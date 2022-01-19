@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<PackageTags>Lor;LorDeckCodes;LegendsOfRuneterra;Runeterr</PackageTags>
+		<Version>0.1.0</Version>
+		<Description>Encode/Decode Legends of Runeterra decks to/from simple strings.</Description>
+		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Kunc.Converters" Version="0.1.0" />
+	</ItemGroup>
+
+	
+	<ItemGroup>
+		<None Update="README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+	
+</Project>

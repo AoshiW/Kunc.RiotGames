@@ -7,10 +7,6 @@
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 	</PropertyGroup>
 
-	<ItemGroup>
-	  <PackageReference Include="Kunc.Converters" Version="0.1.0" />
-	</ItemGroup>
-
 	
 	<ItemGroup>
 		<None Update="README.md">

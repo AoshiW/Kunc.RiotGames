@@ -1,43 +1,22 @@
 ﻿/*
-* Derived from https://github.com/RiotGames/LoRDeckCodes
-* 
-* Copyright (C) 2019 Riot Games
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*      http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
-/*
-* Derived from https://github.com/google/google-authenticator-android/blob/master/AuthenticatorApp/src/main/java/com/google/android/apps/authenticator/Base32String.java
-* 
-* Copyright (C) 2016 BravoTango86
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*      http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Derived from https://github.com/RiotGames/LoRDeckCodes
+ * 
+ * Copyright (C) 2019 Riot Games
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-#pragma warning disable IDE0057 // Use range operator
-
-using System;
 using System.Buffers;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 namespace Kunc.RiotGames.Lor.DeckCodes;
@@ -78,7 +57,7 @@ public class LorDeckEncoder : ILorDeckEncoder
     }
 
     /// <remarks>
-    /// Convert Span (2 item) to uint is more efficient than ToString().
+    /// Convert Span (2 char) to uint is more efficient than ToString().
     /// </remarks>
     private static uint ConvertFactionToUint(ReadOnlySpan<char> span) => (uint)span[0] << 16 | span[1];
 
@@ -150,9 +129,9 @@ public class LorDeckEncoder : ILorDeckEncoder
         return result;
     }
 
-    static readonly SpanAction<char, (int, string, int)> CreateCardCodeAction = CreateCardCode;
+    private static readonly SpanAction<char, (int, string, int)> CreateCardCodeAction = CreateCardCode;
 
-    static void CreateCardCode(Span<char> span, (int Set, string Faction, int Number) args)
+    private static void CreateCardCode(Span<char> span, (int Set, string Faction, int Number) args)
     {
         args.Set.TryFormat(span, out _, "00");
         args.Faction.CopyTo(span.Slice(2));
@@ -162,7 +141,6 @@ public class LorDeckEncoder : ILorDeckEncoder
     /// <inheritdoc/>
     public string GetCodeFromDeck<T>(IEnumerable<T> deck) where T : IReadOnlyDeckItem
     {
-        ArgumentNullException.ThrowIfNull(deck);
         var bytes = GetDeckCodeBytes(deck);
         return Base32.ToBase32(CollectionsMarshal.AsSpan(bytes), Base32FormattingOptions.RemovePadding);
     }
@@ -282,23 +260,24 @@ public class LorDeckEncoder : ILorDeckEncoder
         {
             List<T> currentSet = new();
 
-            //get info from first
-            string firstCardCode = list[0].CardCode;
-            ParseCardCode(firstCardCode, out int setNumber, out var factionCode, out _);
+            //get info from last
+            var lastImdex = list.Count - 1;
+            var lastItem = list[lastImdex];
+            ParseCardCode(lastItem.CardCode, out int setNumber, out var factionCode, out _);
 
             //now add that to our new list, remove from old
-            currentSet.Add(list[0]);
-            list.RemoveAt(0);
+            currentSet.Add(lastItem);
+            list.RemoveAt(lastImdex);
 
             //sweep through rest of list and grab entries that should live with our first one.
             //matching means same set and faction - we are already assured the count matches from previous grouping.
             for (int i = list.Count - 1; i >= 0; i--)
             {
                 var currentCardCode = list[i].CardCode.AsSpan();
-                int currentSetNumber = int.Parse(currentCardCode.Slice(0, 2));
+                var currentSetNumberStr = currentCardCode.Slice(0, 2);
                 var currentFactionCode = currentCardCode.Slice(2, 2);
 
-                if (currentSetNumber == setNumber && currentFactionCode.Equals(factionCode, StringComparison.OrdinalIgnoreCase))
+                if (currentFactionCode.Equals(factionCode, StringComparison.OrdinalIgnoreCase) && int.Parse(currentSetNumberStr) == setNumber)
                 {
                     currentSet.Add(list[i]);
                     list.RemoveAt(i);
@@ -334,17 +313,15 @@ public class LorDeckEncoder : ILorDeckEncoder
         }
     }
 
-    static bool ValidDeckItem<T>(T item) where T : IReadOnlyDeckItem
+    private static bool ValidDeckItem<T>(T item) where T : IReadOnlyDeckItem
     {
-        if (item.CardCode.Length != CardCodeLength || item.Count < 1)
+        var cardcode = item.CardCode.AsSpan();
+        if (cardcode.Length != CardCodeLength || item.Count < 1)
             return false;
 
-        var ccSpan = item.CardCode.AsSpan();
-        if (!int.TryParse(ccSpan.Slice(0, 2), out _) || !int.TryParse(ccSpan.Slice(4), out _))
-            return false;
-        var faction = ccSpan.Slice(2, 2);
-        if (!FactionCodeInfo.ContainsKey(ConvertFactionToUint(faction)))
-            return false;
-        return true;
+        var faction = ConvertFactionToUint(cardcode.Slice(2, 2));
+        return FactionCodeInfo.ContainsKey(faction)
+            && int.TryParse(cardcode.Slice(0, 2), out _)
+            && int.TryParse(cardcode.Slice(4), out _);
     }
 }

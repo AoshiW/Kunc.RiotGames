@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Kunc.Lor.DeckCodes.Benchmark.OrigCode;
+namespace Kunc.RiotGames.Lor.DeckCodes.Benchmark.OrigCode;
 
 public class VarintTranslator
 {

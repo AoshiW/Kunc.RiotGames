@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Kunc.Lor.DeckCodes.Benchmark.OrigCode;
+namespace Kunc.RiotGames.Lor.DeckCodes.Benchmark.OrigCode;
 
 public static class Base32
 {

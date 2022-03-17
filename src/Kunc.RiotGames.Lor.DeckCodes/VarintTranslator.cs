@@ -24,18 +24,16 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
 THE POSSIBILITY OF SUCH DAMAGE. 
 */
 
-#pragma warning disable IDE0057 // Use range operator
-using System;
 using System.Runtime.CompilerServices;
 
 namespace Kunc.RiotGames.Lor.DeckCodes;
 
-class VarintTranslator
+internal class VarintTranslator
 {
-    // MSB = most significant bit?
     private const byte AllButMSB = 0x7f;
     private const byte JustMSB = 0x80;
 
+    /// <exception cref="ArgumentException"></exception>
     public static int PopVarint(ref Span<byte> bytes)
     {
         ulong result = 0;
@@ -50,7 +48,7 @@ class VarintTranslator
             }
             currentShift += 7;
         }
-        throw new ArgumentException("Byte array did not contain valid varints.");
+        throw new ArgumentException("Span of bytes did not contain valid varints.");
     }
 
     public static byte[] GetVarint(ulong value)
@@ -58,7 +56,7 @@ class VarintTranslator
         if (value == 0)
             return new byte[1] { 0 };
         Span<byte> buff = stackalloc byte[10];
-        var currentIndex = 0;
+        int currentIndex = 0;
         while (value != 0)
         {
             var byteVal = value & AllButMSB;

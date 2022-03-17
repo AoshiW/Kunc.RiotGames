@@ -1,4 +1,4 @@
-﻿using Kunc.Lor.DeckCodes.Benchmark.OrigCode;
+﻿using Kunc.RiotGames.Lor.DeckCodes.Benchmark.OrigCode;
 using System.Collections.Generic;
 
 namespace Kunc.RiotGames.Lor.DeckCodes.Benchmark;

@@ -1,15 +1,16 @@
-﻿using System;
+﻿#pragma warning disable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Kunc.Lor.DeckCodes.Benchmark.OrigCode;
+namespace Kunc.RiotGames.Lor.DeckCodes.Benchmark.OrigCode;
 
 public class LoRDeckEncoder
 {
     private readonly static int CARD_CODE_LENGTH = 7;
-    private static Dictionary<string, int> FactionCodeToIntIdentifier = new Dictionary<string, int>();
-    private static Dictionary<int, string> IntIdentifierToFactionCode = new Dictionary<int, string>();
-    private static readonly Dictionary<string, int> FactionCodeToLibraryVersion = new Dictionary<string, int>();
+    private static readonly Dictionary<string, int> FactionCodeToIntIdentifier = new();
+    private static readonly Dictionary<int, string> IntIdentifierToFactionCode = new();
+    private static readonly Dictionary<string, int> FactionCodeToLibraryVersion = new();
     private readonly static int MAX_KNOWN_VERSION = 4;
     private readonly static int FORMAT = 1;
     private readonly static int INITIAL_VERSION = 1;
@@ -60,7 +61,7 @@ public class LoRDeckEncoder
 
     public static List<CardCodeAndCount> GetDeckFromCode(string code)
     {
-        List<CardCodeAndCount> result = new List<CardCodeAndCount>();
+        List<CardCodeAndCount> result = new();
 
         byte[] bytes;
         try
@@ -75,7 +76,7 @@ public class LoRDeckEncoder
         List<byte> byteList = bytes.ToList();
 
         //grab format and version
-        int format = bytes[0] >> 4;
+        _ = bytes[0] >> 4;
         int version = bytes[0] & 0xF;
         byteList.RemoveAt(0);
 
@@ -102,7 +103,7 @@ public class LoRDeckEncoder
                     string factionString = IntIdentifierToFactionCode[faction];
                     string cardString = card.ToString().PadLeft(3, '0');
 
-                    CardCodeAndCount newEntry = new CardCodeAndCount() { CardCode = setString + factionString + cardString, Count = i };
+                    CardCodeAndCount newEntry = new() { CardCode = setString + factionString + cardString, Count = i };
                     result.Add(newEntry);
                 }
 
@@ -123,7 +124,7 @@ public class LoRDeckEncoder
             string fourPlusFactionString = IntIdentifierToFactionCode[fourPlusFaction];
             string fourPlusNumberString = fourPlusNumber.ToString().PadLeft(3, '0');
 
-            CardCodeAndCount newEntry = new CardCodeAndCount() { CardCode = fourPlusSetString + fourPlusFactionString + fourPlusNumberString, Count = fourPlusCount };
+            CardCodeAndCount newEntry = new() { CardCode = fourPlusSetString + fourPlusFactionString + fourPlusNumberString, Count = fourPlusCount };
             result.Add(newEntry);
         }
 
@@ -138,19 +139,19 @@ public class LoRDeckEncoder
 
     private static byte[] GetDeckCodeBytes(List<CardCodeAndCount> deck)
     {
-        List<byte> result = new List<byte>();
+        List<byte> result = new();
 
         if (!ValidCardCodesAndCounts(deck))
             throw new ArgumentException("The provided deck contains invalid card codes.");
 
-        byte formatAndVersion = (byte)(FORMAT << 4 | (GetMinSupportedLibraryVersion(deck) & 0xF));
+        byte formatAndVersion = (byte)(FORMAT << 4 | GetMinSupportedLibraryVersion(deck) & 0xF);
 
         result.Add(formatAndVersion);
 
-        List<CardCodeAndCount> of3 = new List<CardCodeAndCount>();
-        List<CardCodeAndCount> of2 = new List<CardCodeAndCount>();
-        List<CardCodeAndCount> of1 = new List<CardCodeAndCount>();
-        List<CardCodeAndCount> ofN = new List<CardCodeAndCount>();
+        List<CardCodeAndCount> of3 = new();
+        List<CardCodeAndCount> of2 = new();
+        List<CardCodeAndCount> of1 = new();
+        List<CardCodeAndCount> ofN = new();
 
         foreach (CardCodeAndCount ccc in deck)
         {
@@ -232,17 +233,17 @@ public class LoRDeckEncoder
 
     private static void ParseCardCode(string code, out int set, out string faction, out int number)
     {
-        set = int.Parse(code.Substring(0, 2));
+        set = int.Parse(code[..2]);
         faction = code.Substring(2, 2);
         number = int.Parse(code.Substring(4, 3));
     }
 
     private static List<List<CardCodeAndCount>> GetGroupedOfs(List<CardCodeAndCount> list)
     {
-        List<List<CardCodeAndCount>> result = new List<List<CardCodeAndCount>>();
+        List<List<CardCodeAndCount>> result = new();
         while (list.Count > 0)
         {
-            List<CardCodeAndCount> currentSet = new List<CardCodeAndCount>();
+            List<CardCodeAndCount> currentSet = new();
 
             //get info from first
             string firstCardCode = list[0].CardCode;
@@ -257,7 +258,7 @@ public class LoRDeckEncoder
             for (int i = list.Count - 1; i >= 0; i--)
             {
                 string currentCardCode = list[i].CardCode;
-                int currentSetNumber = int.Parse(currentCardCode.Substring(0, 2));
+                int currentSetNumber = int.Parse(currentCardCode[..2]);
                 string currentFactionCode = currentCardCode.Substring(2, 2);
 
                 if (currentSetNumber == setNumber && currentFactionCode == factionCode)
@@ -303,8 +304,7 @@ public class LoRDeckEncoder
             if (ccc.CardCode.Length != CARD_CODE_LENGTH)
                 return false;
 
-            int parsed;
-            if (!int.TryParse(ccc.CardCode.Substring(0, 2), out parsed))
+            if (!int.TryParse(ccc.CardCode[..2], out int parsed))
                 return false;
 
             string faction = ccc.CardCode.Substring(2, 2);

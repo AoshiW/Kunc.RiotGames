@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Kunc.RiotGames.Lor.DeckCodes;
+﻿namespace Kunc.RiotGames.Lor.DeckCodes;
 
 public interface ILorDeckEncoder
 {

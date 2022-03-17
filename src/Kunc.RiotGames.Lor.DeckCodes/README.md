@@ -1,7 +1,7 @@
-﻿﻿# Kunc.Lor.DeckCodes
+﻿﻿# Kunc.RiotGames.Lor.DeckCodes
 
 This is a C# implementation of the C# library [RiotGames/LoRDeckCodes](https://github.com/RiotGames/LoRDeckCodes).
-This library is faster and use less memory.
+This library is faster and allocate less memory.
 
 ## How to use
 ```cs
@@ -22,9 +22,17 @@ You can also use your own class, all you have to do is implement 2 interface\
 `IReadOnlyDeckCard` - to get the code from the deck
 
 ```cs
-class MyCard : IDeckItem, IReadOnlyDeckItem { ... }
+class MyCard : IDeckItem, IReadOnlyDeckItem 
+{
+    public string CardCode { get; set; }
+    public int Count { get; set; }
+
+    // ...
+}
 
 var deckEncoder = new LorDeckEncoder();
 List<MyCard> deck = deckEncoder.GetDeckFromCode<MyCard>("SomeCode");
 string code = deckEncoder.GetCodeFromDeck(deck);
 ```
+
+`Kunc.RiotGames.Lor.DeckCodes` isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.

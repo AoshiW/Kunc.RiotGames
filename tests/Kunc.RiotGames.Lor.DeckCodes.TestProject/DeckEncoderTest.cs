@@ -2,8 +2,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
 
 namespace Kunc.RiotGames.Lor.DeckCodes.TestProject;
 
@@ -29,8 +27,11 @@ public class DeckEncoderTest
                 var newDeck = new List<DeckItem>();
                 while (!string.IsNullOrEmpty(line = myReader.ReadLine()))
                 {
-                    var parts = line.Split(new char[] { ':' });
-                    newDeck.Add(new DeckItem() { Count = int.Parse(parts[0]), CardCode = parts[1] });
+                    var inex = line.IndexOf(':');
+                    var cardCode = line[(inex + 1)..];
+                    var count = int.Parse(line.AsSpan(0, inex));
+                    var item = new DeckItem(cardCode, count);
+                    newDeck.Add(item);
                 }
                 decks.Add(newDeck);
             }
@@ -53,7 +54,7 @@ public class DeckEncoderTest
     {
         var deck = new List<DeckItem>
         {
-            new() { CardCode = "01DE002", Count = 1 }
+            new("01DE002", 1)
         };
 
         string code = DeckEncoder.GetCodeFromDeck(deck);
@@ -67,26 +68,26 @@ public class DeckEncoderTest
     {
         var deck = new List<DeckItem>
         {
-            new() { CardCode = "01DE002", Count = 3 },
-            new() { CardCode = "01DE003", Count = 3 },
-            new() { CardCode = "01DE004", Count = 3 },
-            new() { CardCode = "01DE005", Count = 3 },
-            new() { CardCode = "01DE006", Count = 3 },
-            new() { CardCode = "01DE007", Count = 3 },
-            new() { CardCode = "01DE008", Count = 3 },
-            new() { CardCode = "01DE009", Count = 3 },
-            new() { CardCode = "01DE010", Count = 3 },
-            new() { CardCode = "01DE011", Count = 3 },
-            new() { CardCode = "01DE012", Count = 3 },
-            new() { CardCode = "01DE013", Count = 3 },
-            new() { CardCode = "01DE014", Count = 3 },
-            new() { CardCode = "01DE015", Count = 3 },
-            new() { CardCode = "01DE016", Count = 3 },
-            new() { CardCode = "01DE017", Count = 3 },
-            new() { CardCode = "01DE018", Count = 3 },
-            new() { CardCode = "01DE019", Count = 3 },
-            new() { CardCode = "01DE020", Count = 3 },
-            new() { CardCode = "01DE021", Count = 3 }
+            new("01DE002", 3),
+            new("01DE003", 3),
+            new("01DE004", 3),
+            new("01DE005", 3),
+            new("01DE006", 3),
+            new("01DE007", 3),
+            new("01DE008", 3),
+            new("01DE009", 3),
+            new("01DE010", 3),
+            new("01DE011", 3),
+            new("01DE012", 3),
+            new("01DE013", 3),
+            new("01DE014", 3),
+            new("01DE015", 3),
+            new("01DE016", 3),
+            new("01DE017", 3),
+            new("01DE018", 3),
+            new("01DE019", 3),
+            new("01DE020", 3),
+            new("01DE021", 3)
         };
 
         string code = DeckEncoder.GetCodeFromDeck(deck);
@@ -100,7 +101,7 @@ public class DeckEncoderTest
     {
         var deck = new List<DeckItem>
         {
-            new() { CardCode = "01DE002", Count = 4 }
+            new("01DE002", 4)
         };
 
         string code = DeckEncoder.GetCodeFromDeck(deck);
@@ -113,26 +114,26 @@ public class DeckEncoderTest
     {
         var deck = new List<DeckItem>
         {
-            new() { CardCode = "01DE002", Count = 3 },
-            new() { CardCode = "01DE003", Count = 3 },
-            new() { CardCode = "01DE004", Count = 3 },
-            new() { CardCode = "01DE005", Count = 3 },
-            new() { CardCode = "01DE006", Count = 4 },
-            new() { CardCode = "01DE007", Count = 5 },
-            new() { CardCode = "01DE008", Count = 6 },
-            new() { CardCode = "01DE009", Count = 7 },
-            new() { CardCode = "01DE010", Count = 8 },
-            new() { CardCode = "01DE011", Count = 9 },
-            new() { CardCode = "01DE012", Count = 3 },
-            new() { CardCode = "01DE013", Count = 3 },
-            new() { CardCode = "01DE014", Count = 3 },
-            new() { CardCode = "01DE015", Count = 3 },
-            new() { CardCode = "01DE016", Count = 3 },
-            new() { CardCode = "01DE017", Count = 3 },
-            new() { CardCode = "01DE018", Count = 3 },
-            new() { CardCode = "01DE019", Count = 3 },
-            new() { CardCode = "01DE020", Count = 3 },
-            new() { CardCode = "01DE021", Count = 3 }
+            new("01DE002", 3),
+            new("01DE003", 3),
+            new("01DE004", 3),
+            new("01DE005", 3),
+            new("01DE006", 4),
+            new("01DE007", 5),
+            new("01DE008", 6),
+            new("01DE009", 7),
+            new("01DE010", 8),
+            new("01DE011", 9),
+            new("01DE012", 3),
+            new("01DE013", 3),
+            new("01DE014", 3),
+            new("01DE015", 3),
+            new("01DE016", 3),
+            new("01DE017", 3),
+            new("01DE018", 3),
+            new("01DE019", 3),
+            new("01DE020", 3),
+            new("01DE021", 3)
         };
 
         string code = DeckEncoder.GetCodeFromDeck(deck);
@@ -145,7 +146,7 @@ public class DeckEncoderTest
     {
         var deck = new List<DeckItem>
         {
-            new() { CardCode = "01DE002", Count = 40 }
+            new("01DE002", 40)
         };
 
         string code = DeckEncoder.GetCodeFromDeck(deck);
@@ -158,26 +159,26 @@ public class DeckEncoderTest
     {
         var deck = new List<DeckItem>
         {
-            new() { CardCode = "01DE002", Count = 4 },
-            new() { CardCode = "01DE003", Count = 4 },
-            new() { CardCode = "01DE004", Count = 4 },
-            new() { CardCode = "01DE005", Count = 4 },
-            new() { CardCode = "01DE006", Count = 4 },
-            new() { CardCode = "01DE007", Count = 5 },
-            new() { CardCode = "01DE008", Count = 6 },
-            new() { CardCode = "01DE009", Count = 7 },
-            new() { CardCode = "01DE010", Count = 8 },
-            new() { CardCode = "01DE011", Count = 9 },
-            new() { CardCode = "01DE012", Count = 4 },
-            new() { CardCode = "01DE013", Count = 4 },
-            new() { CardCode = "01DE014", Count = 4 },
-            new() { CardCode = "01DE015", Count = 4 },
-            new() { CardCode = "01DE016", Count = 4 },
-            new() { CardCode = "01DE017", Count = 4 },
-            new() { CardCode = "01DE018", Count = 4 },
-            new() { CardCode = "01DE019", Count = 4 },
-            new() { CardCode = "01DE020", Count = 4 },
-            new() { CardCode = "01DE021", Count = 4 }
+            new("01DE002", 4),
+            new("01DE003", 4),
+            new("01DE004", 4),
+            new("01DE005", 4),
+            new("01DE006", 4),
+            new("01DE007", 5),
+            new("01DE008", 6),
+            new("01DE009", 7),
+            new("01DE010", 8),
+            new("01DE011", 9),
+            new("01DE012", 4),
+            new("01DE013", 4),
+            new("01DE014", 4),
+            new("01DE015", 4),
+            new("01DE016", 4),
+            new("01DE017", 4),
+            new("01DE018", 4),
+            new("01DE019", 4),
+            new("01DE020", 4),
+            new("01DE021", 4)
         };
 
         string code = DeckEncoder.GetCodeFromDeck(deck);
@@ -190,16 +191,16 @@ public class DeckEncoderTest
     {
         var deck1 = new List<DeckItem>
         {
-            new() { CardCode = "01DE002", Count = 1 },
-            new() { CardCode = "01DE003", Count = 2 },
-            new() { CardCode = "02DE003", Count = 3 }
+            new("01DE002", 1),
+            new("01DE003", 2),
+            new("02DE003", 3)
         };
 
         var deck2 = new List<DeckItem>
         {
-            new() { CardCode = "01DE003", Count = 2 },
-            new() { CardCode = "02DE003", Count = 3 },
-            new() { CardCode = "01DE002", Count = 1 }
+            new("01DE003", 2),
+            new("02DE003", 3),
+            new("01DE002", 1)
         };
 
         string code1 = DeckEncoder.GetCodeFromDeck(deck1);
@@ -209,16 +210,16 @@ public class DeckEncoderTest
 
         var deck3 = new List<DeckItem>
         {
-            new() { CardCode = "01DE002", Count = 4 },
-            new() { CardCode = "01DE003", Count = 2 },
-            new() { CardCode = "02DE003", Count = 3 }
+            new("01DE002", 4),
+            new("01DE003", 2),
+            new("02DE003", 3)
         };
 
         var deck4 = new List<DeckItem>
         {
-            new() { CardCode = "01DE003", Count = 2 },
-            new() { CardCode = "02DE003", Count = 3 },
-            new() { CardCode = "01DE002", Count = 4 }
+            new("01DE003", 2),
+            new("02DE003", 3),
+            new("01DE002", 4)
         };
 
         string code3 = DeckEncoder.GetCodeFromDeck(deck3);
@@ -233,18 +234,18 @@ public class DeckEncoderTest
         //importantly this order test includes more than 1 card with counts >3, which are sorted by card code and appending to the <=3 encodings.
         var deck1 = new List<DeckItem>
         {
-            new() { CardCode = "01DE002", Count = 4 },
-            new() { CardCode = "01DE003", Count = 2 },
-            new() { CardCode = "02DE003", Count = 3 },
-            new() { CardCode = "01DE004", Count = 5 }
+            new("01DE002", 4),
+            new("01DE003", 2),
+            new("02DE003", 3),
+            new("01DE004", 5)
         };
 
         var deck2 = new List<DeckItem>
         {
-            new() { CardCode = "01DE004", Count = 5 },
-            new() { CardCode = "01DE003", Count = 2 },
-            new() { CardCode = "02DE003", Count = 3 },
-            new() { CardCode = "01DE002", Count = 4 }
+            new("01DE004", 5),
+            new("01DE003", 2),
+            new("02DE003", 3),
+            new("01DE002", 4)
         };
 
         string code1 = DeckEncoder.GetCodeFromDeck(deck1);
@@ -258,10 +259,10 @@ public class DeckEncoderTest
     {
         var deck = new List<DeckItem>
         {
-            new() { CardCode = "01DE002", Count = 4 },
-            new() { CardCode = "02BW003", Count = 2 },
-            new() { CardCode = "02BW010", Count = 3 },
-            new() { CardCode = "01DE004", Count = 5 }
+            new("01DE002", 4),
+            new("02BW003", 2),
+            new("02BW010", 3),
+            new("01DE004", 5)
         };
 
         string code = DeckEncoder.GetCodeFromDeck(deck);
@@ -274,10 +275,10 @@ public class DeckEncoderTest
     {
         var deck = new List<DeckItem>
         {
-            new() { CardCode = "01DE002", Count = 4 },
-            new() { CardCode = "02BW003", Count = 2 },
-            new() { CardCode = "02BW010", Count = 3 },
-            new() { CardCode = "04SH047", Count = 5 }
+            new("01DE002", 4),
+            new("02BW003", 2),
+            new("02BW010", 3),
+            new("04SH047", 5)
         };
 
         string code = DeckEncoder.GetCodeFromDeck(deck);
@@ -290,10 +291,10 @@ public class DeckEncoderTest
     {
         var deck = new List<DeckItem>
         {
-            new() { CardCode = "01DE002", Count = 4 },
-            new() { CardCode = "03MT003", Count = 2 },
-            new() { CardCode = "03MT010", Count = 3 },
-            new() { CardCode = "02BW004", Count = 5 }
+            new("01DE002", 4),
+            new("03MT003", 2),
+            new("03MT010", 3),
+            new("02BW004", 5)
         };
 
         string code = DeckEncoder.GetCodeFromDeck(deck);
@@ -307,10 +308,10 @@ public class DeckEncoderTest
         // make sure that a deck with an invalid version fails
         var deck = new List<DeckItem>
         {
-            new() { CardCode = "01DE002", Count = 4 },
-            new() { CardCode = "01DE003", Count = 2 },
-            new() { CardCode = "02DE003", Count = 3 },
-            new() { CardCode = "01DE004", Count = 5 }
+            new("01DE002", 4),
+            new("01DE003", 2),
+            new("02DE003", 3),
+            new("01DE004", 5)
         };
 
         var bytesFromDeck = Base32.FromBase32(DeckEncoder.GetCodeFromDeck(deck));
@@ -336,7 +337,7 @@ public class DeckEncoderTest
     {
         var deck = new List<DeckItem>
         {
-            new() { CardCode = "01DE02", Count = 1 }
+            new("01DE02", 1)
         };
 
         bool failed = false;
@@ -356,7 +357,7 @@ public class DeckEncoderTest
 
         failed = false;
         deck.Clear();
-        deck.Add(new() { CardCode = "01XX002", Count = 1 });
+        deck.Add(new("01XX002", 1));
 
         try
         {
@@ -496,10 +497,12 @@ public class DeckEncoderTest
     [DataRow("BC", 4)]
     public void DeckVersionIsTheMinimumLibraryVersionThatSupportsTheContainedFactions(string faction, int expectedVersion)
     {
-        List<DeckItem> deck = new();
-        deck.Add(new() { CardCode = "01DE001", Count = 1 });
-        deck.Add(new() { CardCode = $"01{faction}002", Count = 1 });
-        deck.Add(new() { CardCode = "01FR001", Count = 1 });
+        List<DeckItem> deck = new()
+        {
+            new("01DE001", 1),
+            new($"01{faction}002", 1),
+            new("01FR001", 1)
+        };
         string deckCode = DeckEncoder.GetCodeFromDeck(deck);
 
         int minSupportedLibraryVersion = ExtractVersionFromDeckCode(deckCode);

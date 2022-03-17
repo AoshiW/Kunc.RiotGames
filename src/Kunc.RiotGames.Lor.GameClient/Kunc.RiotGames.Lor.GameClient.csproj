@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <PackageTags>Lor;GameClient;LegendsOfRuneterra;Runeterra</PackageTags>
+        <Version>0.1.0</Version>
+        <Description>Simple client for LegendsOfRuneterra GameClientAPI.</Description>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Macross.Json.Extensions" Version="2.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Kunc.RiotGames.Core\Kunc.RiotGames.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Update="README.md">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+    </ItemGroup>
+
+</Project>

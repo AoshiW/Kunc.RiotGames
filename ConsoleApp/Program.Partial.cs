@@ -1,5 +1,7 @@
 ﻿#pragma warning disable IDE0051 // Remove unused private members
 #pragma warning disable IDE0052 // Remove unread private members
+using Kunc.RiotGames.Lol.DataDragon;
+using Kunc.RiotGames.Lol.GameClient;
 using Kunc.RiotGames.Lor.DeckCodes;
 using Kunc.RiotGames.Lor.GameClient;
 using System.Text;
@@ -7,10 +9,13 @@ using System.Text.Json;
 
 partial class Program
 {
+    static readonly ILolDataDragon LolDataDragon = new LolDataDragon();
+    static readonly ILolGameClient LolGameClient = new LolGameClient();
+
     static readonly ILorDeckEncoder LorDeckEncoder = new LorDeckEncoder();
     static readonly ILorGameClient LorGameClient = new LorGameClient();
 
-    static void ExtensionDataPropertygenerator(Dictionary<string, JsonElement>? extensionData)
+    static void ExtensionDataPropertyGenerator(Dictionary<string, JsonElement>? extensionData)
     {
         if (extensionData is null)
             return;

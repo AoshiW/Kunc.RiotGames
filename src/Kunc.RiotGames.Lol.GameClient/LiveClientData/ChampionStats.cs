@@ -86,7 +86,7 @@ public record ChampionStats : BaseDto
     public double ResourceRegenRate { get; init; }
 
     [JsonPropertyName("resourceType")]
-    public ResourceType ResourceType { get; init; }
+    public AbilityResource ResourceType { get; init; }
 
     [JsonPropertyName("resourceValue")]
     public double ResourceValue { get; init; }

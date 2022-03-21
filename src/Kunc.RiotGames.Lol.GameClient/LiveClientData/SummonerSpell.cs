@@ -5,7 +5,7 @@ namespace Kunc.RiotGames.Lol.GameClient.LiveClientData;
 public record SummonerSpell : BaseDto
 {
     [JsonPropertyName("displayName")]
-    public string DisplayName { get; init; }
+    public string DisplayName { get; init; } = default!;
 
     [JsonPropertyName("rawDescription")]
     public string RawDescription { get; init; } = default!;

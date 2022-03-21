@@ -2,26 +2,33 @@
 
 namespace Kunc.RiotGames.Lol.GameClient.LiveClientData;
 
+/// <summary>
+/// Ability Resource
+/// </summary>
 [JsonConverter(typeof(JsonStringEnumMemberConverter)), JsonStringEnumMemberConverterOptions(deserializationFailureFallbackValue: UnknownEnumValue)]
-public enum ResourceType
+public enum AbilityResource
 {
     /// <summary>
     /// Represent unknow enum value.
     /// </summary>
-    UnknownEnumValue,
+    UnknownEnumValue = -1,
 
-    None, // Dr. Mundo
-    BattleFury, // Tryndamere
-    BloodWell, // Aatrox
-    DragonFury, // Shyvana
-    Energy, // Akali
-    Ferocity, // Rengar
-    GnarFury, // Gnar
-    Heat, // Rumble
     Mana, // Ahri
-    Rage, // Renekton
+    Energy, // Akali
+    None, // Dr. Mundo
     Shield, // Mordekaiser
+    BattleFury, // Tryndamere
+    DragonFury, // Shyvana
+    Rage, // Renekton
+    Heat, // Rumble
+    GnarFury, // Gnar
+    Ferocity, // Rengar
+    BloodWell, // Aatrox
     Wind, // Yasuo
 
-    //Max, Ammo, Other, MoonLight
+    //??
+    Ammo, 
+    MoonLight,
+    Other,
+    Max,
 }

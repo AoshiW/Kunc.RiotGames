@@ -15,9 +15,12 @@ public class LiveClientDataEndpoint : ILiveClientData
     };
     
     /// <inheritdoc/> 
-    public async Task<AllGameData> GetAllGameDataAsync(CancellationToken cancellationToken = default)
+    public async Task<AllGameData> GetAllGameDataAsync(int? eventID = null, CancellationToken cancellationToken = default)
     {
-        var obj = await _client.GetFromJsonAsync<AllGameData>("/liveclientdata/allgamedata", cancellationToken);
+        var query = eventID is not null
+            ? $"?{nameof(eventID)}={eventID}"
+            : string.Empty;
+        var obj = await _client.GetFromJsonAsync<AllGameData>("/liveclientdata/allgamedata" + query, cancellationToken);
         return obj!;
     }
 
@@ -50,9 +53,12 @@ public class LiveClientDataEndpoint : ILiveClientData
     }
 
     /// <inheritdoc/>
-    public async Task<Player[]> GetAllPlayersAsync(CancellationToken cancellationToken = default)
+    public async Task<Player[]> GetAllPlayersAsync(string? teamID = null, CancellationToken cancellationToken = default)
     {
-        var obj = await _client.GetFromJsonAsync<Player[]>("/liveclientdata/playerlist", cancellationToken);
+        var query = teamID is not null
+            ? $"?{nameof(teamID)}={teamID}"
+            : string.Empty;
+        var obj = await _client.GetFromJsonAsync<Player[]>("/liveclientdata/playerlist" + query, cancellationToken);
         return obj!;
     }
 
@@ -71,7 +77,7 @@ public class LiveClientDataEndpoint : ILiveClientData
     }
 
     /// <inheritdoc/>
-    public async Task<Runes> GepPayerMainRunesAsync(string summonerName, CancellationToken cancellationToken = default)
+    public async Task<Runes> GetPayerMainRunesAsync(string summonerName, CancellationToken cancellationToken = default)
     {
         var obj = await _client.GetFromJsonAsync<Runes>($"/liveclientdata/playermainrunes?summonerName={summonerName}", cancellationToken);
         return obj!;
@@ -85,9 +91,12 @@ public class LiveClientDataEndpoint : ILiveClientData
     }
 
     /// <inheritdoc/>
-    public async Task<EventData> GetEventDataAsync(CancellationToken cancellationToken = default)
+    public async Task<EventData> GetEventDataAsync(int? eventID = null, CancellationToken cancellationToken = default)
     {
-        var obj = await _client.GetFromJsonAsync<EventData>("/liveclientdata/eventdata", cancellationToken);
+        var query = eventID is not null
+            ? $"?{nameof(eventID)}={eventID}"
+            : string.Empty;
+        var obj = await _client.GetFromJsonAsync<EventData>("/liveclientdata/eventdata" + query, cancellationToken);
         return obj!;
     }
 

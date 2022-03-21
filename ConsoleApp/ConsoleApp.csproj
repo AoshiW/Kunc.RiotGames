@@ -1,21 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<IsPackable>false</IsPackable>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.13.1" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="BenchmarkDotNet" Version="0.13.1" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\src\Kunc.RiotGames.Lol.DataDragon\Kunc.RiotGames.Lol.DataDragon.csproj" />
-    <ProjectReference Include="..\src\Kunc.RiotGames.Lol.GameClient\Kunc.RiotGames.Lol.GameClient.csproj" />
-    <ProjectReference Include="..\src\Kunc.RiotGames.Lor.DeckCodes\Kunc.RiotGames.Lor.DeckCodes.csproj" />
-    <ProjectReference Include="..\src\Kunc.RiotGames.Lor.GameClient\Kunc.RiotGames.Lor.GameClient.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\src\Kunc.RiotGames.Lol.DataDragon\Kunc.RiotGames.Lol.DataDragon.csproj" />
+		<ProjectReference Include="..\src\Kunc.RiotGames.Lol.GameClient\Kunc.RiotGames.Lol.GameClient.csproj" />
+		<ProjectReference Include="..\src\Kunc.RiotGames.Lor.DeckCodes\Kunc.RiotGames.Lor.DeckCodes.csproj" />
+		<ProjectReference Include="..\src\Kunc.RiotGames.Lor.GameClient\Kunc.RiotGames.Lor.GameClient.csproj" />
+	</ItemGroup>
 
 </Project>

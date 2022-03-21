@@ -4,6 +4,7 @@
 		<RootNamespace>Kunc.RiotGames</RootNamespace>
         <Version>0.1.0</Version>
         <Description>Kunc.RiotGames core package.</Description>
+        <PackageReadmeFile></PackageReadmeFile>
 	</PropertyGroup>
 
 	<ItemGroup>

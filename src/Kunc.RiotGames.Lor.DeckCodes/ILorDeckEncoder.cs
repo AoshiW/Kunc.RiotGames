@@ -1,5 +1,8 @@
 ﻿namespace Kunc.RiotGames.Lor.DeckCodes;
 
+/// <summary>
+/// Encode/Decode decks to/from simple strings.
+/// </summary>
 public interface ILorDeckEncoder
 {
     /// <summary>
@@ -8,6 +11,7 @@ public interface ILorDeckEncoder
     /// <typeparam name="T">Type that implements <see cref="IReadOnlyDeckItem"/>.</typeparam>
     /// <param name="deck">Deck</param>
     /// <returns>DeckCode created from <paramref name="deck"/>.</returns>
+    /// <exception cref="ArgumentException"></exception>
     string GetCodeFromDeck<T>(IEnumerable<T> deck) where T : IReadOnlyDeckItem;
 
     /// <summary>
@@ -16,5 +20,6 @@ public interface ILorDeckEncoder
     /// <typeparam name="T">Type that implements <see cref="IDeckItem"/>.</typeparam>
     /// <param name="deckCode">Deck code.</param>
     /// <returns>Deck created from <paramref name="deckCode"/>.</returns>
+    /// <exception cref="ArgumentException"></exception>
     List<T> GetDeckFromCode<T>(ReadOnlySpan<char> deckCode) where T : IDeckItem, new();
 }

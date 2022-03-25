@@ -2,6 +2,7 @@
 
 namespace Kunc.RiotGames.Lor.GameClient;
 
+/// <inheritdoc cref="ILorGameClient"/>
 public class LorGameClient : ILorGameClient
 {
     private readonly HttpClient _client = new();

@@ -3,6 +3,9 @@ using System.Text.Json.Serialization;
 
 namespace Kunc.RiotGames.JsonConverters;
 
+/// <summary>
+/// Converts <see cref="int"/> to/from <see cref="double"/>.
+/// </summary>
 public class Int32Converter : JsonConverter<int>
 {
     /// <inheritdoc/>

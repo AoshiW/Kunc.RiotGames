@@ -2,10 +2,10 @@
 
     <PropertyGroup>
         <PackageTags>Lor;LorDeckCodes;LegendsOfRuneterra;Runeterr</PackageTags>
-        <Version>0.1.1</Version>
+        <Version>0.1.2</Version>
         <Description>Encode/Decode Legends of Runeterra decks to/from simple strings.</Description>
         <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-        <PackageReleaseNotes>improvements and optimizations , ctor for DeckItem</PackageReleaseNotes>
+        <PackageReleaseNotes>/// doc</PackageReleaseNotes>
     </PropertyGroup>
 
     <PropertyGroup>

@@ -4,8 +4,14 @@ using System.Text.Json.Serialization;
 
 namespace Kunc.RiotGames;
 
+/// <summary>
+/// Represent base DTO.
+/// </summary>
 public abstract record BaseDto
 {
+    /// <summary>
+    /// Contains extra JSON properties that did not map to fields.
+    /// </summary>
     [JsonExtensionData]
     public Dictionary<string, JsonElement>? ExtensionData { get; init; }
 

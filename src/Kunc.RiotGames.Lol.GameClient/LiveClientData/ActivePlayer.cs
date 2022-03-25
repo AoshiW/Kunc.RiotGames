@@ -4,6 +4,9 @@ namespace Kunc.RiotGames.Lol.GameClient.LiveClientData;
 
 public record ActivePlayer : BaseDto
 {
+    /// <summary>
+    /// Champion's abilities.
+    /// </summary>
     [JsonPropertyName("abilities")]
     public Abilities Abilities { get; init; } = default!;
 

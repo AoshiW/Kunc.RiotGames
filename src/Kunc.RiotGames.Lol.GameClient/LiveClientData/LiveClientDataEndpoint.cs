@@ -2,6 +2,7 @@
 
 namespace Kunc.RiotGames.Lol.GameClient.LiveClientData;
 
+/// <inheritdoc cref="ILiveClientData"/>
 public class LiveClientDataEndpoint : ILiveClientData
 {
     private readonly HttpClient _client = new(

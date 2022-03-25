@@ -1,5 +1,6 @@
 ﻿namespace Kunc.RiotGames.Lor.DeckCodes;
 
+/// <inheritdoc cref="IDeckItem"/>
 public class DeckItem : IReadOnlyDeckItem, IDeckItem, IEquatable<DeckItem?>
 {
     /// <summary>

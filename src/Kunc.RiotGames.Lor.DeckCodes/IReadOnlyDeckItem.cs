@@ -1,5 +1,8 @@
 ﻿namespace Kunc.RiotGames.Lor.DeckCodes;
 
+/// <summary>
+/// Represent ReadOnly item in deck.
+/// </summary>
 public interface IReadOnlyDeckItem
 {
     /// <summary>

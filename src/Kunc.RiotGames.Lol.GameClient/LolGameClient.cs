@@ -2,6 +2,7 @@
 
 namespace Kunc.RiotGames.Lol.GameClient;
 
+///<inheritdoc cref="ILolGameClient"/>
 public class LolGameClient : ILolGameClient
 {
     /// <inheritdoc/>

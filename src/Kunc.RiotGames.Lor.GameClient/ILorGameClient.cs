@@ -1,5 +1,8 @@
 ﻿namespace Kunc.RiotGames.Lor.GameClient;
 
+/// <summary>
+/// Simple client for game client API.
+/// </summary>
 public interface ILorGameClient
 {
     /// <summary>
@@ -8,7 +11,7 @@ public interface ILorGameClient
     int Port { get; set; }
 
     /// <summary>
-    /// 
+    /// Get information about current expedition.
     /// </summary>
     /// <remarks>
     /// The expeditions-state endpoint can be used to determine the cards a player drafts during an Expedition.
@@ -17,6 +20,7 @@ public interface ILorGameClient
     /// <param name="cancellationToken">The cancellation token to cancel operation.</param>
     /// <returns></returns>
     /// <exception cref="TaskCanceledException">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</exception>
+    /// <exception cref="HttpRequestException"></exception>
     Task<ExpeditionsState> GetExpeditionsStateAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -30,19 +34,19 @@ public interface ILorGameClient
     /// <param name="cancellationToken">The cancellation token to cancel operation.</param>
     /// <returns></returns>
     /// <exception cref="TaskCanceledException">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</exception>
+    /// <exception cref="HttpRequestException"></exception>
     Task<GameResult> GetGameResultAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// 
+    /// This endpoint can be used to determine the position of the cards in the collection, deck builder, Expedition drafts, and active games.
     /// </summary>
     /// <remarks>
-    /// The positional-rectangles endpoint can be used to determine the position of the cards in the collection, deck builder, Expedition drafts, and active games.
-    /// Unlike the static-decklist endpoint, the positional-rectangles endpoint will return the position of the cards at the time of the request.
     /// The response time of this endpoint will vary by computer, however Riot suggest polling this endpoint no more than once per second.
     /// </remarks>
     /// <param name="cancellationToken">The cancellation token to cancel operation.</param>
     /// <returns></returns>
     /// <exception cref="TaskCanceledException">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</exception>
+    /// <exception cref="HttpRequestException"></exception>
     Task<PositionalRectangles> GetPositionalRectanglesAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -55,5 +59,6 @@ public interface ILorGameClient
     /// <param name="cancellationToken">The cancellation token to cancel operation.</param>
     /// <returns></returns>
     /// <exception cref="TaskCanceledException">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</exception>
+    /// <exception cref="HttpRequestException"></exception>
     Task<StaticDecklist> GetStaticDecklistAsync(CancellationToken cancellationToken = default);
 }

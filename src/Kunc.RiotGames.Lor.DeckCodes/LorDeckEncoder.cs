@@ -23,6 +23,7 @@ namespace Kunc.RiotGames.Lor.DeckCodes;
 
 // https://www.meziantou.net/fastest-way-to-enumerate-a-list-t.htm
 
+/// <inheritdoc cref="ILorDeckEncoder"/>
 public class LorDeckEncoder : ILorDeckEncoder
 {
     private const int MaxVersion = 4;
@@ -94,7 +95,6 @@ public class LorDeckEncoder : ILorDeckEncoder
                 int set = VarintTranslator.PopVarint(ref byteSpan);
                 int faction = VarintTranslator.PopVarint(ref byteSpan);
                 string factionString = IntIdentifierToFactionCode[faction];
-
                 for (int k = 0; k < numOfsInThisGroup; k++)
                 {
                     int number = VarintTranslator.PopVarint(ref byteSpan);
@@ -145,6 +145,7 @@ public class LorDeckEncoder : ILorDeckEncoder
         return Base32.ToBase32(CollectionsMarshal.AsSpan(bytes), Base32FormattingOptions.RemovePadding);
     }
 
+    /// <exception cref="ArgumentException"></exception>
     private static List<byte> GetDeckCodeBytes<T>(IEnumerable<T> deck) where T : IReadOnlyDeckItem
     {
         var of3 = new List<T>();
@@ -154,7 +155,7 @@ public class LorDeckEncoder : ILorDeckEncoder
         foreach (var item in deck)
         {
             if (!ValidDeckItem(item))
-                throw new ArgumentException("The provided deck contains invalid card codes.");
+                throw new ArgumentException("The provided deck contains invalid card codes or count.");
 
             if (item.Count == 3)
                 of3.Add(item);
@@ -162,8 +163,6 @@ public class LorDeckEncoder : ILorDeckEncoder
                 of2.Add(item);
             else if (item.Count == 1)
                 of1.Add(item);
-            else if (item.Count < 1)
-                throw new ArgumentException($"Invalid count of {item.Count} for card {item.CardCode}");
             else
                 ofN.Add(item);
         }

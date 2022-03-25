@@ -1,5 +1,8 @@
 ﻿namespace Kunc.RiotGames.Lor.DeckCodes;
 
+/// <summary>
+/// Represent item in deck.
+/// </summary>
 public interface IDeckItem
 {
     /// <summary>

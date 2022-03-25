@@ -14,7 +14,6 @@ public static class GameExtensions
     {
         return value switch
         {
-            Game.Lol => "lol",
             Game.Lor => "lor",
             Game.Val => "val",
             _ => value.ToString().ToLowerInvariant()

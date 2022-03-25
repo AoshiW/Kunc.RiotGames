@@ -1,5 +1,8 @@
 ﻿namespace Kunc.RiotGames.Lol.GameClient.LiveClientData;
 
+/// <summary>
+/// Champion's abilities.
+/// </summary>
 public record Abilities : BaseDto
 {
     /// <summary>

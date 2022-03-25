@@ -16,7 +16,7 @@ public record GameData : BaseDto
     public string MapName { get; init; } = default!;
 
     [JsonPropertyName("mapNumber")]
-    public int MapNumber { get; init; }
+    public MapId Map{ get; init; }
 
     [JsonPropertyName("mapTerrain")]
     public MapTerrain MapTerrain { get; init; }

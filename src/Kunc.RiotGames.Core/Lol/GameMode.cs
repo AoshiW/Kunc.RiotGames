@@ -4,6 +4,9 @@ using System.Text.Json.Serialization;
 
 namespace Kunc.RiotGames.Lol;
 
+/// <summary>
+/// Game modes in LoL.
+/// </summary>
 [JsonConverter(typeof(JsonStringEnumMemberConverter)), JsonStringEnumMemberConverterOptions(deserializationFailureFallbackValue: UnknownEnumValue)]
 public enum GameMode
 {

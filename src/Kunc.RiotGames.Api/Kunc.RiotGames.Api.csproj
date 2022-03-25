@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	  <PackageTags>Lol;LeagueOfLegends;Api</PackageTags>
+	  <Version>0.1.0</Version>
+	  <Description></Description>
+    <RootNamespace>Kunc.RiotGames</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Kunc.RiotGames.Core\Kunc.RiotGames.Core.csproj" />
+  </ItemGroup>
+
+    <ItemGroup>
+        <None Include="README.md">
+            <PackagePath>\</PackagePath>
+            <Pack>True</Pack>
+        </None>
+    </ItemGroup>
+
+</Project>

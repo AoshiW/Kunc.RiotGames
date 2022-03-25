@@ -4,6 +4,9 @@ public record Rectangles : BaseDto
 {
     public int CardID { get; init; }
 
+    /// <summary>
+    /// CardCode of card.
+    /// </summary>
     public string CardCode { get; init; } = default!;
 
     /// <summary>

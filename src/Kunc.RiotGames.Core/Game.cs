@@ -6,11 +6,6 @@ namespace Kunc.RiotGames;
 public enum Game
 {
     /// <summary>
-    /// League of Legends
-    /// </summary>
-    Lol,
-
-    /// <summary>
     /// Legends of Runeterra
     /// </summary>
     Lor,

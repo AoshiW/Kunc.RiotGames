@@ -3,6 +3,9 @@ using System.Text.Json.Serialization;
 
 namespace Kunc.RiotGames.JsonConverters;
 
+/// <summary>
+/// Converts <see cref="TimeSpan"/> to/from <see cref="double"/>.
+/// </summary>
 public class JsonTimeSpanConverter : JsonConverter<TimeSpan>
 {
     private readonly BaseTimeUnit _baseTimeUnit;

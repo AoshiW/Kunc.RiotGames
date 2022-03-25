@@ -2,11 +2,15 @@
 
 namespace Kunc.RiotGames.Lol.DataDragon;
 
+/// <inheritdoc cref="ILolDataDragon"/>
 public class LolDataDragon : ILolDataDragon
 {
     private readonly HttpClient _client;
     private readonly LolDataDragonOptions _options;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="LolDataDragon"/>.
+    /// </summary>
     public LolDataDragon(LolDataDragonOptions? options = null)
     {
         _options = options ?? new();

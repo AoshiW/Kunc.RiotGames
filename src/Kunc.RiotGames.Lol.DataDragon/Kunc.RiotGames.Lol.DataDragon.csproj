@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<PackageTags>Lol;LeagueOfLegends;DataDragon</PackageTags>
 		<Version>0.1.0</Version>
-		<Description></Description>
+		<Description>Simple client for League Of Legends Data Dragon.</Description>
 	</PropertyGroup>
 
 	<ItemGroup>

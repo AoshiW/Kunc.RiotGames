@@ -3,6 +3,9 @@ using System.Text.Json.Serialization;
 
 namespace Kunc.RiotGames.JsonConverters;
 
+/// <summary>
+/// Converts <see cref="bool"/> to/from <see cref="string"/>.
+/// </summary>
 public class BooleanConverter : JsonConverter<bool>
 {
     /// <inheritdoc/>

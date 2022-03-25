@@ -3,6 +3,9 @@ using System.Text.Json.Serialization;
 
 namespace Kunc.RiotGames.JsonConverters;
 
+/// <summary>
+/// Converts <see cref="DateTimeOffset"/> to/from Unix Timestamp.
+/// </summary>
 public class UnixTimestampDateTimeOffsetMsConverter : JsonConverter<DateTimeOffset>
 {
     /// <inheritdoc/>

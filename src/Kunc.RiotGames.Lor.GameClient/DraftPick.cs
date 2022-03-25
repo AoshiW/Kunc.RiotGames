@@ -19,8 +19,14 @@ public record DraftPick : BaseDto
     /// </summary>
     public string[]? Picks { get; init; }
 
+    /// <summary>
+    /// CardCode of the cards you received in exchange.
+    /// </summary>
     public string[]? SwappedIn { get; init; }
 
+    /// <summary>
+    /// CardCode of the cards you lost in exchange.
+    /// </summary>
     public string[]? SwappedOut { get; init; }
     
     // todo override PrintMembers?

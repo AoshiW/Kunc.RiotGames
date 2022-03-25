@@ -1,9 +1,12 @@
 ﻿using Kunc.RiotGames.Lol.GameClient.LiveClientData;
 
-namespace Kunc.RiotGames.Lol.GameClient
+namespace Kunc.RiotGames.Lol.GameClient;
+
+/// <summary>
+/// Simple client for Game Client API.
+/// </summary>
+public interface ILolGameClient
 {
-    public interface ILolGameClient
-    {
-        ILiveClientData LiveClientData { get; }
-    }
+    /// <inheritdoc/>
+    ILiveClientData LiveClientData { get; }
 }

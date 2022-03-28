@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Kunc.RiotGames.Lor.DeckCodes.Benchmark;
 
-[MemoryDiagnoser, GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory, BenchmarkLogicalGroupRule.ByParams)]
+[MemoryDiagnoser, GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByParams)]
 public class Benchmark
 {
     readonly LorDeckEncoder deckEncoder = new();

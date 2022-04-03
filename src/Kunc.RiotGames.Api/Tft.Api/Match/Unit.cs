@@ -14,7 +14,7 @@ public record Unit : BaseDto
     /// This field was introduced in patch 9.22 with data_version 2.
     /// </summary>
     [JsonPropertyName("character_id")]
-    public string character_id { get; init; } = default!;
+    public string CharacterId { get; init; } = default!;
 
     /// <summary>
     /// If a unit is chosen as part of the Fates set mechanic, the chosen trait will be indicated by this field.

@@ -4,9 +4,8 @@ namespace Kunc.RiotGames.Lor.Api.Match;
 
 public record Info
 {
-    // todo
     [JsonPropertyName("game_mode")]
-    public string GameMode { get; private set; } = default!;
+    public GameMode GameMode { get; init; }
 
     // todo
     [JsonPropertyName("game_type")]

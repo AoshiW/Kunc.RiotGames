@@ -20,7 +20,7 @@ public record Event : BaseDto
     public string? TurretKilled { get; init; }
     public string[]? Assisters { get; init; }
     public int? KillStreak { get; init; }
-    public string? Result { get; init; }
+    public string? Result { get; init; } // todo
 
     [JsonPropertyName("Stolen"), JsonConverter(typeof(BooleanConverter))]
     public bool? IsStolen { get; init; }

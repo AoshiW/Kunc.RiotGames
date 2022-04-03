@@ -19,7 +19,7 @@ public interface ILorGameClient
     /// </remarks>
     /// <param name="cancellationToken">The cancellation token to cancel operation.</param>
     /// <returns></returns>
-    /// <exception cref="TaskCanceledException">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</exception>
+    /// <exception cref="TaskCanceledException">The task has been canceled.</exception>
     /// <exception cref="HttpRequestException"></exception>
     Task<ExpeditionsState> GetExpeditionsStateAsync(CancellationToken cancellationToken = default);
 
@@ -33,7 +33,7 @@ public interface ILorGameClient
     /// </remarks>
     /// <param name="cancellationToken">The cancellation token to cancel operation.</param>
     /// <returns></returns>
-    /// <exception cref="TaskCanceledException">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</exception>
+    /// <exception cref="TaskCanceledException">The task has been canceled.</exception>
     /// <exception cref="HttpRequestException"></exception>
     Task<GameResult> GetGameResultAsync(CancellationToken cancellationToken = default);
 
@@ -45,7 +45,7 @@ public interface ILorGameClient
     /// </remarks>
     /// <param name="cancellationToken">The cancellation token to cancel operation.</param>
     /// <returns></returns>
-    /// <exception cref="TaskCanceledException">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</exception>
+    /// <exception cref="TaskCanceledException">The task has been canceled.</exception>
     /// <exception cref="HttpRequestException"></exception>
     Task<PositionalRectangles> GetPositionalRectanglesAsync(CancellationToken cancellationToken = default);
 
@@ -58,7 +58,7 @@ public interface ILorGameClient
     /// </remarks>
     /// <param name="cancellationToken">The cancellation token to cancel operation.</param>
     /// <returns></returns>
-    /// <exception cref="TaskCanceledException">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</exception>
+    /// <exception cref="TaskCanceledException">The task has been canceled.</exception>
     /// <exception cref="HttpRequestException"></exception>
     Task<StaticDecklist> GetStaticDecklistAsync(CancellationToken cancellationToken = default);
 }

@@ -8,10 +8,10 @@ public record Status : BaseDto
     public string Id { get; init; } = default!;
 
     [JsonPropertyName("maintenance_status")]
-    public MaintenanceStatus MaintenanceStatus { get; init; }
+    public MaintenanceStatus MaintenanceStatus { get; init; }//todo null
 
     [JsonPropertyName("incident_severity")]
-    public IncidentSeverity IncidentSeverity { get; init; }
+    public IncidentSeverity IncidentSeverity { get; init; } //todo null
 
     [JsonPropertyName("titles")]
     public ContentDto[] Titles { get; init; } = default!;
@@ -29,5 +29,5 @@ public record Status : BaseDto
     public DateTimeOffset? UpdatedAt { get; init; }
 
     [JsonPropertyName("platforms")]
-    public Platform Platforms { get; init; } = default!;
+    public Platform[] Platforms { get; init; } = default!;
 }

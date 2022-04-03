@@ -36,7 +36,7 @@ public record Player : BaseDto
     [JsonPropertyName("level")]
     public int Level { get; init; }
 
-    // todo enum position
+    // todo enum position, ""
     [JsonPropertyName("position")]
     public string Position { get; init; } = default!;
 
@@ -49,6 +49,9 @@ public record Player : BaseDto
     [JsonPropertyName("respawnTimer"), JsonTimeSpanConverter(BaseTimeUnit.Seconds)]
     public TimeSpan RespawnTimer { get; init; }
 
+    /// <remarks>
+    /// For "Soraka Bot" in <see cref="GameMode.NexisBlitz"/> is <see langword="null"/>.
+    /// </remarks>
     [JsonPropertyName("runes")]
     public Runes Runes { get; init; } = default!;
 

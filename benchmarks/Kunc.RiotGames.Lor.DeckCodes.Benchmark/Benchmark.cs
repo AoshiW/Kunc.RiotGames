@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Kunc.RiotGames.Lor.DeckCodes.Benchmark;
 
-[MemoryDiagnoser, GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory, BenchmarkLogicalGroupRule.ByParams)]
+[MemoryDiagnoser, GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByParams)]
 public class Benchmark
 {
     readonly LorDeckEncoder deckEncoder = new();
@@ -14,6 +14,7 @@ public class Benchmark
     {
         new("CEAQYAIABEGA2EQUDANB2IRHFAYQCAQBAAWTEAA","Min"),
         new("CEAAECABAQJRWHBIFU2DOOYIAEBAMCIMCINCILJZAICACBANE4VCYBABAILR2HRL","D_1"),
+        new("CQBQCAIADAAQEAADAEBAGBAKAEAQAHIBAEBSGAICAAEQCAQDAMAQGAAPAEBQGAIBAQAAOAIEAMDACBIKWMAQCBIDBUFACAIAE4AQCAZCAEBAABABAIBQKAIDAAHACBAABYAQIAYSAECQUEQBAUBQMAQDAMDAO", "Max") // legal, but unplayable: D 
     };
 
     [Benchmark(Description = "Riot.GetCode"), ArgumentsSource(nameof(Inputs)), BenchmarkCategory("GetCode")]
@@ -27,4 +28,6 @@ public class Benchmark
 
     [Benchmark(Description = "Kunc.GetDeck"), ArgumentsSource(nameof(Inputs)), BenchmarkCategory("GetDeck")]
     public List<DeckItem> GetDeckKunc(Input type) => deckEncoder.GetDeckFromCode<DeckItem>(type.Code);
+    
+    //[Benchmark] public object Obj() => new();
 }

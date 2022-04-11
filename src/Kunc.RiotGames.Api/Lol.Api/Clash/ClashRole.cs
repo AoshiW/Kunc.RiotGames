@@ -11,5 +11,5 @@ public enum ClashRole
     UnknownEnumValue,
 
     Captein,
-    Mwmber
+    Member
 }

@@ -10,7 +10,7 @@ public record Participant : BaseDto
     /// Participant's companion.
     /// </summary>
     [JsonPropertyName("companion")]
-    public Companion Companion { get; init; }
+    public Companion Companion { get; init; } = default!;
 
     /// <summary>
     /// Gold left after participant was eliminated.

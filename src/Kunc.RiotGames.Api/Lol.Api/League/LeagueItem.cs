@@ -44,5 +44,5 @@ public record LeagueItem : BaseDto
     /// Player's encrypted summonerId.
     /// </summary>
     [JsonPropertyName("summonerId")]
-    public string SummonerId { get; init; }
+    public string SummonerId { get; init; } = default!;
 }

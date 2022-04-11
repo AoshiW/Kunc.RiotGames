@@ -1,4 +1,6 @@
-﻿using Kunc.RiotGames.Extensions;
+﻿using System.Text.Json;
+
+using Kunc.RiotGames.Extensions;
 
 namespace Kunc.RiotGames.Lor.Api.Match;
 
@@ -12,7 +14,7 @@ public class LorMatchEndpoint : ILorMatchV1
     /// </summary>
     public LorMatchEndpoint(RiotGamesApiClient client)
     {
-        _client = client;
+           _client = client;
     }
 
     /// <inheritdoc/>
@@ -30,5 +32,14 @@ public class LorMatchEndpoint : ILorMatchV1
         const string methodId = "/lor/match/v1/matches/{matchId}";
         var requestFunc = () => new HttpRequestMessage(HttpMethod.Get, $"/lor/match/v1/matches/{matchId}");
         return await _client.SendAndDeserializeAsync<Match>(routing.ToLowerString(), requestFunc, methodId, cancellationToken).ConfigureAwait(false);
+    }
+
+    private static readonly JsonSerializerOptions MatchJsonSerializerOptions = MatchJsonSerializerOptionsInit();
+
+    private static JsonSerializerOptions MatchJsonSerializerOptionsInit()
+    {
+        var opt = new JsonSerializerOptions();
+        opt.Converters.Add(new FactionArrayConverter());
+        return opt;
     }
 }

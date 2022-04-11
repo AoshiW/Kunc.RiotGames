@@ -5,6 +5,7 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2CA6F9C7-5C68-45C6-B848-177DACB88E5A}"
 	ProjectSection(SolutionItems) = preProject
+		src\.editorconfig = src\.editorconfig
 		src\Directory.Build.props = src\Directory.Build.props
 	EndProjectSection
 EndProject
@@ -25,6 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{50A0
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E4FEFA60-4204-41CB-A781-2DE729D06108}"
 	ProjectSection(SolutionItems) = preProject
+		kuncriotgames.json = kuncriotgames.json
 		README.md = README.md
 	EndProjectSection
 EndProject

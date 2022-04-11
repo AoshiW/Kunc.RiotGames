@@ -2,8 +2,9 @@
 
 namespace Kunc.RiotGames.Lor.Api.Match;
 
-public record Player
+public record Player : BaseDto
 {
+    [JsonPropertyName("puuid")]
     public string Puuid { get; init; } = default!;
 
     [JsonPropertyName("deck_id")]
@@ -15,7 +16,8 @@ public record Player
     [JsonPropertyName("deck_code")]
     public string DeckCode { get; init; } = default!;
 
-    public string[] Factions { get; init; } = default!;
+    [JsonPropertyName("factions"), JsonConverter(typeof(FactionArrayConverter))]
+    public Faction[] Factions { get; init; } = default!;
 
     [JsonPropertyName("game_outcome")]
     public GameOutcome GameOutcome { get; init; }

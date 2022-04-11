@@ -140,7 +140,7 @@ public record Participant : BaseDto, IKda
     public int Kills { get; init; }
 
     [JsonPropertyName("lane")]
-    public string Lane { get; init; } = default;
+    public string Lane { get; init; } = default!;
 
     [JsonPropertyName("largestCriticalStrike")]
     public int LargestCriticalStrike { get; init; }

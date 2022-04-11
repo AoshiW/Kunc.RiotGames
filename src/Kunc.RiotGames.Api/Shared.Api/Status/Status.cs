@@ -5,13 +5,13 @@ namespace Kunc.RiotGames.Shared.Api.Status;
 public record Status : BaseDto
 {
     [JsonPropertyName("id")]
-    public string Id { get; init; } = default!;
+    public int Id { get; init; }
 
     [JsonPropertyName("maintenance_status")]
-    public MaintenanceStatus MaintenanceStatus { get; init; }//todo null
+    public MaintenanceStatus? MaintenanceStatus { get; init; }
 
     [JsonPropertyName("incident_severity")]
-    public IncidentSeverity IncidentSeverity { get; init; } //todo null
+    public IncidentSeverity? IncidentSeverity { get; init; }
 
     [JsonPropertyName("titles")]
     public ContentDto[] Titles { get; init; } = default!;

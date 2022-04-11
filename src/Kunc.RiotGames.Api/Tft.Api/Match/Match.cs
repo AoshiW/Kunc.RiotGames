@@ -8,11 +8,11 @@ public record Match : BaseDto
     /// Match metadata.
     /// </summary>
     [JsonPropertyName("metadata")]
-    public MatchMetadata Metadata { get; init; }
+    public MatchMetadata Metadata { get; init; } = default!;
 
     /// <summary>
     /// Match info.
     /// </summary>
     [JsonPropertyName("info")]
-    public Info Info { get; init; }
+    public Info Info { get; init; } = default!;
 }

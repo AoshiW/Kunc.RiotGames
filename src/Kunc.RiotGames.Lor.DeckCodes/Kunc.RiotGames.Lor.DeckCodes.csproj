@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <PackageTags>Lor;LorDeckCodes;LegendsOfRuneterra;Runeterr</PackageTags>
+        <PackageTags>Lor;LorDeckCodes;LegendsOfRuneterra;Runeterra</PackageTags>
         <Version>0.1.2</Version>
         <Description>Encode/Decode Legends of Runeterra decks to/from simple strings.</Description>
         <AllowUnsafeBlocks>True</AllowUnsafeBlocks>

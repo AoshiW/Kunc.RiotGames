@@ -30,7 +30,7 @@ public record Info : BaseDto
     public GameMode GameMode { get; init; }
 
     [JsonPropertyName("gameName")]
-    public string GameName { get; init; }
+    public string GameName { get; init; } = default!;
 
     /// <summary>
     /// Time when match starts on the game server.

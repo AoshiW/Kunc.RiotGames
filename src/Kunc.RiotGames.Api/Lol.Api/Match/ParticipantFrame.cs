@@ -5,13 +5,13 @@ namespace Kunc.RiotGames.Lol.Api.Match;
 public record ParticipantFrame : BaseDto
 {
     [JsonPropertyName("championStats")]
-    public ChampionStats ChampionStats { get; init; }
+    public ChampionStats ChampionStats { get; init; } = default!;
 
     [JsonPropertyName("currentGold")]
     public int CurrentGold { get; init; }
 
     [JsonPropertyName("damageStats")]
-    public DamageStats DamageStats { get; init; }
+    public DamageStats DamageStats { get; init; } = default!;
 
     [JsonPropertyName("goldPerSecond")]
     public int GoldPerSecond { get; init; }
@@ -29,7 +29,7 @@ public record ParticipantFrame : BaseDto
     public int ParticipantId { get; init; }
 
     [JsonPropertyName("position")]
-    public MapPoint Position { get; init; }
+    public MapPoint Position { get; init; } = default!;
 
     [JsonPropertyName("timeEnemySpentControlled")]
     public int TimeEnemySpentControlled { get; init; }

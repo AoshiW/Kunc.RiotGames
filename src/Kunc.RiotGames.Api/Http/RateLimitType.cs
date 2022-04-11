@@ -2,6 +2,7 @@
 
 public enum RateLimitType
 {
+    Unknow,
     Application,
     Method
 }

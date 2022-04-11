@@ -1,7 +1,9 @@
 ﻿#pragma warning disable IDE0051 // Remove unused private members
 #pragma warning disable IDE0052 // Remove unread private members
+using Kunc.RiotGames.Lol.Api;
 using Kunc.RiotGames.Lol.DataDragon;
 using Kunc.RiotGames.Lol.GameClient;
+using Kunc.RiotGames.Lor.Api;
 using Kunc.RiotGames.Lor.DeckCodes;
 using Kunc.RiotGames.Lor.GameClient;
 using System.Text;
@@ -9,9 +11,12 @@ using System.Text.Json;
 
 partial class Program
 {
+    const string key = "RGAPI-f2dcb875-7d08-4ae2-bf0d-18727d5f29f5";
+    static readonly ILolApi LolApi = new LolApi(key);
     static readonly ILolDataDragon LolDataDragon = new LolDataDragon();
     static readonly ILolGameClient LolGameClient = new LolGameClient();
 
+    static readonly ILorApi LorApi = new LorApi(key);
     static readonly ILorDeckEncoder LorDeckEncoder = new LorDeckEncoder();
     static readonly ILorGameClient LorGameClient = new LorGameClient();
 

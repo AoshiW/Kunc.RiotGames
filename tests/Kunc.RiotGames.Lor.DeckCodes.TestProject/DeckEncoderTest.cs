@@ -8,7 +8,7 @@ namespace Kunc.RiotGames.Lor.DeckCodes.TestProject;
 [TestClass]
 public class DeckEncoderTest
 {
-    static readonly ILorDeckEncoder DeckEncoder = new LorDeckEncoder();
+    static readonly ILorDeckEncoder DeckEncoder = new LorDeckEncoder(null);
 
     //Tests the encoding of a set of hard coded decks in DeckCodesTestData.txt
     [TestMethod]
@@ -303,6 +303,22 @@ public class DeckEncoderTest
     }
 
     [TestMethod]
+    public void RuneterraSet()
+    {
+        var deck = new List<DeckItem>
+        {
+            new("01DE002", 4),
+            new("03MT003", 2),
+            new("03MT010", 3),
+            new("01RU001", 5)
+        };
+
+        string code = DeckEncoder.GetCodeFromDeck(deck);
+        var decoded = DeckEncoder.GetDeckFromCode<DeckItem>(code);
+        Assert.IsTrue(VerifyRehydration(deck, decoded));
+    }
+
+    [TestMethod]
     public void BadVersion()
     {
         // make sure that a deck with an invalid version fails
@@ -495,6 +511,7 @@ public class DeckEncoderTest
     [DataRow("MT", 2)]
     [DataRow("SH", 3)]
     [DataRow("BC", 4)]
+    [DataRow("RU", 5)]
     public void DeckVersionIsTheMinimumLibraryVersionThatSupportsTheContainedFactions(string faction, int expectedVersion)
     {
         List<DeckItem> deck = new()
@@ -519,8 +536,8 @@ public class DeckEncoderTest
     [TestMethod]
     public void ArgumentExceptionOnFutureVersion()
     {
-        const string singleCardDeckWithVersion5 = "CUAAAAIBAUAAC";
-        Assert.ThrowsException<ArgumentException>(() => DeckEncoder.GetDeckFromCode<DeckItem>(singleCardDeckWithVersion5));
+        const string singleCardDeckWithVersion10 = "DEAAABABAEFACAIBAAAQCAIFAEAQGCTP";
+        Assert.ThrowsException<ArgumentException>(() => DeckEncoder.GetDeckFromCode<DeckItem>(singleCardDeckWithVersion10));
     }
 
     static bool VerifyRehydration(List<DeckItem> d, List<DeckItem> rehydratedList)

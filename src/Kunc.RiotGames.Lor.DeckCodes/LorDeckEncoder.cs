@@ -16,8 +16,9 @@
  * limitations under the License.
  */
 
-using System.Buffers;
 using System.Runtime.InteropServices;
+
+using CommunityToolkit.HighPerformance.Buffers;
 
 namespace Kunc.RiotGames.Lor.DeckCodes;
 
@@ -26,7 +27,7 @@ namespace Kunc.RiotGames.Lor.DeckCodes;
 /// <inheritdoc cref="ILorDeckEncoder"/>
 public class LorDeckEncoder : ILorDeckEncoder
 {
-    private const int MaxVersion = 4;
+    private const int MaxVersion = 5;
     private const int Format = 1;
     private const int InitialVersion = 1;
     private const int CardCodeLength = 7;
@@ -42,7 +43,8 @@ public class LorDeckEncoder : ILorDeckEncoder
         { ConvertFactionToUint("BW"), (6, 2) },
         { ConvertFactionToUint("SH"), (7, 3) },
         { ConvertFactionToUint("MT"), (9, 2) },
-        { ConvertFactionToUint("BC"), (10, 4) }
+        { ConvertFactionToUint("BC"), (10, 4) },
+        { ConvertFactionToUint("RU"), (12, 5) },
     };
 
     static LorDeckEncoder()
@@ -57,6 +59,23 @@ public class LorDeckEncoder : ILorDeckEncoder
         }
     }
 
+    private readonly StringPool? _stringPool;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="LorDeckEncoder"/> class.
+    /// </summary>
+    /// <param name="stringPool">A <see cref="StringPool"/> for caching CardCode <see cref="string"/>s, set to <see langword="null"/> for disabled.</param>
+    public LorDeckEncoder(StringPool? stringPool)
+    {
+        _stringPool = stringPool;
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="LorDeckEncoder"/> class.
+    /// </summary>
+    public LorDeckEncoder() : this(new StringPool())
+    { }
+
     /// <remarks>
     /// Convert Span (2 char) to uint is more efficient than ToString().
     /// </remarks>
@@ -65,21 +84,16 @@ public class LorDeckEncoder : ILorDeckEncoder
     /// <inheritdoc/>
     public List<T> GetDeckFromCode<T>(ReadOnlySpan<char> code) where T : IDeckItem, new()
     {
-        byte[] bytes;
-        try
-        {
-            bytes = Base32.FromBase32(code);
-        }
-        catch (Exception ex)
-        {
-            throw new ArgumentException("Invalid deck code", ex);
-        }
+        using var bytesOwner = SpanOwner<byte>.Allocate(Base32.CalculateLength(code));
+        if (!Base32.TryFromBase32(code, bytesOwner.Span, out _))
+            throw new ArgumentException("Invalid deck code");
+        var byteSpan = bytesOwner.Span;
         var result = new List<T>(20);
 
         //grab format and version
-        int format = bytes[0] >> 4;
-        int version = bytes[0] & 0xF;
-        var byteSpan = bytes.AsSpan(1);
+        int format = byteSpan[0] >> 4;
+        int version = byteSpan[0] & 0xF;
+        byteSpan = byteSpan.Slice(1);
 
         if (version > MaxVersion)
         {
@@ -100,7 +114,7 @@ public class LorDeckEncoder : ILorDeckEncoder
                     int number = VarintTranslator.PopVarint(ref byteSpan);
                     var newEntry = new T()
                     {
-                        CardCode = string.Create(7, (set, factionString, number), CreateCardCodeAction),
+                        CardCode = CreateCardCode(set, factionString, number),
                         Count = i
                     };
                     result.Add(newEntry);
@@ -121,7 +135,7 @@ public class LorDeckEncoder : ILorDeckEncoder
 
             var newEntry = new T()
             {
-                CardCode = string.Create(7, (set, factionStr, number), CreateCardCodeAction),
+                CardCode = CreateCardCode(set, factionStr, number),
                 Count = count
             };
             result.Add(newEntry);
@@ -129,13 +143,13 @@ public class LorDeckEncoder : ILorDeckEncoder
         return result;
     }
 
-    private static readonly SpanAction<char, (int, string, int)> CreateCardCodeAction = CreateCardCode;
-
-    private static void CreateCardCode(Span<char> span, (int Set, string Faction, int Number) args)
+    private string CreateCardCode(int set, string faction, int number)
     {
-        args.Set.TryFormat(span, out _, "00");
-        args.Faction.CopyTo(span.Slice(2));
-        args.Number.TryFormat(span.Slice(4), out _, "000");
+        Span<char> span = stackalloc char[CardCodeLength];
+        set.TryFormat(span, out _, "00");
+        faction.CopyTo(span.Slice(2));
+        number.TryFormat(span.Slice(4), out _, "000");
+        return _stringPool?.GetOrAdd(span) ?? span.ToString();
     }
 
     /// <inheritdoc/>
@@ -182,7 +196,7 @@ public class LorDeckEncoder : ILorDeckEncoder
         SortGroupOf(groupedOf1s);
 
         //Nofs (since rare) are simply sorted by the card code - there's no optimiziation based upon the card count
-        ofN.Sort((x, y) => string.Compare(x.CardCode, y.CardCode, StringComparison.Ordinal));
+        ofN.Sort(static (x, y) => string.Compare(x.CardCode, y.CardCode, StringComparison.Ordinal));
 
         //Encode
         EncodeGroupOf(result, groupedOf3s);
@@ -234,14 +248,14 @@ public class LorDeckEncoder : ILorDeckEncoder
     //Second by the alphanumeric order of the card codes within those lists.
     private static void SortGroupOf<T>(List<List<T>> groupOf) where T : IReadOnlyDeckItem
     {
-        groupOf.Sort((x, y) =>
+        groupOf.Sort(static (x, y) =>
         {
             var compareCount = x.Count.CompareTo(y.Count);
             return compareCount != 0 ? compareCount : string.Compare(x[0].CardCode, y[0].CardCode, StringComparison.Ordinal);
         });
         foreach (var item in CollectionsMarshal.AsSpan(groupOf))
         {
-            item.Sort((x, y) => string.Compare(x.CardCode, y.CardCode, StringComparison.Ordinal));
+            item.Sort(static (x, y) => string.Compare(x.CardCode, y.CardCode, StringComparison.Ordinal));
         }
     }
 
@@ -260,13 +274,13 @@ public class LorDeckEncoder : ILorDeckEncoder
             List<T> currentSet = new();
 
             //get info from last
-            var lastImdex = list.Count - 1;
-            var lastItem = list[lastImdex];
+            var lastIndex = list.Count - 1;
+            var lastItem = list[lastIndex];
             ParseCardCode(lastItem.CardCode, out int setNumber, out var factionCode, out _);
 
             //now add that to our new list, remove from old
             currentSet.Add(lastItem);
-            list.RemoveAt(lastImdex);
+            list.RemoveAt(lastIndex);
 
             //sweep through rest of list and grab entries that should live with our first one.
             //matching means same set and faction - we are already assured the count matches from previous grouping.
@@ -305,9 +319,9 @@ public class LorDeckEncoder : ILorDeckEncoder
             //what are the cards, as identified by the third section of card code only now, within this group?
             foreach (var item in CollectionsMarshal.AsSpan(currentList))
             {
-                var code = item.CardCode.AsSpan();
-                int sequenceNumber = int.Parse(code.Slice(4, 3));
-                bytes.AddRange(VarintTranslator.GetVarint(sequenceNumber));
+                var sequenceNumber = item.CardCode.AsSpan(4, 3);
+                int number = int.Parse(sequenceNumber);
+                bytes.AddRange(VarintTranslator.GetVarint(number));
             }
         }
     }

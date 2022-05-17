@@ -22,4 +22,8 @@ public interface ILorDeckEncoder
     /// <returns>Deck created from <paramref name="deckCode"/>.</returns>
     /// <exception cref="ArgumentException"></exception>
     List<T> GetDeckFromCode<T>(ReadOnlySpan<char> deckCode) where T : IDeckItem, new();
+
+    /// <inheritdoc cref="GetDeckFromCode{T}(ReadOnlySpan{char})"/>
+    List<T> GetDeckFromCode<T>(string deckCode) where T : IDeckItem, new()
+        => GetDeckFromCode<T>(deckCode.AsSpan());
 }

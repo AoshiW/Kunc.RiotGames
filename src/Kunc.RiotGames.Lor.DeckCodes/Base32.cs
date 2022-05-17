@@ -39,30 +39,47 @@ internal class Base32
     /// <exception cref="FormatException"></exception>
     public static byte[] FromBase32(ReadOnlySpan<char> chars)
     {
+        var length = CalculateLength(chars);
+        if (length == 0)
+            return Array.Empty<byte>();
+        var result = new byte[length];
+        return TryFromBase32(chars, result, out var written)
+            ? result
+            : throw new FormatException($"Illegal character: {chars[written]}");
+    }
+
+    public static int CalculateLength(ReadOnlySpan<char> chars)
+        => chars.Trim().TrimEnd(PaddingChar).Length * Shift / 8;
+
+    public static bool TryFromBase32(ReadOnlySpan<char> chars, Span<byte> span, out int written)
+    {
         chars = chars.Trim().TrimEnd(PaddingChar);
+        written = 0;
         if (chars.IsEmpty)
         {
-            return Array.Empty<byte>();
+            return true;
         }
-        var result = new byte[chars.Length * Shift / 8];
+        if (span.Length < CalculateLength(chars))
+        {
+            return false;
+        }
         int buffer = 0;
-        int next = 0;
         int bitsLeft = 0;
         foreach (var item in chars)
         {
             if (!CharMap.TryGetValue(item, out var value))
             {
-                throw new FormatException($"Illegal character: {item}");
+                return false;
             }
             buffer = buffer << Shift | value & Mask;
             bitsLeft += Shift;
             if (bitsLeft >= 8)
             {
-                result[next++] = (byte)(buffer >> bitsLeft - 8);
+                span[written++] = (byte)(buffer >> bitsLeft - 8);
                 bitsLeft -= 8;
             }
         }
-        return result;
+        return true;
     }
 
     // Derived from https://github.com/dotnet/aspnetcore/blob/5fa80eb167ac3ae2c03590b135379fc3e3621175/src/Identity/Extensions.Core/src/Base32.cs under MIT
@@ -119,7 +136,7 @@ internal class Base32
                     s[wi++] = Alphabet[(int)(b5 & 0x1f)];
                 }
 
-                if (wi == str.Length) 
+                if (wi == str.Length)
                     return str;
                 var numCharsToOutput = (bytes.Length - offset) switch
                 {
@@ -146,13 +163,13 @@ internal class Base32
                 b4 = (offset < bytes.Length) ? bytes[offset++] : 0U;
                 s[wi++] = (numCharsToOutput >= 5) ? Alphabet[(int)(((b3 & 0x0f) << 1) | (b4 >> 7))] : PaddingChar;
 
-                if (wi == str.Length) 
+                if (wi == str.Length)
                     return str;
                 b5 = (offset < bytes.Length) ? bytes[offset++] : 0U;
                 s[wi++] = (numCharsToOutput >= 6) ? Alphabet[(int)((b4 >> 2) & 0x1f)] : PaddingChar;
                 s[wi++] = (numCharsToOutput >= 7) ? Alphabet[(int)(((b4 & 0x3) << 3) | (b5 >> 5))] : PaddingChar;
 
-                if (wi == str.Length) 
+                if (wi == str.Length)
                     return str;
                 s[wi] = (numCharsToOutput >= 8) ? Alphabet[(int)(b5 & 0x1f)] : PaddingChar;
             }

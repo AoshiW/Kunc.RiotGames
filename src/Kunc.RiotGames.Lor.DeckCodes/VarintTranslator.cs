@@ -65,9 +65,7 @@ internal class VarintTranslator
                 byteVal |= 0x80;
             buff[currentIndex++] = (byte)byteVal;
         }
-        var result = new byte[currentIndex];
-        buff.Slice(0, currentIndex).CopyTo(result);
-        return result;
+        return buff.Slice(0, currentIndex).ToArray();
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

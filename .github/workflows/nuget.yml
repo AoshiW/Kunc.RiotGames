@@ -22,6 +22,8 @@ jobs:
       run: dotnet test --no-build --verbosity normal
     - name: Pack
       run: dotnet pack -c Release --output nupkgs
-    - name: nuget push
-      run: dotnet nuget push --skip-duplicate --api-key ${{ secrets.NUGET_KEY }} -s https://api.nuget.org/v3/index.json -ss https://api.nuget.org/v3/index.json ./nupkgs/
+    - name: NuGet push
+      run: dotnet nuget push --skip-duplicate --api-key ${{ secrets.NUGET_KEY }} -s https://api.nuget.org/v3/index.json -ss https://api.nuget.org/v3/index.json ./nupkgs/*.nupkg
+    - name: NuGet push Symbols
+      run: dotnet nuget push --skip-duplicate --api-key ${{ secrets.NUGET_KEY }} -s https://api.nuget.org/v3/index.json -ss https://api.nuget.org/v3/index.json ./nupkgs/*.snupkg
       

@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kunc.RiotGames.Lor.DeckCodes", "src\Kunc.RiotGames.Lor.DeckCodes\Kunc.RiotGames.Lor.DeckCodes.csproj", "{FDB8D7BA-FD41-4A1C-BB6F-3FC7A68AAEAC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8C21ADEF-A779-4A13-AD30-548B91499CBD}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		Directory.Build.props = Directory.Build.props
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6D2DC7AC-A8C5-460E-814A-BC50B3332517}"
+	ProjectSection(SolutionItems) = preProject
+		src\Directory.Build.props = src\Directory.Build.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C8D52066-9A04-43FD-8FBB-AB3C03DE97EC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{B399A5B5-C6B1-4A09-B259-168258ED9C54}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kunc.RiotGames.Lor.DeckCodes.Tests", "tests\Kunc.RiotGames.Lor.DeckCodes.Tests\Kunc.RiotGames.Lor.DeckCodes.Tests.csproj", "{F908E6F0-9132-421B-A35D-B9844EBF2B19}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FDB8D7BA-FD41-4A1C-BB6F-3FC7A68AAEAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDB8D7BA-FD41-4A1C-BB6F-3FC7A68AAEAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDB8D7BA-FD41-4A1C-BB6F-3FC7A68AAEAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDB8D7BA-FD41-4A1C-BB6F-3FC7A68AAEAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F908E6F0-9132-421B-A35D-B9844EBF2B19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F908E6F0-9132-421B-A35D-B9844EBF2B19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F908E6F0-9132-421B-A35D-B9844EBF2B19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F908E6F0-9132-421B-A35D-B9844EBF2B19}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FDB8D7BA-FD41-4A1C-BB6F-3FC7A68AAEAC} = {6D2DC7AC-A8C5-460E-814A-BC50B3332517}
+		{F908E6F0-9132-421B-A35D-B9844EBF2B19} = {C8D52066-9A04-43FD-8FBB-AB3C03DE97EC}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D8E42019-F5E1-4BEF-90EB-4728F0021911}
+	EndGlobalSection
+EndGlobal

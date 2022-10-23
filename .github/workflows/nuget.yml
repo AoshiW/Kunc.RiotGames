@@ -23,5 +23,5 @@ jobs:
     - name: Pack
       run: dotnet pack -c Release --output nupkgs
     - name: nuget push
-      run: dotnet nuget push --skip-duplicate --api-key ${{ secrets.NUGET_KEY }} -s https://api.nuget.org/v3/index.json ./nupkgs/
+      run: dotnet nuget push --skip-duplicate --api-key ${{ secrets.NUGET_KEY }} -s https://api.nuget.org/v3/index.json -ss https://api.nuget.org/v3/index.json ./nupkgs/
       

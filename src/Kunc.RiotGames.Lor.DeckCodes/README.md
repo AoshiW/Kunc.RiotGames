@@ -1,5 +1,5 @@
 ﻿# Kunc.RiotGames.Lor.DeckCodes
-![Nuget](https://img.shields.io/nuget/v/Kunc.RiotGames.Lor.DeckCodes?logo=NuGet&logoColor=blue&style=flat-square)
+[![Nuget](https://img.shields.io/nuget/v/Kunc.RiotGames.Lor.DeckCodes?logo=NuGet&logoColor=blue&style=flat-square)](https://www.nuget.org/packages/Kunc.RiotGames.Lor.DeckCodes)
 
 This is a C# implementation of the C# library [RiotGames/LoRDeckCodes](https://github.com/RiotGames/LoRDeckCodes).
 This library is faster and allocate less memory.

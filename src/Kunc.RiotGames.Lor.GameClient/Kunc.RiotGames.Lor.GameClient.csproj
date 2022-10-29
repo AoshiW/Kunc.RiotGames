@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <PackageTags>Lor;GameClient;LegendsOfRuneterra;Runeterra</PackageTags>
+        <Version>0.1.2</Version>
+        <Description>Simple client for LegendsOfRuneterra GameClientAPI.</Description>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Kunc.RiotGames.Core\Kunc.RiotGames.Core.csproj" />
+    </ItemGroup>
+
+</Project>

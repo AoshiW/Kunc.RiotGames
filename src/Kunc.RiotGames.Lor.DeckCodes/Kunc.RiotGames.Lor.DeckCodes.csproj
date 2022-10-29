@@ -5,7 +5,7 @@
 	  <PackageTags>Lor;LorDeckCodes;LegendsOfRuneterra;Runeterra</PackageTags>
 	  <Description>Encode/Decode Legends of Runeterra decks to/from simple strings.</Description>
 	  <PackageReleaseNotes>Added default extension method for IServiceCollection.</PackageReleaseNotes>
-	  <Version>0.2.0</Version>
+	  <Version>0.2.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

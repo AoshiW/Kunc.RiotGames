@@ -1,0 +1,10 @@
+{
+  "PlayerName": null,
+  "OpponentName": null,
+  "GameState": "Menus",
+  "Screen": {
+    "ScreenWidth": 1573,
+    "ScreenHeight": 786
+  },
+  "Rectangles": []
+}

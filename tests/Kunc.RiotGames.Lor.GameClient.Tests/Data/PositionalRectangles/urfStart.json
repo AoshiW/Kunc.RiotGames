@@ -1,0 +1,119 @@
+{
+  "PlayerName": "AoshiW",
+  "OpponentName": "Derenik",
+  "GameState": "InProgress",
+  "Screen": {
+    "ScreenWidth": 1573,
+    "ScreenHeight": 786
+  },
+  "Rectangles": [
+    {
+      "CardID": 226922299,
+      "CardCode": "face",
+      "TopLeftX": 218,
+      "TopLeftY": 521,
+      "Width": 85,
+      "Height": 85,
+      "LocalPlayer": false
+    },
+    {
+      "CardID": 1536431226,
+      "CardCode": "face",
+      "TopLeftX": 218,
+      "TopLeftY": 350,
+      "Width": 85,
+      "Height": 85,
+      "LocalPlayer": true
+    },
+    {
+      "CardID": 1407765081,
+      "CardCode": "06BW016",
+      "TopLeftX": 682,
+      "TopLeftY": 189,
+      "Width": 92,
+      "Height": 116,
+      "LocalPlayer": true
+    },
+    {
+      "CardID": 494892348,
+      "CardCode": "03PZ011",
+      "TopLeftX": 436,
+      "TopLeftY": 56,
+      "Width": 127,
+      "Height": 178,
+      "LocalPlayer": true
+    },
+    {
+      "CardID": 1572993608,
+      "CardCode": "03FR004",
+      "TopLeftX": 664,
+      "TopLeftY": 62,
+      "Width": 128,
+      "Height": 179,
+      "LocalPlayer": true
+    },
+    {
+      "CardID": 1133715593,
+      "CardCode": "02FR003",
+      "TopLeftX": 549,
+      "TopLeftY": 61,
+      "Width": 128,
+      "Height": 179,
+      "LocalPlayer": true
+    },
+    {
+      "CardID": 212527918,
+      "CardCode": "01PZ019",
+      "TopLeftX": 779,
+      "TopLeftY": 61,
+      "Width": 129,
+      "Height": 180,
+      "LocalPlayer": true
+    },
+    {
+      "CardID": 537139177,
+      "CardCode": "99PZ100",
+      "TopLeftX": 557,
+      "TopLeftY": 907,
+      "Width": 108,
+      "Height": 157,
+      "LocalPlayer": false
+    },
+    {
+      "CardID": 1088081096,
+      "CardCode": "06BC044",
+      "TopLeftX": 896,
+      "TopLeftY": 57,
+      "Width": 129,
+      "Height": 181,
+      "LocalPlayer": true
+    },
+    {
+      "CardID": 2093839521,
+      "CardCode": "99PZ100",
+      "TopLeftX": 1013,
+      "TopLeftY": 49,
+      "Width": 130,
+      "Height": 182,
+      "LocalPlayer": true
+    },
+    {
+      "CardID": 1874635726,
+      "CardCode": "04PZ002",
+      "TopLeftX": 740,
+      "TopLeftY": 713,
+      "Width": 92,
+      "Height": 116,
+      "LocalPlayer": false
+    },
+    {
+      "CardID": 1225439681,
+      "CardCode": "06BW006T3",
+      "TopLeftX": 797,
+      "TopLeftY": 189,
+      "Width": 92,
+      "Height": 116,
+      "LocalPlayer": true
+    }
+  ]
+}

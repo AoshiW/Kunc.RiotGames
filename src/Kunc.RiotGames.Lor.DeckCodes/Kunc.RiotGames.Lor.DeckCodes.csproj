@@ -4,13 +4,12 @@
 	  <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 	  <PackageTags>Lor;LorDeckCodes;LegendsOfRuneterra;Runeterra</PackageTags>
 	  <Description>Encode/Decode Legends of Runeterra decks to/from simple strings.</Description>
-	  <PackageReleaseNotes>Added default extension method for IServiceCollection.</PackageReleaseNotes>
 	  <Version>0.2.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.HighPerformance" Version="8.0.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
   </ItemGroup>
 
 </Project>

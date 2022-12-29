@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFrameworks>net7.0</TargetFrameworks>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="BenchmarkDotNet" Version="0.13.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\Kunc.RiotGames.Lol.LeagueClientUpdate\Kunc.RiotGames.Lol.LeagueClientUpdate.csproj" />
+        <ProjectReference Include="..\..\src\Kunc.RiotGames.Lor.DeckCodes\Kunc.RiotGames.Lor.DeckCodes.csproj" />
+        <ProjectReference Include="..\..\src\Kunc.RiotGames.Lor.GameClient\Kunc.RiotGames.Lor.GameClient.csproj" />
+    </ItemGroup>
+
+</Project>

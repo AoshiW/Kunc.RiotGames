@@ -1,0 +1,9 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+      <PackageTags>Lol;LeagueOfLegends;LCU;LeagueClientUpdate</PackageTags>
+      <Description>Simple client for interacting with the League of Legends LCU.</Description>
+      <Version>0.1.0</Version>
+  </PropertyGroup>
+
+</Project>

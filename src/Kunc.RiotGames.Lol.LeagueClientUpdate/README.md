@@ -29,7 +29,7 @@ To subscribe a lcu event, you have 2 options:
 2. Create a `class` with **public** (static) methods and place `LcuEventAttribute` on it, than call `SubscribeAll<T>()`, if the `class` has any dependencies in the constructor, you can call `SubscribeAll<T>(T obj)` and pass the created class.
  
 When you create a class or use `Subscibe` with a `System.Delegate`, you can create any method that has any return type and has 0-3 parameters, the parameters can be 
-1. `object`/`LolLeagueClientUpdate`
+1. `object`/`LolLeagueClientUpdate` for "sender"
 2. `CancelationToken`
 3. and anything else will be a lcu event argument
 

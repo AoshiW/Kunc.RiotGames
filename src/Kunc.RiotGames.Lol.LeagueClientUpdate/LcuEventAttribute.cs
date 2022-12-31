@@ -4,7 +4,11 @@
 public sealed class LcuEventAttribute : Attribute
 {
     public string Uri { get; }
-    //public string EventType { get; }
+
+    /// <remarks>
+    /// Values: Create, Update, Delete
+    /// </remarks>
+    public string? EventType { get; set; }
 
     public LcuEventAttribute(string uri)
     {

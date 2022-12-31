@@ -34,9 +34,12 @@ public partial class LolLeagueClientUpdate
             !data[1].ValueEquals("OnJsonApiEvent"u8) ||
             !_events.TryGetValue(data[2].GetProperty("uri"u8).GetString()!, out var ev))
             return;
+        JsonElement? eventTypeProp = default;
         foreach (var item in ev)
         {
-            //if (item.EventType is not null && data[2].GetProperty("eventType"u8).GetString() != item.EventType) continue;
+            if (item.EventType is not null &&
+                !(eventTypeProp ??= data[2].GetProperty("eventType"u8)).ValueEquals(item.EventType))
+                continue;
             var args = item.ArgTypes.Length == 0 ? Array.Empty<object>() : new object[item.ArgTypes.Length];
             for (int i = 0; i < item.ArgTypes.Length; i++)
             {
@@ -56,20 +59,26 @@ public partial class LolLeagueClientUpdate
         }
     }
 
-    public void Subscribe<T>(string eventUri, EventHandler<T> eventHandler) => SubscribeCore(eventUri, eventHandler, eventHandler.Method.GetParameters());
-    public void Subscribe<T>(string eventUri, Func<object, T, CancellationToken, Task> eventHandler) => SubscribeCore(eventUri, eventHandler, eventHandler.Method.GetParameters());
-    public void Subscribe(string eventUri, Delegate eventHandler) => SubscribeCore(eventUri, eventHandler, eventHandler.Method.GetParameters());
+    public void Subscribe<T>(string eventUri, EventHandler<T> eventHandler) 
+        => SubscribeCore(new(eventUri), eventHandler, eventHandler.Method.GetParameters());
 
-    void SubscribeCore(string eventUri, Delegate eventHandler, ParameterInfo[] parameterInfos)
+    public void Subscribe<T>(string eventUri, Func<object, T, CancellationToken, Task> eventHandler)
+        => SubscribeCore(new(eventUri), eventHandler, eventHandler.Method.GetParameters());
+
+    public void Subscribe(string eventUri, Delegate eventHandler) 
+        => SubscribeCore(new(eventUri), eventHandler, eventHandler.Method.GetParameters());
+
+    void SubscribeCore(LcuEventAttribute attribute, Delegate eventHandler, ParameterInfo[] parameterInfos)
     {
-        ArgumentNullException.ThrowIfNull(eventUri);
+        ArgumentNullException.ThrowIfNull(attribute);
         ArgumentNullException.ThrowIfNull(eventHandler);
         ArgumentNullException.ThrowIfNull(parameterInfos);
         DelegateInfo di = new()
         {
             ArgTypes = parameterInfos.Length == 0 ? Array.Empty<ArgType>() : new ArgType[parameterInfos.Length],
             Delegate = eventHandler,
-            //Uri = eventUri
+            //Uri = eventUri,
+            EventType = attribute.EventType,
         };
         for (int i = 0; i < parameterInfos.Length; i++)
         {
@@ -88,7 +97,7 @@ public partial class LolLeagueClientUpdate
                 di.Type = item.ParameterType;
             }
         }
-        var events = _events.GetOrAdd(eventUri, static _ => new());
+        var events = _events.GetOrAdd(attribute.Uri, static _ => new());
         events.Add(di);
     }
 
@@ -111,7 +120,7 @@ public partial class LolLeagueClientUpdate
             var args = methodInfo.GetParameters();
             var delegateType = CreateDelegateType(args, methodInfo.ReturnType);
             var @delegate = methodInfo.CreateDelegate(delegateType, methodInfo.IsStatic ? null : obj ??= Activator.CreateInstance(type));
-            SubscribeCore(attribute.Uri, @delegate, args);
+            SubscribeCore(attribute, @delegate, args);
         }
     }
 

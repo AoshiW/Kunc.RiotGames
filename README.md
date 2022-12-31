@@ -8,6 +8,7 @@ All packages are available through [NuGet](https://www.nuget.org/packages?q=Kunc
 Package                        |NuGet| Description
 -------------------------------|-----|------------
 `Kunc.RiotGames.Core`          | [![Nuget](https://img.shields.io/nuget/v/Kunc.RiotGames.Core?logo=NuGet&logoColor=blue&style=flat-square)](https://www.nuget.org/packages/Kunc.RiotGames.Core) | 
+`Kunc.RiotGames.Lol.LeagueClientUpdate`| [![Nuget](https://img.shields.io/nuget/v/Kunc.RiotGames.Lol.LeagueClientUpdate?logo=NuGet&logoColor=blue&style=flat-square)](https://www.nuget.org/packages/Kunc.RiotGames.Lol.LeagueClientUpdate) |Simple client for interacting with the League of Legends LCU.|
 `Kunc.RiotGames.Lor.DeckCodes` | [![Nuget](https://img.shields.io/nuget/v/Kunc.RiotGames.Lor.DeckCodes?logo=NuGet&logoColor=blue&style=flat-square)](https://www.nuget.org/packages/Kunc.RiotGames.Lor.DeckCodes) | Encode/Decode Legends of Runeterra decks to/from simple strings.
 `Kunc.RiotGames.Lor.GameClient`| [![Nuget](https://img.shields.io/nuget/v/Kunc.RiotGames.Lor.GameClient?logo=NuGet&logoColor=blue&style=flat-square)](https://www.nuget.org/packages/Kunc.RiotGames.Lor.GameClient) |Simple client for [Legends of Runeterra Game Client API](https://developer.riotgames.com/docs/lor#game-client-api)|
 

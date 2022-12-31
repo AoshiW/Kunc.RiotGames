@@ -6,6 +6,6 @@ class DelegateInfo
     public ArgType[] ArgTypes = default!;
     public Type? Type;
 
-    //public string EventType = default!;
+    public string? EventType;
     //public string Uri = default!;
 }

@@ -30,7 +30,7 @@ public class LorDeckEncoder : ILorDeckEncoder
     private const int Format = 1;
     private const int InitialVersion = 1;
     private const int CardCodeLength = 7;
-    private static readonly Dictionary<int, string> IntIdentifierToFactionCode = new();
+    private static readonly Dictionary<int, string> IntIdentifierToFactionCode;
     private static readonly Dictionary<uint, (int Identifier, int LibraryVersion)> FactionCodeInfo = new()
     {
         { ConvertFactionToUint("DE"), (0, 1) },
@@ -48,6 +48,7 @@ public class LorDeckEncoder : ILorDeckEncoder
 
     static LorDeckEncoder()
     {
+        IntIdentifierToFactionCode = new(FactionCodeInfo.Count);
         foreach (var item in FactionCodeInfo)
         {
             IntIdentifierToFactionCode.Add(item.Value.Identifier, string.Create(2, item.Key, (s, arg) =>
@@ -196,7 +197,7 @@ public class LorDeckEncoder : ILorDeckEncoder
         SortGroupOf(groupedOf1s);
 
         //Nofs (since rare) are simply sorted by the card code - there's no optimiziation based upon the card count
-        ofN.Sort(static (x, y) => string.Compare(x.CardCode, y.CardCode, StringComparison.Ordinal));
+        ofN.Sort(static (x, y) => string.Compare(x.CardCode, y.CardCode, StringComparison.OrdinalIgnoreCase));
 
         //Encode
         EncodeGroupOf(groupedOf3s, result);
@@ -230,16 +231,23 @@ public class LorDeckEncoder : ILorDeckEncoder
 
     private static void EncodeNOfs<T>(List<T> nOfs, List<byte> bytes) where T : IReadOnlyDeckItem
     {
+        Span<byte> buffer = stackalloc byte[10];
         foreach (var item in CollectionsMarshal.AsSpan(nOfs))
         {
-            bytes.AddRange(VarintTranslator.GetVarint(item.Count));
+            VarintTranslator.TryGetVarint(item.Count, buffer, out var w);
+            bytes.AddRange(buffer.Slice(0, w));
 
             ParseCardCode(item.CardCode, out int setNumber, out var factionCode, out int cardNumber);
             int factionNumber = FactionCodeInfo[ConvertFactionToUint(factionCode)].Identifier;
 
-            bytes.AddRange(VarintTranslator.GetVarint(setNumber));
-            bytes.AddRange(VarintTranslator.GetVarint(factionNumber));
-            bytes.AddRange(VarintTranslator.GetVarint(cardNumber));
+            VarintTranslator.TryGetVarint(setNumber, buffer, out w);
+            bytes.AddRange(buffer.Slice(0, w));
+
+            VarintTranslator.TryGetVarint(factionNumber, buffer, out w);
+            bytes.AddRange(buffer.Slice(0, w));
+
+            VarintTranslator.TryGetVarint(cardNumber, buffer, out w);
+            bytes.AddRange(buffer.Slice(0, w));
         }
     }
 
@@ -303,25 +311,33 @@ public class LorDeckEncoder : ILorDeckEncoder
 
     private static void EncodeGroupOf<T>(List<List<T>> groupOf, List<byte> bytes) where T : IReadOnlyDeckItem
     {
-        bytes.AddRange(VarintTranslator.GetVarint(groupOf.Count));
+        Span<byte> buffer = stackalloc byte[10];
+        VarintTranslator.TryGetVarint(groupOf.Count, buffer, out var w);
+        bytes.AddRange(buffer.Slice(0, w));
         foreach (var currentList in CollectionsMarshal.AsSpan(groupOf))
         {
             //how many cards in current group?
-            bytes.AddRange(VarintTranslator.GetVarint(currentList.Count));
+            VarintTranslator.TryGetVarint(currentList.Count, buffer, out w);
+            bytes.AddRange(buffer.Slice(0, w));
 
             //what is this group, as identified by a set and faction pair
             string currentCardCode = currentList[0].CardCode;
             ParseCardCode(currentCardCode, out int currentSetNumber, out var currentFactionCode, out var _);
             int currentFactionNumber = FactionCodeInfo[ConvertFactionToUint(currentFactionCode)].Identifier;
-            bytes.AddRange(VarintTranslator.GetVarint(currentSetNumber));
-            bytes.AddRange(VarintTranslator.GetVarint(currentFactionNumber));
+            
+            VarintTranslator.TryGetVarint(currentSetNumber, buffer, out w);
+            bytes.AddRange(buffer.Slice(0, w));
+
+            VarintTranslator.TryGetVarint(currentFactionNumber, buffer, out w);
+            bytes.AddRange(buffer.Slice(0, w));
 
             //what are the cards, as identified by the third section of card code only now, within this group?
             foreach (var item in CollectionsMarshal.AsSpan(currentList))
             {
                 var sequenceNumber = item.CardCode.AsSpan(4, 3);
                 int number = int.Parse(sequenceNumber);
-                bytes.AddRange(VarintTranslator.GetVarint(number));
+                VarintTranslator.TryGetVarint(number, buffer, out w);
+                bytes.AddRange(buffer.Slice(0, w));
             }
         }
     }
@@ -331,10 +347,14 @@ public class LorDeckEncoder : ILorDeckEncoder
         var cardcode = item.CardCode.AsSpan();
         if (cardcode.Length != CardCodeLength || item.Count < 1)
             return false;
-
         var faction = ConvertFactionToUint(cardcode.Slice(2, 2));
         return FactionCodeInfo.ContainsKey(faction)
+#if NET8_0_OR_GREATER
+            && cardcode.Slice(0, 2).IndexOfAnyExceptInRange('0', '9') == -1
+            && cardcode.Slice(4).IndexOfAnyExceptInRange('0', '9') == -1;
+#else
             && int.TryParse(cardcode.Slice(0, 2), out _)
             && int.TryParse(cardcode.Slice(4), out _);
+#endif
     }
 }

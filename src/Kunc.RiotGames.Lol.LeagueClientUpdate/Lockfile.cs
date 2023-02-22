@@ -12,7 +12,7 @@ public sealed class Lockfile : IEquatable<Lockfile?>
 #endif
 {
     public static string DefaulthPath
-        => OperatingSystem.IsWindows() ? Path.Combine("C:", "Riot Games", "League of Legends", "lockfile")
+        => OperatingSystem.IsWindows() ? @"C:\Riot Games\League of Legends\lockfile"
         : throw new PlatformNotSupportedException();
 
     const char Separator = ':';
@@ -27,6 +27,19 @@ public sealed class Lockfile : IEquatable<Lockfile?>
         ArgumentNullException.ThrowIfNull(name);
         ArgumentNullException.ThrowIfNull(password);
         ArgumentNullException.ThrowIfNull(protocol);
+#if NET8_0_OR_GREATER
+        ArgumentOutOfRangeException.ThrowIfNegative(processID);
+        ArgumentOutOfRangeException.ThrowIfNegative(port);
+#else
+        if (processID < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(processID), processID, $"'{nameof(processID)}' must be a non-negative value.");
+        }
+        if (port < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(port), port, $"'{nameof(port)}' must be a non-negative value.");
+        }
+#endif
         Name = name;
         ProcessID = processID;
         Port = port;

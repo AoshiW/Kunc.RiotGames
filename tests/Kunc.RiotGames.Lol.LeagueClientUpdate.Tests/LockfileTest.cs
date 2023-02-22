@@ -25,7 +25,7 @@ public class LockfileTest
     }
 
     [TestMethod]
-    public async Task AuthenticationHeaderValue()
+    public void AuthenticationHeaderValue()
     {
         var lockfile = Lockfile.Parse(TestData, null);
 

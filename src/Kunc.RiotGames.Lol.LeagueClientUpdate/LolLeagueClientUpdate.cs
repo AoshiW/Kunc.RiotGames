@@ -10,6 +10,7 @@ public partial class LolLeagueClientUpdate
         get => _lockfile;
         set
         {
+            ArgumentNullException.ThrowIfNull(value);
             _lockfile = value;
             Client.BaseAddress = new Uri($"https://127.0.0.1:{_lockfile.Port}/");
             Client.DefaultRequestHeaders.Authorization = _lockfile.ToAuthenticationHeaderValue();
@@ -34,6 +35,7 @@ public partial class LolLeagueClientUpdate
 
     public Task<HttpResponseMessage> SendAsync<T>(HttpMethod method, string requestUri, T value, JsonSerializerOptions? options = null, CancellationToken cancellationToken = default)
     {
+        ArgumentNullException.ThrowIfNull(requestUri);
         var request = new HttpRequestMessage(method, requestUri)
         {
             Content = JsonContent.Create(value, typeof(T), null, options),
@@ -42,5 +44,8 @@ public partial class LolLeagueClientUpdate
     }
 
     public Task<T?> GetAsync<T>(string requestUri, JsonSerializerOptions? options = null, CancellationToken cancellationToken = default)
-        => Client.GetFromJsonAsync<T>(requestUri, options, cancellationToken);
+    {
+        ArgumentNullException.ThrowIfNull(requestUri);
+        return Client.GetFromJsonAsync<T>(requestUri, options, cancellationToken);
+    }
 }

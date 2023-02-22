@@ -144,7 +144,7 @@ internal class Base32
                     2 => 4,
                     3 => 5,
                     4 => 7,
-                    _ => throw new Exception(), // 8, this should not happen 
+                    _ => throw new Exception("UnreachableException"), // 8, this should not happen 
                 };
 
                 b1 = (offset < bytes.Length) ? bytes[offset++] : 0U;

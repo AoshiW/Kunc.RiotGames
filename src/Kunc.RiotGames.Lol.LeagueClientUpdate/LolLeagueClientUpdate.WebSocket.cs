@@ -32,10 +32,10 @@ public partial class LolLeagueClientUpdate
         if (data.Length != 3 ||
             data[0].GetInt32() != 8 ||
             !data[1].ValueEquals("OnJsonApiEvent"u8) ||
-            !_events.TryGetValue(data[2].GetProperty("uri"u8).GetString()!, out var ev))
+            !_events.TryGetValue(data[2].GetProperty("uri"u8).GetString()!, out var eventsDelegatesInfo))
             return;
         JsonElement? eventTypeProp = default;
-        foreach (var item in ev)
+        foreach (var item in eventsDelegatesInfo)
         {
             if (item.EventType is not null &&
                 !(eventTypeProp ??= data[2].GetProperty("eventType"u8)).ValueEquals(item.EventType))

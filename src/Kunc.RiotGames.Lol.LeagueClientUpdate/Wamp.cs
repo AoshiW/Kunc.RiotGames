@@ -59,6 +59,7 @@ public sealed class Wamp
 
     public async Task ConnectAsync(Lockfile lockfile, CancellationToken token)
     {
+        ArgumentNullException.ThrowIfNull(lockfile);
         if (_socket is not null)
             throw new InvalidOperationException();
         _socket = new();

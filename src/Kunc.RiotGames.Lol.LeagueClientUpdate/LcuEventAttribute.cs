@@ -10,8 +10,14 @@ public sealed class LcuEventAttribute : Attribute
     /// </remarks>
     public string? EventType { get; set; }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="LcuEventAttribute"/> class
+    /// </summary>
+    /// <param name="uri"></param>
+    /// <exception cref="ArgumentNullException"></exception>
     public LcuEventAttribute(string uri)
     {
+        ArgumentNullException.ThrowIfNull(uri);
         Uri = uri;
     }
 }

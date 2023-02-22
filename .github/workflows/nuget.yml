@@ -21,7 +21,7 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Pack
-      run: dotnet pack -c Release --property:PackageOutputPath=.\..\..\nupkgs
+      run: dotnet pack -c Release --property:PackageOutputPath=./../../nupkgs
     - name: NuGet push
       run: dotnet nuget push --skip-duplicate --api-key ${{ secrets.NUGET_KEY }} -s https://api.nuget.org/v3/index.json ./nupkgs/*.nupkg
       

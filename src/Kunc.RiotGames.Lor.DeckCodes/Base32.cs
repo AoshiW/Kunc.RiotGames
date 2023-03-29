@@ -138,6 +138,7 @@ internal class Base32
 
                 if (wi == str.Length)
                     return str;
+#pragma warning disable CA2201 // Do not raise reserved exception types
                 var numCharsToOutput = (bytes.Length - offset) switch
                 {
                     1 => 2,
@@ -146,6 +147,7 @@ internal class Base32
                     4 => 7,
                     _ => throw new Exception("UnreachableException"), // 8, this should not happen 
                 };
+#pragma warning restore CA2201 // Do not raise reserved exception types
 
                 b1 = (offset < bytes.Length) ? bytes[offset++] : 0U;
                 b2 = (offset < bytes.Length) ? bytes[offset++] : 0U;

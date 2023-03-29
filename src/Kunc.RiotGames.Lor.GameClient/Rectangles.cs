@@ -1,7 +1,13 @@
 ﻿namespace Kunc.RiotGames.Lor.GameClient;
 
+/// <summary>
+/// Card position information.
+/// </summary>
 public class Rectangles : BaseDto
 {
+    /// <summary>
+    /// Card ID.
+    /// </summary>
     public int CardID { get; set; }
 
     /// <summary>

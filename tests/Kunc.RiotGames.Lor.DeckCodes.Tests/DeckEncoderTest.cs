@@ -1,9 +1,11 @@
+using System.Globalization;
+
 namespace Kunc.RiotGames.Lor.DeckCodes.Tests;
 
 [TestClass]
 public class DeckEncoderTest
 {
-    static readonly ILorDeckEncoder DeckEncoder = new LorDeckEncoder(null);
+    static readonly LorDeckEncoder DeckEncoder = new(null);
 
     //Tests the encoding of a set of hard coded decks in DeckCodesTestData.txt
     [TestMethod]
@@ -24,7 +26,7 @@ public class DeckEncoderTest
                 {
                     var inex = line.IndexOf(':');
                     var cardCode = line[(inex + 1)..];
-                    var count = int.Parse(line.AsSpan(0, inex));
+                    var count = int.Parse(line.AsSpan(0, inex), NumberStyles.Integer, NumberFormatInfo.InvariantInfo);
                     var item = new DeckItem(cardCode, count);
                     newDeck.Add(item);
                 }

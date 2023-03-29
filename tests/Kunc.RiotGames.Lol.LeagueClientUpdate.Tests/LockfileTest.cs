@@ -19,7 +19,7 @@ public class LockfileTest
     [TestMethod]
     public async Task FromFileAsync()
     {
-        var lockfile = await Lockfile.FromFileAsync("lockfile");
+        var lockfile = await Lockfile.FromFileAsync("lockfile").ConfigureAwait(false);
 
         Assert.IsNotNull(lockfile);
     }

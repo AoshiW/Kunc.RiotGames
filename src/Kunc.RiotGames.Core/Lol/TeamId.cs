@@ -2,12 +2,17 @@
 
 namespace Kunc.RiotGames.Lol;
 
+/// <summary>
+/// League of Legends TeamId.
+/// </summary>
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum TeamId
 {
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     All = -100,
 
     Unknown = 0,
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
     /// <summary>   
     /// Blue team

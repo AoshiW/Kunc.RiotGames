@@ -3,6 +3,9 @@
 /// <summary>
 /// Encode/Decode decks to/from simple strings.
 /// </summary>
+/// <remarks>
+/// <see href="https://developer.riotgames.com/docs/lor#deck-codes"/>
+/// </remarks>
 public interface ILorDeckEncoder
 {
     /// <summary>

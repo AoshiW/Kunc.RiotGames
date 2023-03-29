@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 
+using System.Globalization;
 using System.Runtime.InteropServices;
 using CommunityToolkit.HighPerformance.Buffers;
 
@@ -33,17 +34,17 @@ public class LorDeckEncoder : ILorDeckEncoder
     private static readonly Dictionary<int, string> IntIdentifierToFactionCode;
     private static readonly Dictionary<uint, (int Identifier, int LibraryVersion)> FactionCodeInfo = new()
     {
-        { ConvertFactionToUint("DE"), (0, 1) },
-        { ConvertFactionToUint("FR"), (1, 1) },
-        { ConvertFactionToUint("IO"), (2, 1) },
-        { ConvertFactionToUint("NX"), (3, 1) },
-        { ConvertFactionToUint("PZ"), (4, 1) },
-        { ConvertFactionToUint("SI"), (5, 1) },
-        { ConvertFactionToUint("BW"), (6, 2) },
-        { ConvertFactionToUint("SH"), (7, 3) },
-        { ConvertFactionToUint("MT"), (9, 2) },
-        { ConvertFactionToUint("BC"), (10, 4) },
-        { ConvertFactionToUint("RU"), (12, 5) },
+        { ConvertFactionToUInt("DE"), (0, 1) },
+        { ConvertFactionToUInt("FR"), (1, 1) },
+        { ConvertFactionToUInt("IO"), (2, 1) },
+        { ConvertFactionToUInt("NX"), (3, 1) },
+        { ConvertFactionToUInt("PZ"), (4, 1) },
+        { ConvertFactionToUInt("SI"), (5, 1) },
+        { ConvertFactionToUInt("BW"), (6, 2) },
+        { ConvertFactionToUInt("SH"), (7, 3) },
+        { ConvertFactionToUInt("MT"), (9, 2) },
+        { ConvertFactionToUInt("BC"), (10, 4) },
+        { ConvertFactionToUInt("RU"), (12, 5) },
     };
 
     static LorDeckEncoder()
@@ -79,13 +80,13 @@ public class LorDeckEncoder : ILorDeckEncoder
     /// <remarks>
     /// Convert Span (2 char) to uint is more efficient than ToString().
     /// </remarks>
-    private static uint ConvertFactionToUint(ReadOnlySpan<char> span) => (uint)span[0] << 16 | span[1];
+    private static uint ConvertFactionToUInt(ReadOnlySpan<char> span) => (uint)span[0] << 16 | span[1];
 
     /// <inheritdoc/>
-    public List<T> GetDeckFromCode<T>(ReadOnlySpan<char> code) where T : IDeckItem, new()
+    public List<T> GetDeckFromCode<T>(ReadOnlySpan<char> deckCode) where T : IDeckItem, new()
     {
-        using var bytesOwner = SpanOwner<byte>.Allocate(Base32.CalculateLength(code));
-        if (!Base32.TryFromBase32(code, bytesOwner.Span, out _))
+        using var bytesOwner = SpanOwner<byte>.Allocate(Base32.CalculateLength(deckCode));
+        if (!Base32.TryFromBase32(deckCode, bytesOwner.Span, out _))
             throw new ArgumentException("Invalid deck code");
         var byteSpan = bytesOwner.Span;
         var result = new List<T>(20);
@@ -146,9 +147,9 @@ public class LorDeckEncoder : ILorDeckEncoder
     private string CreateCardCode(int set, string faction, int number)
     {
         Span<char> span = stackalloc char[CardCodeLength];
-        set.TryFormat(span, out _, "00");
+        set.TryFormat(span, out _, "00", NumberFormatInfo.InvariantInfo);
         faction.CopyTo(span.Slice(2));
-        number.TryFormat(span.Slice(4), out _, "000");
+        number.TryFormat(span.Slice(4), out _, "000", NumberFormatInfo.InvariantInfo);
         return _stringPool?.GetOrAdd(span) ?? span.ToString();
     }
 
@@ -197,7 +198,7 @@ public class LorDeckEncoder : ILorDeckEncoder
         SortGroupOf(groupedOf1s);
 
         //Nofs (since rare) are simply sorted by the card code - there's no optimiziation based upon the card count
-        ofN.Sort(static (x, y) => string.Compare(x.CardCode, y.CardCode, StringComparison.OrdinalIgnoreCase));
+        ofN.Sort(static (x, y) => string.Compare(x.CardCode, y.CardCode, StringComparison.Ordinal));
 
         //Encode
         EncodeGroupOf(groupedOf3s, result);
@@ -216,7 +217,7 @@ public class LorDeckEncoder : ILorDeckEncoder
         foreach (var item in deck)
         {
             var facCode = item.CardCode.AsSpan(2, 2);
-            if (!FactionCodeInfo.TryGetValue(ConvertFactionToUint(facCode), out var valueInfo))
+            if (!FactionCodeInfo.TryGetValue(ConvertFactionToUInt(facCode), out var valueInfo))
                 return MaxVersion;
             var value = valueInfo.LibraryVersion;
             if (value > max)
@@ -238,7 +239,7 @@ public class LorDeckEncoder : ILorDeckEncoder
             bytes.AddRange(buffer.Slice(0, w));
 
             ParseCardCode(item.CardCode, out int setNumber, out var factionCode, out int cardNumber);
-            int factionNumber = FactionCodeInfo[ConvertFactionToUint(factionCode)].Identifier;
+            int factionNumber = FactionCodeInfo[ConvertFactionToUInt(factionCode)].Identifier;
 
             VarintTranslator.TryGetVarint(setNumber, buffer, out w);
             bytes.AddRange(buffer.Slice(0, w));
@@ -270,8 +271,8 @@ public class LorDeckEncoder : ILorDeckEncoder
     private static void ParseCardCode(ReadOnlySpan<char> code, out int set, out ReadOnlySpan<char> faction, out int number)
     {
         faction = code.Slice(2, 2);
-        set = int.Parse(code.Slice(0, 2));
-        number = int.Parse(code.Slice(4));
+        set = int.Parse(code.Slice(0, 2), NumberStyles.Integer, NumberFormatInfo.InvariantInfo);
+        number = int.Parse(code.Slice(4), NumberStyles.Integer, NumberFormatInfo.InvariantInfo);
     }
 
     private static List<List<T>> GetGroupedOfs<T>(List<T> list) where T : IReadOnlyDeckItem
@@ -279,7 +280,7 @@ public class LorDeckEncoder : ILorDeckEncoder
         List<List<T>> result = new();
         while (list.Count > 0)
         {
-            List<T> currentSet = new();
+            List<T> currentSet = new(4);
 
             //get info from last
             var lastIndex = list.Count - 1;
@@ -298,7 +299,7 @@ public class LorDeckEncoder : ILorDeckEncoder
                 var currentSetNumberStr = currentCardCode.Slice(0, 2);
                 var currentFactionCode = currentCardCode.Slice(2, 2);
 
-                if (currentFactionCode.Equals(factionCode, StringComparison.OrdinalIgnoreCase) && int.Parse(currentSetNumberStr) == setNumber)
+                if (currentFactionCode.SequenceEqual(factionCode) && int.Parse(currentSetNumberStr, NumberStyles.Integer, NumberFormatInfo.InvariantInfo) == setNumber)
                 {
                     currentSet.Add(list[i]);
                     list.RemoveAt(i);
@@ -323,8 +324,8 @@ public class LorDeckEncoder : ILorDeckEncoder
             //what is this group, as identified by a set and faction pair
             string currentCardCode = currentList[0].CardCode;
             ParseCardCode(currentCardCode, out int currentSetNumber, out var currentFactionCode, out var _);
-            int currentFactionNumber = FactionCodeInfo[ConvertFactionToUint(currentFactionCode)].Identifier;
-            
+            int currentFactionNumber = FactionCodeInfo[ConvertFactionToUInt(currentFactionCode)].Identifier;
+
             VarintTranslator.TryGetVarint(currentSetNumber, buffer, out w);
             bytes.AddRange(buffer.Slice(0, w));
 
@@ -335,7 +336,7 @@ public class LorDeckEncoder : ILorDeckEncoder
             foreach (var item in CollectionsMarshal.AsSpan(currentList))
             {
                 var sequenceNumber = item.CardCode.AsSpan(4, 3);
-                int number = int.Parse(sequenceNumber);
+                int number = int.Parse(sequenceNumber, NumberStyles.Integer, NumberFormatInfo.InvariantInfo);
                 VarintTranslator.TryGetVarint(number, buffer, out w);
                 bytes.AddRange(buffer.Slice(0, w));
             }
@@ -347,7 +348,7 @@ public class LorDeckEncoder : ILorDeckEncoder
         var cardcode = item.CardCode.AsSpan();
         if (cardcode.Length != CardCodeLength || item.Count < 1)
             return false;
-        var faction = ConvertFactionToUint(cardcode.Slice(2, 2));
+        var faction = ConvertFactionToUInt(cardcode.Slice(2, 2));
         return FactionCodeInfo.ContainsKey(faction)
 #if NET8_0_OR_GREATER
             && cardcode.Slice(0, 2).IndexOfAnyExceptInRange('0', '9') == -1

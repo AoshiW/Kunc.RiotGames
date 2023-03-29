@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿#pragma warning disable CA1707 // Identifiers should not contain underscores
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Kunc.RiotGames.Lor.DeckCodes.Tests;

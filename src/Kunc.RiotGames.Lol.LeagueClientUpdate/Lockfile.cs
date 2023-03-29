@@ -6,22 +6,47 @@ using System.Text;
 
 namespace Kunc.RiotGames.Lol.LeagueClientUpdate;
 
-public sealed class Lockfile : IEquatable<Lockfile?>
+public sealed class Lockfile : IEquatable<Lockfile?>, ISpanFormattable
 #if NET7_0_OR_GREATER
-, ISpanParsable<Lockfile>
+    , ISpanParsable<Lockfile>
 #endif
 {
+    /// <summary>
+    /// The default path where lockfile is located.
+    /// </summary>
     public static string DefaulthPath
         => OperatingSystem.IsWindows() ? @"C:\Riot Games\League of Legends\lockfile"
         : throw new PlatformNotSupportedException();
 
-    const char Separator = ':';
+
+    /// <summary>
+    /// Process name.
+    /// </summary>
     public string Name { get; }
+
+    /// <summary>
+    /// Process id.
+    /// </summary>
     public int ProcessID { get; }
+
+    /// <summary>
+    /// Process port.
+    /// </summary>
     public int Port { get; }
+
     public string Password { get; }
     public string Protocol { get; }
 
+    /// <summary>
+    ///  Initializes a new instance of the <see cref="Lockfile"/> class.
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="processID"></param>
+    /// <param name="port"></param>
+    /// <param name="password"></param>
+    /// <param name="protocol"></param>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
     public Lockfile(string name, int processID, int port, string password, string protocol)
     {
         ArgumentNullException.ThrowIfNull(name);
@@ -47,18 +72,27 @@ public sealed class Lockfile : IEquatable<Lockfile?>
         Protocol = protocol;
     }
 
-    public static async Task<Lockfile> FromFileAsync(string? path = null)
+    /// <summary>
+    /// Get lockfile from specific path.
+    /// </summary>
+    /// <remarks>
+    /// Unfortunately, the <paramref name="cancellationToken"/> parameter is ignored for .NET 6.
+    /// </remarks>
+    /// <param name="path">Path to file. If not set, <see cref="DefaulthPath"/> is used.</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public static async Task<Lockfile> FromFileAsync(string? path = null, CancellationToken cancellationToken = default)
     {
         path ??= DefaulthPath;
         using var stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
         using var reader = new StreamReader(stream);
-        var lockfile = await reader.ReadToEndAsync();
+        var lockfile = await reader.ReadToEndAsync(
+#if NET7_0_OR_GREATER
+            cancellationToken
+#endif
+            ).ConfigureAwait(false);
         return Parse(lockfile, null);
     }
-
-    /// <inheritdoc/>
-    public override string ToString() 
-        => $"{Name}{Separator}{ProcessID}{Separator}{Port}{Separator}{Password}{Separator}{Protocol}";
 
     /// <inheritdoc/>
     public override bool Equals(object? obj) => Equals(obj as Lockfile);
@@ -78,7 +112,7 @@ public sealed class Lockfile : IEquatable<Lockfile?>
     public override int GetHashCode() => HashCode.Combine(Name, ProcessID, Port, Password, Protocol);
 
     /// <inheritdoc/>
-    public static Lockfile Parse(ReadOnlySpan<char> s, IFormatProvider? provider) 
+    public static Lockfile Parse(ReadOnlySpan<char> s, IFormatProvider? provider)
         => TryParse(s, provider, out var lockfile)
         ? lockfile
         : throw new FormatException();
@@ -100,7 +134,7 @@ public sealed class Lockfile : IEquatable<Lockfile?>
 
         static bool TryReadNext(ref ReadOnlySpan<char> span, out ReadOnlySpan<char> output)
         {
-            var index = span.IndexOf(Separator);
+            var index = span.IndexOf(':');
             if (index == -1)
             {
                 output = default;
@@ -123,6 +157,10 @@ public sealed class Lockfile : IEquatable<Lockfile?>
     public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, [MaybeNullWhen(false)] out Lockfile result)
         => TryParse(s.AsSpan(), provider, out result);
 
+    /// <summary>
+    /// Create <see cref="AuthenticationHeaderValue"/> from lockfile.
+    /// </summary>
+    /// <returns></returns>
     public AuthenticationHeaderValue ToAuthenticationHeaderValue()
     {
         ReadOnlySpan<byte> user = "riot:"u8;
@@ -136,5 +174,22 @@ public sealed class Lockfile : IEquatable<Lockfile?>
         return new("Basic", base64);
     }
 
+    /// <summary>
+    /// Create <see cref="NetworkCredential"/> from lockfile.
+    /// </summary>
+    /// <returns></returns>
     public NetworkCredential ToCredential() => new("riot", Password);
+
+
+    /// <inheritdoc/>
+    public override string ToString()
+        => $"{Name}:{ProcessID}:{Port}:{Password}:{Protocol}";
+
+    /// <inheritdoc/>
+    public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider? provider)
+        => destination.TryWrite($"{Name}:{ProcessID}:{Port}:{Password}:{Protocol}", out charsWritten);
+
+    /// <inheritdoc/>
+    public string ToString(string? format, IFormatProvider? formatProvider)
+        => ToString();
 }

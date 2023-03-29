@@ -1,7 +1,13 @@
 ﻿namespace Kunc.RiotGames.Lol;
 
+/// <summary>
+/// League of Lgends (and Teamfight Tactics) maps 
+/// </summary>
 public enum MapId
 {
+    /// <summary>
+    /// Default/None value.
+    /// </summary>
     None,
 
     /// <summary>

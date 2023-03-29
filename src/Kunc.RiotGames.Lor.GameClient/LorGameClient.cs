@@ -3,9 +3,10 @@
 namespace Kunc.RiotGames.Lor.GameClient;
 
 /// <inheritdoc cref="ILorGameClient"/>
-public class LorGameClient : ILorGameClient
+public class LorGameClient : ILorGameClient, IDisposable
 {
     private readonly HttpClient _client = new();
+    private bool _disposed;
 
     /// <inheritdoc/>
     public int Port
@@ -26,21 +27,44 @@ public class LorGameClient : ILorGameClient
     /// <inheritdoc/>
     public async Task<StaticDecklist> GetStaticDecklistAsync(CancellationToken cancellationToken = default)
     {
-        var obj = await _client.GetFromJsonAsync<StaticDecklist>("static-decklist", cancellationToken).ConfigureAwait(false);
-        return obj!;
+        var decklist = await _client.GetFromJsonAsync<StaticDecklist>("static-decklist", cancellationToken).ConfigureAwait(false);
+        return decklist!;
     }
 
     /// <inheritdoc/>
     public async Task<PositionalRectangles> GetPositionalRectanglesAsync(CancellationToken cancellationToken = default)
     {
-        var obj = await _client.GetFromJsonAsync<PositionalRectangles>("positional-rectangles", cancellationToken).ConfigureAwait(false);
-        return obj!;
+        var positionalRectangles = await _client.GetFromJsonAsync<PositionalRectangles>("positional-rectangles", cancellationToken).ConfigureAwait(false);
+        return positionalRectangles!;
     }
 
     /// <inheritdoc/>
     public async Task<GameResult> GetGameResultAsync(CancellationToken cancellationToken = default)
     {
-        var obj = await _client.GetFromJsonAsync<GameResult>("game-result", cancellationToken).ConfigureAwait(false);
-        return obj!;
+        var gameResult = await _client.GetFromJsonAsync<GameResult>("game-result", cancellationToken).ConfigureAwait(false);
+        return gameResult!;
+    }
+
+    /// <summary>
+    /// Releases the unmanaged resources used by the System.Net.Http.HttpClient and optionally disposes of the managed resources.
+    /// </summary>
+    /// <param name="disposing">
+    /// <see langword="true"/> to release both managed and unmanaged resources;
+    /// <see langword="false"/> to releases only unmanaged resources.
+    /// </param>
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!_disposed && disposing)
+        {
+            _client.Dispose();
+            _disposed = true;
+        }
+    }
+
+    /// <inheritdoc/>
+    public void Dispose()
+    {
+        Dispose(disposing: true);
+        GC.SuppressFinalize(this);
     }
 }

@@ -2,6 +2,9 @@
 
 namespace Kunc.RiotGames.Lor.GameClient;
 
+/// <summary>
+/// The game state.
+/// </summary>
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum GameState
 {

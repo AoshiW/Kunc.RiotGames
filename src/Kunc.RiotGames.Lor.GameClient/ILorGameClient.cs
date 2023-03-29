@@ -3,6 +3,9 @@
 /// <summary>
 /// Simple client for game client API.
 /// </summary>
+/// <remarks>
+/// <see href="https://developer.riotgames.com/docs/lor#game-client-api" />
+/// </remarks>
 public interface ILorGameClient
 {
     /// <summary>

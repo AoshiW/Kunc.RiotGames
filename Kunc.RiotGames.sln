@@ -40,6 +40,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kunc.RiotGames.Lol.LeagueCl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotSample", "samples\NotSample\NotSample.csproj", "{29894BE4-A419-4538-BE1C-092C55A4B038}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kunc.RiotGames.Core.Tests", "tests\Kunc.RiotGames.Core.Tests\Kunc.RiotGames.Core.Tests.csproj", "{5409CD25-A56B-4E6D-A34C-6588B0BE9A3F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,6 +80,10 @@ Global
 		{29894BE4-A419-4538-BE1C-092C55A4B038}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29894BE4-A419-4538-BE1C-092C55A4B038}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29894BE4-A419-4538-BE1C-092C55A4B038}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5409CD25-A56B-4E6D-A34C-6588B0BE9A3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5409CD25-A56B-4E6D-A34C-6588B0BE9A3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5409CD25-A56B-4E6D-A34C-6588B0BE9A3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5409CD25-A56B-4E6D-A34C-6588B0BE9A3F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -91,6 +97,7 @@ Global
 		{280A626E-46F5-436B-8AF2-2F61413A23FE} = {6D2DC7AC-A8C5-460E-814A-BC50B3332517}
 		{F4489346-EF73-4DAE-8411-D40A02C8B114} = {C8D52066-9A04-43FD-8FBB-AB3C03DE97EC}
 		{29894BE4-A419-4538-BE1C-092C55A4B038} = {B399A5B5-C6B1-4A09-B259-168258ED9C54}
+		{5409CD25-A56B-4E6D-A34C-6588B0BE9A3F} = {C8D52066-9A04-43FD-8FBB-AB3C03DE97EC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D8E42019-F5E1-4BEF-90EB-4728F0021911}

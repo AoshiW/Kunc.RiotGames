@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+using System.Collections.Concurrent;
 using System.Net.WebSockets;
 using System.Reflection;
 using System.Text.Json;
@@ -7,27 +8,60 @@ namespace Kunc.RiotGames.Lol.LeagueClientUpdate;
 
 public partial class LolLeagueClientUpdate
 {
-    public Wamp Wamp { get; } = new();
-    
-    private readonly ConcurrentDictionary<string, ConcurrentBag<DelegateInfo>> _events = new();
-    CancellationTokenSource? _cancellationTokenSource;
-
-    public async Task ConnectAsync(CancellationToken token = default)
+    private readonly Wamp _wamp;
+    public event EventHandler<JsonElement[]>? OnWampMessage
     {
-        _cancellationTokenSource = new();
-        await Wamp.ConnectAsync(Lockfile, token).ConfigureAwait(false);
-        await Wamp.SendAsync(SubscribeOnJsonApiEvent, WebSocketMessageType.Text, token).ConfigureAwait(false);
+        add => _wamp.OnMessage += value;
+        remove => _wamp.OnMessage -= value;
     }
 
-    public Task CloseAsync(CancellationToken token = default)
+    public event EventHandler? OnWampDisconnect
+    {
+        add => _wamp.OnDisconnect += value;
+        remove => _wamp.OnDisconnect -= value;
+    }
+
+    public event EventHandler? OnWampConnect
+    {
+        add => _wamp.OnConnect += value; 
+        remove => _wamp.OnConnect -= value;
+    }
+
+    public event EventHandler<Exception>? OnWampMessageError
+    {
+        add => _wamp.OnMessageError += value; 
+        remove => _wamp.OnMessageError -= value;
+    }
+
+    private readonly ConcurrentDictionary<string, List<DelegateInfo>> _events = new();
+    CancellationTokenSource? _cancellationTokenSource;
+
+    /// <summary>
+    /// Connest to LCU WebSocket.
+    /// </summary>
+    /// <param name="token"></param>
+    /// <returns></returns>
+    public async Task ConnectWampAsync(CancellationToken token = default)
+    {
+        _cancellationTokenSource = new();
+        await _wamp.ConnectAsync(Lockfile, token).ConfigureAwait(false);
+        await _wamp.SendAsync(SubscribeOnJsonApiEvent, WebSocketMessageType.Text, token).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Close LCU WebSocket.
+    /// </summary>
+    /// <param name="token"></param>
+    /// <returns></returns>
+    public Task CloseWampAsync(CancellationToken token = default)
     {
         _cancellationTokenSource?.Cancel();
-        return Wamp.CloseAsync(token);
+        return _wamp.CloseAsync(token);
     }
 
     static readonly ReadOnlyMemory<byte> SubscribeOnJsonApiEvent = "[5, \"OnJsonApiEvent\"]"u8.ToArray();
 
-    private void OnMessage(JsonElement[] data)
+    private void OnMessage(object? sender, JsonElement[] data)
     {
         if (data.Length != 3 ||
             data[0].GetInt32() != 8 ||
@@ -40,13 +74,13 @@ public partial class LolLeagueClientUpdate
             if (item.EventType is not null &&
                 !(eventTypeProp ??= data[2].GetProperty("eventType"u8)).ValueEquals(item.EventType))
                 continue;
-            var args = item.ArgTypes.Length == 0 ? Array.Empty<object>() : new object[item.ArgTypes.Length];
+            var args = item.ArgTypes.Length == 0 ? null : new object[item.ArgTypes.Length];
             for (int i = 0; i < item.ArgTypes.Length; i++)
             {
-                args[i] = item.ArgTypes[i] switch
+                args![i] = item.ArgTypes[i] switch
                 {
                     ArgType.Sender => this,
-                    ArgType.Argument => data[2].Deserialize(item.Type!)!,
+                    ArgType.Argument => item.Type == typeof(JsonElement) ? data[2] : data[2].Deserialize(item.Type!)!,
                     ArgType.CancelationToken => _cancellationTokenSource!.Token,
                     _ => throw new ArgumentOutOfRangeException(null, item.ArgTypes[i], "Unknow enum value.")
                 };
@@ -59,20 +93,22 @@ public partial class LolLeagueClientUpdate
         }
     }
 
-    public void Subscribe<T>(string eventUri, EventHandler<T> eventHandler) 
-        => SubscribeCore(new(eventUri), eventHandler, eventHandler.Method.GetParameters());
+    public void Subscribe<T>(string eventUri, EventHandler<T> eventHandler)
+    {
+        ArgumentNullException.ThrowIfNull(eventUri);
+        ArgumentNullException.ThrowIfNull(eventHandler);
+        SubscribeCore(new(eventUri), eventHandler, eventHandler.Method.GetParameters());
+    }
 
-    public void Subscribe<T>(string eventUri, Func<object, T, CancellationToken, Task> eventHandler)
-        => SubscribeCore(new(eventUri), eventHandler, eventHandler.Method.GetParameters());
-
-    public void Subscribe(string eventUri, Delegate eventHandler) 
-        => SubscribeCore(new(eventUri), eventHandler, eventHandler.Method.GetParameters());
+    public void Subscribe(string eventUri, Delegate eventHandler)
+    {
+        ArgumentNullException.ThrowIfNull(eventUri);
+        ArgumentNullException.ThrowIfNull(eventHandler);
+        SubscribeCore(new(eventUri), eventHandler, eventHandler.Method.GetParameters());
+    }
 
     void SubscribeCore(LcuEventAttribute attribute, Delegate eventHandler, ParameterInfo[] parameterInfos)
     {
-        ArgumentNullException.ThrowIfNull(attribute);
-        ArgumentNullException.ThrowIfNull(eventHandler);
-        ArgumentNullException.ThrowIfNull(parameterInfos);
         DelegateInfo di = new()
         {
             ArgTypes = parameterInfos.Length == 0 ? Array.Empty<ArgType>() : new ArgType[parameterInfos.Length],
@@ -135,17 +171,20 @@ public partial class LolLeagueClientUpdate
             if (parameters.Length == 0)
                 return typeof(Action);
             methodArgs = new Type[parameters.Length];
+#pragma warning disable CS8509 // The switch expression does not handle all possible values of its input type (it is not exhaustive).
             delegateType = parameters.Length switch
             {
                 1 => typeof(Action<>),
                 2 => typeof(Action<,>),
                 3 => typeof(Action<,,>),
             };
+#pragma warning restore CS8509 // The switch expression does not handle all possible values of its input type (it is not exhaustive).
         }
         else
         {
             methodArgs = new Type[parameters.Length + 1];
             methodArgs[^1] = returnType;
+#pragma warning disable CS8509 // The switch expression does not handle all possible values of its input type (it is not exhaustive).
             delegateType = parameters.Length switch
             {
                 0 => typeof(Func<>),
@@ -153,6 +192,7 @@ public partial class LolLeagueClientUpdate
                 2 => typeof(Func<,,>),
                 3 => typeof(Func<,,,>),
             };
+#pragma warning restore CS8509 // The switch expression does not handle all possible values of its input type (it is not exhaustive).
         }
         for (int i = 0; i < parameters.Length; i++)
         {

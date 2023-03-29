@@ -11,10 +11,10 @@ public class LcuEventArgs<T> : EventArgs
     public T Data { get; set; } = default!;
 
     /// <summary>
-    /// Type of event.
+    /// Gets or sets the type of the event.
     /// </summary>
     /// <remarks>
-    /// Values: Create, Update, Delete
+    /// The possible values are: Create, Update, and Delete.
     /// </remarks>
     [JsonPropertyName("eventType")]
     public string EventType { get; set; } = default!;

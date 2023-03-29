@@ -3,21 +3,28 @@ using System.Text.Json;
 
 namespace Kunc.RiotGames.Lol.LeagueClientUpdate;
 
-public sealed class Wamp
+sealed class Wamp : IDisposable
 {
-    public event Action<JsonElement[]>? OnMessage;
-    public event Action? OnDisconnect;
-    public event Action<Exception>? OnMessageError;
-    
+    public event EventHandler<JsonElement[]>? OnMessage;
+    public event EventHandler? OnDisconnect;
+    public event EventHandler? OnConnect;
+    public event EventHandler<Exception>? OnMessageError;
+
     private ClientWebSocket? _socket;
     private Task _eventLoopTask = Task.CompletedTask;
     private CancellationTokenSource? _cancellationTokenSource;
-    
+    private readonly LolLeagueClientUpdate _lolLeagueClientUpdate;
+
+    public Wamp(LolLeagueClientUpdate lolLeagueClientUpdate)
+    {
+        _lolLeagueClientUpdate = lolLeagueClientUpdate;
+    }
+
     private async Task EventLoop()
     {
         _cancellationTokenSource = new();
         var cancellationToken = _cancellationTokenSource.Token;
-        var buffer = new byte[2048];
+        var buffer = new byte[4 * 1024];
         var memorBuffer = new Memory<byte>(buffer);
         var memoryStream = new MemoryStream();
         while (!cancellationToken.IsCancellationRequested)
@@ -27,24 +34,18 @@ public sealed class Wamp
                 switch (_socket!.State)
                 {
                     case WebSocketState.Open:
-                        var received = await _socket!.ReceiveAsync(memorBuffer, cancellationToken);
+                        var received = await _socket!.ReceiveAsync(memorBuffer, cancellationToken).ConfigureAwait(false);
                         memoryStream.Write(buffer, 0, received.Count);
                         if (received.EndOfMessage)
                         {
                             memoryStream.Position = 0;
                             var data = JsonSerializer.Deserialize<JsonElement[]>(memoryStream)!;
-                            OnMessage?.Invoke(data);
+                            OnMessage?.Invoke(_lolLeagueClientUpdate, data);
                             memoryStream.SetLength(0);
                         }
                         break;
                     case WebSocketState.Closed or WebSocketState.Aborted:
-                        try
-                        {
-                            _cancellationTokenSource.Cancel();
-                            _socket = null;
-                            OnDisconnect?.Invoke();
-                        }
-                        catch { }
+                        _cancellationTokenSource.Cancel();
                         break;
                     default:
                         break;
@@ -52,29 +53,28 @@ public sealed class Wamp
             }
             catch (Exception e)
             {
-                OnMessageError?.Invoke(e);
+                OnMessageError?.Invoke(_lolLeagueClientUpdate, e);
             }
         }
+        OnDisconnect?.Invoke(this, EventArgs.Empty);
     }
 
     public async Task ConnectAsync(Lockfile lockfile, CancellationToken token)
     {
-        ArgumentNullException.ThrowIfNull(lockfile);
-        if (_socket is not null)
-            throw new InvalidOperationException();
         _socket = new();
         _socket.Options.AddSubProtocol("wamp");
-        _socket.Options.RemoteCertificateValidationCallback = (_, _, _, _) => true;
+#pragma warning disable CA5359 // Do Not Disable Certificate Validation
+        _socket.Options.RemoteCertificateValidationCallback = static (_, _, _, _) => true;
+#pragma warning restore CA5359 // Do Not Disable Certificate Validation
         _socket.Options.Credentials = lockfile.ToCredential();
-        await _socket.ConnectAsync(new($"wss://127.0.0.1:{lockfile.Port}"), token);
+        await _socket.ConnectAsync(new Uri($"wss://127.0.0.1:{lockfile.Port}"), token).ConfigureAwait(false);
+        OnConnect?.Invoke(_lolLeagueClientUpdate, EventArgs.Empty);
         _eventLoopTask = EventLoop();
     }
 
     public ValueTask SendAsync(ReadOnlyMemory<byte> buffer, WebSocketMessageType msgType, CancellationToken token)
     {
-        return _socket is not null
-            ? _socket.SendAsync(buffer, msgType, true, token)
-            : throw new InvalidOperationException();
+        return _socket!.SendAsync(buffer, msgType, true, token);
     }
 
     public async Task CloseAsync(CancellationToken token)
@@ -84,12 +84,18 @@ public sealed class Wamp
         {
             if (_socket is not null)
             {
-                await _eventLoopTask;
-                await _socket!.CloseAsync(WebSocketCloseStatus.NormalClosure, null, token);
+                await _eventLoopTask.ConfigureAwait(false);
+                await _socket!.CloseAsync(WebSocketCloseStatus.NormalClosure, null, token).ConfigureAwait(false);
             }
-            _socket = null;
         }
         catch (OperationCanceledException)
         { }
+    }
+
+    public void Dispose()
+    {
+        _cancellationTokenSource?.Cancel();
+        _cancellationTokenSource?.Dispose();
+        _socket?.Dispose();
     }
 }

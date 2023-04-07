@@ -85,7 +85,7 @@ public partial class LolLeagueClientUpdate : IDisposable
     }
 
     /// <summary>
-    /// Releases the unmanaged resources used by the System.Net.Http.HttpClient and optionally disposes of the managed resources.
+    /// Releases the unmanaged resources used by the <see cref="LolLeagueClientUpdate"/> and optionally disposes of the managed resources.
     /// </summary>
     /// <param name="disposing">
     /// <see langword="true"/> to release both managed and unmanaged resources;

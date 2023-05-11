@@ -19,7 +19,7 @@ public enum QueueType
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 }
 
-internal static partial class ThrowExtensions
+internal static partial class QueueTypeExtensions
 {
     public static void ThrowIfNotLolQueue(this QueueType queue, [CallerArgumentExpression(nameof(queue))] string? paramName = null)
     {
@@ -35,5 +35,19 @@ internal static partial class ThrowExtensions
         {
             throw new ArgumentException($"Value '{queue}' is not valid TFT Queue", paramName);
         }
+    }
+
+    public static string ToApiString(this QueueType queue)
+    {
+        return queue switch
+        {
+            QueueType.RANKED_SOLO_5x5 => "RANKED_SOLO_5x5",
+            QueueType.RANKED_FLEX_SR => "RANKED_FLEX_SR",
+
+            QueueType.RANKED_TFT_DOUBLE_UP => "RANKED_TFT_DOUBLE_UP",
+            QueueType.RANKED_TFT_TURBO => "RANKED_TFT_TURBO",
+            QueueType.RANKED_TFT => "RANKED_TFT",
+            _ => throw new InvalidOperationException()
+        };
     }
 }

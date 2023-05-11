@@ -35,14 +35,12 @@ public ref struct QueryStringBuilder
         _handler.AppendLiteral("=");
     }
 
-    /// <inheritdoc cref="DefaultInterpolatedStringHandler.ToStringAndClear"/>
     public string ToStringAndClear()
     {
         _hasAny = false;
         return _handler.ToStringAndClear();
     }
 
-    /// <inheritdoc cref="DefaultInterpolatedStringHandler.ToString"/>
     public override string ToString()
     {
         return _handler.ToString();

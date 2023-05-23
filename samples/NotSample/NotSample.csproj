@@ -9,12 +9,20 @@
 
     <ItemGroup>
         <PackageReference Include="BenchmarkDotNet" Version="0.13.5" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0" />
     </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\..\src\Kunc.RiotGames.Lol.LeagueClientUpdate\Kunc.RiotGames.Lol.LeagueClientUpdate.csproj" />
         <ProjectReference Include="..\..\src\Kunc.RiotGames.Lor.DeckCodes\Kunc.RiotGames.Lor.DeckCodes.csproj" />
         <ProjectReference Include="..\..\src\Kunc.RiotGames.Lor.GameClient\Kunc.RiotGames.Lor.GameClient.csproj" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <None Update="appsettings.json">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

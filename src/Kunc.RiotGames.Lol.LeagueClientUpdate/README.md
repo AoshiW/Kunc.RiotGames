@@ -1,16 +1,18 @@
 # Kunc.RiotGames.Lol.LeagueClientUpdate
-
+Simple client for interacting with the League of Legends LCU.
 
 ## How to use
 ```cs
+using Kunc.RiotGames.Lol.LeagueClientUpdate;
+
 Lockfile lockfile = await Lockfile.FromFileAsync();
 LolLeagueClientUpdate lcu = new LolLeagueClientUpdate(lockfile);
 ```
 
-### API
+### API requests
 To send an API request, you have 2 options:
 1. Use the predefined methods (`GetAsync/SendAsync`) that are a wrapper around `HttpClinet`.
-2. Use `HttpClient` directly (property `Client`), so you can use many existing methods. 
+1. Use `HttpClient` directly (property `Client`), so you can use many existing methods. 
 
 ```cs
 var obj = new { challengeIds = new long[] { -1, -1, -1 } };
@@ -24,48 +26,50 @@ class RootObject { /* Properties */ }
 ```
 
 ### WebSocket
-To subscribe a lcu event, you have 2 options:
-1. Call `Subscribe` with event uri and pass event delegate.
-2. Create a `class` with **public** (static) methods and place `LcuEventAttribute` on it, than call `SubscribeAll<T>()`, if the `class` has any dependencies in the constructor, you can call `SubscribeAll<T>(T obj)` and pass the created class.
- 
-When you create a class or use `Subscibe` with a `System.Delegate`, you can create any method that has any return type and has 0-3 parameters, the parameters can be 
-1. `object`/`LolLeagueClientUpdate` for "sender"
-2. `CancelationToken`
-3. and anything else will be a lcu event argument
+TODO
 
-Don't forget to call `ConnectAsync` to start WebSocket.
+#### Event delegate
+As a delegate you can use __any__ method that has 0-3 parameters, the order of the parameters does not matter.
+
+The parameters must be:
+- type sender: `object`, `LolLeagueClientUpdate` ,`ILolLeagueClientUpdate`
+- type eventArgs: here you can use __any__ type that represents an object that was sent through wamp
+- `CancellationToken`, token will by canceled when you call `CloseWampAsync`
+
+__Don't forget to call `ConnectWampAsync` to start WebSocket!__
+
 ```cs
-lcu.Subscribe<LcuEventArgs<string>>("/lol-gameflow/v1/gameflow-phase", (sender, arg) => Console.WriteLine(arg.Data));
+Lcu.Subscribe("/lol-gameflow/v1/gameflow-phase", () => { });
+Lcu.Subscribe([LcuEvent("/lol-gameflow/v1/gameflow-phase")] () => { });
+Lcu.Subscribe(new LcuEventAttribute("/lol-gameflow/v1/gameflow-phase"), () => { });
 
-lcu.SubscribeAll<SomeClass>();
-var obj = new SomeClassWithDependencies(DateTime.Now);
-lcu.SubscribeAll(obj);
+Lcu.SubscribeAll<SomeClass>();
 
-await lcu.ConnectAsync();
+await Lcu.ConnectWampAsync();
 
 class SomeClass
 {
     [LcuEvent("/lol-gameflow/v1/gameflow-phase")]
-    public void MyMethod1(object? sender, LcuEventArgs<string> data) 
-        => Console.WriteLine(data.Data);
-        
-    [LcuEvent("/lol-gameflow/v1/gameflow-phase")]
-    public void MyMethod2() => Console.WriteLine("without params");
+    public void Method1()
+    { }
 
     [LcuEvent("/lol-gameflow/v1/gameflow-phase")]
-    public int MyMethod3() 
-    {
-        Console.WriteLine("Return int, without params");
-        return 6;
+    public void Method2(LcuEventArgs<string> e)
+    { 
+        Console.WriteLine(e.Data);
     }
-}
-class SomeClassWithDependencies
-{
-    public SomeClassWithDependencies(DateTime dt) { }
 
     [LcuEvent("/lol-gameflow/v1/gameflow-phase")]
-    public void MyMethod1(object? sender, LcuEventArgs<string> data) 
-        => Console.WriteLine(data.Data);
+    public void Method3(object sender, LcuEventArgs<string> e)
+    { }
+
+    [LcuEvent("/lol-gameflow/v1/gameflow-phase")]
+    public void Method4(LolLeagueClientUpdate sender, LcuEventArgs<string> e, CancellationToken token)
+    { }
+
+    [LcuEvent("/lol-gameflow/v1/gameflow-phase")]
+    public async Task Method5(ILolLeagueClientUpdate sender)
+    { }
 }
 ```
 

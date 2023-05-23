@@ -1,203 +1,208 @@
-﻿#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-using System.Collections.Concurrent;
-using System.Net.WebSockets;
+﻿using System.Net.WebSockets;
 using System.Reflection;
 using System.Text.Json;
 
 namespace Kunc.RiotGames.Lol.LeagueClientUpdate;
 
-public partial class LolLeagueClientUpdate
+public partial class LolLeagueClientUpdate : ILolLeagueClientUpdate
 {
-    private readonly Wamp _wamp;
-    public event EventHandler<JsonElement[]>? OnWampMessage
-    {
-        add => _wamp.OnMessage += value;
-        remove => _wamp.OnMessage -= value;
-    }
-
-    public event EventHandler? OnWampDisconnect
-    {
-        add => _wamp.OnDisconnect += value;
-        remove => _wamp.OnDisconnect -= value;
-    }
-
-    public event EventHandler? OnWampConnect
-    {
-        add => _wamp.OnConnect += value; 
-        remove => _wamp.OnConnect -= value;
-    }
-
-    public event EventHandler<Exception>? OnWampMessageError
-    {
-        add => _wamp.OnMessageError += value; 
-        remove => _wamp.OnMessageError -= value;
-    }
-
-    private readonly ConcurrentDictionary<string, List<DelegateInfo>> _events = new();
+    readonly object _lock = new();
+    private readonly List<EventInfo> _events = new();
+    EventInfo[] _readOnlyEvents = Array.Empty<EventInfo>();
+    bool _isEdited = true;
     CancellationTokenSource? _cancellationTokenSource;
 
-    /// <summary>
-    /// Connest to LCU WebSocket.
-    /// </summary>
-    /// <param name="token"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
+    public IWamp Wamp { get; }
+
+    /// <inheritdoc/>
+    public event EventHandler<LcuEventArgs<JsonElement>>? OnLcuEvent;
+
+    /// <inheritdoc/>
     public async Task ConnectWampAsync(CancellationToken token = default)
     {
         _cancellationTokenSource = new();
-        await _wamp.ConnectAsync(Lockfile, token).ConfigureAwait(false);
-        await _wamp.SendAsync(SubscribeOnJsonApiEvent, WebSocketMessageType.Text, token).ConfigureAwait(false);
+        await Wamp.ConnectAsync(Lockfile, token).ConfigureAwait(false);
+        await Wamp.SendAsync(SubscribeOnJsonApiEvent, WebSocketMessageType.Text, token).ConfigureAwait(false);
     }
 
-    /// <summary>
-    /// Close LCU WebSocket.
-    /// </summary>
-    /// <param name="token"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public Task CloseWampAsync(CancellationToken token = default)
     {
         _cancellationTokenSource?.Cancel();
-        return _wamp.CloseAsync(token);
+        return Wamp.CloseAsync(token);
     }
 
     static readonly ReadOnlyMemory<byte> SubscribeOnJsonApiEvent = "[5, \"OnJsonApiEvent\"]"u8.ToArray();
 
-    private void OnMessage(object? sender, JsonElement[] data)
+    private void OnMessage(object? sender, JsonElement[] e)
     {
-        if (data.Length != 3 ||
-            data[0].GetInt32() != 8 ||
-            !data[1].ValueEquals("OnJsonApiEvent"u8) ||
-            !_events.TryGetValue(data[2].GetProperty("uri"u8).GetString()!, out var eventsDelegatesInfo))
+        if (e.Length != 3 || e[0].GetInt32() != 8)
             return;
-        JsonElement? eventTypeProp = default;
-        foreach (var item in eventsDelegatesInfo)
+        var data = e[2];
+        OnLcuEvent?.Invoke(this, data.Deserialize<LcuEventArgs<JsonElement>>()!);
+        if (!e[1].ValueEquals("OnJsonApiEvent"u8) )
+            return;
+
+        object? boxedCancellationToken = null;
+        CacheArray cacheArray = default;
+        JsonElement eventTypeProp = data.GetProperty("eventType"u8);
+        JsonElement uriProp = data.GetProperty("uri"u8);
+        EventInfo[] eventLocalCopy;
+        lock (_lock)
         {
-            if (item.EventType is not null &&
-                !(eventTypeProp ??= data[2].GetProperty("eventType"u8)).ValueEquals(item.EventType))
+            if (_isEdited)
+            {
+                _readOnlyEvents = _events.ToArray();
+                _isEdited = false;
+            }
+            eventLocalCopy = _readOnlyEvents;
+        }
+
+        foreach (var item in eventLocalCopy)
+        {
+            if (!uriProp.ValueEquals(item.EventAttribute.Uri) || 
+                (item.EventAttribute.EventType is not null && !eventTypeProp.ValueEquals(item.EventAttribute.EventType)))
                 continue;
-            var args = item.ArgTypes.Length == 0 ? null : new object[item.ArgTypes.Length];
+            var args = cacheArray.Get(item.ArgTypes.Length);
             for (int i = 0; i < item.ArgTypes.Length; i++)
             {
                 args![i] = item.ArgTypes[i] switch
                 {
                     ArgType.Sender => this,
-                    ArgType.Argument => item.Type == typeof(JsonElement) ? data[2] : data[2].Deserialize(item.Type!)!,
-                    ArgType.CancelationToken => _cancellationTokenSource!.Token,
+                    ArgType.EventArgs => item.EventArgsType == typeof(JsonElement) ? data : data.Deserialize(item.EventArgsType!)!,
+                    ArgType.CancelationToken => boxedCancellationToken ??= _cancellationTokenSource!.Token,
                     _ => throw new ArgumentOutOfRangeException(null, item.ArgTypes[i], "Unknow enum value.")
                 };
             }
             try
             {
-                item.Delegate.DynamicInvoke(args);
+                item.Invoke(args);
+                LogInvokeMethod(item.MethodInfo);
             }
-            catch { }
+            catch (Exception ex)
+            {
+                LogExceptionWhenInvokeWampDelegate(item.MethodInfo, ex);
+            }
         }
     }
 
-    public void Subscribe<T>(string eventUri, EventHandler<T> eventHandler)
+    /// <inheritdoc/>
+    public void Subscribe(LcuEventAttribute attribute, Delegate eventHandler)
     {
-        ArgumentNullException.ThrowIfNull(eventUri);
+        ArgumentNullException.ThrowIfNull(attribute);
         ArgumentNullException.ThrowIfNull(eventHandler);
-        SubscribeCore(new(eventUri), eventHandler, eventHandler.Method.GetParameters());
+        SubscribeCore(attribute, eventHandler.Method, eventHandler.Target);
     }
 
-    public void Subscribe(string eventUri, Delegate eventHandler)
+    /// <inheritdoc/>
+    public void Subscribe(string uri, Delegate eventHandler)
     {
-        ArgumentNullException.ThrowIfNull(eventUri);
+        ArgumentNullException.ThrowIfNull(uri);
         ArgumentNullException.ThrowIfNull(eventHandler);
-        SubscribeCore(new(eventUri), eventHandler, eventHandler.Method.GetParameters());
+        var attribute = new LcuEventAttribute(uri);
+        SubscribeCore(attribute, eventHandler.Method, eventHandler.Target);
     }
 
-    void SubscribeCore(LcuEventAttribute attribute, Delegate eventHandler, ParameterInfo[] parameterInfos)
+    /// <inheritdoc/>
+    public void Subscribe(Delegate eventHandler)
     {
-        DelegateInfo di = new()
+        ArgumentNullException.ThrowIfNull(eventHandler);
+        var attribute = ThrowIfMissingLcuEventAttribute(eventHandler.Method);
+        SubscribeCore(attribute, eventHandler.Method, eventHandler.Target);
+    }
+
+    void SubscribeCore(LcuEventAttribute attribute, MethodInfo methodInfo, object? target)
+    {
+        var di = new EventInfo(attribute, methodInfo, target);
+        LogRegisterDelegate(methodInfo);
+        lock (_lock)
         {
-            ArgTypes = parameterInfos.Length == 0 ? Array.Empty<ArgType>() : new ArgType[parameterInfos.Length],
-            Delegate = eventHandler,
-            //Uri = eventUri,
-            EventType = attribute.EventType,
-        };
-        for (int i = 0; i < parameterInfos.Length; i++)
-        {
-            var item = parameterInfos[i];
-            if (item.ParameterType == typeof(object) || item.ParameterType == typeof(LolLeagueClientUpdate))
-            {
-                di.ArgTypes[i] = ArgType.Sender;
-            }
-            else if (item.ParameterType == typeof(CancellationToken))
-            {
-                di.ArgTypes[i] = ArgType.CancelationToken;
-            }
-            else
-            {
-                di.ArgTypes[i] = ArgType.Argument;
-                di.Type = item.ParameterType;
-            }
+            _isEdited = true;
+            _events.Add(di);
         }
-        var events = _events.GetOrAdd(attribute.Uri, static _ => new());
-        events.Add(di);
     }
 
-    public void SubscribeAll<T>() => SubscribeAllCore(typeof(T), null);
-
-    public void SubscribeAll<T>(T obj)
+    /// <inheritdoc/>
+    public bool Unsubscribe(LcuEventAttribute attribute, Delegate eventHandler)
     {
-        ArgumentNullException.ThrowIfNull(obj);
-        SubscribeAllCore(typeof(T), obj);
+        ArgumentNullException.ThrowIfNull(attribute);
+        ArgumentNullException.ThrowIfNull(eventHandler);
+        lock (_lock)
+        {
+            var index = _events.FindIndex(x => x.Equals(attribute, eventHandler.Method, eventHandler.Target));
+            if (index is -1)
+                return false;
+            _events.RemoveAt(index);
+            _isEdited = true;
+            return true;
+        }
     }
 
-    void SubscribeAllCore(Type type, object? obj)
+    /// <inheritdoc/>
+    public bool Unsubscribe(string uri, Delegate eventHandler)
     {
-        var methods = type.GetMethods();
+        ArgumentNullException.ThrowIfNull(uri);
+        ArgumentNullException.ThrowIfNull(eventHandler);
+        var attribute = new LcuEventAttribute(uri);
+        return Unsubscribe(attribute, eventHandler);
+    }
+
+    /// <inheritdoc/>
+    public bool Unsubscribe(Delegate eventHandler)
+    {
+        ArgumentNullException.ThrowIfNull(eventHandler);
+        var attribute = ThrowIfMissingLcuEventAttribute(eventHandler.Method);
+        return Unsubscribe(attribute, eventHandler);
+    }
+
+    /// <inheritdoc/>
+    public int SubscribeAll<T>(T? target, MethodOptions options = MethodOptions.Public | MethodOptions.Instance) where T : class
+    {
+        return SubscribeAllCore(typeof(T), target, options);
+    }
+
+    int SubscribeAllCore(Type type, object? target, MethodOptions options)
+    {
+        var count = 0;
+        var methods = type.GetMethods((BindingFlags)options);
         foreach (var methodInfo in methods)
         {
             var attribute = methodInfo.GetCustomAttribute<LcuEventAttribute>();
             if (attribute is null)
                 continue;
-            var args = methodInfo.GetParameters();
-            var delegateType = CreateDelegateType(args, methodInfo.ReturnType);
-            var @delegate = methodInfo.CreateDelegate(delegateType, methodInfo.IsStatic ? null : obj ??= Activator.CreateInstance(type));
-            SubscribeCore(attribute, @delegate, args);
+            var currentMethodTarget = methodInfo.IsStatic
+                ? null
+                : target ??= Activator.CreateInstance(type);
+            SubscribeCore(attribute, methodInfo, currentMethodTarget);
+            count++;
         }
+        LogTotalSubscibedMethods(count, type);
+        return count;
     }
 
-    static Type CreateDelegateType(ParameterInfo[] parameters, Type returnType)
+    private static LcuEventAttribute ThrowIfMissingLcuEventAttribute(MethodInfo methodInfo)
     {
-        if (parameters.Length > 3)
-            throw new ArgumentException("Method cant have more than 3 parametrs.", nameof(parameters));
-        Type[] methodArgs;
-        Type delegateType;
-        if (returnType == typeof(void))
+        var attribute = methodInfo.GetCustomAttribute<LcuEventAttribute>();
+        return attribute is null
+            ? throw new InvalidOperationException($"Required attribute '{nameof(LcuEventAttribute)}' missing.")
+            : attribute;
+    }
+}
+
+file struct CacheArray
+{
+    object[]? _array1, _array2, _array3;
+
+    public object[]? Get(int length)
+    {
+        return length switch
         {
-            if (parameters.Length == 0)
-                return typeof(Action);
-            methodArgs = new Type[parameters.Length];
-#pragma warning disable CS8509 // The switch expression does not handle all possible values of its input type (it is not exhaustive).
-            delegateType = parameters.Length switch
-            {
-                1 => typeof(Action<>),
-                2 => typeof(Action<,>),
-                3 => typeof(Action<,,>),
-            };
-#pragma warning restore CS8509 // The switch expression does not handle all possible values of its input type (it is not exhaustive).
-        }
-        else
-        {
-            methodArgs = new Type[parameters.Length + 1];
-            methodArgs[^1] = returnType;
-#pragma warning disable CS8509 // The switch expression does not handle all possible values of its input type (it is not exhaustive).
-            delegateType = parameters.Length switch
-            {
-                0 => typeof(Func<>),
-                1 => typeof(Func<,>),
-                2 => typeof(Func<,,>),
-                3 => typeof(Func<,,,>),
-            };
-#pragma warning restore CS8509 // The switch expression does not handle all possible values of its input type (it is not exhaustive).
-        }
-        for (int i = 0; i < parameters.Length; i++)
-        {
-            methodArgs[i] = parameters[i].ParameterType;
-        }
-        return delegateType.MakeGenericType(methodArgs);
+            0 => null,
+            1 => _array1 ??= new object[1],
+            2 => _array2 ??= new object[2],
+            3 => _array3 ??= new object[3],
+            _ => new object[length],
+        };
     }
 }

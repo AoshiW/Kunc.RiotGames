@@ -1,5 +1,7 @@
 ﻿using System.Net.Http.Json;
 using System.Text.Json;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Kunc.RiotGames.Lol.LeagueClientUpdate;
 
@@ -20,11 +22,12 @@ public partial class LolLeagueClientUpdate : IDisposable
             _lockfile = value;
             Client.BaseAddress = new Uri($"https://127.0.0.1:{_lockfile.Port}/");
             Client.DefaultRequestHeaders.Authorization = _lockfile.ToAuthenticationHeaderValue();
-            _ = _wamp.CloseAsync(default).ConfigureAwait(false);
+            _ = Wamp.CloseAsync(default).ConfigureAwait(false);
         }
     }
     private Lockfile _lockfile = default!;
     private bool _disposedValue;
+    private readonly ILogger<LolLeagueClientUpdate> _logger;
 
     /// <summary>
     /// Internal HttpClient for sending requests.
@@ -38,29 +41,36 @@ public partial class LolLeagueClientUpdate : IDisposable
     /// Initializes a new instance of the <see cref="LolLeagueClientUpdate"/> class with the specified <see cref="Lockfile"/>.
     /// </summary>
     /// <param name="lockfile"></param>
+    /// <param name="wamp"></param>
+    /// <param name="loggerFactory"></param>
     /// <exception cref="ArgumentNullException"></exception>
-    public LolLeagueClientUpdate(Lockfile lockfile)
+    public LolLeagueClientUpdate(Lockfile lockfile, IWamp? wamp = null, ILoggerFactory? loggerFactory = null)
     {
         ArgumentNullException.ThrowIfNull(lockfile);
+        loggerFactory ??= NullLoggerFactory.Instance;
         var clientHandler = new HttpClientHandler()
         {
             ClientCertificateOptions = ClientCertificateOption.Manual,
             ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator,
         };
         Client = new HttpClient(clientHandler);
-        _wamp = new(this);
-        _wamp.OnMessage += OnMessage;
+        Wamp = wamp ?? new Wamp(loggerFactory.CreateLogger<Wamp>());
         Lockfile = lockfile;
+        Wamp.OnMessage += OnMessage;
+        _logger = loggerFactory.CreateLogger<LolLeagueClientUpdate>();
     }
 
+    /// <inheritdoc/>
     public Task<HttpResponseMessage> SendAsync(HttpRequestMessage httpRequestMessage, CancellationToken cancellationToken = default)
     {
         return Client.SendAsync(httpRequestMessage, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task<HttpResponseMessage> SendAsync<T>(HttpMethod method, string requestUri, T value, JsonSerializerOptions? options = null, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(requestUri);
+        ArgumentNullException.ThrowIfNull(value);
         using var request = new HttpRequestMessage(method, requestUri)
         {
             Content = JsonContent.Create(value, typeof(T), null, options),
@@ -68,20 +78,11 @@ public partial class LolLeagueClientUpdate : IDisposable
         return await Client.SendAsync(request, cancellationToken).ConfigureAwait(false);
     }
 
-    public Task<HttpResponseMessage> PostdAsync<T>(string requestUri, T value, JsonSerializerOptions? options = null, CancellationToken cancellationToken = default)
-    {
-        return SendAsync<T>(HttpMethod.Post, requestUri, value, options, cancellationToken);
-    }
-
-    public Task<HttpResponseMessage> PutdAsync<T>(string requestUri, T value, JsonSerializerOptions? options = null, CancellationToken cancellationToken = default)
-    {
-        return SendAsync<T>(HttpMethod.Put, requestUri, value, options, cancellationToken);
-    }
-
-    public Task<T?> GetAsync<T>(string requestUri, JsonSerializerOptions? options = null, CancellationToken cancellationToken = default)
+    /// <inheritdoc/>
+    public Task<T?> GetAsync<T>(string requestUri, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(requestUri);
-        return Client.GetFromJsonAsync<T>(requestUri, options, cancellationToken);
+        return Client.GetFromJsonAsync<T>(requestUri, cancellationToken);
     }
 
     /// <summary>

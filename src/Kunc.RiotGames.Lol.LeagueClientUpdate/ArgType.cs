@@ -3,6 +3,6 @@
 enum ArgType
 {
     Sender,
-    Argument,
+    EventArgs,
     CancelationToken,
 }

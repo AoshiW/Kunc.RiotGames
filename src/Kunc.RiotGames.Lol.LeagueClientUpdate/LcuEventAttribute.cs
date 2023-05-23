@@ -1,5 +1,8 @@
-﻿namespace Kunc.RiotGames.Lol.LeagueClientUpdate;
+﻿using System.Diagnostics;
 
+namespace Kunc.RiotGames.Lol.LeagueClientUpdate;
+
+[DebuggerDisplay("Uri = {Uri}, EventType = {EventType} ")]
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
 public sealed class LcuEventAttribute : Attribute
 {
@@ -14,7 +17,7 @@ public sealed class LcuEventAttribute : Attribute
     /// <remarks>
     /// The possible values are: Create, Update, and Delete.
     /// </remarks>
-    public string? EventType { get; set; }
+    public string? EventType { get; init; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="LcuEventAttribute"/> class

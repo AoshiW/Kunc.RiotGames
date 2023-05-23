@@ -12,12 +12,17 @@ public sealed class Lockfile : IEquatable<Lockfile?>, ISpanFormattable
 #endif
 {
     /// <summary>
+    /// Represent a Lockfile with default values.
+    /// </summary>
+    public static Lockfile Empty => _empty ??= new(string.Empty, 0, 0, string.Empty, string.Empty);
+    private static Lockfile? _empty;
+
+    /// <summary>
     /// The default path where lockfile is located.
     /// </summary>
     public static string DefaulthPath
         => OperatingSystem.IsWindows() ? @"C:\Riot Games\League of Legends\lockfile"
         : throw new PlatformNotSupportedException();
-
 
     /// <summary>
     /// Process name.

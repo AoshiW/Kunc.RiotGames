@@ -3,7 +3,7 @@
   <PropertyGroup>
       <PackageTags>Lol;LeagueOfLegends;LCU;LeagueClientUpdate</PackageTags>
       <Description>Simple client for interacting with the League of Legends LCU.</Description>
-      <Version>0.1.2</Version>
+      <Version>0.1.3</Version>
   </PropertyGroup>
 
   <ItemGroup>

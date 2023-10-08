@@ -4,9 +4,9 @@ using Kunc.RiotGames.Lor.DeckCodes;
 
 namespace NotSample;
 
-//[SimpleJob(RuntimeMoniker.Net60)]
-[SimpleJob(RuntimeMoniker.Net70)]
-//[SimpleJob(RuntimeMoniker.Net80)]
+//[ShortRunJob(RuntimeMoniker.Net60)]
+[ShortRunJob(RuntimeMoniker.Net70)]
+[ShortRunJob(RuntimeMoniker.Net80)]
 [MemoryDiagnoser]
 public partial class LorDeckEncoderBenchmark
 {
@@ -39,13 +39,11 @@ public partial class LorDeckEncoderBenchmark
 
     public class Input
     {
-        static readonly ILorDeckEncoder deckEncoder = new LorDeckEncoder();
-
         public Input(string code, string type)
         {
             Type = type;
             Code = code;
-            Kunc = deckEncoder.GetDeckFromCode<DeckItem>(code);
+            Kunc = DeckEncoderNoCache.GetDeckFromCode<DeckItem>(code);
             //Riot = LoRDeckEncoder.GetDeckFromCode(code);
         }
 

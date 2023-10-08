@@ -5,7 +5,11 @@ namespace Kunc.RiotGames.Lor.GameClient;
 /// <summary>
 /// The game state.
 /// </summary>
+#if NET8_0_OR_GREATER
+[JsonConverter(typeof(JsonStringEnumConverter<GameState>))]
+#else
 [JsonConverter(typeof(JsonStringEnumConverter))]
+#endif
 public enum GameState
 {
     /// <summary>

@@ -52,7 +52,7 @@ public class LorDeckEncoder : ILorDeckEncoder
         IntIdentifierToFactionCode = new(FactionCodeInfo.Count);
         foreach (var item in FactionCodeInfo)
         {
-            IntIdentifierToFactionCode.Add(item.Value.Identifier, string.Create(2, item.Key, (s, arg) =>
+            IntIdentifierToFactionCode.Add(item.Value.Identifier, string.Create(2, item.Key, static (s, arg) =>
             {
                 s[0] = (char)(arg >> 16);
                 s[1] = (char)arg;
@@ -85,7 +85,7 @@ public class LorDeckEncoder : ILorDeckEncoder
     /// <inheritdoc/>
     public List<T> GetDeckFromCode<T>(ReadOnlySpan<char> deckCode) where T : IDeckItem, new()
     {
-        using var bytesOwner = SpanOwner<byte>.Allocate(Base32.CalculateLength(deckCode));
+        using var bytesOwner = SpanOwner<byte>.Allocate(Base32.GetByteCount(deckCode));
         if (!Base32.TryFromBase32(deckCode, bytesOwner.Span, out _))
             throw new ArgumentException("Invalid deck code");
         var byteSpan = bytesOwner.Span;
@@ -270,9 +270,13 @@ public class LorDeckEncoder : ILorDeckEncoder
 
     private static void ParseCardCode(ReadOnlySpan<char> code, out int set, out ReadOnlySpan<char> faction, out int number)
     {
-        faction = code.Slice(2, 2);
-        set = int.Parse(code.Slice(0, 2), NumberStyles.Integer, NumberFormatInfo.InvariantInfo);
+        ParseCardCode(code, out set, out faction);
         number = int.Parse(code.Slice(4), NumberStyles.Integer, NumberFormatInfo.InvariantInfo);
+    }
+    private static void ParseCardCode(ReadOnlySpan<char> code, out int set, out ReadOnlySpan<char> faction)
+    {
+        set = int.Parse(code.Slice(0, 2), NumberStyles.Integer, NumberFormatInfo.InvariantInfo);
+        faction = code.Slice(2, 2);
     }
 
     private static List<List<T>> GetGroupedOfs<T>(List<T> list) where T : IReadOnlyDeckItem
@@ -285,7 +289,7 @@ public class LorDeckEncoder : ILorDeckEncoder
             //get info from last
             var lastIndex = list.Count - 1;
             var lastItem = list[lastIndex];
-            ParseCardCode(lastItem.CardCode, out int setNumber, out var factionCode, out _);
+            ParseCardCode(lastItem.CardCode, out int setNumber, out var factionCode);
 
             //now add that to our new list, remove from old
             currentSet.Add(lastItem);
@@ -323,7 +327,7 @@ public class LorDeckEncoder : ILorDeckEncoder
 
             //what is this group, as identified by a set and faction pair
             string currentCardCode = currentList[0].CardCode;
-            ParseCardCode(currentCardCode, out int currentSetNumber, out var currentFactionCode, out var _);
+            ParseCardCode(currentCardCode, out int currentSetNumber, out var currentFactionCode);
             int currentFactionNumber = FactionCodeInfo[ConvertFactionToUInt(currentFactionCode)].Identifier;
 
             VarintTranslator.TryGetVarint(currentSetNumber, buffer, out w);

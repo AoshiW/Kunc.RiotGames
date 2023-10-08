@@ -4,7 +4,7 @@
 	  <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 	  <PackageTags>Lor;LorDeckCodes;LegendsOfRuneterra;Runeterra</PackageTags>
 	  <Description>Encode/Decode Legends of Runeterra decks to/from simple strings.</Description>
-	  <Version>0.2.2</Version>
+	  <Version>0.2.3</Version>
   </PropertyGroup>
 
   <ItemGroup>

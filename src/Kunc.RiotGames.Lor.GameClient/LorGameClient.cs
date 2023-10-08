@@ -5,6 +5,10 @@ namespace Kunc.RiotGames.Lor.GameClient;
 /// <inheritdoc cref="ILorGameClient"/>
 public class LorGameClient : ILorGameClient, IDisposable
 {
+    private static readonly Uri StaticDecklistUri = new("static-decklist");
+    private static readonly Uri PositionalRectanglesUri = new("positional-rectangles");
+    private static readonly Uri GameResultUri = new("game-result");
+
     private readonly HttpClient _client = new();
     private bool _disposed;
 
@@ -27,21 +31,21 @@ public class LorGameClient : ILorGameClient, IDisposable
     /// <inheritdoc/>
     public async Task<StaticDecklist> GetStaticDecklistAsync(CancellationToken cancellationToken = default)
     {
-        var decklist = await _client.GetFromJsonAsync<StaticDecklist>("static-decklist", cancellationToken).ConfigureAwait(false);
+        var decklist = await _client.GetFromJsonAsync(StaticDecklistUri, JsonContext.Default.StaticDecklist, cancellationToken).ConfigureAwait(false);
         return decklist!;
     }
 
     /// <inheritdoc/>
     public async Task<PositionalRectangles> GetPositionalRectanglesAsync(CancellationToken cancellationToken = default)
     {
-        var positionalRectangles = await _client.GetFromJsonAsync<PositionalRectangles>("positional-rectangles", cancellationToken).ConfigureAwait(false);
+        var positionalRectangles = await _client.GetFromJsonAsync(PositionalRectanglesUri, JsonContext.Default.PositionalRectangles, cancellationToken).ConfigureAwait(false);
         return positionalRectangles!;
     }
 
     /// <inheritdoc/>
     public async Task<GameResult> GetGameResultAsync(CancellationToken cancellationToken = default)
     {
-        var gameResult = await _client.GetFromJsonAsync<GameResult>("game-result", cancellationToken).ConfigureAwait(false);
+        var gameResult = await _client.GetFromJsonAsync(GameResultUri, JsonContext.Default.GameResult, cancellationToken).ConfigureAwait(false);
         return gameResult!;
     }
 

@@ -109,6 +109,11 @@ public enum GameMode
     UltBook,
 
     /// <summary>
+    /// Arena (2v2v2v2)
+    /// </summary>
+    Cherry,
+
+    /// <summary>
     /// Practice Tool.
     /// </summary>
     PracticeTool,

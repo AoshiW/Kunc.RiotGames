@@ -1,4 +1,6 @@
-﻿namespace Kunc.RiotGames.Lor.DeckCodes;
+﻿using System.Diagnostics;
+
+namespace Kunc.RiotGames.Lor.DeckCodes;
 
 [Flags]
 internal enum Base32FormattingOptions
@@ -80,6 +82,7 @@ internal static class Base32
         }
         return true;
     }
+
     public static string ToBase32(ReadOnlySpan<byte> bytes, Base32FormattingOptions options = Base32FormattingOptions.None)
     {
         if (bytes.IsEmpty)
@@ -123,16 +126,14 @@ internal static class Base32
 
         if (w == length)
             return true;
-#pragma warning disable CA2201 // Do not raise reserved exception types
         var numCharsToOutput = (bytes.Length - offset) switch
         {
             1 => 2,
             2 => 4,
             3 => 5,
             4 => 7,
-            _ => throw new Exception("UnreachableException"), // 8, this should not happen 
+            _ => throw new UnreachableException()
         };
-#pragma warning restore CA2201 // Do not raise reserved exception types
 
         b1 = (offset < bytes.Length) ? bytes[offset++] : default;
         b2 = (offset < bytes.Length) ? bytes[offset++] : default;

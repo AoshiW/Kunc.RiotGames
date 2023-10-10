@@ -35,7 +35,8 @@ public class Base32Benchmark
     }
 
     [Benchmark, ArgumentsSource(nameof(Strings))]
-    public void TryGetBytes(string input) {
+    public void TryGetBytes(string input)
+    {
         var bytes = ArrayPool<byte>.Shared.Rent(Base32.GetByteCount(input));
         if (!Base32.TryFromBase32(input, bytes, out _))
             throw new FormatException();

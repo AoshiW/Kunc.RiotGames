@@ -1,12 +1,9 @@
-using System.Diagnostics;
-using BenchmarkDotNet.Running;
 using Kunc.RiotGames.Lol.LeagueClientUpdate;
 using Kunc.RiotGames.Lor.DeckCodes;
 using Kunc.RiotGames.Lor.GameClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using NotSample;
 
 partial class Program
 {
@@ -29,12 +26,4 @@ partial class Program
     static ILorGameClient LorGameClient => _service.GetRequiredService<ILorGameClient>();
     static ILolLeagueClientUpdate Lcu => _service.GetRequiredService<ILolLeagueClientUpdate>();
     static T Get<T>() where T : class => _service.GetRequiredService<T>();
-
-    [Conditional("RELEASE")]
-    static void RunBenchmarks(bool exit = true)
-    {
-        BenchmarkRunner.Run<LorDeckEncoderBenchmark>();
-        if (exit)
-            Environment.Exit(0);
-    }
 }

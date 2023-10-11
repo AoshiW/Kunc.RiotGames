@@ -1,5 +1,4 @@
-﻿#pragma warning disable CA1707 // Identifiers should not contain underscores
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 
 namespace Kunc.RiotGames.Lor.DeckCodes.Tests;
@@ -7,8 +6,10 @@ namespace Kunc.RiotGames.Lor.DeckCodes.Tests;
 [TestClass]
 public class Base32Test
 {
+    private static readonly RandomNumberGenerator _rng = RandomNumberGenerator.Create();
+
     [TestMethod]
-    public void ConversionTest() // test from .NET Github
+    public void ConversionTest()
     {
         var data = new byte[] { 1, 2, 3, 4, 5, 6 };
         Assert.IsTrue(data.SequenceEqual(Base32.FromBase32(Base32.ToBase32(data))));
@@ -25,8 +26,6 @@ public class Base32Test
         data = GetRandomByteArray(length);
         Assert.IsTrue(data.SequenceEqual(Base32.FromBase32(Base32.ToBase32(data))));
     }
-
-    private static readonly RandomNumberGenerator _rng = RandomNumberGenerator.Create();
 
     private static byte[] GetRandomByteArray(int length)
     {
@@ -73,10 +72,10 @@ public class Base32Test
     public void FromBase32(string expectedOutput, string input)
     {
         var bytes = Base32.FromBase32(input);
-        string result = Encoding.ASCII.GetString(bytes.ToArray());
+        string result = Encoding.ASCII.GetString(bytes);
         Assert.AreEqual(result, expectedOutput);
         bytes = Base32.FromBase32(input.ToLowerInvariant());
-        result = Encoding.ASCII.GetString(bytes.ToArray());
+        result = Encoding.ASCII.GetString(bytes);
         Assert.AreEqual(result, expectedOutput);
     }
 

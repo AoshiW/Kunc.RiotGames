@@ -11,7 +11,6 @@ internal enum Base32FormattingOptions
 
 internal static class Base32
 {
-    private static readonly Dictionary<char, int> CharMap = new(60);
     private static readonly char[] Alphabet =
     {
         'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
@@ -19,18 +18,21 @@ internal static class Base32
         'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
         'Y', 'Z', '2', '3', '4', '5', '6', '7'
     };
+    private static ReadOnlySpan<byte> ReversedMapAlphabet => new byte[]
+    {
+      //   0     1     2     3     4     5     6     7     8    9     10    11    12    13    14    16
+        0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, //  0 -  15
+        0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, // 16 -  31
+        0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, // 23 -  47
+        0xff, 0xff,   26,   27,   28,   29,   30,   31, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, // 48 -  63
+        0xff,    0,    1,    2,    3,    4,    5,    6,    7,    8,    9,   10,   11,   12,   13,   14, // 64 -  79
+          15,   16,   17,   18,   19,   20,   21,   22,   23,   24,   25, 0xff, 0xff, 0xff, 0xff, 0xff, // 80 -  95
+        0xff,    0,    1,    2,    3,    4,    5,    6,    7,    8,    9,   10,   11,   12,   13,   14, // 96 - 111
+          15,   16,   17,   18,   19,   20,   21,   22,   23,   24,   25, 0xff, 0xff, 0xff, 0xff, 0xff, //128 - 143
+    };
     private const int Mask = 31;
     private const int Shift = 5;
     private const char PaddingChar = '=';
-
-    static Base32()
-    {
-        for (int i = 0; i < Alphabet.Length; i++)
-        {
-            CharMap[Alphabet[i]] = i;
-            CharMap[char.ToLowerInvariant(Alphabet[i])] = i;
-        }
-    }
 
     public static int GetByteCount(ReadOnlySpan<char> chars) => chars.TrimEnd(PaddingChar).Length * Shift / 8;
 
@@ -68,7 +70,8 @@ internal static class Base32
         int bitsLeft = 0;
         foreach (var item in chars)
         {
-            if (!CharMap.TryGetValue(item, out var value))
+            byte value;
+            if (item >= ReversedMapAlphabet.Length || (value = ReversedMapAlphabet[item]) == 0xff)
             {
                 return false;
             }

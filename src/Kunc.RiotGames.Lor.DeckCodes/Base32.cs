@@ -98,6 +98,7 @@ internal static class Base32
             }
         }
     }
+
     public static bool TryToBase32(ReadOnlySpan<byte> bytes, Span<char> chars, Base32FormattingOptions options, out int w)
     {
         w = 0;
@@ -159,7 +160,7 @@ internal static class Base32
 
         if (w == length)
             return true;
-        chars[w] = (numCharsToOutput >= 8) ? Alphabet[b5 & 0x1f] : PaddingChar;
+        chars[w++] = (numCharsToOutput >= 8) ? Alphabet[b5 & 0x1f] : PaddingChar;
         return true;
     }
 }

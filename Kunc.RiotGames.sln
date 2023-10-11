@@ -21,6 +21,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6D2DC7AC-A8C
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C8D52066-9A04-43FD-8FBB-AB3C03DE97EC}"
+	ProjectSection(SolutionItems) = preProject
+		tests\Directory.Build.props = tests\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{B399A5B5-C6B1-4A09-B259-168258ED9C54}"
 	ProjectSection(SolutionItems) = preProject
@@ -44,7 +47,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotSample", "samples\NotSam
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kunc.RiotGames.Core.Tests", "tests\Kunc.RiotGames.Core.Tests\Kunc.RiotGames.Core.Tests.csproj", "{5409CD25-A56B-4E6D-A34C-6588B0BE9A3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmarks", "samples\Benchmarks\Benchmarks.csproj", "{E185A5AC-7793-4099-A8C7-52566D81C28E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmarks", "samples\Benchmarks\Benchmarks.csproj", "{E185A5AC-7793-4099-A8C7-52566D81C28E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

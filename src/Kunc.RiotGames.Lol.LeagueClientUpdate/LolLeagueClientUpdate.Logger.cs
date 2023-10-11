@@ -6,7 +6,7 @@ namespace Kunc.RiotGames.Lol.LeagueClientUpdate;
 
 partial class LolLeagueClientUpdate
 {
-    [LoggerMessage(0, LogLevel.Error, "Exception was throw whne was invoked WAMP delegade: {methodInfo}")]
+    [LoggerMessage(0, LogLevel.Error, "Exception was throw when was invoked WAMP delegate: {methodInfo}")]
     partial void LogExceptionWhenInvokeWampDelegate(MethodInfo methodInfo, Exception ex);
 
     [LoggerMessage(0, LogLevel.Debug, "Invoked Method: {methodInfo}")]

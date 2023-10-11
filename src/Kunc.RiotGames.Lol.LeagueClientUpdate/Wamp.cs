@@ -78,7 +78,7 @@ public sealed partial class Wamp : IWamp
             }
             catch (TaskCanceledException)
             {
-
+                /* NOP */
             }
             catch (Exception ex)
             {

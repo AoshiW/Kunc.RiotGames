@@ -111,6 +111,7 @@ class SomeClass
     {
         IsInvoked.EventHandler(this, EventArgs.Empty);
     }
+
     [LcuEvent("url2")]
     public void M2()
     {

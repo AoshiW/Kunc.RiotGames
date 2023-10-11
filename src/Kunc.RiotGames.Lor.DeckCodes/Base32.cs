@@ -99,33 +99,33 @@ internal static class Base32
         }
     }
 
-    public static bool TryToBase32(ReadOnlySpan<byte> bytes, Span<char> chars, Base32FormattingOptions options, out int w)
+    public static bool TryToBase32(ReadOnlySpan<byte> bytes, Span<char> chars, Base32FormattingOptions options, out int written)
     {
-        w = 0;
+        written = 0;
         var length = GetCharCount(bytes, options);
         if (chars.Length < length)
             return false;
-        byte b1, b2, b3, b4, b5;
+        byte b0, b1, b2, b3, b4;
         int offset = 0;
         while (offset + 5 <= bytes.Length)
         {
+            b0 = bytes[offset++];
             b1 = bytes[offset++];
             b2 = bytes[offset++];
             b3 = bytes[offset++];
             b4 = bytes[offset++];
-            b5 = bytes[offset++];
 
-            chars[w++] = Alphabet[b1 >> 3];
-            chars[w++] = Alphabet[((b1 & 0x07) << 2) | (b2 >> 6)];
-            chars[w++] = Alphabet[(b2 >> 1) & 0x1f];
-            chars[w++] = Alphabet[((b2 & 0x01) << 4) | (b3 >> 4)];
-            chars[w++] = Alphabet[((b3 & 0x0f) << 1) | (b4 >> 7)];
-            chars[w++] = Alphabet[(b4 >> 2) & 0x1f];
-            chars[w++] = Alphabet[((b4 & 0x3) << 3) | (b5 >> 5)];
-            chars[w++] = Alphabet[b5 & 0x1f];
+            chars[written++] = Alphabet[b0 >> 3];
+            chars[written++] = Alphabet[((b0 & 0x07) << 2) | (b1 >> 6)];
+            chars[written++] = Alphabet[(b1 >> 1) & 0x1f];
+            chars[written++] = Alphabet[((b1 & 0x01) << 4) | (b2 >> 4)];
+            chars[written++] = Alphabet[((b2 & 0x0f) << 1) | (b3 >> 7)];
+            chars[written++] = Alphabet[(b3 >> 2) & 0x1f];
+            chars[written++] = Alphabet[((b3 & 0x3) << 3) | (b4 >> 5)];
+            chars[written++] = Alphabet[b4 & 0x1f];
         }
 
-        if (w == length)
+        if (written == length)
             return true;
         var numCharsToOutput = (bytes.Length - offset) switch
         {
@@ -136,31 +136,31 @@ internal static class Base32
             _ => throw new UnreachableException()
         };
 
+        b0 = (offset < bytes.Length) ? bytes[offset++] : default;
         b1 = (offset < bytes.Length) ? bytes[offset++] : default;
-        b2 = (offset < bytes.Length) ? bytes[offset++] : default;
-        chars[w++] = (numCharsToOutput >= 1) ? Alphabet[b1 >> 3] : PaddingChar;
-        chars[w++] = (numCharsToOutput >= 2) ? Alphabet[((b1 & 0x07) << 2) | (b2 >> 6)] : PaddingChar;
+        chars[written++] = (numCharsToOutput >= 1) ? Alphabet[b0 >> 3] : PaddingChar;
+        chars[written++] = (numCharsToOutput >= 2) ? Alphabet[((b0 & 0x07) << 2) | (b1 >> 6)] : PaddingChar;
 
-        if (w == length)
+        if (written == length)
+            return true;
+        b2 = (offset < bytes.Length) ? bytes[offset++] : default;
+        chars[written++] = (numCharsToOutput >= 3) ? Alphabet[(b1 >> 1) & 0x1f] : PaddingChar;
+        chars[written++] = (numCharsToOutput >= 4) ? Alphabet[((b1 & 0x01) << 4) | (b2 >> 4)] : PaddingChar;
+
+        if (written == length)
             return true;
         b3 = (offset < bytes.Length) ? bytes[offset++] : default;
-        chars[w++] = (numCharsToOutput >= 3) ? Alphabet[(b2 >> 1) & 0x1f] : PaddingChar;
-        chars[w++] = (numCharsToOutput >= 4) ? Alphabet[((b2 & 0x01) << 4) | (b3 >> 4)] : PaddingChar;
+        chars[written++] = (numCharsToOutput >= 5) ? Alphabet[(((b2 & 0x0f) << 1) | (b3 >> 7))] : PaddingChar;
 
-        if (w == length)
+        if (written == length)
             return true;
         b4 = (offset < bytes.Length) ? bytes[offset++] : default;
-        chars[w++] = (numCharsToOutput >= 5) ? Alphabet[(int)(((b3 & 0x0f) << 1) | (b4 >> 7))] : PaddingChar;
+        chars[written++] = (numCharsToOutput >= 6) ? Alphabet[(b3 >> 2) & 0x1f] : PaddingChar;
+        chars[written++] = (numCharsToOutput >= 7) ? Alphabet[((b3 & 0x3) << 3) | (b4 >> 5)] : PaddingChar;
 
-        if (w == length)
+        if (written == length)
             return true;
-        b5 = (offset < bytes.Length) ? bytes[offset++] : default;
-        chars[w++] = (numCharsToOutput >= 6) ? Alphabet[(b4 >> 2) & 0x1f] : PaddingChar;
-        chars[w++] = (numCharsToOutput >= 7) ? Alphabet[((b4 & 0x3) << 3) | (b5 >> 5)] : PaddingChar;
-
-        if (w == length)
-            return true;
-        chars[w++] = (numCharsToOutput >= 8) ? Alphabet[b5 & 0x1f] : PaddingChar;
+        chars[written++] = (numCharsToOutput >= 8) ? Alphabet[b4 & 0x1f] : PaddingChar;
         return true;
     }
 }

@@ -20,7 +20,7 @@ public class Base32Benchmark
     public void TryGetString(byte[] input)
     {
         var chars = ArrayPool<char>.Shared.Rent(Base32.GetCharCount(input, default));
-        if (!Base32.TryToBase32(input, chars, default, out _))
+        if (!Base32.TryToBase32(input, chars, out _, default))
             throw new FormatException();
         ArrayPool<char>.Shared.Return(chars);
     }
@@ -29,7 +29,7 @@ public class Base32Benchmark
     public void TryGetStringNoPadding(byte[] input)
     {
         var chars = ArrayPool<char>.Shared.Rent(Base32.GetCharCount(input, Base32FormattingOptions.RemovePadding));
-        if (!Base32.TryToBase32(input, chars, Base32FormattingOptions.RemovePadding, out _))
+        if (!Base32.TryToBase32(input, chars, out _, Base32FormattingOptions.RemovePadding))
             throw new FormatException();
         ArrayPool<char>.Shared.Return(chars);
     }

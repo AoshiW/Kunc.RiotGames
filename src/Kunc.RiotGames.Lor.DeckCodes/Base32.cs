@@ -9,6 +9,9 @@ internal enum Base32FormattingOptions
     RemovePadding
 }
 
+/// <summary>
+/// Convert between binary data and UTF-8 encoded text that is represented in Base32.
+/// </summary>
 internal static class Base32
 {
     private static readonly char[] Alphabet =
@@ -28,7 +31,7 @@ internal static class Base32
         0xff,    0,    1,    2,    3,    4,    5,    6,    7,    8,    9,   10,   11,   12,   13,   14, // 64 -  79
           15,   16,   17,   18,   19,   20,   21,   22,   23,   24,   25, 0xff, 0xff, 0xff, 0xff, 0xff, // 80 -  95
         0xff,    0,    1,    2,    3,    4,    5,    6,    7,    8,    9,   10,   11,   12,   13,   14, // 96 - 111
-          15,   16,   17,   18,   19,   20,   21,   22,   23,   24,   25, 0xff, 0xff, 0xff, 0xff, 0xff, //128 - 143
+          15,   16,   17,   18,   19,   20,   21,   22,   23,   24,   25, 0xff, 0xff, 0xff, 0xff, 0xff, //112 - 127
     };
     private const int Mask = 31;
     private const int Shift = 5;
@@ -43,6 +46,12 @@ internal static class Base32
             : (int)Math.Ceiling(bytes.Length / (float)Shift) * 8;
     }
 
+    /// <summary>
+    /// Converts the span containing a string, which encodes binary data as Base32 digits, to the equivalent byte array.
+    /// </summary>
+    /// <param name="chars">A span containing the string representation that is encoded with Base32 digits.</param>
+    /// <returns>The array of bytes represented by the specified Base32 string.</returns>
+    /// <exception cref="FormatException"></exception>
     public static byte[] FromBase32(ReadOnlySpan<char> chars)
     {
         var length = GetByteCount(chars);
@@ -54,6 +63,13 @@ internal static class Base32
             : throw new FormatException($"Illegal character: {chars[w]}");
     }
 
+    /// <summary>
+    /// Tries to convert the specified span containing a string representation that is encoded with Base32 digits into a span of 8-bit unsigned integers.
+    /// </summary>
+    /// <param name="chars">A span containing the string representation that is encoded with Base32 digits.</param>
+    /// <param name="bytes">The span in which to write the converted 8-bit unsigned integers. If this method returns <see langword="false"/>, either the span remains unmodified or contains an incomplete conversion of <paramref name="chars"/>, up to the last valid character.</param>
+    /// <param name="written">When this method returns, contains the total number of characters written into <paramref name="bytes"/>.</param>
+    /// <returns><see langword="true"/> if the conversion is successful; otherwise, <see langword="false"/>.</returns>
     public static bool TryFromBase32(ReadOnlySpan<char> chars, Span<byte> bytes, out int written)
     {
         chars = chars.TrimEnd(PaddingChar);
@@ -86,6 +102,12 @@ internal static class Base32
         return true;
     }
 
+    /// <summary>
+    /// Converts an span of 8-bit unsigned integers to its equivalent string representation that is encoded with Base32 digits.
+    /// </summary>
+    /// <param name="bytes">A read-only span of 8-bit unsigned integers.</param>
+    /// <param name="options"></param>
+    /// <returns>The string representation, in Base32, of the contents of <paramref name="bytes"/>.</returns>
     public static string ToBase32(ReadOnlySpan<byte> bytes, Base32FormattingOptions options = Base32FormattingOptions.None)
     {
         if (bytes.IsEmpty)
@@ -96,13 +118,21 @@ internal static class Base32
         {
             fixed (char* ptr = base32)
             {
-                TryToBase32(bytes, new Span<char>(ptr, length), options, out _);
+                TryToBase32(bytes, new Span<char>(ptr, length), out _, options);
                 return base32;
             }
         }
     }
 
-    public static bool TryToBase32(ReadOnlySpan<byte> bytes, Span<char> chars, Base32FormattingOptions options, out int written)
+    /// <summary>
+    /// Tries to convert the 8-bit unsigned integers inside the specified read-only span into their equivalent string representation that is encoded with Base32 digits.
+    /// </summary>
+    /// <param name="bytes">A read-only span of 8-bit unsigned integers.</param>
+    /// <param name="chars">The span in which to write the string representation in Base32 of the elements in bytes.</param>
+    /// <param name="written">When this method returns, contains the total number of characters written into <paramref name="chars"/>.</param>
+    /// <param name="options"></param>
+    /// <returns><see langword="true"/> if the conversion is successful; otherwise, <see langword="false"/>.</returns>
+    public static bool TryToBase32(ReadOnlySpan<byte> bytes, Span<char> chars, out int written, Base32FormattingOptions options)
     {
         written = 0;
         var length = GetCharCount(bytes, options);

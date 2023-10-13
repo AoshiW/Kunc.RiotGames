@@ -271,11 +271,11 @@ public class LorDeckEncoder : ILorDeckEncoder
     private static void ParseCardCode(ReadOnlySpan<char> code, out int set, out ReadOnlySpan<char> faction, out int number)
     {
         ParseCardCode(code, out set, out faction);
-        number = int.Parse(code.Slice(4), NumberStyles.Integer, NumberFormatInfo.InvariantInfo);
+        number = int.Parse(code.Slice(4), NumberFormatInfo.InvariantInfo);
     }
     private static void ParseCardCode(ReadOnlySpan<char> code, out int set, out ReadOnlySpan<char> faction)
     {
-        set = int.Parse(code.Slice(0, 2), NumberStyles.Integer, NumberFormatInfo.InvariantInfo);
+        set = int.Parse(code.Slice(0, 2), NumberFormatInfo.InvariantInfo);
         faction = code.Slice(2, 2);
     }
 
@@ -303,7 +303,7 @@ public class LorDeckEncoder : ILorDeckEncoder
                 var currentSetNumberStr = currentCardCode.Slice(0, 2);
                 var currentFactionCode = currentCardCode.Slice(2, 2);
 
-                if (currentFactionCode.SequenceEqual(factionCode) && int.Parse(currentSetNumberStr, NumberStyles.Integer, NumberFormatInfo.InvariantInfo) == setNumber)
+                if (currentFactionCode.SequenceEqual(factionCode) && int.Parse(currentSetNumberStr, NumberFormatInfo.InvariantInfo) == setNumber)
                 {
                     currentSet.Add(list[i]);
                     list.RemoveAt(i);
@@ -340,7 +340,7 @@ public class LorDeckEncoder : ILorDeckEncoder
             foreach (var item in CollectionsMarshal.AsSpan(currentList))
             {
                 var sequenceNumber = item.CardCode.AsSpan(4, 3);
-                int number = int.Parse(sequenceNumber, NumberStyles.Integer, NumberFormatInfo.InvariantInfo);
+                int number = int.Parse(sequenceNumber, NumberFormatInfo.InvariantInfo);
                 VarintTranslator.TryGetVarint(number, buffer, out w);
                 bytes.AddRange(buffer.Slice(0, w));
             }

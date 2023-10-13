@@ -28,6 +28,9 @@ public sealed partial class Wamp : IWamp
     private Task _eventLoopTask = Task.CompletedTask;
     private readonly ILogger<Wamp> _logger;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="LolLeagueClientUpdate"/> class.
+    /// </summary>
     public Wamp(ILogger<Wamp> logger)
     {
         _logger = logger;
@@ -64,7 +67,7 @@ public sealed partial class Wamp : IWamp
                         {
                             LogFullMessageReceived(memoryStream.Position);
                             var memmoryBuffer = memoryStream.GetBuffer();
-                            var data = JsonSerializer.Deserialize<JsonElement[]>(memmoryBuffer.AsSpan(0, (int)memoryStream.Position))!;
+                            var data = JsonSerializer.Deserialize<JsonElement[]>((memmoryBuffer.AsSpan(0, (int)memoryStream.Position))!;
                             OnMessage?.Invoke(this, data);
                             memoryStream.SetLength(0);
                         }
@@ -77,9 +80,7 @@ public sealed partial class Wamp : IWamp
                 }
             }
             catch (TaskCanceledException)
-            {
-                /* NOP */
-            }
+            { /* NOP */ }
             catch (Exception ex)
             {
                 LogEventLoopException(ex);
@@ -129,7 +130,7 @@ public sealed partial class Wamp : IWamp
             await _socket.CloseAsync(WebSocketCloseStatus.NormalClosure, null, token).ConfigureAwait(false);
         }
         catch (OperationCanceledException)
-        { }
+        { /* NOP */ }
         Dispose();
     }
 

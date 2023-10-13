@@ -16,5 +16,5 @@ partial class LolLeagueClientUpdate
     partial void LogRegisterDelegate(MethodInfo methodInfo);
 
     [LoggerMessage(0, LogLevel.Debug, "Total {count} methods were subscribed from {type}.")]
-    partial void LogTotalSubscibedMethods(int count, Type type);
+    partial void LogTotalSubscribedMethods(int count, Type type);
 }

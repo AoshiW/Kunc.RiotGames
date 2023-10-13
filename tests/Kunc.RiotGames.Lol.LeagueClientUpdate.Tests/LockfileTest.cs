@@ -14,6 +14,10 @@ public class LockfileTest
         if (!Lockfile.TryParse(lockfileData, null, out var lockfile))
             Assert.Fail();
         Assert.AreEqual(lockfileData, lockfile.ToString());
+
+        if (!Lockfile.TryParse(Encoding.UTF8.GetBytes(lockfileData), null, out lockfile))
+            Assert.Fail();
+        Assert.AreEqual(lockfileData, lockfile.ToString());
     }
 
     [TestMethod]

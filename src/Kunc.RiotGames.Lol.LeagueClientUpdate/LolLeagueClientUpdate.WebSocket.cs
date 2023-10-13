@@ -177,7 +177,7 @@ public partial class LolLeagueClientUpdate : ILolLeagueClientUpdate
             SubscribeCore(attribute, methodInfo, currentMethodTarget);
             count++;
         }
-        LogTotalSubscibedMethods(count, type);
+        LogTotalSubscribedMethods(count, type);
         return count;
     }
 

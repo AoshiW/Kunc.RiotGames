@@ -8,10 +8,10 @@ partial class Wamp
     [LoggerMessage(0, LogLevel.Error, "Exception was throw in WAMP event loop.")]
     partial void LogEventLoopException(Exception ex);
 
-    [LoggerMessage(0, LogLevel.Information, "Conneted.")]
+    [LoggerMessage(0, LogLevel.Information, "Connected.")]
     partial void LogConnected();
 
-    [LoggerMessage(0, LogLevel.Information, "Disconneted.")]
+    [LoggerMessage(0, LogLevel.Information, "Disconnected.")]
     partial void LogDisconnected();
 
     [LoggerMessage(0, LogLevel.Trace, "Full message received, length: {length} bytes.")]

@@ -1,14 +1,16 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Buffers;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.Unicode;
 
 namespace Kunc.RiotGames.Lol.LeagueClientUpdate;
 
-public sealed class Lockfile : IEquatable<Lockfile?>, ISpanFormattable
-#if NET7_0_OR_GREATER
-    , ISpanParsable<Lockfile>
+public sealed class Lockfile : IEquatable<Lockfile?>, ISpanFormattable, ISpanParsable<Lockfile>
+#if NET8_0_OR_GREATER
+    , IUtf8SpanFormattable, IUtf8SpanParsable<Lockfile>
 #endif
 {
     /// <summary>
@@ -20,6 +22,7 @@ public sealed class Lockfile : IEquatable<Lockfile?>, ISpanFormattable
     /// <summary>
     /// The default path where lockfile is located.
     /// </summary>
+    /// <exception cref="PlatformNotSupportedException"></exception>
     public static string DefaulthPath
         => OperatingSystem.IsWindows() ? @"C:\Riot Games\League of Legends\lockfile"
         : throw new PlatformNotSupportedException();
@@ -91,11 +94,7 @@ public sealed class Lockfile : IEquatable<Lockfile?>, ISpanFormattable
         path ??= DefaulthPath;
         using var stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
         using var reader = new StreamReader(stream);
-        var lockfile = await reader.ReadToEndAsync(
-#if NET7_0_OR_GREATER
-            cancellationToken
-#endif
-            ).ConfigureAwait(false);
+        var lockfile = await reader.ReadToEndAsync(cancellationToken).ConfigureAwait(false);
         return Parse(lockfile, null);
     }
 
@@ -118,9 +117,11 @@ public sealed class Lockfile : IEquatable<Lockfile?>, ISpanFormattable
 
     /// <inheritdoc/>
     public static Lockfile Parse(ReadOnlySpan<char> s, IFormatProvider? provider)
-        => TryParse(s, provider, out var lockfile)
-        ? lockfile
-        : throw new FormatException();
+    {
+        return TryParse(s, provider, out var lockfile)
+            ? lockfile
+            : throw new FormatException();
+    }
 
     /// <inheritdoc/>
     public static bool TryParse(ReadOnlySpan<char> s, IFormatProvider? provider, [MaybeNullWhen(false)] out Lockfile result)
@@ -160,7 +161,32 @@ public sealed class Lockfile : IEquatable<Lockfile?>, ISpanFormattable
 
     /// <inheritdoc/>
     public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, [MaybeNullWhen(false)] out Lockfile result)
-        => TryParse(s.AsSpan(), provider, out result);
+    {
+        return TryParse(s.AsSpan(), provider, out result);
+    }
+
+
+    /// <inheritdoc/>
+    public static Lockfile Parse(ReadOnlySpan<byte> utf8Text, IFormatProvider? provider)
+    {
+        return TryParse(utf8Text, provider, out var lockfile)
+            ? lockfile
+            : throw new FormatException();
+    }
+
+    /// <inheritdoc/>
+    public static bool TryParse(ReadOnlySpan<byte> utf8Text, IFormatProvider? provider, [MaybeNullWhen(false)] out Lockfile result)
+    {
+        char[]? array = null;
+        Span<char> buffer = utf8Text.Length < 32
+            ? stackalloc char[utf8Text.Length]
+            : (array = ArrayPool<char>.Shared.Rent(utf8Text.Length));
+        var c = Encoding.UTF8.GetChars(utf8Text, array);
+        var isParsed = TryParse(buffer.Slice(0, c), provider, out result);
+        if (array is not null)
+            ArrayPool<char>.Shared.Return(array);
+        return isParsed;
+    }
 
     /// <summary>
     /// Create <see cref="AuthenticationHeaderValue"/> from lockfile.
@@ -185,16 +211,23 @@ public sealed class Lockfile : IEquatable<Lockfile?>, ISpanFormattable
     /// <returns></returns>
     public NetworkCredential ToCredential() => new("riot", Password);
 
-
     /// <inheritdoc/>
     public override string ToString()
         => $"{Name}:{ProcessID}:{Port}:{Password}:{Protocol}";
 
     /// <inheritdoc/>
+    public string ToString(string? format, IFormatProvider? formatProvider)
+        => ToString();
+
+    /// <inheritdoc/>
     public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider? provider)
         => destination.TryWrite($"{Name}:{ProcessID}:{Port}:{Password}:{Protocol}", out charsWritten);
 
+#if NET8_0_OR_GREATER
     /// <inheritdoc/>
-    public string ToString(string? format, IFormatProvider? formatProvider)
-        => ToString();
+    public bool TryFormat(Span<byte> utf8Destination, out int bytesWritten, ReadOnlySpan<char> format, IFormatProvider? provider)
+    {
+        return Utf8.TryWrite(utf8Destination, $"{Name}:{ProcessID}:{Port}:{Password}:{Protocol}", out bytesWritten);
+    }
+#endif
 }

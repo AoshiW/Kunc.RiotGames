@@ -34,7 +34,7 @@ class EventInfo
             else
             {
                 if (EventArgsType is not null && EventArgsType != item.ParameterType)
-                    throw new InvalidOperationException($"Delegate have multiple diferent arguments that are clasified as {nameof(ArgType.EventArgs)}. ('{EventArgsType}', '{item.ParameterType}')");
+                    throw new InvalidOperationException($"Delegate have multiple different arguments that are classified as {nameof(ArgType.EventArgs)}. ('{EventArgsType}', '{item.ParameterType}')");
                 ArgTypes[i] = ArgType.EventArgs;
                 EventArgsType = item.ParameterType;
             }

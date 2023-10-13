@@ -11,7 +11,7 @@ public abstract partial class QueryString
     protected abstract void ToStringCore(ref QueryStringBuilder builder);
 
     /// <inheritdoc/>
-    public override string ToString()
+    public sealed override string ToString()
     {
         var builder = new QueryStringBuilder();
         ToStringCore(ref builder);

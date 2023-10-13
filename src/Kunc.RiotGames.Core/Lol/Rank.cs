@@ -12,11 +12,12 @@ public struct Rank :
     IEquatable<Rank>,
     IComparable,
     IComparable<Rank>,
-    ISpanFormattable
-#if NET7_0_OR_GREATER
-    , IEqualityOperators<Rank, Rank, bool>,
-    IComparisonOperators<Rank, Rank, bool> // TODO ISpanParseable<>?
+    ISpanFormattable,
+#if NET8_0_OR_GREATER
+    ISpanParsable<Rank>,
 #endif
+    IEqualityOperators<Rank, Rank, bool>,
+    IComparisonOperators<Rank, Rank, bool>
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="Rank"/> class.
@@ -46,15 +47,15 @@ public struct Rank :
     /// <remarks>
     /// <see langword="true"/> if <see cref="Tier"/> is <see cref="Tier.Unranked"/> or <see cref="Division"/> is <see cref="Division.None"/>; otherwise, <see langword="false"/>.
     /// </remarks>
-    public bool IsUnranked
+    public readonly bool IsUnranked
         => Tier == Tier.Unranked || Division == Division.None;
 
     /// <inheritdoc/>
-    public override bool Equals(object? obj)
+    public readonly override bool Equals(object? obj)
         => obj is Rank rank && Equals(rank);
 
     /// <inheritdoc/>
-    public bool Equals(Rank other)
+    public readonly bool Equals(Rank other)
     {
         return Tier == other.Tier &&
                Division == other.Division &&
@@ -62,7 +63,7 @@ public struct Rank :
     }
 
     /// <inheritdoc/>
-    public override int GetHashCode()
+    public readonly override int GetHashCode()
         => HashCode.Combine(Tier, Division, LeaguePoints);
 
     /// <inheritdoc/>
@@ -90,7 +91,7 @@ public struct Rank :
         => left.CompareTo(right) <= 0;
 
     /// <inheritdoc/>
-    public int CompareTo(Rank other)
+    public readonly int CompareTo(Rank other)
     {
         if (Tier != other.Tier)
         {
@@ -107,7 +108,7 @@ public struct Rank :
     }
 
     /// <inheritdoc/>
-    public int CompareTo(object? obj)
+    public readonly int CompareTo(object? obj)
     {
         if (obj is null)
         {
@@ -130,7 +131,7 @@ public struct Rank :
     /// <param name="division">Deconstructed parameter for <see cref="Division"/>.</param>
     /// <param name="lp">Deconstructed parameter for <see cref="LeaguePoints"/>.</param>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public void Deconstruct(out Tier tier, out Division division, out int lp)
+    public readonly void Deconstruct(out Tier tier, out Division division, out int lp)
     {
         tier = Tier;
         division = Division;
@@ -143,22 +144,22 @@ public struct Rank :
     /// <param name="tier"> Deconstructed parameter for <see cref="Tier"/>.</param>
     /// <param name="division">Deconstructed parameter for <see cref="Division"/>.</param>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public void Deconstruct(out Tier tier, out Division division)
+    public readonly void Deconstruct(out Tier tier, out Division division)
     {
         tier = Tier;
         division = Division;
     }
 
-    const string UnrankedString = "Unranked";
+    internal const string UnrankedString = "Unranked";
 
     /// <inheritdoc/>
-    public override string ToString()
+    public readonly override string ToString()
         => IsUnranked
         ? UnrankedString
         : $"{Tier} {Division} {LeaguePoints}LP";
 
     /// <inheritdoc/>
-    public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider? provider)
+    public readonly bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider? provider)
     {
         if (IsUnranked)
         {
@@ -174,8 +175,54 @@ public struct Rank :
     }
 
     /// <inheritdoc/>
-    public string ToString(string? format, IFormatProvider? formatProvider)
+    public readonly string ToString(string? format, IFormatProvider? formatProvider)
     {
         return ToString();
     }
-   }
+#if NET8_0_OR_GREATER
+    /// <inheritdoc/>
+    public static Rank Parse(ReadOnlySpan<char> s, IFormatProvider? provider)
+    {
+        return TryParse(s, provider, out var result)
+            ? result
+            : throw new FormatException();
+    }
+
+    /// <inheritdoc/>
+    public static bool TryParse(ReadOnlySpan<char> s, IFormatProvider? provider, [MaybeNullWhen(false)] out Rank result)
+    {
+        if (s.Equals(UnrankedString, StringComparison.InvariantCultureIgnoreCase))
+        {
+            result = default;
+            return true;
+        }
+        Span<Range> dest = stackalloc Range[4];
+        if (s.Split(dest, ' ', StringSplitOptions.TrimEntries) == 3)
+        {
+            if (Enum.TryParse<Tier>(s[dest[0]], true, out var tier) &&
+                Enum.TryParse<Division>(s[dest[1]], true, out var division) &&
+                s[dest[2]].EndsWith("LP", StringComparison.InvariantCultureIgnoreCase) &&
+                int.TryParse(s[dest[2]][0..^2], out var lp))
+            {
+                result = new Rank(tier, division, lp);
+                return true;
+            }
+        }
+        result = default;
+        return false;
+    }
+
+    /// <inheritdoc/>
+    public static Rank Parse(string s, IFormatProvider? provider)
+    {
+        ArgumentNullException.ThrowIfNull(s);
+        return Parse(s.AsSpan(), provider);
+    }
+
+    /// <inheritdoc/>
+    public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, [MaybeNullWhen(false)] out Rank result)
+    {
+        return TryParse(s.AsSpan(), provider, out result);
+    }
+#endif
+}

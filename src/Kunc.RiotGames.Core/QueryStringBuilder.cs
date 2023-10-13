@@ -37,12 +37,16 @@ public ref struct QueryStringBuilder
         _handler.AppendLiteral("=");
     }
 
+    /// <summary>Gets the built <see cref="string"/> and clears the builder.</summary>
+    /// <returns>The built string.</returns>
     public string ToStringAndClear()
     {
         _hasAny = false;
         return _handler.ToStringAndClear();
     }
 
+    /// <summary>Gets the built <see cref="string"/>.</summary>
+    /// <returns>The built string.</returns>
     public override string ToString()
     {
         return _handler.ToString();

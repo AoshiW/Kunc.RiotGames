@@ -1,19 +1,18 @@
-﻿#pragma warning disable SYSLIB1006 // Multiple logging methods cannot use the same event id within a class
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 
 namespace Kunc.RiotGames.Lol.LeagueClientUpdate;
 
 partial class Wamp
 {
-    [LoggerMessage(0, LogLevel.Error, "Exception was throw in WAMP event loop.")]
+    [LoggerMessage(LogLevel.Error, "Exception was throw in WAMP event loop.")]
     partial void LogEventLoopException(Exception ex);
 
-    [LoggerMessage(0, LogLevel.Information, "Connected.")]
+    [LoggerMessage(LogLevel.Information, "Connected.")]
     partial void LogConnected();
 
-    [LoggerMessage(0, LogLevel.Information, "Disconnected.")]
+    [LoggerMessage(LogLevel.Information, "Disconnected.")]
     partial void LogDisconnected();
 
-    [LoggerMessage(0, LogLevel.Trace, "Full message received, length: {length} bytes.")]
+    [LoggerMessage(LogLevel.Trace, "Full message received, length: {length} bytes.")]
     partial void LogFullMessageReceived(long length);
 }

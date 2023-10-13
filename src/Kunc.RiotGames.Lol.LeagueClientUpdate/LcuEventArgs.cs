@@ -17,8 +17,8 @@ public class LcuEventArgs<T> : EventArgs
     /// The possible values are: Create, Update, and Delete.
     /// </remarks>
     [JsonPropertyName("eventType")]
-    public string EventType { get; set; } = default!;
+    public string EventType { get; set; } = string.Empty!;
 
     [JsonPropertyName("uri")]
-    public string Uri { get; set; } = default!;
+    public string Uri { get; set; } = string.Empty;
 }

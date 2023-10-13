@@ -13,7 +13,7 @@ public class Rectangles : BaseDto
     /// <summary>
     /// CardCode of card.
     /// </summary>
-    public string CardCode { get; set; } = default!;
+    public string CardCode { get; set; } = string.Empty;
 
     /// <summary>
     /// The TopLeftX fields indicate the position of the top left corner of the card relative to the bottom left corner of the game client.

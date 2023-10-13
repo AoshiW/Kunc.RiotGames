@@ -1,4 +1,6 @@
-﻿namespace Kunc.RiotGames.Lor.GameClient;
+﻿using System.Text.Json.Serialization;
+
+namespace Kunc.RiotGames.Lor.GameClient;
 
 /// <summary>
 /// Information about position of the cards in the collection, deck builder, and active games.
@@ -26,10 +28,11 @@ public class PositionalRectangles : BaseDto
     /// <summary>
     /// Screen resolution in game.
     /// </summary>
-    public Screen Screen { get; set; } = default!;
+    [JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]
+    public Screen Screen { get; set; } = new();
 
     /// <summary>
     /// Information about card positions.
     /// </summary>
-    public Rectangles[] Rectangles { get; set; } = default!;
+    public Rectangles[] Rectangles { get; set; } = Array.Empty<Rectangles>();
 }

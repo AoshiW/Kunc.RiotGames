@@ -6,6 +6,7 @@
         <Nullable>enable</Nullable>
         <LangVersion>latest</LangVersion>
         <AnalysisLevel>latest-recommended</AnalysisLevel>
+        <ArtifactsPath>$(MSBuildThisFileDirectory)artifacts</ArtifactsPath>
     </PropertyGroup>
 
 </Project>

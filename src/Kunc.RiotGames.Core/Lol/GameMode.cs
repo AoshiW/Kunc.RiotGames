@@ -5,11 +5,7 @@ namespace Kunc.RiotGames.Lol;
 /// <summary>
 /// Game modes in League of Legends.
 /// </summary>
-#if NET8_0_OR_GREATER
 [JsonConverter(typeof(JsonStringEnumConverter<GameMode>))]
-#else
-[JsonConverter(typeof(JsonStringEnumConverter))]
-#endif
 public enum GameMode
 {
     /// <summary>

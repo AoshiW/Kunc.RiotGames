@@ -2,11 +2,7 @@
 
 namespace Kunc.RiotGames;
 
-#if NET8_0_OR_GREATER
 [JsonConverter(typeof(JsonStringEnumConverter<Game>))]
-#else
-[JsonConverter(typeof(JsonStringEnumConverter))]
-#endif
 public enum Game
 {
     /// <summary>

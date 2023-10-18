@@ -3,11 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Kunc.RiotGames.Lol;
 
-#if NET8_0_OR_GREATER
 [JsonConverter(typeof(JsonStringEnumConverter<Division>))]
-#else
-[JsonConverter(typeof(JsonStringEnumConverter))]
-#endif
 public enum Division
 {
     None,

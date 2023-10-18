@@ -5,5 +5,9 @@
         <Description></Description>
         <Version>0.1.3</Version>
     </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="System.Text.Json" />
+    </ItemGroup>
     
 </Project>

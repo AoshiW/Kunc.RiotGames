@@ -22,14 +22,7 @@ public class DeckItem : IReadOnlyDeckItem, IDeckItem, IEquatable<DeckItem?>
     public DeckItem(string cardCode, int count)
     {
         ArgumentNullException.ThrowIfNull(cardCode);
-#if NET8_0_OR_GREATER
         ArgumentOutOfRangeException.ThrowIfNegative(count);
-#else
-        if (count < 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(count), count, $"'{nameof(count)}' must be a non-negative value.");
-        }
-#endif
         CardCode = cardCode;
         Count = count;
     }

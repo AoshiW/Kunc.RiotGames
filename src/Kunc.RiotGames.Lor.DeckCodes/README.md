@@ -34,11 +34,5 @@ List<MyCard> deck = deckEncoder.GetDeckFromCode<MyCard>("SomeCode");
 string code = deckEncoder.GetCodeFromDeck(deck);
 ```
 
-### Build-in DI support
-```cs
-serviceCollection.AddLorDeckCodes();  
-// ...
-var deckEncoder = serviceProvider.GetRequiredService<ILorDeckEncoder>();
-```
 ## Disclaimer
 `Kunc.RiotGames.Lor.DeckCodes` isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.

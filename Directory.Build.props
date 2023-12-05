@@ -1,12 +1,13 @@
 <Project>
 
     <PropertyGroup>
-        <TargetFrameworks>net7.0;net8.0</TargetFrameworks>
+        <TargetFrameworks>net8.0</TargetFrameworks>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <LangVersion>latest</LangVersion>
         <AnalysisLevel>latest-recommended</AnalysisLevel>
         <ArtifactsPath>$(MSBuildThisFileDirectory)artifacts</ArtifactsPath>
+        <IsAotCompatible>true</IsAotCompatible>
     </PropertyGroup>
 
 </Project>

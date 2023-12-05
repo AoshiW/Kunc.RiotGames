@@ -34,5 +34,5 @@ public class PositionalRectangles : BaseDto
     /// <summary>
     /// Information about card positions.
     /// </summary>
-    public Rectangles[] Rectangles { get; set; } = Array.Empty<Rectangles>();
+    public Rectangles[] Rectangles { get; set; } = [];
 }

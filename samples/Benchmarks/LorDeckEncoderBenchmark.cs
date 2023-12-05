@@ -6,9 +6,7 @@ using Kunc.RiotGames.Lor.DeckCodes;
 namespace Benchmarks;
 
 [MemoryDiagnoser]
-//[ShortRunJob(RuntimeMoniker.Net60)]
-[ShortRunJob(RuntimeMoniker.Net70)]
-[ShortRunJob(RuntimeMoniker.Net80)]
+[ShortRunJob]
 public class KuncLorDeckEncoderBenchmark: LorDeckEncoderBenchmarkBase
 {
 
@@ -23,7 +21,7 @@ public class KuncLorDeckEncoderBenchmark: LorDeckEncoderBenchmarkBase
 }
 
 [MemoryDiagnoser]
-[ShortRunJob(RuntimeMoniker.Net70)]
+[ShortRunJob]
 public class RiotLorDeckEncoderBenchmark : LorDeckEncoderBenchmarkBase
 {
     [Benchmark(Description = "Riot.GetCode"), ArgumentsSource(nameof(Inputs))]

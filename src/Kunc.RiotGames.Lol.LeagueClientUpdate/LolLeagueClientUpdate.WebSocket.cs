@@ -7,8 +7,8 @@ namespace Kunc.RiotGames.Lol.LeagueClientUpdate;
 public partial class LolLeagueClientUpdate : ILolLeagueClientUpdate
 {
     readonly object _lock = new();
-    private readonly List<EventInfo> _events = new();
-    EventInfo[] _readOnlyEvents = Array.Empty<EventInfo>();
+    private readonly List<EventInfo> _events = [];
+    EventInfo[] _readOnlyEvents = [];
     bool _isEdited = true;
     CancellationTokenSource? _cancellationTokenSource;
 
@@ -40,7 +40,7 @@ public partial class LolLeagueClientUpdate : ILolLeagueClientUpdate
         if (e.Length != 3 || e[0].GetInt32() != 8)
             return;
         var data = e[2];
-        OnLcuEvent?.Invoke(this, data.Deserialize<LcuEventArgs<JsonElement>>()!);
+        OnLcuEvent?.Invoke(this, data.Deserialize(LcuJsonContext.Default.LcuEventArgsJsonElement)!);
         if (!e[1].ValueEquals("OnJsonApiEvent"u8) )
             return;
 
@@ -161,6 +161,7 @@ public partial class LolLeagueClientUpdate : ILolLeagueClientUpdate
     {
         return SubscribeAllCore(typeof(T), target, options);
     }
+
 
     int SubscribeAllCore(Type type, object? target, MethodOptions options)
     {

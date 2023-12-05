@@ -58,7 +58,7 @@ public sealed partial class Wamp : IWamp
                         if (received.EndOfMessage && memoryStream.Position == 0)
                         {
                             LogFullMessageReceived(received.Count);
-                            var data = JsonSerializer.Deserialize<JsonElement[]>(buffer.AsSpan(0, received.Count))!;
+                            var data = JsonSerializer.Deserialize(buffer.AsSpan(0, received.Count), LcuJsonContext.Default.JsonElementArray)!;
                             OnMessage?.Invoke(this, data);
                             break;
                         }
@@ -67,7 +67,7 @@ public sealed partial class Wamp : IWamp
                         {
                             LogFullMessageReceived(memoryStream.Position);
                             var memmoryBuffer = memoryStream.GetBuffer();
-                            var data = JsonSerializer.Deserialize<JsonElement[]>(memmoryBuffer.AsSpan(0, (int)memoryStream.Position))!;
+                            var data = JsonSerializer.Deserialize(memmoryBuffer.AsSpan(0, (int)memoryStream.Position), LcuJsonContext.Default.JsonElementArray)!;
                             OnMessage?.Invoke(this, data);
                             memoryStream.SetLength(0);
                         }

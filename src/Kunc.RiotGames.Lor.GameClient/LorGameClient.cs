@@ -58,9 +58,13 @@ public class LorGameClient : ILorGameClient, IDisposable
     /// </param>
     protected virtual void Dispose(bool disposing)
     {
-        if (!_disposed && disposing)
+        if (!_disposed)
         {
-            _client.Dispose();
+            if (disposing)
+            {
+                _client.Dispose();
+                _disposed = true;
+            }
             _disposed = true;
         }
     }

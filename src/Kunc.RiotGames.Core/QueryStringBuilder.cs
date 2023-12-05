@@ -7,9 +7,7 @@ namespace Kunc.RiotGames;
 /// </summary>
 public ref struct QueryStringBuilder
 {
-#pragma warning disable IDE0044 // Add readonly modifier
     DefaultInterpolatedStringHandler _handler;
-#pragma warning restore IDE0044 // Add readonly modifier
     bool _hasAny;
 
     /// <summary>

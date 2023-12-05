@@ -56,7 +56,7 @@ internal static class Base32
     {
         var length = GetByteCount(chars);
         if (length == 0)
-            return Array.Empty<byte>();
+            return [];
         var bytes = new byte[length];
         return TryFromBase32(chars, bytes, out var w)
             ? bytes

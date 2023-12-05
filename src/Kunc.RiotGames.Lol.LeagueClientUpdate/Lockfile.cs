@@ -1,6 +1,5 @@
 ﻿using System.Buffers;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
@@ -9,9 +8,7 @@ using System.Text.Unicode;
 namespace Kunc.RiotGames.Lol.LeagueClientUpdate;
 
 public sealed class Lockfile : IEquatable<Lockfile?>, ISpanFormattable, ISpanParsable<Lockfile>
-#if NET8_0_OR_GREATER
     , IUtf8SpanFormattable, IUtf8SpanParsable<Lockfile>
-#endif
 {
     /// <summary>
     /// Represent a Lockfile with default values.
@@ -60,19 +57,8 @@ public sealed class Lockfile : IEquatable<Lockfile?>, ISpanFormattable, ISpanPar
         ArgumentNullException.ThrowIfNull(name);
         ArgumentNullException.ThrowIfNull(password);
         ArgumentNullException.ThrowIfNull(protocol);
-#if NET8_0_OR_GREATER
         ArgumentOutOfRangeException.ThrowIfNegative(processID);
         ArgumentOutOfRangeException.ThrowIfNegative(port);
-#else
-        if (processID < 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(processID), processID, $"'{nameof(processID)}' must be a non-negative value.");
-        }
-        if (port < 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(port), port, $"'{nameof(port)}' must be a non-negative value.");
-        }
-#endif
         Name = name;
         ProcessID = processID;
         Port = port;
@@ -126,30 +112,23 @@ public sealed class Lockfile : IEquatable<Lockfile?>, ISpanFormattable, ISpanPar
     /// <inheritdoc/>
     public static bool TryParse(ReadOnlySpan<char> s, IFormatProvider? provider, [MaybeNullWhen(false)] out Lockfile result)
     {
-        if (TryReadNext(ref s, out var name) &&
-            TryReadNext(ref s, out var number1) && int.TryParse(number1, NumberStyles.Integer, provider, out var processId) &&
-            TryReadNext(ref s, out var number2) && int.TryParse(number2, NumberStyles.Integer, provider, out var port) &&
-            TryReadNext(ref s, out var password))
+        result = default;
+        Span<Range> slices = stackalloc Range[6];
+        if (s.Split(slices, ':') != 5)
+            return false;
+
+        var name = s[slices[0]];
+        var numberProcessId = s[slices[1]];
+        var numberPort = s[slices[2]];
+        var password = s[slices[3]];
+        var protocol = s[slices[4]];
+
+        if (int.TryParse(numberProcessId, provider, out var processId) && int.TryParse(numberPort, provider, out var port))
         {
-            var protocol = s;
             result = new Lockfile(name.ToString(), processId, port, password.ToString(), protocol.ToString());
             return true;
         }
-        result = default;
         return false;
-
-        static bool TryReadNext(ref ReadOnlySpan<char> span, out ReadOnlySpan<char> output)
-        {
-            var index = span.IndexOf(':');
-            if (index == -1)
-            {
-                output = default;
-                return false;
-            }
-            output = span.Slice(0, index);
-            span = span.Slice(index + 1);
-            return true;
-        }
     }
 
     /// <inheritdoc/>
@@ -223,11 +202,9 @@ public sealed class Lockfile : IEquatable<Lockfile?>, ISpanFormattable, ISpanPar
     public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider? provider)
         => destination.TryWrite($"{Name}:{ProcessID}:{Port}:{Password}:{Protocol}", out charsWritten);
 
-#if NET8_0_OR_GREATER
     /// <inheritdoc/>
     public bool TryFormat(Span<byte> utf8Destination, out int bytesWritten, ReadOnlySpan<char> format, IFormatProvider? provider)
     {
         return Utf8.TryWrite(utf8Destination, $"{Name}:{ProcessID}:{Port}:{Password}:{Protocol}", out bytesWritten);
     }
-#endif
 }

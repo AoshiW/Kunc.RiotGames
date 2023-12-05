@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.HighPerformance" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
   </ItemGroup>
 
 </Project>

@@ -281,10 +281,10 @@ public class LorDeckEncoder : ILorDeckEncoder
 
     private static List<List<T>> GetGroupedOfs<T>(List<T> list) where T : IReadOnlyDeckItem
     {
-        List<List<T>> result = new();
+        var result = new List<List<T>>();
         while (list.Count > 0)
         {
-            List<T> currentSet = new(4);
+            var currentSet = new List<T>(4);
 
             //get info from last
             var lastIndex = list.Count - 1;
@@ -354,12 +354,7 @@ public class LorDeckEncoder : ILorDeckEncoder
             return false;
         var faction = ConvertFactionToUInt(cardcode.Slice(2, 2));
         return FactionCodeInfo.ContainsKey(faction)
-#if NET8_0_OR_GREATER
             && cardcode.Slice(0, 2).IndexOfAnyExceptInRange('0', '9') == -1
             && cardcode.Slice(4).IndexOfAnyExceptInRange('0', '9') == -1;
-#else
-            && int.TryParse(cardcode.Slice(0, 2), out _)
-            && int.TryParse(cardcode.Slice(4), out _);
-#endif
     }
 }

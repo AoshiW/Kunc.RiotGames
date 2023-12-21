@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <PackageTags>Lol;LeagueOfLegends;DataDragon</PackageTags>
+        <Description></Description>
+        <Version>0.1.1</Version>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Kunc.RiotGames.Core\Kunc.RiotGames.Core.csproj" />
+    </ItemGroup>
+
+</Project>

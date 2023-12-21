@@ -7,7 +7,6 @@
         <LangVersion>latest</LangVersion>
         <AnalysisLevel>latest-recommended</AnalysisLevel>
         <ArtifactsPath>$(MSBuildThisFileDirectory)artifacts</ArtifactsPath>
-        <IsAotCompatible>true</IsAotCompatible>
     </PropertyGroup>
 
 </Project>

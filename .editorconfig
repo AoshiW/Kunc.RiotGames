@@ -383,3 +383,8 @@ end_of_line = crlf
 dotnet_style_allow_multiple_blank_lines_experimental = true:silent
 dotnet_style_allow_statement_immediately_after_block_experimental = true:silent
 
+
+# IDE0305: Simplify collection initialization
+dotnet_style_prefer_collection_expression = false
+# IDE0290: Use primary constructor
+csharp_style_prefer_primary_constructors = false

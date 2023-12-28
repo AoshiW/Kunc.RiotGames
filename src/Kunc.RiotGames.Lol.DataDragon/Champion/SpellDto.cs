@@ -20,13 +20,13 @@ public class SpellDto : PassiveDto
 
     // todo => timespan
     [JsonPropertyName("cooldown")]
-    public int[] Cooldown { get; set; } = [];
+    public double[] Cooldown { get; set; } = [];
 
     [JsonPropertyName("cooldownBurn")]
     public string CooldownBurn { get; set; } = string.Empty;
 
     [JsonPropertyName("cost")]
-    public int Cost { get; set; }
+    public int[] Cost { get; set; }
 
     [JsonPropertyName("costBurn")]
     public string CostBurn { get; set; } = string.Empty;
@@ -35,7 +35,7 @@ public class SpellDto : PassiveDto
     public JsonElement Datavalues { get; set; }
 
     [JsonPropertyName("effect")]
-    public int[]?[] Effect { get; set; } = [];
+    public double[]?[] Effect { get; set; } = [];
 
     [JsonPropertyName("effectBurn")]
     public string?[] EffectBurn { get; set; } = [];
@@ -50,7 +50,7 @@ public class SpellDto : PassiveDto
     public string Maxammo { get; set; } = string.Empty;
 
     [JsonPropertyName("range")]
-    public int[] Range { get; set; } = [];
+    public double[] Range { get; set; } = [];
 
     [JsonPropertyName("rangeBurn")]
     public string RangeBurn { get; set; } = string.Empty;

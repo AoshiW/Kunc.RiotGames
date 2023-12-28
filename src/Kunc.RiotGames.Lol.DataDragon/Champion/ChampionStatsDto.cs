@@ -8,7 +8,7 @@ public class ChampionStatsDto : BaseDto
     public double HP { get; set; }
 
     [JsonPropertyName("hpperlevel")]
-    public int HPPerLevel { get; set; }
+    public double HPPerLevel { get; set; }
 
     [JsonPropertyName("mp")]
     public double MP { get; set; }
@@ -17,10 +17,10 @@ public class ChampionStatsDto : BaseDto
     public double MPPerLevel { get; set; }
 
     [JsonPropertyName("movespeed")]
-    public int MoveSpeed { get; set; }
+    public double MoveSpeed { get; set; }
 
     [JsonPropertyName("armor")]
-    public int Armor { get; set; }
+    public double Armor { get; set; }
 
     [JsonPropertyName("armorperlevel")]
     public double ArmorPerLevel { get; set; }
@@ -32,7 +32,7 @@ public class ChampionStatsDto : BaseDto
     public double SpellBlockPerLevel { get; set; }
 
     [JsonPropertyName("attackrange")]
-    public int AttackRange { get; set; }
+    public double AttackRange { get; set; }
 
     [JsonPropertyName("hpregen")]
     public double HPRegen { get; set; }
@@ -47,10 +47,10 @@ public class ChampionStatsDto : BaseDto
     public double MPRegenPerLevel { get; set; }
 
     [JsonPropertyName("crit")]
-    public int Crit { get; set; }
+    public double Crit { get; set; }
 
     [JsonPropertyName("critperlevel")]
-    public int Critperlevel { get; set; }
+    public double Critperlevel { get; set; }
 
     [JsonPropertyName("attackdamage")]
     public double AttackDamage { get; set; }

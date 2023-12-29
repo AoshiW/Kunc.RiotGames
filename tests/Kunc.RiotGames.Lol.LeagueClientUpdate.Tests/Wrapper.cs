@@ -20,7 +20,7 @@ class Wrapper<T>
     }
 
     public T Value { get; set; } = default!;
-    
+
     public void EventHandler(object? sender, EventArgs e)
     {
         _onEvent(this);

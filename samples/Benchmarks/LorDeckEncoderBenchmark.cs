@@ -7,7 +7,7 @@ namespace Benchmarks;
 
 [MemoryDiagnoser]
 [ShortRunJob]
-public class KuncLorDeckEncoderBenchmark: LorDeckEncoderBenchmarkBase
+public class KuncLorDeckEncoderBenchmark : LorDeckEncoderBenchmarkBase
 {
 
     [Benchmark(Description = "Kunc.GetCode"), ArgumentsSource(nameof(Inputs))]

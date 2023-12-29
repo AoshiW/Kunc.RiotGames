@@ -19,7 +19,7 @@ internal class NullDistributedCache : IDistributedCache
     public byte[]? Get(string key) => null;
 
     /// <inheritdoc/>
-    public Task<byte[]?> GetAsync(string key, CancellationToken token = default) 
+    public Task<byte[]?> GetAsync(string key, CancellationToken token = default)
         => Task.FromResult<byte[]?>(null);
 
     /// <inheritdoc/>

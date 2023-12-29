@@ -9,13 +9,13 @@ public sealed partial class Wamp : IWamp
 {
     /// <inheritdoc/>
     public event EventHandler<JsonElement[]>? OnMessage;
-    
+
     /// <inheritdoc/>
     public event EventHandler? OnDisconnect;
-    
+
     /// <inheritdoc/>
     public event EventHandler? OnConnect;
-    
+
     /// <inheritdoc/>
     public event EventHandler<Exception>? OnMessageException;
 
@@ -94,7 +94,7 @@ public sealed partial class Wamp : IWamp
     /// <inheritdoc/>
     public async Task ConnectAsync(Lockfile lockfile, CancellationToken token)
     {
-        if(IsConnected)
+        if (IsConnected)
         {
             throw new InvalidOperationException("WAMP is already connected.");
         }

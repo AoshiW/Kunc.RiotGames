@@ -41,7 +41,7 @@ public partial class LolLeagueClientUpdate : ILolLeagueClientUpdate
             return;
         var data = e[2];
         OnLcuEvent?.Invoke(this, data.Deserialize(LcuJsonContext.Default.LcuEventArgsJsonElement)!);
-        if (!e[1].ValueEquals("OnJsonApiEvent"u8) )
+        if (!e[1].ValueEquals("OnJsonApiEvent"u8))
             return;
 
         object? boxedCancellationToken = null;
@@ -61,7 +61,7 @@ public partial class LolLeagueClientUpdate : ILolLeagueClientUpdate
 
         foreach (var item in eventLocalCopy)
         {
-            if (!uriProp.ValueEquals(item.EventAttribute.Uri) || 
+            if (!uriProp.ValueEquals(item.EventAttribute.Uri) ||
                 (item.EventAttribute.EventType is not null && !eventTypeProp.ValueEquals(item.EventAttribute.EventType)))
                 continue;
             var args = cacheArray.Get(item.ArgTypes.Length);

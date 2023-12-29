@@ -24,7 +24,7 @@ partial class Program
         .AddSingleton<ILorDeckEncoder, LorDeckEncoder>()
         .AddSingleton<ILorGameClient, LorGameClient>()
         .AddSingleton<ILolDataDragon, LolDataDragon>()
-        .AddSqliteCache(x=>
+        .AddSqliteCache(x =>
         {
             x.CachePath = "cache.sqlite";
         })

@@ -18,7 +18,7 @@ namespace Kunc.RiotGames.Lol.DataDragon;
 
 public class LolDataDragon : ILolDataDragon
 {
-    static Uri VersionsUri = new("api/versions.json", UriKind.Relative);
+    static readonly Uri VersionsUri = new("api/versions.json", UriKind.Relative);
 
     readonly HttpClient _client = new()
     {

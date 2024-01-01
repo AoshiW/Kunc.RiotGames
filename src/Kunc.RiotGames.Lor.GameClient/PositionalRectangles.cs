@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 namespace Kunc.RiotGames.Lor.GameClient;
 
@@ -35,4 +36,10 @@ public class PositionalRectangles : BaseDto
     /// Information about card positions.
     /// </summary>
     public Rectangles[] Rectangles { get; set; } = [];
+
+    [JsonIgnore]
+    [MemberNotNullWhen(true, nameof(PlayerName), nameof(OpponentName), nameof(GameState))]
+    public bool HasData => PlayerName is not null &&
+        OpponentName is not null &&
+        GameState.HasValue;
 }

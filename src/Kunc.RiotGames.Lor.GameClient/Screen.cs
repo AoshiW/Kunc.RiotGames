@@ -6,7 +6,6 @@ namespace Kunc.RiotGames.Lor.GameClient;
 /// <summary>
 /// Game screen resolution
 /// </summary>
-
 [DebuggerDisplay($"{{{nameof(Width)}}} x {{{nameof(Height)}}}")]
 public class Screen : BaseDto
 {

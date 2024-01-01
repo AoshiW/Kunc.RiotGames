@@ -8,11 +8,6 @@
 var options = new LorGameClientOptions();
 var lorGameClient = new LorGameClient(options);
 
-var services = new ServiceCollection()
-    .AddLorGameClient()
-    .BuildServiceProvider();
-var lorGameClient = services.GetRequiredService<ILorGameClient>();
-
 while (true)
 {
     PositionalRectangles positionalRectangles = await lorGameClient.GetPositionalRectanglesAsync();

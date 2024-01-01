@@ -51,9 +51,9 @@ internal class VarintTranslator
         throw new ArgumentException("Span of bytes did not contain valid varints.");
     }
 
-    public static bool TryGetVarint(ulong value, Span<byte> destination, out int w)
+    public static bool TryGetVarint(ulong value, Span<byte> destination, out int written)
     {
-        w = 0;
+        written = 0;
         if (destination.IsEmpty)
         {
             return false;
@@ -61,23 +61,23 @@ internal class VarintTranslator
         if (value == 0)
         {
             destination[0] = 0;
-            w = 1;
+            written = 1;
             return true;
         }
-        while (value != 0 && w < destination.Length)
+        while (value != 0 && written < destination.Length)
         {
             var byteVal = value & AllButMSB;
             value >>= 7;
             if (value != 0)
                 byteVal |= 0x80;
-            destination[w++] = (byte)byteVal;
+            destination[written++] = (byte)byteVal;
         }
         return value == 0;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool TryGetVarint(int value, Span<byte> destination, out int w)
+    public static bool TryGetVarint(int value, Span<byte> destination, out int written)
     {
-        return TryGetVarint((ulong)value, destination, out w);
+        return TryGetVarint((ulong)value, destination, out written);
     }
 }

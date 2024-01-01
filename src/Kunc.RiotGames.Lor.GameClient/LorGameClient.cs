@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Json;
+using Microsoft.Extensions.Options;
 
 namespace Kunc.RiotGames.Lor.GameClient;
 
@@ -10,47 +11,43 @@ public class LorGameClient : ILorGameClient, IDisposable
     private static readonly Uri GameResultUri = new("game-result");
 
     private readonly HttpClient _client = new();
-    private bool _disposed;
-
-    /// <inheritdoc/>
-    public int Port
-    {
-        get => _client.BaseAddress!.Port;
-        set => _client.BaseAddress = new($"http://127.0.0.1:{value}");
-    }
+    private readonly LorGameClientOptions _options;
+    private bool _disposedValue;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="LorGameClient"/> class.
     /// </summary>
-    /// <param name="port"></param>
-    public LorGameClient(int port = 21337)
+    /// <exception cref="ArgumentNullException"></exception>
+    public LorGameClient(IOptions<LorGameClientOptions> options)
     {
-        Port = port;
+        ArgumentNullException.ThrowIfNull(options);
+        _options = options.Value;
+        _client.BaseAddress = new($"http://127.0.0.1:{_options.Port}");
     }
 
     /// <inheritdoc/>
     public async Task<StaticDecklist> GetStaticDecklistAsync(CancellationToken cancellationToken = default)
     {
-        var decklist = await _client.GetFromJsonAsync(StaticDecklistUri, JsonContext.Default.StaticDecklist, cancellationToken).ConfigureAwait(false);
+        var decklist = await _client.GetFromJsonAsync<StaticDecklist>(StaticDecklistUri, _options.JsonSerializerOptions, cancellationToken).ConfigureAwait(false);
         return decklist!;
     }
 
     /// <inheritdoc/>
     public async Task<PositionalRectangles> GetPositionalRectanglesAsync(CancellationToken cancellationToken = default)
     {
-        var positionalRectangles = await _client.GetFromJsonAsync(PositionalRectanglesUri, JsonContext.Default.PositionalRectangles, cancellationToken).ConfigureAwait(false);
+        var positionalRectangles = await _client.GetFromJsonAsync<PositionalRectangles>(PositionalRectanglesUri, _options.JsonSerializerOptions, cancellationToken).ConfigureAwait(false);
         return positionalRectangles!;
     }
 
     /// <inheritdoc/>
     public async Task<GameResult> GetGameResultAsync(CancellationToken cancellationToken = default)
     {
-        var gameResult = await _client.GetFromJsonAsync(GameResultUri, JsonContext.Default.GameResult, cancellationToken).ConfigureAwait(false);
+        var gameResult = await _client.GetFromJsonAsync<GameResult>(GameResultUri, _options.JsonSerializerOptions, cancellationToken).ConfigureAwait(false);
         return gameResult!;
     }
 
     /// <summary>
-    /// Releases the unmanaged resources used by the System.Net.Http.HttpClient and optionally disposes of the managed resources.
+    /// Releases the unmanaged resources and optionally disposes of the managed resources.
     /// </summary>
     /// <param name="disposing">
     /// <see langword="true"/> to release both managed and unmanaged resources;
@@ -58,14 +55,13 @@ public class LorGameClient : ILorGameClient, IDisposable
     /// </param>
     protected virtual void Dispose(bool disposing)
     {
-        if (!_disposed)
+        if (!_disposedValue)
         {
             if (disposing)
             {
                 _client.Dispose();
-                _disposed = true;
             }
-            _disposed = true;
+            _disposedValue = true;
         }
     }
 

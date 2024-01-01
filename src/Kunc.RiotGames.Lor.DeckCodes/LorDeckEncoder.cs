@@ -349,12 +349,12 @@ public class LorDeckEncoder : ILorDeckEncoder
 
     private static bool ValidDeckItem<T>(T item) where T : IReadOnlyDeckItem
     {
-        var cardcode = item.CardCode.AsSpan();
-        if (cardcode.Length != CardCodeLength || item.Count < 1)
+        var cardCode = item.CardCode.AsSpan();
+        if (cardCode.Length != CardCodeLength || item.Count < 1)
             return false;
-        var faction = ConvertFactionToUInt(cardcode.Slice(2, 2));
+        var faction = ConvertFactionToUInt(cardCode.Slice(2, 2));
         return FactionCodeInfo.ContainsKey(faction)
-            && cardcode.Slice(0, 2).IndexOfAnyExceptInRange('0', '9') == -1
-            && cardcode.Slice(4).IndexOfAnyExceptInRange('0', '9') == -1;
+            && cardCode.Slice(0, 2).IndexOfAnyExceptInRange('0', '9') == -1
+            && cardCode.Slice(4).IndexOfAnyExceptInRange('0', '9') == -1;
     }
 }

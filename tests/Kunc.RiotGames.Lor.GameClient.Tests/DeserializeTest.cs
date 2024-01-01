@@ -30,8 +30,8 @@ public class DeserializeTest
         {
             isEmpty = false;
             var json = File.ReadAllText(item);
-            var gameResult = JsonSerializer.Deserialize<T>(json);
-            Assert.IsNotNull(gameResult);
+            var obj = JsonSerializer.Deserialize<T>(json);
+            Assert.IsNotNull(obj);
         }
         Assert.IsFalse(isEmpty);
     }

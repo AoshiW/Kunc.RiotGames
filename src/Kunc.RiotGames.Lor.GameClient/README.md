@@ -1,10 +1,18 @@
 ﻿# Kunc.RiotGames.Lor.GameClient
 [![Nuget](https://img.shields.io/nuget/v/Kunc.RiotGames.Lor.GameClient?logo=NuGet&logoColor=blue&style=flat-square)](https://www.nuget.org/packages/Kunc.RiotGames.Lor.GameClient)
 
-[Game Client API](https://developer.riotgames.com/docs/lor#game-client-api) for Legends of Runeterra
+[Game Client API](https://developer.riotgames.com/docs/lor#game-client-api) for Legends of Runeterra.
+
 ## Usage
 ```cs
-var lorGameClient = new LorGameClient();
+var options = new LorGameClientOptions();
+var lorGameClient = new LorGameClient(options);
+
+var services = new ServiceCollection()
+    .AddLorGameClient()
+    .BuildServiceProvider();
+var lorGameClient = services.GetRequiredService<ILorGameClient>();
+
 while (true)
 {
     PositionalRectangles positionalRectangles = await lorGameClient.GetPositionalRectanglesAsync();

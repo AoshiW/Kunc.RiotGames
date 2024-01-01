@@ -9,11 +9,6 @@
 public interface ILorGameClient
 {
     /// <summary>
-    ///  Gets or sets the port number of <see cref="ILorGameClient"/>
-    /// </summary>
-    int Port { get; set; }
-
-    /// <summary>
     /// Get <see cref="GameResult"/> after last game.
     /// </summary>
     /// <remarks>

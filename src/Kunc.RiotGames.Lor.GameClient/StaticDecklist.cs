@@ -6,7 +6,7 @@
 public class StaticDecklist : BaseDto
 {
     /// <summary>
-    /// Deckcode of current deck.
+    /// DeckCode of current deck.
     /// </summary>
     public string? DeckCode { get; set; }
 

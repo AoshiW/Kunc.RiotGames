@@ -24,4 +24,10 @@ public class ImageDto : BaseDto
 
     [JsonPropertyName("h")]
     public int Height { get; set; }
+
+    public string GetUriPath(string version)
+    {
+        ArgumentNullException.ThrowIfNull(version);
+        return $"cdn/{version}/img/{Group}/{Full}";
+    }
 }

@@ -23,7 +23,7 @@ partial class Program
         //.AddSingleton<IWamp, NullWamp>() // testing
         .AddSingleton<ILorDeckEncoder, LorDeckEncoder>()
         .AddSingleton<ILorGameClient, LorGameClient>()
-        .AddSingleton<ILolDataDragon, LolDataDragon>()
+        .AddLolDataDragon()
         .AddSqliteCache(x =>
         {
             x.CachePath = "cache.sqlite";

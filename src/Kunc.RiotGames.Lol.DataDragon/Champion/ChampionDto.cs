@@ -26,4 +26,18 @@ public class ChampionDto : ChampionBaseDto
 
     [JsonPropertyName("recommended")]
     public JsonElement[] Recommended { get; set; } = [];
+
+    public string GetImageUrl(SkinDto skin, ChampionImageType imageType)
+    {
+        ArgumentNullException.ThrowIfNull(skin);
+        var type = imageType switch
+        {
+            ChampionImageType.Centered => "centered",
+            ChampionImageType.Loading => "loading",
+            ChampionImageType.Splash => "splash",
+            ChampionImageType.Tiles => "tiles",
+            _ => throw new ArgumentOutOfRangeException(nameof(imageType))
+        };
+        return $"cdn/img/champion/{type}/{Id}_{skin.Num}.jpg";
+    }
 }

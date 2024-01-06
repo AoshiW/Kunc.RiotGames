@@ -7,15 +7,18 @@ using Kunc.RiotGames.Lol.DataDragon.RuneReforged;
 using Kunc.RiotGames.Lol.DataDragon.SummonerSpell;
 
 namespace Kunc.RiotGames.Lol.DataDragon;
+
 public interface ILolDataDragon
 {
-    Task<Dictionary<string, ChampionDto>> GetAllChampionsAsync(string version, string language, CancellationToken cancellationToken);
-    Task<Dictionary<string, ChampionBaseDto>> GetAllChampionsBaseAsync(string version, string language, CancellationToken cancellationToken);
-    Task<ChallengeDto[]> GetChallengesAsync(string version, string language, CancellationToken cancellationToken);
-    Task<Dictionary<string, ItemDto>> GetItemsAsync(string version, string language, CancellationToken cancellationToken);
-    Task<Dictionary<string, MapDto>> GetMapsAsync(string version, string language, CancellationToken cancellationToken);
-    Task<Dictionary<string, ProfileIconDto>> GetProfileIconsAsync(string version, string language, CancellationToken cancellationToken);
-    Task<RuneReforgedDto[]> GetRunesReforgedAsync(string version, string language, CancellationToken cancellationToken);
-    Task<Dictionary<string, SummonerSpellDto>> GetSummonerSpellsAsync(string version, string language, CancellationToken cancellationToken);
-    Task<string[]> GetVersionsAsync(CancellationToken cancellationToken);
+    Task<Dictionary<string, ChampionDto>> GetAllChampionsAsync(string version, string language, CancellationToken cancellationToken = default);
+    Task<Dictionary<string, ChampionBaseDto>> GetAllChampionsBaseAsync(string version, string language, CancellationToken cancellationToken = default);
+    Task<ChampionDto> GetChampionsAsync(string version, string language, string id, CancellationToken cancellationToken = default);
+    Task<ChallengeDto[]> GetChallengesAsync(string version, string language, CancellationToken cancellationToken = default);
+    Task<Dictionary<string, ItemDto>> GetItemsAsync(string version, string language, CancellationToken cancellationToken = default  );
+    Task<Dictionary<string, MapDto>> GetMapsAsync(string version, string language, CancellationToken cancellationToken = default);
+    Task<Dictionary<string, ProfileIconDto>> GetProfileIconsAsync(string version, string language, CancellationToken cancellationToken = default);
+    Task<RuneReforgedDto[]> GetRunesReforgedAsync(string version, string language, CancellationToken cancellationToken = default);
+    Task<Dictionary<string, SummonerSpellDto>> GetSummonerSpellsAsync(string version, string language, CancellationToken cancellationToken = default);
+    Task<string[]> GetLanguagesAsync(CancellationToken cancellationToken = default);
+    Task<string[]> GetVersionsAsync(CancellationToken cancellationToken = default);
 }

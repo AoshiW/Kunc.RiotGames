@@ -18,6 +18,6 @@ namespace Kunc.RiotGames.Lol.DataDragon;
 [JsonSerializable(typeof(RootDto<ChampionDto>))]
 [JsonSerializable(typeof(RuneReforgedDto[]))]
 [JsonSerializable(typeof(ChallengeDto[]))]
-internal partial class DDJsonContext : JsonSerializerContext
+internal partial class JsonContext : JsonSerializerContext
 {
 }

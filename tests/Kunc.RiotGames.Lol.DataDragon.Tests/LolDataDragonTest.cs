@@ -77,6 +77,14 @@ public class LolDataDragonTest
     }
 
     [TestMethod]
+    public async Task GetLanguages()
+    {
+        var languages = await _dataDragon.GetLanguagesAsync(default);
+
+        Assert.IsNotNull(languages);
+    }
+
+    [TestMethod]
     public async Task GetRunesReforged()
     {
         var lastVersion = await GetLastVersionAsync();

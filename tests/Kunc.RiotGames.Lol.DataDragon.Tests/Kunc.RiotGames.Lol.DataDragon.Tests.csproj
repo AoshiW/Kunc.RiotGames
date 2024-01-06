@@ -15,7 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\src\Kunc.RiotGames.Lol.DataDragon\Kunc.RiotGames.Lol.DataDragon.csproj" />
+      <ProjectReference Include="..\..\src\Kunc.RiotGames.Lol.DataDragon\Kunc.RiotGames.Lol.DataDragon.csproj" />
     </ItemGroup>
 
 </Project>

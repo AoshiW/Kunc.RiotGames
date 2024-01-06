@@ -1,7 +1,9 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Diagnostics;
+using System.Text.Json.Serialization;
 
 namespace Kunc.RiotGames.Lol.DataDragon.Champion;
 
+[DebuggerDisplay($"{nameof(Attack)}: {{{nameof(Attack)}}}, {nameof(Defense)}: {{{nameof(Defense)}}}, {nameof(Magic)}: {{{nameof(Magic)}}}, {nameof(Difficulty)}: {{{nameof(Difficulty)}}}")]
 public class ChamionInfoDto : BaseDto
 {
     [JsonPropertyName("attack")]

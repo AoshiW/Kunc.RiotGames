@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Kunc.RiotGames.JsonConverters;
 
 namespace Kunc.RiotGames.Api.LorRankedV1;
 
@@ -11,8 +12,9 @@ public class PlayerDto : BaseDto
     public int Rank { get; set; }
 
     /// <summary>
-    /// 	League points.
+    /// League points.
     /// </summary>
     [JsonPropertyName("lp")]
+    [JsonConverter(typeof(Int32Converter))]
     public int Lp { get; set; }
 }

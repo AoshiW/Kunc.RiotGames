@@ -7,9 +7,6 @@ public class TopRatedLadderEntryDto : BaseDto
     [JsonPropertyName("summonerId")]
     public string SummonerId { get; set; } = string.Empty;
 
-    [JsonPropertyName("summonerName")]
-    public string SummonerName { get; set; } = string.Empty;
-
     [JsonPropertyName("ratedTier")]
     public RatedTier RatedTier { get; set; }
 

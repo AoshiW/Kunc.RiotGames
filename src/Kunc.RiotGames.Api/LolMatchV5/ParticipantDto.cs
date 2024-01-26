@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-using System.Text.Json.Serialization;
-using System.Text.Json.Serialization.Metadata;
+﻿using System.Text.Json.Serialization;
 using Kunc.RiotGames.JsonConverters;
 using Kunc.RiotGames.Lol;
 
@@ -385,22 +383,9 @@ public class ParticipantDto : BaseDto, IKda
 
     [JsonPropertyName("visionClearedPings")]
     public int VisionClearedPings { get; set; }
+
+    [JsonIgnore]
+    public int CreepScore => TotalMinionsKilled + NeutralMinionsKilled;
 }
 
-public enum Role
-{
-    None,
-    Solo,
-    Carry,
-    Support,
-    Duo,
-}
-public enum Lane
-{
-    None,
-    Top,
-    Jungle,
-    Middle,
-    Bottom,
-}
 //teamPosition/individualposotopn came as LolClashV1.Position without Fill, Unselected

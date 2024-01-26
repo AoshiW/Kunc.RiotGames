@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Kunc.RiotGames.Api.LolchallengesV1;
+namespace Kunc.RiotGames.Api.LolChallengesV1;
 
 [JsonConverter(typeof(JsonStringEnumConverter<Tracking>))]
 public enum Tracking

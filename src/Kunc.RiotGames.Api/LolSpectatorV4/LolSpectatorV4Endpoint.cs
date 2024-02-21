@@ -27,10 +27,10 @@ public class LolSpectatorV4Endpoint : ILolSpectatorV4
             MethodId = "/lol/spectator/v4/active-games/by-summoner/{encryptedSummonerId}",
             Path = $"/lol/spectator/v4/active-games/by-summoner/{summonerId}",
         };
-        return await _client.SendAndDeserializeAsync<CurrentGameInfoDto>(request, cancellationToken).ConfigureAwait(false);
+        return await _client.SendAndDeserializeAsync<CurrentGameInfoDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<FeaturedGameInfoDto> GetListOfFeaturedGamesAsync(string region, CancellationToken cancellationToken = default)
+    public async Task<FeaturedGamesDto> GetListOfFeaturedGamesAsync(string region, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(region);
 
@@ -41,6 +41,6 @@ public class LolSpectatorV4Endpoint : ILolSpectatorV4
             MethodId = "/lol/spectator/v4/featured-games",
             Path = $"/lol/spectator/v4/featured-games",
         };
-        return await _client.SendAndDeserializeAsync<FeaturedGameInfoDto>(request, cancellationToken).ConfigureAwait(false);
+        return await _client.SendAndDeserializeAsync<FeaturedGamesDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 }

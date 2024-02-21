@@ -28,7 +28,7 @@ public class LorMatchV1Endpoint : ILorMatchV1
             MethodId = "/lor/match/v1/matches/by-puuid/{puuid}/ids",
             Path = $"/lor/match/v1/matches/by-puuid/{puuid}/ids",
         };
-        return await _client.SendAndDeserializeAsync<string[]>(request, cancellationToken).ConfigureAwait(false);
+        return await _client.SendAndDeserializeAsync<string[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc/>
@@ -44,6 +44,6 @@ public class LorMatchV1Endpoint : ILorMatchV1
             MethodId = "/lor/match/v1/matches/{matchId}",
             Path = $"/lor/match/v1/matches/{matchId}",
         };
-        return await _client.SendAndDeserializeAsync<MatchDto>(request, cancellationToken).ConfigureAwait(false);
+        return await _client.SendAndDeserializeAsync<MatchDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 }

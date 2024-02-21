@@ -28,7 +28,7 @@ public class TftSummonerV1Endpoint : ITftSummonerV1
             MethodId = "/tft/summoner/v1/summoners/by-puuid/{encryptedPUUID}",
             Path = $"/tft/summoner/v1/summoners/by-puuid/{puuid}",
         };
-        return await _client.SendAndDeserializeAsync<SummonerDto>(request, cancellationToken).ConfigureAwait(false);
+        return await _client.SendAndDeserializeAsync<SummonerDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc/>
@@ -44,6 +44,6 @@ public class TftSummonerV1Endpoint : ITftSummonerV1
             MethodId = "/tft/summoner/v1/summoners/{encryptedSummonerId}",
             Path = $"/tft/summoner/v1/summoners/{summonerId}",
         };
-        return await _client.SendAndDeserializeAsync<SummonerDto>(request, cancellationToken).ConfigureAwait(false);
+        return await _client.SendAndDeserializeAsync<SummonerDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 }

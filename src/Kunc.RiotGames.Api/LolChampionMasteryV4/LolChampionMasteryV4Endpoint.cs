@@ -28,7 +28,7 @@ public class LolChampionMasteryV4Endpoint : ILolChampionMasteryV4
             MethodId = "/lol/champion-mastery/v4/champion-masteries/by-puuid/{encryptedPUUID}",
             Path = $"/lol/champion-mastery/v4/champion-masteries/by-puuid/{puuid}",
         };
-        return await _client.SendAndDeserializeAsync<ChampionMasteryDto[]>(request, cancellationToken).ConfigureAwait(false);
+        return await _client.SendAndDeserializeAsync<ChampionMasteryDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc/>
@@ -44,7 +44,7 @@ public class LolChampionMasteryV4Endpoint : ILolChampionMasteryV4
             MethodId = "/lol/champion-mastery/v4/champion-masteries/by-puuid/{encryptedPUUID}/by-champion/{championId}",
             Path = $"/lol/champion-mastery/v4/champion-masteries/by-puuid/{puuid}/by-champion/{championId}",
         };
-        return await _client.SendAndDeserializeAsync<ChampionMasteryDto>(request, cancellationToken).ConfigureAwait(false);
+        return await _client.SendAndDeserializeAsync<ChampionMasteryDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc/>
@@ -61,7 +61,7 @@ public class LolChampionMasteryV4Endpoint : ILolChampionMasteryV4
             Path = $"/lol/champion-mastery/v4/champion-masteries/by-puuid/{puuid}/top",
             Query = query,
         };
-        return await _client.SendAndDeserializeAsync<ChampionMasteryDto[]>(request, cancellationToken).ConfigureAwait(false);
+        return await _client.SendAndDeserializeAsync<ChampionMasteryDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc/>
@@ -77,6 +77,6 @@ public class LolChampionMasteryV4Endpoint : ILolChampionMasteryV4
             MethodId = "/lol/champion-mastery/v4/scores/by-puuid/{encryptedPUUID}",
             Path = $"/lol/champion-mastery/v4/scores/by-puuid/{puuid}",
         };
-        return await _client.SendAndDeserializeAsync<int>(request, cancellationToken).ConfigureAwait(false);
+        return await _client.SendAndDeserializeAsync<int>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 }

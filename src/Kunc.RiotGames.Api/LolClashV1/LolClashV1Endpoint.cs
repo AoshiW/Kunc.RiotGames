@@ -28,7 +28,7 @@ public class LolClashV1Endpoint : ILolClashV1
             MethodId = "/lol/clash/v1/players/by-summoner/{summonerId}",
             Path = $"/lol/clash/v1/players/by-summoner/{summonerId}",
         };
-        return await _client.SendAndDeserializeAsync<PlayerDto[]>(request, cancellationToken).ConfigureAwait(false);
+        return await _client.SendAndDeserializeAsync<PlayerDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc/>
@@ -44,7 +44,7 @@ public class LolClashV1Endpoint : ILolClashV1
             MethodId = "/lol/clash/v1/teams/{teamId}",
             Path = $"/lol/clash/v1/teams/{teamId}",
         };
-        return await _client.SendAndDeserializeAsync<TeamDto>(request, cancellationToken).ConfigureAwait(false);
+        return await _client.SendAndDeserializeAsync<TeamDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc/>
@@ -59,7 +59,7 @@ public class LolClashV1Endpoint : ILolClashV1
             MethodId = "/lol/clash/v1/tournaments",
             Path = "/lol/clash/v1/tournaments",
         };
-        return await _client.SendAndDeserializeAsync<TournamentDto[]>(request, cancellationToken).ConfigureAwait(false);
+        return await _client.SendAndDeserializeAsync<TournamentDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc/>
@@ -75,7 +75,7 @@ public class LolClashV1Endpoint : ILolClashV1
             MethodId = "/lol/clash/v1/tournaments/by-team/{teamId}",
             Path = $"/lol/clash/v1/tournaments/by-team/{teamId}",
         };
-        return await _client.SendAndDeserializeAsync<TournamentDto>(request, cancellationToken).ConfigureAwait(false);
+        return await _client.SendAndDeserializeAsync<TournamentDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc/>
@@ -91,6 +91,6 @@ public class LolClashV1Endpoint : ILolClashV1
             MethodId = "/lol/clash/v1/tournaments/{tournamentId}",
             Path = $"/lol/clash/v1/tournaments/{tournamentId}",
         };
-        return await _client.SendAndDeserializeAsync<TournamentDto>(request, cancellationToken).ConfigureAwait(false);
+        return await _client.SendAndDeserializeAsync<TournamentDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 }

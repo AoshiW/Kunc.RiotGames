@@ -17,5 +17,5 @@ public interface ILolSpectatorV4
     /// <param name="region"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<FeaturedGameInfoDto> GetListOfFeaturedGamesAsync(string region, CancellationToken cancellationToken = default);
+    Task<FeaturedGamesDto> GetListOfFeaturedGamesAsync(string region, CancellationToken cancellationToken = default);
 }

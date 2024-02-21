@@ -1,10 +1,12 @@
 ﻿using System.Runtime.CompilerServices;
+using System.Text.Json.Serialization;
 
 namespace Kunc.RiotGames.Lol;
 
 /// <summary>
 /// Queue types for Lol (and Tft).
 /// </summary>
+[JsonConverter(typeof(JsonStringEnumConverter<QueueType>))]
 public enum QueueType
 {
 #pragma warning disable CA1707 // Identifiers should not contain underscores

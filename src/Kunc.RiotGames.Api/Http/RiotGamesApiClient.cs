@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
+using Microsoft.Extensions.Options;
 
 namespace Kunc.RiotGames.Api.Http;
 
@@ -12,14 +13,13 @@ public class RiotGamesApiClient : IRiotGamesApiClient
     /// <summary>
     /// Initializes a new instance of the <see cref="RiotGamesApiClient"/> class.
     /// </summary>
-    public RiotGamesApiClient(RiotGamesApiOptions options)
+    public RiotGamesApiClient(IOptions<RiotGamesApiOptions> options)
     {
-        _options = options;
-        _client.DefaultRequestHeaders.Add("X-Riot-Token", options.ApiKey);
+        _options = options.Value;
     }
 
     /// <inheritdoc/>
-    public async Task<HttpResponseMessage> SendAsync(RiotRequestMessage request, CancellationToken cancellationToken = default)
+    public async Task<HttpResponseMessage> SendAsync(RiotRequestMessage request, RiotRequestOptions options, CancellationToken cancellationToken = default)
     {
         int retries = 0;
         do
@@ -27,7 +27,10 @@ public class RiotGamesApiClient : IRiotGamesApiClient
             // get method rl
             // get host rl
             retries++;
-            var response = await _client.SendAsync(request.ToHttpRequestMessage(), cancellationToken).ConfigureAwait(false);
+            using var httpRequestMessage = request.ToHttpRequestMessage();
+            if (options.IncludeApiKey)
+                httpRequestMessage.Headers.Add("X-Riot-Token", _options.ApiKey);
+            var response = await _client.SendAsync(httpRequestMessage, cancellationToken).ConfigureAwait(false);
             if (response.IsSuccessStatusCode || response.StatusCode is HttpStatusCode.NotFound)
                 return response;
             if (response.StatusCode is HttpStatusCode.TooManyRequests)
@@ -56,9 +59,9 @@ public class RiotGamesApiClient : IRiotGamesApiClient
     }
 
     /// <inheritdoc/>
-    public async Task<T?> SendAndDeserializeAsync<T>(RiotRequestMessage request, CancellationToken cancellationToken = default)
+    public async Task<T?> SendAndDeserializeAsync<T>(RiotRequestMessage request, RiotRequestOptions options, CancellationToken cancellationToken = default)
     {
-        var response = await SendAsync(request, cancellationToken).ConfigureAwait(false);
+        var response = await SendAsync(request, options, cancellationToken).ConfigureAwait(false);
         if (response.IsSuccessStatusCode)
         {
             return await response.Content.ReadFromJsonAsync<T>(_options.JsonSerializerOptions, cancellationToken).ConfigureAwait(false);

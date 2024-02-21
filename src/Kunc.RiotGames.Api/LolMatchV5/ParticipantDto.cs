@@ -386,6 +386,39 @@ public class ParticipantDto : BaseDto, IKda
 
     [JsonIgnore]
     public int CreepScore => TotalMinionsKilled + NeutralMinionsKilled;
+
+#if DEBUG
+    public bool TryGetChallenge<T>(string key, out T value)
+    {
+        ArgumentNullException.ThrowIfNull(key);
+        if (Challenges is null || !Challenges.TryGetValue(key, out var val))
+        {
+            value = default!;
+            return false;
+        }
+        if (typeof(T) == typeof(bool))
+        {
+            value = (T)(object)(val switch
+            {
+                0 => false,
+                1 => true,
+                _ => throw new OverflowException()
+            });
+            return true;
+        }
+        else
+        {
+            throw new InvalidOperationException($"Type {nameof(T)} isn't supported.");
+        }
+    }
+
+    public T GetChallenge<T>(string key)
+    {
+        return TryGetChallenge<T>(key, out var value)
+            ? value
+            : throw new KeyNotFoundException();
+    }
+#endif
 }
 
 //teamPosition/individualposotopn came as LolClashV1.Position without Fill, Unselected

@@ -16,6 +16,7 @@ public class TftLeagueV1Endpoint : ITftLeagueV1
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<LeagueListDto> GetChallengerLeagueAsync(string region, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(region);
@@ -30,6 +31,23 @@ public class TftLeagueV1Endpoint : ITftLeagueV1
         return await _client.SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
+    public async Task<LeagueEntryDto[]> LeagueEntriesForSummonerAsync(string region, string summonerId, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(region);
+        ArgumentNullException.ThrowIfNull(summonerId);
+
+        var request = new RiotRequestMessage()
+        {
+            HttpMethod = HttpMethod.Get,
+            Host = region,
+            MethodId = "/tft/league/v1/entries/by-summoner/{summonerId}",
+            Path = $"/tft/league/v1/entries/by-summoner/{summonerId}",
+        };
+        return await _client.SendAndDeserializeAsync<LeagueEntryDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
     public async Task<LeagueEntryDto[]> GetAllLeaguesEntriesAsync(string region, Tier tier, Division division, AllLeaguesEntriesQuery? query = null, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(region);
@@ -45,6 +63,7 @@ public class TftLeagueV1Endpoint : ITftLeagueV1
         return await _client.SendAndDeserializeAsync<LeagueEntryDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task<LeagueListDto> GetGrandmasterLeagueAsync(string region, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(region);
@@ -59,6 +78,7 @@ public class TftLeagueV1Endpoint : ITftLeagueV1
         return await _client.SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task<LeagueListDto?> GetLeagueByIdAsync(string region, Guid leagueId, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(region);
@@ -73,6 +93,7 @@ public class TftLeagueV1Endpoint : ITftLeagueV1
         return await _client.SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task<LeagueListDto> GetMasterLeagueAsync(string region, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(region);
@@ -87,6 +108,7 @@ public class TftLeagueV1Endpoint : ITftLeagueV1
         return await _client.SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task<TopRatedLadderEntryDto[]> GetTopRatedLadderAsync(string region, QueueType queue, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(region);

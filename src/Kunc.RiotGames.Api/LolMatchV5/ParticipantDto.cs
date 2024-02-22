@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 using Kunc.RiotGames.JsonConverters;
 using Kunc.RiotGames.Lol;
 
@@ -17,7 +18,7 @@ public class ParticipantDto : BaseDto, IKda
     public int BountyLevel { get; set; }
 
     [JsonPropertyName("challenges")]
-    public Dictionary<string, double>? Challenges { get; set; }
+    public JsonElement? Challenges { get; set; }
 
     [JsonPropertyName("champExperience")]
     public int ChampExperience { get; set; }
@@ -384,41 +385,11 @@ public class ParticipantDto : BaseDto, IKda
     [JsonPropertyName("visionClearedPings")]
     public int VisionClearedPings { get; set; }
 
+    /// <summary>
+    /// <see cref="TotalMinionsKilled"/> + <see cref="NeutralMinionsKilled"/>
+    /// </summary>
     [JsonIgnore]
     public int CreepScore => TotalMinionsKilled + NeutralMinionsKilled;
-
-#if DEBUG
-    public bool TryGetChallenge<T>(string key, out T value)
-    {
-        ArgumentNullException.ThrowIfNull(key);
-        if (Challenges is null || !Challenges.TryGetValue(key, out var val))
-        {
-            value = default!;
-            return false;
-        }
-        if (typeof(T) == typeof(bool))
-        {
-            value = (T)(object)(val switch
-            {
-                0 => false,
-                1 => true,
-                _ => throw new OverflowException()
-            });
-            return true;
-        }
-        else
-        {
-            throw new InvalidOperationException($"Type {nameof(T)} isn't supported.");
-        }
-    }
-
-    public T GetChallenge<T>(string key)
-    {
-        return TryGetChallenge<T>(key, out var value)
-            ? value
-            : throw new KeyNotFoundException();
-    }
-#endif
 }
 
 //teamPosition/individualposotopn came as LolClashV1.Position without Fill, Unselected

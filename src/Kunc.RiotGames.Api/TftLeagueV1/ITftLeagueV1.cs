@@ -13,6 +13,15 @@ public interface ITftLeagueV1
     Task<LeagueListDto> GetChallengerLeagueAsync(string region, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Get league entries for a given summoner ID.
+    /// </summary>
+    /// <param name="region"></param>
+    /// <param name="summonerId"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<LeagueEntryDto[]> LeagueEntriesForSummonerAsync(string region, string summonerId, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Get all the league entries.
     /// </summary>
     /// <param name="region"></param>

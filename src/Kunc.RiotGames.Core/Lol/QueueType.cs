@@ -13,6 +13,7 @@ public enum QueueType
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     RANKED_SOLO_5x5,
     RANKED_FLEX_SR,
+    CHERRY,
 
     RANKED_TFT_DOUBLE_UP,
     RANKED_TFT_TURBO,
@@ -25,7 +26,7 @@ internal static partial class QueueTypeExtensions
 {
     public static void ThrowIfNotLolQueue(this QueueType queue, [CallerArgumentExpression(nameof(queue))] string? paramName = null)
     {
-        if (!(queue is QueueType.RANKED_SOLO_5x5 or QueueType.RANKED_FLEX_SR))
+        if (!(queue is QueueType.RANKED_SOLO_5x5 or QueueType.RANKED_FLEX_SR or QueueType.CHERRY))
         {
             throw new ArgumentException($"Value '{queue}' is not valid LoL Queue", paramName);
         }
@@ -45,6 +46,7 @@ internal static partial class QueueTypeExtensions
         {
             QueueType.RANKED_SOLO_5x5 => "RANKED_SOLO_5x5",
             QueueType.RANKED_FLEX_SR => "RANKED_FLEX_SR",
+            QueueType.CHERRY => "CHERRY",
 
             QueueType.RANKED_TFT_DOUBLE_UP => "RANKED_TFT_DOUBLE_UP",
             QueueType.RANKED_TFT_TURBO => "RANKED_TFT_TURBO",

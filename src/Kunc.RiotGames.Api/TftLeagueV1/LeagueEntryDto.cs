@@ -13,7 +13,7 @@ public class LeagueEntryDto : BaseDto
     public string Puuid { get; set; } = string.Empty;
 
     [JsonPropertyName("leagueId")]
-    public Guid LeagueId { get; set; }
+    public Guid? LeagueId { get; set; }
 
     /// <summary>
     /// Player's encrypted summonerId.

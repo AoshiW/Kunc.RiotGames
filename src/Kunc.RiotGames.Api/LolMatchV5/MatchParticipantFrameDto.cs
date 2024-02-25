@@ -3,7 +3,7 @@ using Kunc.RiotGames.JsonConverters;
 
 namespace Kunc.RiotGames.Api.LolMatchV5;
 
-public class ParticipantFrameDto : BaseDto
+public class MatchParticipantFrameDto : BaseDto
 {
     [JsonPropertyName("championStats")]
     public ChampionStatsDto ChampionStats { get; set; }
@@ -31,7 +31,7 @@ public class ParticipantFrameDto : BaseDto
 
     [JsonPropertyName("position")]
     [JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]
-    public Position Position { get; set; } = new();
+    public MatchPosition Position { get; set; } = new();
 
     [JsonPropertyName("timeEnemySpentControlled")]
     [JsonConverter(typeof(JsonTimeSpanMillisecondsConverter))]

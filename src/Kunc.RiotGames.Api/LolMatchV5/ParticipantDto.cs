@@ -18,7 +18,7 @@ public class ParticipantDto : BaseDto, IKda
     public int BountyLevel { get; set; }
 
     [JsonPropertyName("challenges")]
-    public JsonElement? Challenges { get; set; }
+    public ChallengesDto? Challenges { get; set; }
 
     [JsonPropertyName("champExperience")]
     public int ChampExperience { get; set; }

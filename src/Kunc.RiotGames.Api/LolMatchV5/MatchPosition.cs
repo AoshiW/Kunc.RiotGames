@@ -2,7 +2,7 @@
 
 namespace Kunc.RiotGames.Api.LolMatchV5;
 
-public class Position
+public class MatchPosition : BaseDto
 {
     [JsonPropertyName("x")]
     public int X { get; set; }

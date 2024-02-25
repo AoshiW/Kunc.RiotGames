@@ -7,10 +7,10 @@ public class FrameTimelineDto : BaseDto
 {
 
     [JsonPropertyName("events")]
-    public EventTimelineDto[] Events { get; set; } = [];
+    public MatchEventDto[] Events { get; set; } = [];
 
     [JsonPropertyName("participantFrames")]
-    public Dictionary<int, ParticipantFrameDto> ParticipantFrames { get; set; }
+    public Dictionary<int, MatchParticipantFrameDto> ParticipantFrames { get; set; }
 
     [JsonPropertyName("timestamp")]
     [JsonConverter(typeof(JsonTimeSpanMillisecondsConverter))]

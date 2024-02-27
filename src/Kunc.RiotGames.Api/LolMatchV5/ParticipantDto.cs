@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 using Kunc.RiotGames.JsonConverters;
 using Kunc.RiotGames.Lol;
 
@@ -134,7 +133,7 @@ public class ParticipantDto : BaseDto, IKda
     public int Kills { get; set; }
 
     [JsonPropertyName("lane")]
-    public string Lane { get; set; }
+    public Lane Lane { get; set; }
 
     [JsonPropertyName("largestCriticalStrike")]
     public int LargestCriticalStrike { get; set; }

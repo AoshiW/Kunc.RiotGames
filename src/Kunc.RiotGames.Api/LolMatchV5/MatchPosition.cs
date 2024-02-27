@@ -9,4 +9,10 @@ public class MatchPosition : BaseDto
 
     [JsonPropertyName("y")]
     public int Y { get; set; }
+
+    /// <inheritdoc/>
+    public override string ToString()
+    {
+        return $"{{X={X},Y={Y}}}";
+    }
 }

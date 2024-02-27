@@ -6,7 +6,8 @@ namespace Kunc.RiotGames.Api.LolMatchV5;
 public class MatchParticipantFrameDto : BaseDto
 {
     [JsonPropertyName("championStats")]
-    public ChampionStatsDto ChampionStats { get; set; }
+    [JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]
+    public ChampionStatsDto ChampionStats { get; set; } = new();
 
     [JsonPropertyName("currentGold")]
     public int CurrentGold { get; set; }

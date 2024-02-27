@@ -1,6 +1,8 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 
 namespace Kunc.RiotGames.Api.Http;
@@ -9,13 +11,15 @@ public class RiotGamesApiClient : IRiotGamesApiClient
 {
     readonly HttpClient _client = new();
     private readonly RiotGamesApiOptions _options;
+    private readonly ILogger<RiotGamesApiClient> _logger;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RiotGamesApiClient"/> class.
     /// </summary>
-    public RiotGamesApiClient(IOptions<RiotGamesApiOptions> options)
+    public RiotGamesApiClient(IOptions<RiotGamesApiOptions> options, ILogger<RiotGamesApiClient>? logger = null)
     {
         _options = options.Value;
+        _logger = logger ?? NullLogger<RiotGamesApiClient>.Instance;
     }
 
     /// <inheritdoc/>
@@ -41,6 +45,7 @@ public class RiotGamesApiClient : IRiotGamesApiClient
                 {
                     // todo free method
                 }
+                _logger.LogInformation("delay:{0}, Host:{1}, rt:{2}", delay, request.Host, rlt);
                 await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
             }
             else if (response.StatusCode is >= (HttpStatusCode)400 and < (HttpStatusCode)500)

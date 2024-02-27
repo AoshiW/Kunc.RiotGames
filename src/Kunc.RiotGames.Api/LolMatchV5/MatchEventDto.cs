@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 using Kunc.RiotGames.JsonConverters;
 using Kunc.RiotGames.Lol;
 
@@ -24,8 +23,7 @@ public class MatchEventDto : BaseDto
     public int? Bounty { get; set; }
 
     [JsonPropertyName("buildingType")]
-    public string? BuildingType { get; set; }
-    // TOWER_BUILDING INHIBITOR_BUILDING
+    public BuildingType? BuildingType { get; set; }
 
     [JsonPropertyName("creatorId")]
     public int? CreatorId { get; set; }
@@ -40,8 +38,7 @@ public class MatchEventDto : BaseDto
     public int? ItemId { get; set; }
 
     [JsonPropertyName("killType")]
-    public string? KillType { get; set; }
-    // KILL_FIRST_BLOOD KILL_MULTI KILL_ACE
+    public KillType? KillType { get; set; }
 
     [JsonPropertyName("killerId")]
     public int? KillerId { get; set; }
@@ -61,14 +58,13 @@ public class MatchEventDto : BaseDto
 
     [JsonPropertyName("levelUpType")]
     public string? LevelUpType { get; set; }
+    // 
 
     [JsonPropertyName("monsterSubType")]
-    public string? MonsterSubType { get; set; }
-    // AIR_DRAGON WATER_DRAGON CHEMTECH_DRAGON HEXTECH_DRAGON
+    public MonsterSubType? MonsterSubType { get; set; }
 
     [JsonPropertyName("monsterType")]
-    public string? MonsterType { get; set; }
-    // HORDE DRAGON BARON_NASHOR
+    public MonsterType? MonsterType { get; set; }
 
     [JsonPropertyName("multiKillLength")]
     public int? MultiKillLength { get; set; }
@@ -97,11 +93,10 @@ public class MatchEventDto : BaseDto
     public TimeSpan Timestamp { get; set; }
 
     [JsonPropertyName("type")]
-    public string Type { get; set; }
+    public MatchEventType Type { get; set; }
 
     [JsonPropertyName("towerType")]
-    public string TowerType { get; set; }
-    //OUTER_TURRET INNER_TURRET BASE_TURRET NEXUS_TURRET
+    public TowerType? TowerType { get; set; }
 
     [JsonPropertyName("victimDamageDealt")]
     public DamageDto[]? VictimDamageDealt { get; set; }
@@ -113,9 +108,8 @@ public class MatchEventDto : BaseDto
     public int? VictimId { get; set; }
 
     [JsonPropertyName("wardType")]
-    public string? WardType { get; set; }
-    // YELLOW_TRINKET TEEMO_MUSHROOM 
+    public WardType? WardType { get; set; }
 
     [JsonPropertyName("winningTeam")]
-    public TeamId WinningTeam { get; set; }
+    public TeamId? WinningTeam { get; set; }
 }

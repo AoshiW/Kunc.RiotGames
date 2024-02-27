@@ -31,7 +31,7 @@ public class InfoDto : BaseDto
     public GameMode GameMode { get; set; }
 
     [JsonPropertyName("gameName")]
-    public string GameName { get; set; }
+    public string GameName { get; set; } = string.Empty;
 
     /// <summary>
     /// Date when the match starts on the game server.
@@ -47,10 +47,10 @@ public class InfoDto : BaseDto
     ///The first two parts can be used to determine the patch a game was played on.
     /// </summary>
     [JsonPropertyName("gameVersion")]
-    public string GameVersion { get; set; }
+    public string GameVersion { get; set; } = string.Empty;
 
     [JsonPropertyName("mapId")]
-    public int MapId { get; set; }
+    public MapId MapId { get; set; }
 
     [JsonPropertyName("participants")]
     public ParticipantDto[] Participants { get; set; } = [];
@@ -59,7 +59,7 @@ public class InfoDto : BaseDto
     /// The platform where the match was played.
     /// </summary>
     [JsonPropertyName("platformId")]
-    public string PlatformId { get; set; }
+    public string PlatformId { get; set; } = string.Empty;
 
     [JsonPropertyName("queueId")]
     public int QueueId { get; set; }

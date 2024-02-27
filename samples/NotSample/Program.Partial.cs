@@ -1,3 +1,4 @@
+using Kunc.RiotGames.Api;
 using Kunc.RiotGames.Lol.DataDragon;
 using Kunc.RiotGames.Lol.LeagueClientUpdate;
 using Kunc.RiotGames.Lor.DeckCodes;
@@ -13,6 +14,7 @@ partial class Program
     static readonly IConfiguration Configuration = new ConfigurationManager()
         .SetBasePath(Directory.GetParent(Directory.GetCurrentDirectory())!.Parent!.Parent!.FullName)
         .AddJsonFile("appsettings.json", true, true)
+        .AddJsonFile("appsettings.Development.json", true, true)
         .Build();
 
     static readonly IServiceProvider _service = new ServiceCollection()
@@ -22,8 +24,9 @@ partial class Program
         .AddSingleton<ILolLeagueClientUpdate, LolLeagueClientUpdate>()
         //.AddSingleton<IWamp, NullWamp>() // testing
         .AddSingleton<ILorDeckEncoder, LorDeckEncoder>()
-        .AddSingleton<ILorGameClient, LorGameClient>()
+        .AddLorGameClient()
         .AddLolDataDragon()
+        .AddRiotGamesApi(c=>c.ApiKey = Configuration["RGAPIKEY"]!)
         .AddSqliteCache(x =>
         {
             x.CachePath = "cache.sqlite";
@@ -34,5 +37,5 @@ partial class Program
     static ILorGameClient LorGameClient => _service.GetRequiredService<ILorGameClient>();
     static ILolLeagueClientUpdate Lcu => _service.GetRequiredService<ILolLeagueClientUpdate>();
     static ILolDataDragon LolDataDragon => _service.GetRequiredService<ILolDataDragon>();
-    static T Get<T>() where T : class => _service.GetRequiredService<T>();
+    static IRiotGamesApi Api => _service.GetRequiredService<IRiotGamesApi>();
 }

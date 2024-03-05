@@ -2,7 +2,6 @@
 using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
-using System.Threading.RateLimiting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
@@ -11,33 +10,6 @@ namespace Kunc.RiotGames.Api.Http;
 
 public class RiotGamesApiClient : IRiotGamesApiClient
 {
-    sealed class RegionRateLimiter : IDisposable
-    {
-        private readonly ConcurrencyLimiter _app = new(new() { PermitLimit = 1, });
-        private readonly ConcurrentDictionary<string, ConcurrencyLimiter> _methods = new();
-
-        public ValueTask<RateLimitLease> AcquireAppAsync(CancellationToken cancellationToken)
-        {
-            return _app.AcquireAsync(1, cancellationToken); ;
-        }
-
-        public ValueTask<RateLimitLease> AcquireMethodAsync(string methodId, CancellationToken cancellationToken)
-        {
-            var method = _methods.GetOrAdd(methodId, k => new(new() { PermitLimit = 1 }));
-            return method.AcquireAsync(1, cancellationToken);
-        }
-
-        public void Dispose()
-        {
-            _app.Dispose();
-            foreach (var method in _methods)
-            {
-                method.Value.Dispose();
-            }
-            _methods.Clear();
-        }
-    }
-
     readonly HttpClient _client = new();
     private readonly RiotGamesApiOptions _options;
     private readonly ILogger<RiotGamesApiClient> _logger;
@@ -59,6 +31,7 @@ public class RiotGamesApiClient : IRiotGamesApiClient
         var rl = _rl.GetOrAdd(request.Host, k => new());
         do
         {
+            // first check the methodRl, then appRl!
             using var methodRl = await rl.AcquireMethodAsync(request.MethodId, cancellationToken);
             using var appRl = await rl.AcquireAppAsync(cancellationToken);
             retries++;
@@ -73,9 +46,9 @@ public class RiotGamesApiClient : IRiotGamesApiClient
                 var delay = response.Headers.RetryAfter?.Delta ?? _options.Delay;
                 if (response.Headers.TryGetValues("X-Rate-Limit-Type", out var rlt) && rlt.First() == "method")
                 {
-                    methodRl.Dispose();
+                    appRl.Dispose();
                 }
-                _logger.LogInformation("delay:{0}, Host:{1}, rt:{2}", delay, request.Host, rlt);
+                _logger.LogInformation("delay:{0}, Host:{1}, rt:{2}, methodId:{3}", delay, request.Host, rlt, request.MethodId);
                 await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
             }
             else if (response.StatusCode is >= (HttpStatusCode)400 and < (HttpStatusCode)500)

@@ -203,8 +203,8 @@ public class ParticipantDto : BaseDto, IKda
     [JsonPropertyName("quadraKills")]
     public int QuadraKills { get; set; }
 
-    [JsonPropertyName("riotIdName")]
-    public string RiotIdName { get; set; } = string.Empty;
+    [JsonPropertyName("riotIdGameName")]
+    public string RiotIdGameName { get; set; } = string.Empty;
 
     [JsonPropertyName("riotIdTagline")]
     public string RiotIdTagline { get; set; } = string.Empty;

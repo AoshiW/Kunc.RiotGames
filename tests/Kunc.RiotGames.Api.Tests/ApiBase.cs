@@ -1,14 +1,23 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Kunc.RiotGames.Api.Tests;
 
 public class ApiBase
 {
+    static readonly IConfiguration Configuration = new ConfigurationManager()
+        .AddJsonFile("appsettings.json", true)
+        .AddJsonFile("appsettings.Development.json", false)
+        .AddEnvironmentVariables()
+        .Build();
+
     protected static readonly IRiotGamesApi api = new ServiceCollection()
-        .AddRiotGamesApi(c => c.ApiKey = "RGAPI-749afbb0-5a3a-432c-97b9-850dde23b1fc")
+        .AddSingleton<IConfiguration>(Configuration)
+        .AddRiotGamesApi(c => c.ApiKey = Configuration["RGAPIKEY"]!)
         .BuildServiceProvider()
         .GetRequiredService<IRiotGamesApi>();
 
+    //todo move all fields to appsettings.json file 
     protected const string Puuid = "myX6hakkZP-iqDRVz2qu9EuggqMf6kzzMZpnTGgItkPiA1t8nGD4ogGEJZYOgU49sKzNP8QGJgn0OA";
     protected const string SummonerId = "nsWGILVTyUc2ixBlPQkzsbHfUJataEZ23suzfeRn5LcO1iw";
 

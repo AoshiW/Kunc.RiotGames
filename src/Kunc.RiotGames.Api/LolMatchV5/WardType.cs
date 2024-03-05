@@ -8,6 +8,7 @@ public enum WardType
     CONTROL_WARD,
     YELLOW_TRINKET,
     BLUE_TRINKET,
+    SIGHT_WARD,
     TEEMO_MUSHROOM,
     UNDEFINED,
 }

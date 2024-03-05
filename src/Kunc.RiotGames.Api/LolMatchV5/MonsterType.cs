@@ -6,6 +6,7 @@ namespace Kunc.RiotGames.Api.LolMatchV5;
 public enum MonsterType
 {
     HORDE,
+    RIFTHERALD,
     DRAGON,
     BARON_NASHOR,
 }

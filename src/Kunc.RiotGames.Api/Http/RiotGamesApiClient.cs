@@ -1,6 +1,8 @@
-﻿using System.Net;
+﻿using System.Collections.Concurrent;
+using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
+using System.Threading.RateLimiting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
@@ -9,9 +11,37 @@ namespace Kunc.RiotGames.Api.Http;
 
 public class RiotGamesApiClient : IRiotGamesApiClient
 {
+    sealed class RegionRateLimiter : IDisposable
+    {
+        private readonly ConcurrencyLimiter _app = new(new() { PermitLimit = 1, });
+        private readonly ConcurrentDictionary<string, ConcurrencyLimiter> _methods = new();
+
+        public ValueTask<RateLimitLease> AcquireAppAsync(CancellationToken cancellationToken)
+        {
+            return _app.AcquireAsync(1, cancellationToken); ;
+        }
+
+        public ValueTask<RateLimitLease> AcquireMethodAsync(string methodId, CancellationToken cancellationToken)
+        {
+            var method = _methods.GetOrAdd(methodId, k => new(new() { PermitLimit = 1 }));
+            return method.AcquireAsync(1, cancellationToken);
+        }
+
+        public void Dispose()
+        {
+            _app.Dispose();
+            foreach (var method in _methods)
+            {
+                method.Value.Dispose();
+            }
+            _methods.Clear();
+        }
+    }
+
     readonly HttpClient _client = new();
     private readonly RiotGamesApiOptions _options;
     private readonly ILogger<RiotGamesApiClient> _logger;
+    private readonly ConcurrentDictionary<string, RegionRateLimiter> _rl = new();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RiotGamesApiClient"/> class.
@@ -26,10 +56,11 @@ public class RiotGamesApiClient : IRiotGamesApiClient
     public async Task<HttpResponseMessage> SendAsync(RiotRequestMessage request, RiotRequestOptions options, CancellationToken cancellationToken = default)
     {
         int retries = 0;
+        var rl = _rl.GetOrAdd(request.Host, k => new());
         do
         {
-            // get method rl
-            // get host rl
+            using var methodRl = await rl.AcquireMethodAsync(request.MethodId, cancellationToken);
+            using var appRl = await rl.AcquireAppAsync(cancellationToken);
             retries++;
             using var httpRequestMessage = request.ToHttpRequestMessage();
             if (options.IncludeApiKey)
@@ -40,10 +71,9 @@ public class RiotGamesApiClient : IRiotGamesApiClient
             if (response.StatusCode is HttpStatusCode.TooManyRequests)
             {
                 var delay = response.Headers.RetryAfter?.Delta ?? _options.Delay;
-                var rt = response.Headers.TryGetValues("X-Rate-Limit-Type", out var rlt) && rlt.First() == "method";
-                if (rt)
+                if (response.Headers.TryGetValues("X-Rate-Limit-Type", out var rlt) && rlt.First() == "method")
                 {
-                    // todo free method
+                    methodRl.Dispose();
                 }
                 _logger.LogInformation("delay:{0}, Host:{1}, rt:{2}", delay, request.Host, rlt);
                 await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
@@ -57,8 +87,6 @@ public class RiotGamesApiClient : IRiotGamesApiClient
             {
                 await Task.Delay(_options.Delay, cancellationToken).ConfigureAwait(false);
             }
-            //free host rl
-            //free method rl if not
         } while (retries < 5);
         throw new Exception();
     }

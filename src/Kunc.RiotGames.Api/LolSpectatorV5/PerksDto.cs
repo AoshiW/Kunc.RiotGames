@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Kunc.RiotGames.Api.LolSpectatorV4;
+namespace Kunc.RiotGames.Api.LolSpectatorV5;
 
 public class PerksDto : BaseDto
 {

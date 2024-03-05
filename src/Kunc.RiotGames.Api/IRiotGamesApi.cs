@@ -4,7 +4,7 @@ using Kunc.RiotGames.Api.LolChampionV3;
 using Kunc.RiotGames.Api.LolClashV1;
 using Kunc.RiotGames.Api.LolLeagueV4;
 using Kunc.RiotGames.Api.LolMatchV5;
-using Kunc.RiotGames.Api.LolSpectatorV4;
+using Kunc.RiotGames.Api.LolSpectatorV5;
 using Kunc.RiotGames.Api.LolSummonerV4;
 using Kunc.RiotGames.Api.LorMatchV1;
 using Kunc.RiotGames.Api.LorRankedV1;
@@ -22,7 +22,7 @@ public interface IRiotGamesApi
     ILolChampionV3 LolChampionV3 { get; }
     ILolLeagueV4 LolLeagueV4 { get; }
     ILolMatchV5 LolMatchV5 { get; }
-    ILolSpectatorV4 LolSpectatorV4 { get; }
+    ILolSpectatorV5 LolSpectatorV5 { get; }
     ILolSummonerV4 LolSummonerV4 { get; }
     ILorMatchV1 LorMatchV1 { get; }
     ILorRankedV1 LorRankedV1 { get; }

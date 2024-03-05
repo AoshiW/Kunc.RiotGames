@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using Kunc.RiotGames.JsonConverters;
 
-namespace Kunc.RiotGames.Api.LolSpectatorV4;
+namespace Kunc.RiotGames.Api.LolSpectatorV5;
 
 public class FeaturedGamesDto : BaseDto
 {

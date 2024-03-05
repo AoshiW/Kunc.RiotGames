@@ -7,7 +7,7 @@ public class AllLeaguesEntriesQuery : QueryString
     /// <summary>
     /// Defaults to <see cref="QueueType.RANKED_TFT"/>
     /// </summary>
-    public QueueType? Queue{ get; set; }
+    public QueueType? Queue { get; set; }
 
     /// <summary>
     /// Defaults to 1. Starts with page 1.

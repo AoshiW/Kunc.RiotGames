@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using Kunc.RiotGames.Lol;
 
-namespace Kunc.RiotGames.Api.LolSpectatorV4;
+namespace Kunc.RiotGames.Api.LolSpectatorV5;
 
 public class ParticipantDto : BaseDto
 {
@@ -17,9 +17,15 @@ public class ParticipantDto : BaseDto
     [JsonPropertyName("profileIconId")]
     public long ProfileIconId { get; set; }
 
+    /// <summary>
+    /// Encrypted puuid of this participant.
+    /// </summary>
     [JsonPropertyName("puuid")]
     public string Puuid { get; set; } = string.Empty;
 
+    /// <summary>
+    /// The encrypted summoner ID of this participant.
+    /// </summary>
     [JsonPropertyName("summonerId")]
     public string SummonerId { get; set; } = string.Empty;
 

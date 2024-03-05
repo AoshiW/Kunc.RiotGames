@@ -18,8 +18,8 @@ public class LolChampionMasteryV4Endpoint : ILolChampionMasteryV4
     /// <inheritdoc/>
     public async Task<ChampionMasteryDto[]> GetAllChampionMasteryEntriesAsync(string region, string puuid, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(region);
-        ArgumentNullException.ThrowIfNull(puuid);
+        ArgumentException.ThrowIfNullOrEmpty(region);
+        ArgumentException.ThrowIfNullOrEmpty(puuid);
 
         var request = new RiotRequestMessage()
         {
@@ -34,8 +34,8 @@ public class LolChampionMasteryV4Endpoint : ILolChampionMasteryV4
     /// <inheritdoc/>
     public async Task<ChampionMasteryDto?> GetChampionMasteryByPuuidAsync(string region, string puuid, long championId, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(region);
-        ArgumentNullException.ThrowIfNull(puuid);
+        ArgumentException.ThrowIfNullOrEmpty(region);
+        ArgumentException.ThrowIfNullOrEmpty(puuid);
 
         var request = new RiotRequestMessage()
         {
@@ -50,8 +50,8 @@ public class LolChampionMasteryV4Endpoint : ILolChampionMasteryV4
     /// <inheritdoc/>
     public async Task<ChampionMasteryDto[]> GetTopChampionMasteryEntriesAsync(string region, string puuid, TopChampionMasteryEntriesQuery? query = null, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(region);
-        ArgumentNullException.ThrowIfNull(puuid);
+        ArgumentException.ThrowIfNullOrEmpty(region);
+        ArgumentException.ThrowIfNullOrEmpty(puuid);
 
         var request = new RiotRequestMessage()
         {
@@ -67,8 +67,8 @@ public class LolChampionMasteryV4Endpoint : ILolChampionMasteryV4
     /// <inheritdoc/>
     public async Task<int> GetPlayersTotalChampionMasteryScoreAsync(string region, string puuid, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(region);
-        ArgumentNullException.ThrowIfNull(puuid);
+        ArgumentException.ThrowIfNullOrEmpty(region);
+        ArgumentException.ThrowIfNullOrEmpty(puuid);
 
         var request = new RiotRequestMessage()
         {

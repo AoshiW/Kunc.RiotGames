@@ -2,7 +2,7 @@
 using Kunc.RiotGames.JsonConverters;
 using Kunc.RiotGames.Lol;
 
-namespace Kunc.RiotGames.Api.LolSpectatorV4;
+namespace Kunc.RiotGames.Api.LolSpectatorV5;
 
 public class FeaturedGameInfoDto : BaseDto
 {

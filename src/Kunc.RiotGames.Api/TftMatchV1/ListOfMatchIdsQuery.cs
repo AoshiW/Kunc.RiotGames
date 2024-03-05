@@ -16,13 +16,12 @@ public class ListOfMatchIdsQuery : QueryString
     /// </summary>
     public int? Count { get; set; }
 
-    public ListOfMatchIdsQuery NextPage()
+    public void NextPage()
     {
         Start ??= 0;
         Count ??= 20;
 
         Start += Count;
-        return this;
     }
 
     /// <inheritdoc/>

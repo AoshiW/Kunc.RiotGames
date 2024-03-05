@@ -18,8 +18,8 @@ public class LolClashV1Endpoint : ILolClashV1
     /// <inheritdoc/>
     public async Task<PlayerDto[]> GetPlayersBySummonerIdAsync(string region, string summonerId, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(region);
-        ArgumentNullException.ThrowIfNull(summonerId);
+        ArgumentException.ThrowIfNullOrEmpty(region);
+        ArgumentException.ThrowIfNullOrEmpty(summonerId);
 
         var request = new RiotRequestMessage()
         {
@@ -34,8 +34,8 @@ public class LolClashV1Endpoint : ILolClashV1
     /// <inheritdoc/>
     public async Task<TeamDto?> GetTeamByIdAsync(string region, string teamId, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(region);
-        ArgumentNullException.ThrowIfNull(teamId);
+        ArgumentException.ThrowIfNullOrEmpty(region);
+        ArgumentException.ThrowIfNullOrEmpty(teamId);
 
         var request = new RiotRequestMessage()
         {
@@ -50,7 +50,7 @@ public class LolClashV1Endpoint : ILolClashV1
     /// <inheritdoc/>
     public async Task<TournamentDto[]> GetAllActiveOrUpcomingTournamentsAsync(string region, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(region);
+        ArgumentException.ThrowIfNullOrEmpty(region);
 
         var request = new RiotRequestMessage()
         {
@@ -65,8 +65,8 @@ public class LolClashV1Endpoint : ILolClashV1
     /// <inheritdoc/>
     public async Task<TournamentDto?> GetTournamentByTeamIdAsync(string region, string teamId, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(region);
-        ArgumentNullException.ThrowIfNull(teamId);
+        ArgumentException.ThrowIfNullOrEmpty(region);
+        ArgumentException.ThrowIfNullOrEmpty(teamId);
 
         var request = new RiotRequestMessage()
         {
@@ -81,8 +81,8 @@ public class LolClashV1Endpoint : ILolClashV1
     /// <inheritdoc/>
     public async Task<TournamentDto?> GetTournamentByIdAsync(string region, string tournamentId, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(region);
-        ArgumentNullException.ThrowIfNull(tournamentId);
+        ArgumentException.ThrowIfNullOrEmpty(region);
+        ArgumentException.ThrowIfNullOrEmpty(tournamentId);
 
         var request = new RiotRequestMessage()
         {

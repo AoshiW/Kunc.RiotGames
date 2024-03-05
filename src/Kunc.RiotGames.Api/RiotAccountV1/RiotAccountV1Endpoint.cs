@@ -18,8 +18,8 @@ public class RiotAccountV1Endpoint : IRiotAccountV1
     /// <inheritdoc/>
     public async Task<AccountDto> GetAccountByPuuidAsync(string region, string puuid, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(region);
-        ArgumentNullException.ThrowIfNull(puuid);
+        ArgumentException.ThrowIfNullOrEmpty(region);
+        ArgumentException.ThrowIfNullOrEmpty(puuid);
 
         var request = new RiotRequestMessage()
         {
@@ -34,9 +34,9 @@ public class RiotAccountV1Endpoint : IRiotAccountV1
     /// <inheritdoc/>
     public async Task<AccountDto?> GetAccountByRiotIdAsync(string region, string gameName, string tagLine, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(region);
-        ArgumentNullException.ThrowIfNull(gameName);
-        ArgumentNullException.ThrowIfNull(tagLine);
+        ArgumentException.ThrowIfNullOrEmpty(region);
+        ArgumentException.ThrowIfNullOrEmpty(gameName);
+        ArgumentException.ThrowIfNullOrEmpty(tagLine);
 
         var request = new RiotRequestMessage()
         {
@@ -51,8 +51,8 @@ public class RiotAccountV1Endpoint : IRiotAccountV1
     /// <inheritdoc/>
     public async Task<ActiveShardDto> GetActiveShardForPlayerAsync(string region, Game game, string puuid, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(region);
-        ArgumentNullException.ThrowIfNull(puuid);
+        ArgumentException.ThrowIfNullOrEmpty(region);
+        ArgumentException.ThrowIfNullOrEmpty(puuid);
 
         var request = new RiotRequestMessage()
         {

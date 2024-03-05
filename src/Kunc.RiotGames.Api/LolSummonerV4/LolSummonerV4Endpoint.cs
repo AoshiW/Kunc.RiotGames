@@ -18,8 +18,8 @@ public class LolSummonerV4Endpoint : ILolSummonerV4
     /// <inheritdoc/>
     public async Task<SummonerDto> GetSummonerByPuuidAsync(string region, string puuid, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(region);
-        ArgumentNullException.ThrowIfNull(puuid);
+        ArgumentException.ThrowIfNullOrEmpty(region);
+        ArgumentException.ThrowIfNullOrEmpty(puuid);
 
         var request = new RiotRequestMessage()
         {
@@ -34,8 +34,8 @@ public class LolSummonerV4Endpoint : ILolSummonerV4
     /// <inheritdoc/>
     public async Task<SummonerDto> GetSummonerBySummonerIdAsync(string region, string summonerId, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(region);
-        ArgumentNullException.ThrowIfNull(summonerId);
+        ArgumentException.ThrowIfNullOrEmpty(region);
+        ArgumentException.ThrowIfNullOrEmpty(summonerId);
 
         var request = new RiotRequestMessage()
         {

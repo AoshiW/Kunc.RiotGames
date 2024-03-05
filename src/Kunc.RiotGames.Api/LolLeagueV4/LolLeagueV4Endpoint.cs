@@ -19,7 +19,7 @@ public class LolLeagueV4Endpoint : ILolLeagueV4
     /// <inheritdoc/>
     public async Task<LeagueListDto> GetChallengerLeagueAsync(string region, QueueType queue, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(region);
+        ArgumentException.ThrowIfNullOrEmpty(region);
 
         var request = new RiotRequestMessage()
         {
@@ -34,8 +34,8 @@ public class LolLeagueV4Endpoint : ILolLeagueV4
     /// <inheritdoc/>
     public async Task<LeagueEntryDto[]> LeagueEntriesForSummonerAsync(string region, string summonerId, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(region);
-        ArgumentNullException.ThrowIfNull(summonerId);
+        ArgumentException.ThrowIfNullOrEmpty(region);
+        ArgumentException.ThrowIfNullOrEmpty(summonerId);
 
         var request = new RiotRequestMessage()
         {
@@ -50,7 +50,7 @@ public class LolLeagueV4Endpoint : ILolLeagueV4
     /// <inheritdoc/>
     public async Task<LeagueEntryDto[]> GetAllLeaguesEntriesAsync(string region, QueueType queue, Tier tier, Division division, AllLeaguesEntriesQuery? query = null, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(region);
+        ArgumentException.ThrowIfNullOrEmpty(region);
 
         var request = new RiotRequestMessage()
         {
@@ -65,7 +65,7 @@ public class LolLeagueV4Endpoint : ILolLeagueV4
     /// <inheritdoc/>
     public async Task<LeagueListDto> GetGrandmasterLeagueAsync(string region, QueueType queue, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(region);
+        ArgumentException.ThrowIfNullOrEmpty(region);
 
         var request = new RiotRequestMessage()
         {
@@ -78,9 +78,9 @@ public class LolLeagueV4Endpoint : ILolLeagueV4
     }
 
     /// <inheritdoc/>
-    public async Task<LeagueListDto?> GetLeagueByIdAsync(string? region, Guid leagueId, CancellationToken cancellationToken = default)
+    public async Task<LeagueListDto?> GetLeagueByIdAsync(string region, Guid leagueId, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(region);
+        ArgumentException.ThrowIfNullOrEmpty(region);
 
         var request = new RiotRequestMessage()
         {
@@ -95,7 +95,7 @@ public class LolLeagueV4Endpoint : ILolLeagueV4
     /// <inheritdoc/>
     public async Task<LeagueListDto> GetMasterLeagueAsync(string region, QueueType queue, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(region);
+        ArgumentException.ThrowIfNullOrEmpty(region);
 
         var request = new RiotRequestMessage()
         {

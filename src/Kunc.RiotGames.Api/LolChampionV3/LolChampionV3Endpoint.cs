@@ -18,7 +18,7 @@ public class LolChampionV3Endpoint : ILolChampionV3
     /// <inheritdoc/>
     public async Task<ChampionInfoDto> GetChampionFreeRotationsAsync(string region, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(region);
+        ArgumentException.ThrowIfNullOrEmpty(region);
 
         var request = new RiotRequestMessage()
         {

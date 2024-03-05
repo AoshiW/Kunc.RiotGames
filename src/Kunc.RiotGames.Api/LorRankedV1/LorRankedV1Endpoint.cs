@@ -18,7 +18,7 @@ public class LorRankedV1Endpoint : ILorRankedV1
     /// <inheritdoc/> 
     public async Task<LeaderboardDto> GetLeaderboardAsync(string region, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(region);
+        ArgumentException.ThrowIfNullOrEmpty(region);
 
         var request = new RiotRequestMessage()
         {

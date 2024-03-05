@@ -19,5 +19,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageVersion>
+    <PackageVersion Include="System.Threading.RateLimiting" Version="8.0.0" />
   </ItemGroup>
 </Project>

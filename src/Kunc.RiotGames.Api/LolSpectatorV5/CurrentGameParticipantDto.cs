@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using Kunc.RiotGames.Lol;
 
-namespace Kunc.RiotGames.Api.LolSpectatorV4;
+namespace Kunc.RiotGames.Api.LolSpectatorV5;
 
 public class CurrentGameParticipantDto : BaseDto
 {
@@ -36,6 +36,9 @@ public class CurrentGameParticipantDto : BaseDto
     [JsonPropertyName("teamId")]
     public TeamId TeamId { get; set; }
 
+    /// <summary>
+    /// The encrypted puuid of this participant.
+    /// </summary>
     [JsonPropertyName("puuid")]
     public string Puuid { get; set; } = string.Empty;
 

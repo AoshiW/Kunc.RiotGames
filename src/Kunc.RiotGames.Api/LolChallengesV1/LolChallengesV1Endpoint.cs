@@ -18,7 +18,7 @@ public class LolChallengesV1Endpoint : ILolChallengesV1
     /// <inheritdoc/>
     public async Task<ChallengeConfigInfoDto[]> GetListOfAllBasicChallengeConfigurationInformationAsync(string region, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(region);
+        ArgumentException.ThrowIfNullOrEmpty(region);
 
         var request = new RiotRequestMessage()
         {
@@ -33,7 +33,7 @@ public class LolChallengesV1Endpoint : ILolChallengesV1
     /// <inheritdoc/>
     public async Task<Dictionary<long, Dictionary<string, double>>> GetMapOfLevelToPercentileOfPlayersAsync(string region, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(region);
+        ArgumentException.ThrowIfNullOrEmpty(region);
 
         var request = new RiotRequestMessage()
         {
@@ -48,7 +48,7 @@ public class LolChallengesV1Endpoint : ILolChallengesV1
     /// <inheritdoc/>
     public async Task<ChallengeConfigInfoDto?> GetChallengeConfigurationAsync(string region, long challengeId, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(region);
+        ArgumentException.ThrowIfNullOrEmpty(region);
 
         var request = new RiotRequestMessage()
         {
@@ -63,8 +63,8 @@ public class LolChallengesV1Endpoint : ILolChallengesV1
     /// <inheritdoc/>
     public async Task<ApexPlayerInfoDto[]?> GetTopPlayersAsync(string region, long challengeId, string level, TopPlayersQuery? query = null, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(region);
-        ArgumentNullException.ThrowIfNull(level);
+        ArgumentException.ThrowIfNullOrEmpty(region);
+        ArgumentException.ThrowIfNullOrEmpty(level);
 
         var request = new RiotRequestMessage()
         {
@@ -80,7 +80,7 @@ public class LolChallengesV1Endpoint : ILolChallengesV1
     /// <inheritdoc/>
     public async Task<Dictionary<string, double>?> GetMapOfLevelToPercentileAsync(string region, long challengeId, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(region);
+        ArgumentException.ThrowIfNullOrEmpty(region);
 
         var request = new RiotRequestMessage()
         {
@@ -95,8 +95,8 @@ public class LolChallengesV1Endpoint : ILolChallengesV1
     /// <inheritdoc/>
     public async Task<PlayerInfoDto> GetPlayerInformationAsync(string region, string puuid, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(region);
-        ArgumentNullException.ThrowIfNull(puuid);
+        ArgumentException.ThrowIfNullOrEmpty(region);
+        ArgumentException.ThrowIfNullOrEmpty(puuid);
 
         var request = new RiotRequestMessage()
         {

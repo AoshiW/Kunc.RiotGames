@@ -1,7 +1,4 @@
-﻿using System;
-using Kunc.RiotGames.Api.RiotAccountV1;
-
-namespace Kunc.RiotGames.Api.LolClashV1;
+﻿namespace Kunc.RiotGames.Api.LolClashV1;
 
 public interface ILolClashV1
 {

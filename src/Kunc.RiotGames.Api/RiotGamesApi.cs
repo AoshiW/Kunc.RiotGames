@@ -5,7 +5,7 @@ using Kunc.RiotGames.Api.LolChampionV3;
 using Kunc.RiotGames.Api.LolClashV1;
 using Kunc.RiotGames.Api.LolLeagueV4;
 using Kunc.RiotGames.Api.LolMatchV5;
-using Kunc.RiotGames.Api.LolSpectatorV4;
+using Kunc.RiotGames.Api.LolSpectatorV5;
 using Kunc.RiotGames.Api.LolSummonerV4;
 using Kunc.RiotGames.Api.LorMatchV1;
 using Kunc.RiotGames.Api.LorRankedV1;
@@ -33,7 +33,7 @@ public class RiotGamesApi : IRiotGamesApi
         LolClashV1 = new LolClashV1Endpoint(client);
         LolLeagueV4 = new LolLeagueV4Endpoint(client);
         LolMatchV5 = new LolMatchV5Endpoint(client);
-        LolSpectatorV4 = new LolSpectatorV4Endpoint(client);
+        LolSpectatorV5 = new LolSpectatorV5Endpoint(client);
         LolSummonerV4 = new LolSummonerV4Endpoint(client);
 
         LorMatchV1 = new LorMatchV1Endpoint(client);
@@ -66,7 +66,7 @@ public class RiotGamesApi : IRiotGamesApi
     public ILolMatchV5 LolMatchV5 { get; }
 
     /// <inheritdoc />
-    public ILolSpectatorV4 LolSpectatorV4 { get; }
+    public ILolSpectatorV5 LolSpectatorV5 { get; }
 
     ///// <inheritdoc />
     //public int LolStatusV4 { get; }

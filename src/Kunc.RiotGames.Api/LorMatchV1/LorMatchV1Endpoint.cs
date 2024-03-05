@@ -18,8 +18,8 @@ public class LorMatchV1Endpoint : ILorMatchV1
     /// <inheritdoc/>
     public async Task<string[]> GetListOfMatchIdsAsync(string region, string puuid, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(region);
-        ArgumentNullException.ThrowIfNull(puuid);
+        ArgumentException.ThrowIfNullOrEmpty(region);
+        ArgumentException.ThrowIfNullOrEmpty(puuid);
 
         var request = new RiotRequestMessage()
         {
@@ -34,8 +34,8 @@ public class LorMatchV1Endpoint : ILorMatchV1
     /// <inheritdoc/>
     public async Task<MatchDto?> GetMatchAsync(string region, string matchId, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(region);
-        ArgumentNullException.ThrowIfNull(matchId);
+        ArgumentException.ThrowIfNullOrEmpty(region);
+        ArgumentException.ThrowIfNullOrEmpty(matchId);
 
         var request = new RiotRequestMessage()
         {

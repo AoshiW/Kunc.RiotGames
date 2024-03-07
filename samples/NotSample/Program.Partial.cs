@@ -14,7 +14,7 @@ partial class Program
     static readonly IConfiguration Configuration = new ConfigurationManager()
         .SetBasePath(Directory.GetParent(Directory.GetCurrentDirectory())!.Parent!.Parent!.FullName)
         .AddJsonFile("appsettings.json", true, true)
-        .AddJsonFile("appsettings.Development.json", true, true)
+        .AddJsonFile("appsettings.local.json", true, true)
         .Build();
 
     static readonly IServiceProvider _service = new ServiceCollection()

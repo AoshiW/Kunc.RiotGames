@@ -44,4 +44,9 @@ public class LeagueEntryDto : BaseDto
 
     [JsonPropertyName("inactive")]
     public bool IsInactive { get; set; }
+
+    public Rank ToRank()
+    {
+        return new Rank(Tier, Division, LeaguePoints);
+    }
 }

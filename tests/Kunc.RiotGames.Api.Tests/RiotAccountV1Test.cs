@@ -6,7 +6,7 @@ public class RiotAccountV1Test : ApiBase
     [TestMethod]
     public async Task GetAccountByRiotIdAsync()
     {
-        var account = await api.RiotAccountV1.GetAccountByRiotIdAsync(Regions.EUROPE, RiotId.GameName, RiotId.TagLine);
+        var account = await api.RiotAccountV1.GetAccountByRiotIdAsync(Regions.EUROPE, RiotId);
 
         Assert.IsNotNull(account);
     }

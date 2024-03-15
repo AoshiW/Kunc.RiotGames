@@ -1,10 +1,15 @@
 # Kunc.RiotGames.Lol.DataDragon
 [![Nuget](https://img.shields.io/nuget/v/Kunc.RiotGames.Lol.DataDragon?logo=NuGet&logoColor=blue&style=flat-square)](https://www.nuget.org/packages/Kunc.RiotGames.Lol.DataDragon)
 
-## Usage
+## How to Use
 ```cs
 var options = new LolDataDragonOptions();
 var lolDataDragon = new LolDataDragon(options);
+// or
+using var services= new ServiceCollection()
+    .AddLolDataDragon()
+    .BuildServiceProvider();
+var api = services.GetRequiredService<ILolDataDragon>();
 
 int count = 5;
 var language = "en_US";

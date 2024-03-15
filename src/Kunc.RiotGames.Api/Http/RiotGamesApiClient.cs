@@ -1,5 +1,4 @@
-﻿using System.Collections.Concurrent;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
@@ -10,17 +9,18 @@ namespace Kunc.RiotGames.Api.Http;
 
 public class RiotGamesApiClient : IRiotGamesApiClient
 {
-    readonly HttpClient _client = new();
+    private readonly HttpClient _client = new();
     private readonly RiotGamesApiOptions _options;
+    private readonly IRiotGamesRateLimiter _rateLimiter;
     private readonly ILogger<RiotGamesApiClient> _logger;
-    private readonly ConcurrentDictionary<string, RegionRateLimiter> _rl = new();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RiotGamesApiClient"/> class.
     /// </summary>
-    public RiotGamesApiClient(IOptions<RiotGamesApiOptions> options, ILogger<RiotGamesApiClient>? logger = null)
+    public RiotGamesApiClient(IOptions<RiotGamesApiOptions> options, IRiotGamesRateLimiter rateLimiter, ILogger<RiotGamesApiClient>? logger = null)
     {
         _options = options.Value;
+        _rateLimiter = rateLimiter;
         _logger = logger ?? NullLogger<RiotGamesApiClient>.Instance;
     }
 
@@ -28,7 +28,7 @@ public class RiotGamesApiClient : IRiotGamesApiClient
     public async Task<HttpResponseMessage> SendAsync(RiotRequestMessage request, RiotRequestOptions options, CancellationToken cancellationToken = default)
     {
         int retries = 0;
-        var rl = _rl.GetOrAdd(request.Host, k => new());
+        var rl = _rateLimiter.GetPartialRateLimiter(request);
         do
         {
             // first check the methodRl, then appRl!
@@ -39,6 +39,7 @@ public class RiotGamesApiClient : IRiotGamesApiClient
             if (options.IncludeApiKey)
                 httpRequestMessage.Headers.Add("X-Riot-Token", _options.ApiKey);
             var response = await _client.SendAsync(httpRequestMessage, cancellationToken).ConfigureAwait(false);
+            rl.Updade(request, response);
             if (response.IsSuccessStatusCode || response.StatusCode is HttpStatusCode.NotFound)
                 return response;
             if (response.StatusCode is HttpStatusCode.TooManyRequests)

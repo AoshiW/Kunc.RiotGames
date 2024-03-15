@@ -1,5 +1,4 @@
-﻿using Kunc.RiotGames.Api.Http;
-using Kunc.RiotGames.Api.LolChallengesV1;
+﻿using Kunc.RiotGames.Api.LolChallengesV1;
 using Kunc.RiotGames.Api.LolChampionMasteryV4;
 using Kunc.RiotGames.Api.LolChampionV3;
 using Kunc.RiotGames.Api.LolClashV1;
@@ -22,28 +21,31 @@ public class RiotGamesApi : IRiotGamesApi
     /// <summary>
     /// Initializes a new instance of the <see cref="RiotGamesApi"/> class.
     /// </summary>
-    public RiotGamesApi(IRiotGamesApiClient client)
+    public RiotGamesApi(
+        IRiotAccountV1 riotAccountV1,
+        ILolClashV1 lolClashV1, ILolChallengesV1 lolChallengesV1, ILolChampionMasteryV4 lolChampionMasteryV4, ILolChampionV3 lolChampionV3, ILolLeagueV4 lolLeagueV4, ILolMatchV5 lolMatchV5, ILolSpectatorV5 lolSpectatorV5, ILolSummonerV4 lolSummonerV4,
+        ILorMatchV1 lorMatchV1, ILorRankedV1 lorRankedV1,
+        ITftLeagueV1 tftLeagueV1, ITftMatchV1 tftMatchV1, ILolSpectatorTftV5 lolSpectatorTftV5, ITftSummonerV1 tftSummonerV1
+    )
     {
-        ArgumentNullException.ThrowIfNull(client);
+        RiotAccountV1 = riotAccountV1;
 
-        RiotAccountV1 = new RiotAccountV1Endpoint(client);
+        LolClashV1 = lolClashV1;
+        LolChallengesV1 = lolChallengesV1;
+        LolChampionMasteryV4 = lolChampionMasteryV4;
+        LolChampionV3 = lolChampionV3;
+        LolLeagueV4 = lolLeagueV4;
+        LolMatchV5 = lolMatchV5;
+        LolSpectatorV5 = lolSpectatorV5;
+        LolSummonerV4 = lolSummonerV4;
 
-        LolChallengesV1 = new LolChallengesV1Endpoint(client);
-        LolChampionMasteryV4 = new LolChampionMasteryV4Endpoint(client);
-        LolChampionV3 = new LolChampionV3Endpoint(client);
-        LolClashV1 = new LolClashV1Endpoint(client);
-        LolLeagueV4 = new LolLeagueV4Endpoint(client);
-        LolMatchV5 = new LolMatchV5Endpoint(client);
-        LolSpectatorV5 = new LolSpectatorV5Endpoint(client);
-        LolSummonerV4 = new LolSummonerV4Endpoint(client);
+        LorMatchV1 = lorMatchV1;
+        LorRankedV1 = lorRankedV1;
 
-        LorMatchV1 = new LorMatchV1Endpoint(client);
-        LorRankedV1 = new LorRankedV1Endpoint(client);
-
-        TftLeagueV1 = new TftLeagueV1Endpoint(client);
-        TftMatchV1 = new TftMatchV1Endpoint(client);
-        LolSpectatorTftV5 = new LolSpectatorTftV5Endpoint(client);
-        TftSummonerV1 = new TftSummonerV1Endpoint(client);
+        TftLeagueV1 = tftLeagueV1;
+        TftMatchV1 = tftMatchV1;
+        LolSpectatorTftV5 = lolSpectatorTftV5;
+        TftSummonerV1 = tftSummonerV1;
     }
 
     /// <inheritdoc />

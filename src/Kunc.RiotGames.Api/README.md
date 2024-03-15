@@ -1,8 +1,12 @@
 ﻿﻿# Kunc.RiotGames.Api
 [![Nuget](https://img.shields.io/nuget/v/Kunc.RiotGames.Api?logo=NuGet&logoColor=blue&style=flat-square)](https://www.nuget.org/packages/Kunc.RiotGames.Api)
 
-## Usage
+## How to Use
 ```cs
+using var services= new ServiceCollection()
+    .AddRiotGamesApi(c => c.ApiKey = "ApiKey")
+    .BuildServiceProvider();
+var api = services.GetRequiredService<IRiotGamesApi>();
 
 var account = await api.RiotAccountV1.GetAccountByRiotIdAsync(Regions.EUROPE, "AoshiW#IRON");
 //var account = await api.RiotAccountV1.GetAccountByRiotIdAsync(Regions.EUROPE, "AoshiW", "IRON");

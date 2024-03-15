@@ -9,7 +9,7 @@ public enum Tracking
     /// stats are incremented without reset
     /// </summary>
     Lifetime,
-    
+
     /// <summary>
     /// stats are accumulated by season and reset at the beginning of new season
     /// </summary>

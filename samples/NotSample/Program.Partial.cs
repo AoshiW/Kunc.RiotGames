@@ -26,7 +26,7 @@ partial class Program
         .AddSingleton<ILorDeckEncoder, LorDeckEncoder>()
         .AddLorGameClient()
         .AddLolDataDragon()
-        .AddRiotGamesApi(c=>c.ApiKey = Configuration["RGAPIKEY"]!)
+        .AddRiotGamesApi(c => c.ApiKey = Configuration["RGAPIKEY"]!)
         .AddSqliteCache(x =>
         {
             x.CachePath = "cache.sqlite";

@@ -47,7 +47,7 @@ public interface ITftLeagueV1
     /// <param name="leagueId"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<LeagueListDto?> GetLeagueByIdAsync(string ?region, Guid leagueId, CancellationToken cancellationToken = default);
+    Task<LeagueListDto?> GetLeagueByIdAsync(string? region, Guid leagueId, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Get the master league.

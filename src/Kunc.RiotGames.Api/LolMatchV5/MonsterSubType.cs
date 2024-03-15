@@ -9,7 +9,7 @@ public enum MonsterSubType
     EARTH_DRAGON,
     WATER_DRAGON,
     AIR_DRAGON,
-    CHEMTECH_DRAGON, 
+    CHEMTECH_DRAGON,
     HEXTECH_DRAGON,
     ELDER_DRAGON,
 }

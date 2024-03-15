@@ -21,7 +21,7 @@ public class LeagueItemDto : BaseDto
     public bool HotStreak { get; set; }
 
     [JsonPropertyName("rank")]
-    public Division Division { get; set; } 
+    public Division Division { get; set; }
 
     [JsonPropertyName("leaguePoints")]
     public int LeaguePoints { get; set; }

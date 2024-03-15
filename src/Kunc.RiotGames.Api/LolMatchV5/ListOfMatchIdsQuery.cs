@@ -12,7 +12,7 @@ public class ListOfMatchIdsQuery : QueryString
     /// <remarks>
     /// This filter is mutually inclusive of the <see cref="Type"/> filter meaning any match ids returned must match both the <see cref="Queue"/> and type <see cref="Type"/>.
     /// </remarks>
-    public int? Queue{ get; set; }
+    public int? Queue { get; set; }
 
     /// <summary>
     /// Filter the list of match ids by the type of match.

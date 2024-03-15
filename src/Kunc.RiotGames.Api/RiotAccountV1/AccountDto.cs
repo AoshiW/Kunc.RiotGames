@@ -19,8 +19,8 @@ public class AccountDto : BaseDto
 
     public string GetRiotID()
     {
-        return HasRiotID 
-            ? $"{GameName}#{TagLine}" 
+        return HasRiotID
+            ? $"{GameName}#{TagLine}"
             : throw new InvalidOperationException("Riot id is not set.");
     }
 }

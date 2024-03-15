@@ -14,12 +14,12 @@ public enum State
     /// not visible, but calculated
     /// </summary>
     Hidden,
-    
+
     /// <summary>
     /// visible, but not calculated
     /// </summary>
     Archived,
-    
+
     /// <summary>
     /// visible and calculated
     /// </summary>

@@ -207,7 +207,7 @@ public class ParticipantDto : BaseDto, IKda
     public string RiotIdGameName { get; set; } = string.Empty;
 
     [JsonPropertyName("riotIdTagline")]
-    public string RiotIdTagline { get; set; } = string.Empty;
+    public string RiotIdTagLine { get; set; } = string.Empty;
 
     [JsonPropertyName("role")]
     public string Role { get; set; } = string.Empty;
@@ -389,6 +389,11 @@ public class ParticipantDto : BaseDto, IKda
     /// </summary>
     [JsonIgnore]
     public int CreepScore => TotalMinionsKilled + NeutralMinionsKilled;
+
+    public string GetRiotId()
+    {
+        return $"{RiotIdGameName}#{RiotIdTagLine}";
+    }
 }
 
 //teamPosition/individualposotopn came as LolClashV1.Position without Fill, Unselected

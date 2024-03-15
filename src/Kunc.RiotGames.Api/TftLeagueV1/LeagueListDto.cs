@@ -7,7 +7,7 @@ public class LeagueListDto : BaseDto
 {
     [JsonPropertyName("leagueId")]
     public Guid LeagueId { get; set; }
-    
+
     [JsonPropertyName("entries")]
     public LeagueItemDto[] Entries { get; set; } = [];
 

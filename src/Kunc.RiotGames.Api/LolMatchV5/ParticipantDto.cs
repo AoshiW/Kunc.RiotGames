@@ -347,31 +347,31 @@ public class ParticipantDto : BaseDto, IKda
 
     [JsonPropertyName("assistMePings")]
     public int AssistMePings { get; set; }
-    
+
     [JsonPropertyName("baitPings")]
     public int BaitPings { get; set; }
-    
+
     [JsonPropertyName("basicPings")]
     public int BasicPings { get; set; }
-    
+
     [JsonPropertyName("commandPings")]
     public int CommandPings { get; set; }
-    
+
     [JsonPropertyName("dangerPings")]
     public int DangerPings { get; set; }
-    
+
     [JsonPropertyName("enemyMissingPings")]
     public int EnemyMissingPings { get; set; }
-    
+
     [JsonPropertyName("getBackPings")]
     public int GetBackPings { get; set; }
-    
+
     [JsonPropertyName("holdPings")]
     public int HoldPings { get; set; }
-    
+
     [JsonPropertyName("onMyWayPings")]
     public int OnMyWayPings { get; set; }
-    
+
     [JsonPropertyName("pPushPings")]
     public int PushPings { get; set; }
 

@@ -5,6 +5,7 @@ using Kunc.RiotGames.Api.LolChampionV3;
 using Kunc.RiotGames.Api.LolClashV1;
 using Kunc.RiotGames.Api.LolLeagueV4;
 using Kunc.RiotGames.Api.LolMatchV5;
+using Kunc.RiotGames.Api.LolSpectatorTftV5;
 using Kunc.RiotGames.Api.LolSpectatorV5;
 using Kunc.RiotGames.Api.LolSummonerV4;
 using Kunc.RiotGames.Api.LorMatchV1;
@@ -41,6 +42,7 @@ public class RiotGamesApi : IRiotGamesApi
 
         TftLeagueV1 = new TftLeagueV1Endpoint(client);
         TftMatchV1 = new TftMatchV1Endpoint(client);
+        LolSpectatorTftV5 = new LolSpectatorTftV5Endpoint(client);
         TftSummonerV1 = new TftSummonerV1Endpoint(client);
     }
 
@@ -91,6 +93,9 @@ public class RiotGamesApi : IRiotGamesApi
 
     ///// <inheritdoc />
     //public int TftStatusV1 { get; }
+
+    ///// <inheritdoc />
+    public ILolSpectatorTftV5 LolSpectatorTftV5 { get; }
 
     /// <inheritdoc />
     public ITftSummonerV1 TftSummonerV1 { get; }

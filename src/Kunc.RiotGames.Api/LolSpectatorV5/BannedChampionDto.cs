@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Kunc.RiotGames.Lol;
 
 namespace Kunc.RiotGames.Api.LolSpectatorV5;
 
@@ -20,5 +21,5 @@ public class BannedChampionDto : BaseDto
     /// The ID of the team that banned the champion.
     /// </summary>
     [JsonPropertyName("teamId")]
-    public long TeamId { get; set; }
+    public TeamId TeamId { get; set; }
 }

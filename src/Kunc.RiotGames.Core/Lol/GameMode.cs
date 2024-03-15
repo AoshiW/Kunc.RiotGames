@@ -118,7 +118,6 @@ public enum GameMode
     /// </summary>
     PracticeTool,
 
-#pragma warning disable CA1707 // Identifiers should not contain underscores
     /// <summary>
     /// Tutorial part 1: Welcome to League
     /// </summary>
@@ -133,5 +132,9 @@ public enum GameMode
     /// Tutorial part 3: Shop for Gear
     /// </summary>
     TUTORIAL_MODULE_3,
-#pragma warning restore CA1707 // Identifiers should not contain underscores
+
+    /// <summary>
+    /// Teamfight Tactics
+    /// </summary>
+    Tft,
 }

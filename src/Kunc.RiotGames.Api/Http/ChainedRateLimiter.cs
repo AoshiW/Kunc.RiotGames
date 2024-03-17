@@ -2,7 +2,7 @@
 
 namespace Kunc.RiotGames.Api.Http;
 
-class ChainedRateLimiter : RateLimiter
+internal class ChainedRateLimiter : RateLimiter
 {
     private readonly RateLimiter[] _limiters;
     private readonly int _length;

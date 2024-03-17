@@ -1,22 +1,26 @@
 ﻿﻿# Kunc.RiotGames.Api
 [![Nuget](https://img.shields.io/nuget/v/Kunc.RiotGames.Api?logo=NuGet&logoColor=blue&style=flat-square)](https://www.nuget.org/packages/Kunc.RiotGames.Api)
 
+## Features
+The rate limiter is automatically set according to your api key.
+
 ## How to Use
 ```cs
-using var services= new ServiceCollection()
+using var services = new ServiceCollection()
     .AddRiotGamesApi(c => c.ApiKey = "ApiKey")
     .BuildServiceProvider();
 var api = services.GetRequiredService<IRiotGamesApi>();
 
-var account = await api.RiotAccountV1.GetAccountByRiotIdAsync(Regions.EUROPE, "AoshiW#IRON");
-//var account = await api.RiotAccountV1.GetAccountByRiotIdAsync(Regions.EUROPE, "AoshiW", "IRON");
-Console.WriteLine($"Account: {account.GetRiotID()}");
+var account = await api.RiotAccountV1.GetAccountByRiotIdAsync(Regions.EUROPE, "AoshiW", "IRON");
+// or
+//var account = await api.RiotAccountV1.GetAccountByRiotIdAsync(Regions.EUROPE, "AoshiW#IRON");
+Console.WriteLine($"Account: {account.GetRiotId()}");
 
 var summoner = await api.LolSummonerV4.GetSummonerByPuuidAsync(Regions.EUN1, account.Puuid);
 Console.WriteLine();
 Console.WriteLine("Ranks:");
-var le = await api.LolLeagueV4.LeagueEntriesForSummonerAsync(Regions.EUN1, summoner.Id);
-foreach (var entry in le)
+var entries = await api.LolLeagueV4.LeagueEntriesForSummonerAsync(Regions.EUN1, summoner.Id);
+foreach (var entry in entries)
 {
     Console.WriteLine($"{entry.QueueType}: {entry.ToRank()}");
 }

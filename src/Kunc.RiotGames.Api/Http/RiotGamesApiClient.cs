@@ -28,41 +28,48 @@ public class RiotGamesApiClient : IRiotGamesApiClient
     public async Task<HttpResponseMessage> SendAsync(RiotRequestMessage request, RiotRequestOptions options, CancellationToken cancellationToken = default)
     {
         int retries = 0;
-        var rl = _rateLimiter.GetPartialRateLimiter(request);
+        List<Exception>? exceptions = null;
         do
         {
             // first check the methodRl, then appRl!
-            using var methodRl = await rl.AcquireMethodAsync(request.MethodId, cancellationToken);
-            using var appRl = await rl.AcquireAppAsync(cancellationToken);
+            using var methodRl = await _rateLimiter.AcquireMethodAsync(request.Host, request.MethodId, cancellationToken);
+            using var appRl = await _rateLimiter.AcquireAppAsync(request.Host, cancellationToken);
             retries++;
             using var httpRequestMessage = request.ToHttpRequestMessage();
             if (options.IncludeApiKey)
-                httpRequestMessage.Headers.Add("X-Riot-Token", _options.ApiKey);
+                httpRequestMessage.Headers.Add(ApiConstants.RiotToken, _options.ApiKey);
             var response = await _client.SendAsync(httpRequestMessage, cancellationToken).ConfigureAwait(false);
-            rl.Updade(request, response);
+
+            await _rateLimiter.UpdateAsync(request.Host, request, response, cancellationToken);
             if (response.IsSuccessStatusCode || response.StatusCode is HttpStatusCode.NotFound)
                 return response;
+
+            exceptions ??= new();
+            var msg = await ReadErrorMessageAsync(response.Content, cancellationToken).ConfigureAwait(false);
+            exceptions.Add(new HttpRequestException(msg, null, response.StatusCode));
+
             if (response.StatusCode is HttpStatusCode.TooManyRequests)
             {
                 var delay = response.Headers.RetryAfter?.Delta ?? _options.Delay;
-                if (response.Headers.TryGetValues("X-Rate-Limit-Type", out var rlt) && rlt.First() == "method")
+                var rateLimitType = "Unknow";
+                if (response.Headers.TryGetValues(ApiConstants.RateLimitType, out var rlt) && (rateLimitType = rlt.First()) == "method")
                 {
                     appRl.Dispose();
                 }
-                _logger.LogInformation("delay:{0}, Host:{1}, rt:{2}, methodId:{3}", delay, request.Host, rlt, request.MethodId);
+                _logger.HitRateLimits(request.Host, request.MethodId, delay, rateLimitType);
                 await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
             }
             else if (response.StatusCode is >= (HttpStatusCode)400 and < (HttpStatusCode)500)
             {
-                var msg = await ReadErrorMessageAsync(response.Content, cancellationToken).ConfigureAwait(false);
-                throw new HttpRequestException(msg, null, response.StatusCode);
+                throw exceptions[^1];
             }
             else if (response.StatusCode is >= (HttpStatusCode)500 and < (HttpStatusCode)600)
             {
                 await Task.Delay(_options.Delay, cancellationToken).ConfigureAwait(false);
             }
         } while (retries < 5);
-        throw new Exception();
+        var lastException = exceptions[^1];
+        throw new AggregateException($"Request failed after {retries} attempts.", exceptions);
     }
 
     /// <inheritdoc/>

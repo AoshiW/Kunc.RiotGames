@@ -15,11 +15,11 @@ public class AccountDto : BaseDto
     public string? TagLine { get; set; }
 
     [MemberNotNullWhen(true, nameof(GameName), nameof(TagLine))]
-    public bool HasRiotID => GameName is not null && TagLine is not null;
+    public bool HasRiotId => GameName is not null && TagLine is not null;
 
-    public string GetRiotID()
+    public string GetRiotId()
     {
-        return HasRiotID
+        return HasRiotId
             ? $"{GameName}#{TagLine}"
             : throw new InvalidOperationException("Riot id is not set.");
     }

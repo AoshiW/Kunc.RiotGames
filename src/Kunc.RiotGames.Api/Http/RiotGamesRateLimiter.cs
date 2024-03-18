@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Threading.RateLimiting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Kunc.RiotGames.Api.Http;
 
@@ -13,9 +14,9 @@ sealed public class RiotGamesRateLimiter : IRiotGamesRateLimiter, IDisposable
     /// <summary>
     /// Initializes a new instance of the <see cref="RiotGamesRateLimiter"/> class.
     /// </summary>
-    public RiotGamesRateLimiter(ILogger<RiotGamesRateLimiter> logger)
+    public RiotGamesRateLimiter(ILogger<RiotGamesRateLimiter>? logger = null)
     {
-        _logger = logger;
+        _logger = logger ?? NullLogger<RiotGamesRateLimiter>.Instance;
     }
 
     private RegionRateLimiter GetRegionalLimiter(string region)

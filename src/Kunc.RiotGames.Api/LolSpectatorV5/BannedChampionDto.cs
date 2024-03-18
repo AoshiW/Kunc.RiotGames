@@ -15,7 +15,7 @@ public class BannedChampionDto : BaseDto
     /// The ID of the banned champion.
     /// </summary>
     [JsonPropertyName("championId")]
-    public long ChampionId { get; set; }
+    public int ChampionId { get; set; }
 
     /// <summary>
     /// The ID of the team that banned the champion.

@@ -9,7 +9,7 @@ public class CurrentGameParticipantDto : BaseDto
     /// The ID of the champion played by this participant.
     /// </summary>
     [JsonPropertyName("championId")]
-    public long ChampionId { get; set; }
+    public int ChampionId { get; set; }
 
     /// <summary>
     /// Perks/Runes Reforged Information.

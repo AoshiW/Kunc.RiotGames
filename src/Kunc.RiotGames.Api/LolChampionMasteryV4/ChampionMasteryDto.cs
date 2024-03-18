@@ -27,7 +27,7 @@ public class ChampionMasteryDto : BaseDto
     /// Champion ID for this entry.
     /// </summary>
     [JsonPropertyName("championId")]
-    public long ChampionId { get; set; }
+    public int ChampionId { get; set; }
 
     /// <summary>
     /// Last time this champion was played by this player.

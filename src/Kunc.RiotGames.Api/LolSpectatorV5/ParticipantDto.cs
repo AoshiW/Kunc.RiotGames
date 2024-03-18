@@ -33,7 +33,7 @@ public class ParticipantDto : BaseDto
     /// The ID of the champion played by this participant.
     /// </summary>
     [JsonPropertyName("championId")]
-    public long ChampionId { get; set; }
+    public int ChampionId { get; set; }
 
     /// <summary>
     /// The team ID of this participant, indicating the participant's team.

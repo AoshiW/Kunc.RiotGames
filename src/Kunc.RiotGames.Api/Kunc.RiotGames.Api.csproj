@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <PackageTags>Lol;LeagueOfLegends;Lor;LegendsOfRuneterra;Tft;TeamfightTactics</PackageTags>
-        <Description></Description>
+        <Description>Client for the Riot Games API.</Description>
         <Version>0.1.1</Version>
     </PropertyGroup>
 

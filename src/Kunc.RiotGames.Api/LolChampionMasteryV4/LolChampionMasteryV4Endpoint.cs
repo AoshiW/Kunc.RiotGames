@@ -32,7 +32,7 @@ public class LolChampionMasteryV4Endpoint : ILolChampionMasteryV4
     }
 
     /// <inheritdoc/>
-    public async Task<ChampionMasteryDto?> GetChampionMasteryByPuuidAsync(string region, string puuid, long championId, CancellationToken cancellationToken = default)
+    public async Task<ChampionMasteryDto?> GetChampionMasteryByPuuidAsync(string region, string puuid, int championId, CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(region);
         ArgumentException.ThrowIfNullOrEmpty(puuid);

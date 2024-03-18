@@ -19,7 +19,7 @@ public interface ILolChampionMasteryV4
     /// <param name="championId"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<ChampionMasteryDto?> GetChampionMasteryByPuuidAsync(string region, string puuid, long championId, CancellationToken cancellationToken = default);
+    Task<ChampionMasteryDto?> GetChampionMasteryByPuuidAsync(string region, string puuid, int championId, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Get specified number of top champion mastery entries sorted by number of champion points descending.

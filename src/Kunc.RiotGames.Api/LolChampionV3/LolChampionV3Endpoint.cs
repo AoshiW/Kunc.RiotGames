@@ -7,7 +7,7 @@ public class LolChampionV3Endpoint : ILolChampionV3
     private readonly IRiotGamesApiClient _client;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ILolChampionV3Endpoint"/> class.
+    /// Initializes a new instance of the <see cref="LolChampionV3Endpoint"/> class.
     /// </summary>
     public LolChampionV3Endpoint(IRiotGamesApiClient client)
     {

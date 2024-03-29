@@ -1,6 +1,7 @@
 ﻿using System.Threading.RateLimiting;
 
 namespace Kunc.RiotGames.Api.Http;
+
 public interface IRiotGamesRateLimiter
 {
     ValueTask<RateLimitLease> AcquireAppAsync(string region, CancellationToken cancellationToken);

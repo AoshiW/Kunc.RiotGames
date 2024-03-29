@@ -13,7 +13,8 @@ public class MatchParticipantFrameDto : BaseDto
     public int CurrentGold { get; set; }
 
     [JsonPropertyName("damageStats")]
-    public DamageStatsDto DamageStats { get; set; }
+    [JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]
+    public DamageStatsDto DamageStats { get; set; } = new();
 
     [JsonPropertyName("goldPerSecond")]
     public int GoldPerSecond { get; set; }

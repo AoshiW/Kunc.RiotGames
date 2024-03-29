@@ -22,7 +22,7 @@ public interface ILolClashV1
     /// <param name="teamId"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<TeamDto> GetTeamByIdAsync(string region, string teamId, CancellationToken cancellationToken = default);
+    Task<TeamDto?> GetTeamByIdAsync(string region, string teamId, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Get all active or upcoming tournaments.

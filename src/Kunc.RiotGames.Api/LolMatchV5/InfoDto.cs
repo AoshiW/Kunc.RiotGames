@@ -22,7 +22,7 @@ public class InfoDto : BaseDto
     /// </summary>
     [JsonPropertyName("gameEndTimestamp")]
     [JsonConverter(typeof(UnixTimestampDateTimeOffsetMsConverter))]
-    public DateTimeOffset GameEndTimestamp { get; set; }
+    public DateTimeOffset GameEnd { get; set; }
 
     [JsonPropertyName("gameId")]
     public long GameId { get; set; }
@@ -38,7 +38,7 @@ public class InfoDto : BaseDto
     /// </summary>
     [JsonPropertyName("gameStartTimestamp")]
     [JsonConverter(typeof(UnixTimestampDateTimeOffsetMsConverter))]
-    public DateTimeOffset GameStartTimestamp { get; set; }
+    public DateTimeOffset GameStart { get; set; }
 
     [JsonPropertyName("gameType")]
     public GameType GameType { get; set; }

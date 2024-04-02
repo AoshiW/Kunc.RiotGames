@@ -1,22 +1,36 @@
-﻿namespace Kunc.RiotGames.Api.Tests;
+﻿using Microsoft.Extensions.Configuration;
+
+namespace Kunc.RiotGames.Api.Tests;
 
 [TestClass]
-public class LolMatchV5Test : ApiBase
+public class LolMatchV5Test : ApiBase<TGame.LOL>
 {
     [TestMethod]
     public async Task TestAll()
     {
-        var matchIds = await api.LolMatchV5.GetListOfMatchIdsAsync(Regions.EUROPE, Puuid, new()
-        {
-            Queue = 420,
-        });
+        var acc = GetConfiguration("Summoner").Get<AccountInfo>()!;
+        var region = ToBigRegion(acc.Region);
+
+        var matchIds = await Api.LolMatchV5.GetListOfMatchIdsAsync(region, acc.Puuid);
 
         Assert.IsTrue(matchIds.Length > 0);
+        bool isFirstMatch = true;
+        foreach (var matchId in matchIds.Take(10))
+        {
+            var match = await Api.LolMatchV5.GetMatchAsync(region, matchId);
+            var matchTimeline = await Api.LolMatchV5.GetMatchTimelineAsync(region, matchId);
 
-        var match = await api.LolMatchV5.GetMatchAsync(Regions.EUROPE, matchIds[0]);
-        var matchTimeline = await api.LolMatchV5.GetMatchTimelineAsync(Regions.EUROPE, matchIds[0]);
 
-        Assert.IsNotNull(match);
-        Assert.IsNotNull(matchTimeline);
+            Assert.IsNotNull(match);
+            if (isFirstMatch)
+            {
+                isFirstMatch = false;
+                if (DateTimeOffset.UtcNow - match.Info.GameStart > TimeSpan.FromDays(60))
+                {
+                    Assert.Fail("The game is too old for testing. / The player no longer plays the game.");
+                }
+            }
+            Assert.IsNotNull(matchTimeline);
+        }
     }
 }

@@ -1,12 +1,14 @@
-﻿namespace Kunc.RiotGames.Api.Tests;
+﻿using Microsoft.Extensions.Configuration;
+
+namespace Kunc.RiotGames.Api.Tests;
 
 [TestClass]
-public class LolLeagueV4Test : ApiBase
+public class LolLeagueV4Test : ApiBase<TGame.LOL>
 {
     [TestMethod]
     public async Task GetChallengerLeagueAsync()
     {
-        var leagueList = await api.LolLeagueV4.GetChallengerLeagueAsync(Regions.LA2, Lol.QueueType.RANKED_SOLO_5x5);
+        var leagueList = await Api.LolLeagueV4.GetChallengerLeagueAsync(Regions.LA2, Lol.QueueType.RANKED_SOLO_5x5);
 
         Assert.IsNotNull(leagueList);
     }
@@ -14,7 +16,7 @@ public class LolLeagueV4Test : ApiBase
     [TestMethod]
     public async Task GetGrandmasterLeagueAsync()
     {
-        var leagueList = await api.LolLeagueV4.GetGrandmasterLeagueAsync(Regions.LA1, Lol.QueueType.RANKED_FLEX_SR);
+        var leagueList = await Api.LolLeagueV4.GetGrandmasterLeagueAsync(Regions.LA1, Lol.QueueType.RANKED_FLEX_SR);
 
         Assert.IsNotNull(leagueList);
     }
@@ -22,7 +24,7 @@ public class LolLeagueV4Test : ApiBase
     [TestMethod]
     public async Task GetMasterLeagueAsync()
     {
-        var leagueList = await api.LolLeagueV4.GetMasterLeagueAsync(Regions.EUN1, Lol.QueueType.RANKED_SOLO_5x5);
+        var leagueList = await Api.LolLeagueV4.GetMasterLeagueAsync(Regions.EUN1, Lol.QueueType.RANKED_SOLO_5x5);
 
         Assert.IsNotNull(leagueList);
     }
@@ -30,8 +32,15 @@ public class LolLeagueV4Test : ApiBase
     [TestMethod]
     public async Task LeagueEntriesForSummonerAsync()
     {
-        var entries = await api.LolLeagueV4.LeagueEntriesForSummonerAsync(Regions.EUN1, SummonerId);
+        var acc = GetConfiguration("Summoner").Get<AccountInfo>()!;
+        var summonerId = GetConfiguration("Summoner:Id").Get<string>()!;
+
+        var entries = await Api.LolLeagueV4.LeagueEntriesForSummonerAsync(acc.Region, summonerId);
 
         Assert.IsNotNull(entries);
+        if(entries.Length == 0)
+        {
+            Assert.Inconclusive("Summoner without rank.");
+        }
     }
 }

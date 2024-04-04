@@ -14,7 +14,7 @@ public class AccountDto : BaseDto
     [JsonPropertyName("tagLine")]
     public string? TagLine { get; set; }
 
-    [MemberNotNullWhen(true, nameof(GameName), nameof(TagLine))]
+    [JsonIgnore, MemberNotNullWhen(true, nameof(GameName), nameof(TagLine))]
     public bool HasRiotId => GameName is not null && TagLine is not null;
 
     public string GetRiotId()

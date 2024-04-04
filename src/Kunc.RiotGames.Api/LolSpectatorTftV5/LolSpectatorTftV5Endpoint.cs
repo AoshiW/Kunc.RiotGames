@@ -16,6 +16,7 @@ public class LolSpectatorTftV5Endpoint : ILolSpectatorTftV5
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<CurrentGameInfoDto?> GetCurrentGameInformationForPuuidAsync(string region, string puuid, CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(region);
@@ -31,6 +32,7 @@ public class LolSpectatorTftV5Endpoint : ILolSpectatorTftV5
         return await _client.SendAndDeserializeAsync<CurrentGameInfoDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task<FeaturedGamesDto> GetFeaturedGamesAsync(string region, CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(region);

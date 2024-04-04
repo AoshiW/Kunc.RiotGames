@@ -1,11 +1,17 @@
 ﻿using System.Text.Json.Serialization;
+using Kunc.RiotGames.JsonConverters;
 
 namespace Kunc.RiotGames.Api.LolMatchV5;
 
-[JsonConverter(typeof(JsonStringEnumConverter<KillType>))]
+[JsonConverter(typeof(JsonStringEnumConverterWithAltNames<KillType>))]
 public enum KillType
 {
-    KILL_FIRST_BLOOD,
-    KILL_MULTI,
-    KILL_ACE
+    [JsonEnumName("KILL_FIRST_BLOOD")]
+    FirstBlood,
+    
+    [JsonEnumName("KILL_MULTI")]
+    Multi,
+
+    [JsonEnumName("KILL_ACE")]
+    Ace
 }

@@ -26,7 +26,7 @@ public class LolLeagueV4Endpoint : ILolLeagueV4
             HttpMethod = HttpMethod.Get,
             Host = region,
             MethodId = "/lol/league/v4/challengerleagues/by-queue/{queue}",
-            Path = $"/lol/league/v4/challengerleagues/by-queue/{queue}",
+            Path = $"/lol/league/v4/challengerleagues/by-queue/{queue.ToApiString()}",
         };
         return await _client.SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }

@@ -8,7 +8,7 @@ public class LolLeagueV4Test : ApiBase<TGame.LOL>
     [TestMethod]
     public async Task GetChallengerLeagueAsync()
     {
-        var leagueList = await Api.LolLeagueV4.GetChallengerLeagueAsync(Regions.LA2, Lol.QueueType.RANKED_SOLO_5x5);
+        var leagueList = await Api.LolLeagueV4.GetChallengerLeagueAsync(Regions.LA2, Lol.QueueType.RankedSolo5x5);
 
         Assert.IsNotNull(leagueList);
     }
@@ -16,7 +16,7 @@ public class LolLeagueV4Test : ApiBase<TGame.LOL>
     [TestMethod]
     public async Task GetGrandmasterLeagueAsync()
     {
-        var leagueList = await Api.LolLeagueV4.GetGrandmasterLeagueAsync(Regions.LA1, Lol.QueueType.RANKED_FLEX_SR);
+        var leagueList = await Api.LolLeagueV4.GetGrandmasterLeagueAsync(Regions.LA1, Lol.QueueType.RankedFlexSR);
 
         Assert.IsNotNull(leagueList);
     }
@@ -24,7 +24,7 @@ public class LolLeagueV4Test : ApiBase<TGame.LOL>
     [TestMethod]
     public async Task GetMasterLeagueAsync()
     {
-        var leagueList = await Api.LolLeagueV4.GetMasterLeagueAsync(Regions.EUN1, Lol.QueueType.RANKED_SOLO_5x5);
+        var leagueList = await Api.LolLeagueV4.GetMasterLeagueAsync(Regions.EUN1, Lol.QueueType.RankedSolo5x5);
 
         Assert.IsNotNull(leagueList);
     }

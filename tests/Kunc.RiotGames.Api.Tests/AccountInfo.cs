@@ -2,9 +2,9 @@
 
 internal class AccountInfo
 {
-    public string RiotId { get; set; }
+    public string RiotId { get; set; } = default!;
 
-    public string Region { get; set; }
+    public string Region { get; set; } = default!;
     
-    public string Puuid { get; set; }
+    public string Puuid { get; set; } = default!;
 }

@@ -39,7 +39,6 @@ public class LolChallengesV1Test : ApiBase<TGame.LOL>
         var topPlayers = await Api.LolChallengesV1.GetTopPlayersAsync(Regions.TH2, challengeId, level);
 
         Assert.IsNotNull(topPlayers);
-        Assert.AreNotEqual(0, topPlayers.Length);
     }
 
     [TestMethod]

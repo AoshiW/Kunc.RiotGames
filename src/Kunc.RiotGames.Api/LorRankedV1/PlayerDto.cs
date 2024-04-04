@@ -16,5 +16,5 @@ public class PlayerDto : BaseDto
     /// </summary>
     [JsonPropertyName("lp")]
     [JsonConverter(typeof(Int32Converter))]
-    public int Lp { get; set; }
+    public int LP { get; set; }
 }

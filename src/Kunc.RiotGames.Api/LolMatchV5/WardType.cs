@@ -1,14 +1,25 @@
 ﻿using System.Text.Json.Serialization;
+using Kunc.RiotGames.JsonConverters;
 
 namespace Kunc.RiotGames.Api.LolMatchV5;
 
-[JsonConverter(typeof(JsonStringEnumConverter<WardType>))]
+[JsonConverter(typeof(JsonStringEnumConverterWithAltNames<WardType>))]
 public enum WardType
 {
-    CONTROL_WARD,
-    YELLOW_TRINKET,
-    BLUE_TRINKET,
-    SIGHT_WARD,
-    TEEMO_MUSHROOM,
-    UNDEFINED,
+    [JsonEnumName("CONTROL_WARD")]
+    ControlWard,
+
+    [JsonEnumName("YELLOW_TRINKET")]
+    YellowTrinket,
+
+    [JsonEnumName("BLUE_TRINKET")]
+    BlueTrinket,
+
+    [JsonEnumName("SIGHT_WARD")]
+    SightWard,
+
+    [JsonEnumName("TEEMO_MUSHROOM")]
+    TeemoMushroom,
+
+    Undefined,
 }

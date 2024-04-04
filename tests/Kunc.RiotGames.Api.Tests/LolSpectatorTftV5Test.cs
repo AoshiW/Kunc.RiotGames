@@ -9,6 +9,8 @@ public class LolSpectatorTftV5Test : ApiBase<TGame.TFT>
         var featuredGames = await Api.LolSpectatorTftV5.GetFeaturedGamesAsync(Regions.VN2);
 
         Assert.IsNotNull(featuredGames);
+        if (featuredGames.GameList.Length == 0)
+            Assert.Inconclusive("No games were found.");
 
         var currentGame = await Api.LolSpectatorTftV5.GetCurrentGameInformationForPuuidAsync(Regions.VN2, featuredGames.GameList[0].Participants[0].Puuid);
 

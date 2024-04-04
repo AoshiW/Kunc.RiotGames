@@ -4,9 +4,12 @@ namespace Kunc.RiotGames.Api;
 
 public class RiotGamesApiOptions
 {
-    public string ApiKey { get; set; }
+    /// <summary>
+    /// The Riot Games API Key.
+    /// </summary>
+    public string ApiKey { get; set; } = default!;
 
-    public TimeSpan Delay { get; set; }
+    public TimeSpan Delay { get; set; } = TimeSpan.FromSeconds(1);
 
     public JsonSerializerOptions JsonSerializerOptions { get; set; } = new()
     {

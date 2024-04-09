@@ -6,7 +6,7 @@ namespace Kunc.RiotGames.Api.RiotAccountV1;
 public class AccountDto : BaseDto
 {
     [JsonPropertyName("puuid")]
-    public string Puuid { get; set; }
+    public string Puuid { get; set; } = string.Empty;
 
     [JsonPropertyName("gameName")]
     public string? GameName { get; set; }

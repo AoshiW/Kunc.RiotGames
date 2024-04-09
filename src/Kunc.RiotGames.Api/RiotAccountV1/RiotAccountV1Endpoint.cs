@@ -1,4 +1,5 @@
 ﻿using Kunc.RiotGames.Api.Http;
+using Kunc.RiotGames.Api.SharedStatus;
 
 namespace Kunc.RiotGames.Api.RiotAccountV1;
 
@@ -28,7 +29,8 @@ public class RiotAccountV1Endpoint : IRiotAccountV1
             MethodId = "/riot/account/v1/accounts/by-puuid/{puuid}",
             Path = $"/riot/account/v1/accounts/by-puuid/{puuid}",
         };
-        return await _client.SendAndDeserializeAsync<AccountDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await _client.SendAndDeserializeAsync<AccountDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return data!;
     }
 
     /// <inheritdoc/>
@@ -61,6 +63,7 @@ public class RiotAccountV1Endpoint : IRiotAccountV1
             MethodId = "/riot/account/v1/active-shards/by-game/{game}/by-puuid/{puuid}",
             Path = $"/riot/account/v1/active-shards/by-game/{game.ToLowerString()}/by-puuid/{puuid}",
         };
-        return await _client.SendAndDeserializeAsync<ActiveShardDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await _client.SendAndDeserializeAsync<ActiveShardDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return data!;
     }
 }

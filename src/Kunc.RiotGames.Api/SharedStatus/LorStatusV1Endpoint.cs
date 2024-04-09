@@ -27,6 +27,7 @@ public class LorStatusV1Endpoint : ILorStatusV1
             MethodId = "/lor/status/v1/platform-data",
             Path = $"/lor/status/v1/platform-data",
         };
-        return await _client.SendAndDeserializeAsync<PlatformDataDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await _client.SendAndDeserializeAsync<PlatformDataDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return data!;
     }
 }

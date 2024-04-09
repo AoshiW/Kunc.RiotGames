@@ -29,7 +29,8 @@ public class LolMatchV5Endpoint : ILolMatchV5
             Path = $"/lol/match/v5/matches/by-puuid/{puuid}/ids",
             Query = query,
         };
-        return await _client.SendAndDeserializeAsync<string[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await _client.SendAndDeserializeAsync<string[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return data!;
     }
 
     /// <inheritdoc/>

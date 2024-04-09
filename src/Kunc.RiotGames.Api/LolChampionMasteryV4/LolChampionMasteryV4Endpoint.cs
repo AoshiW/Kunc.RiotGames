@@ -28,7 +28,8 @@ public class LolChampionMasteryV4Endpoint : ILolChampionMasteryV4
             MethodId = "/lol/champion-mastery/v4/champion-masteries/by-puuid/{encryptedPUUID}",
             Path = $"/lol/champion-mastery/v4/champion-masteries/by-puuid/{puuid}",
         };
-        return await _client.SendAndDeserializeAsync<ChampionMasteryDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await _client.SendAndDeserializeAsync<ChampionMasteryDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return data!;
     }
 
     /// <inheritdoc/>
@@ -61,7 +62,8 @@ public class LolChampionMasteryV4Endpoint : ILolChampionMasteryV4
             Path = $"/lol/champion-mastery/v4/champion-masteries/by-puuid/{puuid}/top",
             Query = query,
         };
-        return await _client.SendAndDeserializeAsync<ChampionMasteryDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await _client.SendAndDeserializeAsync<ChampionMasteryDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return data!;
     }
 
     /// <inheritdoc/>

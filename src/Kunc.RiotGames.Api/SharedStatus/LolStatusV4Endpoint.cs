@@ -27,6 +27,7 @@ public class LolStatusV4Endpoint : ILolStatusV4
             MethodId = "/lol/status/v4/platform-data",
             Path = $"/lol/status/v4/platform-data",
         };
-        return await _client.SendAndDeserializeAsync<PlatformDataDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await _client.SendAndDeserializeAsync<PlatformDataDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return data!;
     }
 }

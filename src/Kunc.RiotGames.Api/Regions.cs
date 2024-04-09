@@ -17,7 +17,7 @@ public static class Regions
     public static string BR1 { get; } = "br1";
 
     /// <summary>
-    /// Europe Nordic & East
+    /// Europe Nordic &amp; East
     /// </summary>
     public static string EUN1 { get; } = "eun1";
 

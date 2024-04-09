@@ -9,7 +9,7 @@ public class PlayerDto : BaseDto
 
     //todo to guid?
     [JsonPropertyName("deck_id")]
-    public string DeckId { get; set; }
+    public string DeckId { get; set; } = string.Empty;
 
     [JsonPropertyName("deck_code")]
     public string DeckCode { get; set; } = string.Empty;

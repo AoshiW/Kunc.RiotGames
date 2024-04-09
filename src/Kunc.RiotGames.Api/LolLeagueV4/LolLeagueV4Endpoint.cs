@@ -1,5 +1,6 @@
 ﻿using Kunc.RiotGames.Api.Http;
 using Kunc.RiotGames.Lol;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Kunc.RiotGames.Api.LolLeagueV4;
 
@@ -28,7 +29,8 @@ public class LolLeagueV4Endpoint : ILolLeagueV4
             MethodId = "/lol/league/v4/challengerleagues/by-queue/{queue}",
             Path = $"/lol/league/v4/challengerleagues/by-queue/{queue.ToApiString()}",
         };
-        return await _client.SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await _client.SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return data!;
     }
 
     /// <inheritdoc/>
@@ -44,7 +46,8 @@ public class LolLeagueV4Endpoint : ILolLeagueV4
             MethodId = "/lol/league/v4/entries/by-summoner/{encryptedSummonerId}",
             Path = $"/lol/league/v4/entries/by-summoner/{summonerId}",
         };
-        return await _client.SendAndDeserializeAsync<LeagueEntryDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await _client.SendAndDeserializeAsync<LeagueEntryDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return data!;
     }
 
     /// <inheritdoc/>
@@ -59,7 +62,8 @@ public class LolLeagueV4Endpoint : ILolLeagueV4
             MethodId = "/lol/league/v4/entries/{queue}/{tier}/{division}",
             Path = $"/lol/league/v4/entries/{queue.ToApiString()}/{tier.ToUpperString()}/{division.ToFastString()}",
         };
-        return await _client.SendAndDeserializeAsync<LeagueEntryDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await _client.SendAndDeserializeAsync<LeagueEntryDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return data!;
     }
 
     /// <inheritdoc/>
@@ -74,7 +78,8 @@ public class LolLeagueV4Endpoint : ILolLeagueV4
             MethodId = "/lol/league/v4/grandmasterleagues/by-queue/{queue}",
             Path = $"/lol/league/v4/grandmasterleagues/by-queue/{queue.ToApiString()}",
         };
-        return await _client.SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await _client.SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return data!;
     }
 
     /// <inheritdoc/>
@@ -104,6 +109,7 @@ public class LolLeagueV4Endpoint : ILolLeagueV4
             MethodId = "/lol/league/v4/masterleagues/by-queue/{queue}",
             Path = $"/lol/league/v4/masterleagues/by-queue/{queue.ToApiString()}",
         };
-        return await _client.SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await _client.SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return data!;
     }
 }

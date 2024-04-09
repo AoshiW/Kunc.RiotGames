@@ -27,7 +27,8 @@ public class LolChallengesV1Endpoint : ILolChallengesV1
             MethodId = "/lol/challenges/v1/challenges/config",
             Path = $"/lol/challenges/v1/challenges/config",
         };
-        return await _client.SendAndDeserializeAsync<ChallengeConfigInfoDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await _client.SendAndDeserializeAsync<ChallengeConfigInfoDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return data!;
     }
 
     /// <inheritdoc/>
@@ -42,7 +43,8 @@ public class LolChallengesV1Endpoint : ILolChallengesV1
             MethodId = "/lol/challenges/v1/challenges/percentiles",
             Path = $"/lol/challenges/v1/challenges/percentiles",
         };
-        return await _client.SendAndDeserializeAsync<Dictionary<long, Dictionary<string, double>>>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await _client.SendAndDeserializeAsync<Dictionary<long, Dictionary<string, double>>>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return data!;
     }
 
     /// <inheritdoc/>
@@ -105,6 +107,7 @@ public class LolChallengesV1Endpoint : ILolChallengesV1
             MethodId = "/lol/challenges/v1/player-data/{puuid}",
             Path = $"/lol/challenges/v1/player-data/{puuid}",
         };
-        return await _client.SendAndDeserializeAsync<PlayerInfoDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await _client.SendAndDeserializeAsync<PlayerInfoDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return data!;
     }
 }

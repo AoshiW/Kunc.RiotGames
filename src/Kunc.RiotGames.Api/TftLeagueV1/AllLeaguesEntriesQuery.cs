@@ -5,7 +5,7 @@ namespace Kunc.RiotGames.Api.TftLeagueV1;
 public class AllLeaguesEntriesQuery : QueryString
 {
     /// <summary>
-    /// Defaults to <see cref="QueueType.RANKED_TFT"/>
+    /// Defaults to <see cref="QueueType.RankedTft"/>
     /// </summary>
     public QueueType? Queue { get; set; }
 

@@ -28,7 +28,8 @@ public class LolClashV1Endpoint : ILolClashV1
             MethodId = "/lol/clash/v1/players/by-summoner/{summonerId}",
             Path = $"/lol/clash/v1/players/by-summoner/{summonerId}",
         };
-        return await _client.SendAndDeserializeAsync<PlayerDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await _client.SendAndDeserializeAsync<PlayerDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return data!;
     }
 
     /// <inheritdoc/>
@@ -59,7 +60,8 @@ public class LolClashV1Endpoint : ILolClashV1
             MethodId = "/lol/clash/v1/tournaments",
             Path = "/lol/clash/v1/tournaments",
         };
-        return await _client.SendAndDeserializeAsync<TournamentDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await _client.SendAndDeserializeAsync<TournamentDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return data!;
     }
 
     /// <inheritdoc/>

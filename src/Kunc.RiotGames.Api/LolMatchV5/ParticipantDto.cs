@@ -29,7 +29,7 @@ public class ParticipantDto : BaseDto, IKda
     public int ChampionId { get; set; }
 
     [JsonPropertyName("championName")]
-    public string ChampionName { get; set; }
+    public string ChampionName { get; set; } = string.Empty;
 
     /// <remarks>
     /// This field is currently only utilized for Kayn's transformations. (Legal values: 0 - None, 1 - Slayer, 2 - Assassin)
@@ -89,8 +89,9 @@ public class ParticipantDto : BaseDto, IKda
     [JsonPropertyName("goldSpent")]
     public int GoldSpent { get; set; }
 
+    //todo enum
     [JsonPropertyName("individualPosition")]
-    public string IndividualPosition { get; set; }
+    public string IndividualPosition { get; set; } = string.Empty;
 
     [JsonPropertyName("inhibitorKills")]
     public int InhibitorKills { get; set; }
@@ -254,6 +255,7 @@ public class ParticipantDto : BaseDto, IKda
     [JsonPropertyName("teamId")]
     public TeamId TeamId { get; set; }
 
+    //todo enum
     [JsonPropertyName("teamPosition")]
     public string TeamPosition { get; set; } = string.Empty;
 

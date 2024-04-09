@@ -43,6 +43,7 @@ public class LolSpectatorV5Endpoint : ILolSpectatorV5
             MethodId = "/lol/spectator/v5/featured-games",
             Path = $"/lol/spectator/v5/featured-games",
         };
-        return await _client.SendAndDeserializeAsync<FeaturedGamesDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await _client.SendAndDeserializeAsync<FeaturedGamesDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return data!;
     }
 }

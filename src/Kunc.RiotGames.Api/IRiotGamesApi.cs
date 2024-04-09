@@ -10,6 +10,7 @@ using Kunc.RiotGames.Api.LolSummonerV4;
 using Kunc.RiotGames.Api.LorMatchV1;
 using Kunc.RiotGames.Api.LorRankedV1;
 using Kunc.RiotGames.Api.RiotAccountV1;
+using Kunc.RiotGames.Api.SharedStatus;
 using Kunc.RiotGames.Api.TftLeagueV1;
 using Kunc.RiotGames.Api.TftMatchV1;
 using Kunc.RiotGames.Api.TftSummonerV1;
@@ -23,16 +24,19 @@ public interface IRiotGamesApi
     ILolChampionV3 LolChampionV3 { get; }
     ILolLeagueV4 LolLeagueV4 { get; }
     ILolMatchV5 LolMatchV5 { get; }
+    ILolStatusV4 LolStatusV4 { get; }
     ILolSpectatorV5 LolSpectatorV5 { get; }
     ILolSummonerV4 LolSummonerV4 { get; }
 
     ILorMatchV1 LorMatchV1 { get; }
     ILorRankedV1 LorRankedV1 { get; }
+    ILorStatusV1 LorStatusV1 { get; }
 
     IRiotAccountV1 RiotAccountV1 { get; }
 
     ITftLeagueV1 TftLeagueV1 { get; }
     ITftMatchV1 TftMatchV1 { get; }
     ILolSpectatorTftV5 LolSpectatorTftV5 { get; }
+    ITftStatusV1 TftStatusV1 { get; }
     ITftSummonerV1 TftSummonerV1 { get; }
 }

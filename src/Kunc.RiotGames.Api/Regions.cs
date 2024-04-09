@@ -34,7 +34,7 @@ public static class Regions
     /// <summary>
     /// Republic of Korea
     /// </summary>
-    public static string KR1 { get; } = "kr1";
+    public static string KR { get; } = "kr";
 
     /// <summary>
     /// Latin America North

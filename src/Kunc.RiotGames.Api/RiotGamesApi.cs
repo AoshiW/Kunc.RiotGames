@@ -10,6 +10,7 @@ using Kunc.RiotGames.Api.LolSummonerV4;
 using Kunc.RiotGames.Api.LorMatchV1;
 using Kunc.RiotGames.Api.LorRankedV1;
 using Kunc.RiotGames.Api.RiotAccountV1;
+using Kunc.RiotGames.Api.SharedStatus;
 using Kunc.RiotGames.Api.TftLeagueV1;
 using Kunc.RiotGames.Api.TftMatchV1;
 using Kunc.RiotGames.Api.TftSummonerV1;
@@ -23,9 +24,9 @@ public class RiotGamesApi : IRiotGamesApi
     /// </summary>
     public RiotGamesApi(
         IRiotAccountV1 riotAccountV1,
-        ILolClashV1 lolClashV1, ILolChallengesV1 lolChallengesV1, ILolChampionMasteryV4 lolChampionMasteryV4, ILolChampionV3 lolChampionV3, ILolLeagueV4 lolLeagueV4, ILolMatchV5 lolMatchV5, ILolSpectatorV5 lolSpectatorV5, ILolSummonerV4 lolSummonerV4,
-        ILorMatchV1 lorMatchV1, ILorRankedV1 lorRankedV1,
-        ITftLeagueV1 tftLeagueV1, ITftMatchV1 tftMatchV1, ILolSpectatorTftV5 lolSpectatorTftV5, ITftSummonerV1 tftSummonerV1
+        ILolClashV1 lolClashV1, ILolChallengesV1 lolChallengesV1, ILolChampionMasteryV4 lolChampionMasteryV4, ILolChampionV3 lolChampionV3, ILolLeagueV4 lolLeagueV4, ILolMatchV5 lolMatchV5, ILolSpectatorV5 lolSpectatorV5, ILolStatusV4 lolStatusV4, ILolSummonerV4 lolSummonerV4,
+        ILorMatchV1 lorMatchV1, ILorRankedV1 lorRankedV1, ILorStatusV1 lorStatusV1,
+        ITftLeagueV1 tftLeagueV1, ITftMatchV1 tftMatchV1, ILolSpectatorTftV5 lolSpectatorTftV5, ITftStatusV1 tftStatusV1, ITftSummonerV1 tftSummonerV1
     )
     {
         RiotAccountV1 = riotAccountV1;
@@ -37,14 +38,17 @@ public class RiotGamesApi : IRiotGamesApi
         LolLeagueV4 = lolLeagueV4;
         LolMatchV5 = lolMatchV5;
         LolSpectatorV5 = lolSpectatorV5;
+        LolStatusV4 = lolStatusV4;
         LolSummonerV4 = lolSummonerV4;
 
         LorMatchV1 = lorMatchV1;
         LorRankedV1 = lorRankedV1;
+        LorStatusV1 = lorStatusV1;
 
         TftLeagueV1 = tftLeagueV1;
         TftMatchV1 = tftMatchV1;
         LolSpectatorTftV5 = lolSpectatorTftV5;
+        TftStatusV1 = tftStatusV1;
         TftSummonerV1 = tftSummonerV1;
     }
 
@@ -72,8 +76,8 @@ public class RiotGamesApi : IRiotGamesApi
     /// <inheritdoc />
     public ILolSpectatorV5 LolSpectatorV5 { get; }
 
-    ///// <inheritdoc />
-    //public int LolStatusV4 { get; }
+    /// <inheritdoc />
+    public ILolStatusV4 LolStatusV4 { get; }
 
     /// <inheritdoc />
     public ILolSummonerV4 LolSummonerV4 { get; }
@@ -84,8 +88,8 @@ public class RiotGamesApi : IRiotGamesApi
     /// <inheritdoc />
     public ILorRankedV1 LorRankedV1 { get; }
 
-    ///// <inheritdoc />
-    //public int LorStatusV1 { get; }
+    /// <inheritdoc />
+    public ILorStatusV1 LorStatusV1 { get; }
 
     /// <inheritdoc />
     public ITftLeagueV1 TftLeagueV1 { get; }
@@ -93,8 +97,8 @@ public class RiotGamesApi : IRiotGamesApi
     /// <inheritdoc />
     public ITftMatchV1 TftMatchV1 { get; }
 
-    ///// <inheritdoc />
-    //public int TftStatusV1 { get; }
+    /// <inheritdoc />
+    public ITftStatusV1 TftStatusV1 { get; }
 
     ///// <inheritdoc />
     public ILolSpectatorTftV5 LolSpectatorTftV5 { get; }

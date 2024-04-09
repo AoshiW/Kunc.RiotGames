@@ -40,7 +40,7 @@ public abstract class ApiBase<TGame>
 
     private static readonly HashSet<string> ASIA = new(StringComparer.OrdinalIgnoreCase)
     {
-        Regions.KR1,
+        Regions.KR,
         Regions.JP1,
     };
 

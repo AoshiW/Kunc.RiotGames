@@ -13,8 +13,8 @@ public enum GameType
 
     [JsonEnumName("TUTORIAL_GAME")]
     TutorialGame,
-    
-    [JsonEnumName("MATCHED_GAME")] 
+
+    [JsonEnumName("MATCHED_GAME")]
     MatchedGame,
 
     Matched,

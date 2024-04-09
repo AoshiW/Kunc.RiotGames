@@ -8,7 +8,7 @@ public enum KillType
 {
     [JsonEnumName("KILL_FIRST_BLOOD")]
     FirstBlood,
-    
+
     [JsonEnumName("KILL_MULTI")]
     Multi,
 

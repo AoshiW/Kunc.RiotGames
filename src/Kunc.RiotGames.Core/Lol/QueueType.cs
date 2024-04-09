@@ -21,10 +21,10 @@ public enum QueueType
 
     [JsonEnumName("RANKED_TFT_DOUBLE_UP")]
     RankedTftDoubleUp,
-    
+
     [JsonEnumName("RANKED_TFT_TURBO")]
     RankedTftTurbo,
-    
+
     [JsonEnumName("RANKED_TFT")]
     RankedTft,
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

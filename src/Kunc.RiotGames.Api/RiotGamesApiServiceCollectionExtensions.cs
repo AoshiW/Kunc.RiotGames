@@ -52,9 +52,9 @@ public static class RiotGamesApiServiceCollectionExtensions
         services.TryAdd(ServiceDescriptor.Singleton<ILorMatchV1, LorMatchV1Endpoint>());
         services.TryAdd(ServiceDescriptor.Singleton<ILorRankedV1, LorRankedV1Endpoint>());
         services.TryAdd(ServiceDescriptor.Singleton<ILorStatusV1, LorStatusV1Endpoint>());
-        
+
         services.TryAdd(ServiceDescriptor.Singleton<IRiotAccountV1, RiotAccountV1Endpoint>());
-        
+
         services.TryAdd(ServiceDescriptor.Singleton<ITftLeagueV1, TftLeagueV1Endpoint>());
         services.TryAdd(ServiceDescriptor.Singleton<ITftMatchV1, TftMatchV1Endpoint>());
         services.TryAdd(ServiceDescriptor.Singleton<ILolSpectatorTftV5, LolSpectatorTftV5Endpoint>());

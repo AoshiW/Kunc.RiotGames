@@ -38,7 +38,7 @@ public class LolLeagueV4Test : ApiBase<TGame.LOL>
         var entries = await Api.LolLeagueV4.LeagueEntriesForSummonerAsync(acc.Region, summonerId);
 
         Assert.IsNotNull(entries);
-        if(entries.Length == 0)
+        if (entries.Length == 0)
         {
             Assert.Inconclusive("Summoner without rank.");
         }

@@ -5,8 +5,11 @@ namespace Kunc.RiotGames.Api.LolChallengesV1;
 
 public class ChallengeConfigInfoDto : BaseDto
 {
+    /// <summary>
+    /// Challenge id.
+    /// </summary>
     [JsonPropertyName("id")]
-    public int Id { get; set; }
+    public long Id { get; set; }
 
     [JsonPropertyName("localizedNames")]
     [JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]

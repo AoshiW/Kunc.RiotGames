@@ -48,6 +48,9 @@ public class ParticipantDto : BaseDto
     [JsonPropertyName("players_eliminated")]
     public int PlayersEliminated { get; set; }
 
+    /// <summary>
+    /// Participant puuid.
+    /// </summary>
     [JsonPropertyName("puuid")]
     public string Puuid { get; set; } = string.Empty;
 

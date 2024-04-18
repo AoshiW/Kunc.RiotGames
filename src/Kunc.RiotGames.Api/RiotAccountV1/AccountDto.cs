@@ -17,10 +17,10 @@ public class AccountDto : BaseDto
     [JsonIgnore, MemberNotNullWhen(true, nameof(GameName), nameof(TagLine))]
     public bool HasRiotId => GameName is not null && TagLine is not null;
 
-    public string GetRiotId()
+    public RiotId GetRiotId()
     {
         return HasRiotId
-            ? $"{GameName}#{TagLine}"
+            ? new(GameName, TagLine)
             : throw new InvalidOperationException("Riot id is not set.");
     }
 }

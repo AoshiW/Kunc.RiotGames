@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Threading.RateLimiting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Extensions.Options;
 
 namespace Kunc.RiotGames.Api.Http;
 
@@ -10,18 +11,21 @@ sealed public class RiotGamesRateLimiter : IRiotGamesRateLimiter, IDisposable
 {
     private readonly ConcurrentDictionary<string, RegionRateLimiter> _regionsRateLimiters = new();
     private readonly ILogger<RiotGamesRateLimiter> _logger;
+    private readonly IOptions<RiotGamesApiOptions> _options;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RiotGamesRateLimiter"/> class.
     /// </summary>
-    public RiotGamesRateLimiter(ILogger<RiotGamesRateLimiter>? logger = null)
+    public RiotGamesRateLimiter(IOptions<RiotGamesApiOptions> options, ILogger<RiotGamesRateLimiter>? logger = null)
     {
+        ArgumentNullException.ThrowIfNull(options);
+        _options = options;
         _logger = logger ?? NullLogger<RiotGamesRateLimiter>.Instance;
     }
 
     private RegionRateLimiter GetRegionalLimiter(string region)
     {
-        return _regionsRateLimiters.GetOrAdd(region, static (k, a) => new(a), _logger);
+        return _regionsRateLimiters.GetOrAdd(region, static (k, a) => new(a._logger, a._options), (_logger, _options));
     }
 
     /// <inheritdoc/>
@@ -61,10 +65,12 @@ sealed public class RiotGamesRateLimiter : IRiotGamesRateLimiter, IDisposable
         private RateLimiter? _app;
         private readonly ConcurrentDictionary<string, RateLimiter> _methods = new();
         private readonly ILogger _logger;
+        private readonly IOptions<RiotGamesApiOptions> _options;
 
-        public RegionRateLimiter(ILogger logger)
+        public RegionRateLimiter(ILogger logger, IOptions<RiotGamesApiOptions> options)
         {
             _logger = logger;
+            _options = options;
         }
 
         public async ValueTask<RateLimitLease> AcquireAppAsync(CancellationToken cancellationToken)
@@ -102,7 +108,7 @@ sealed public class RiotGamesRateLimiter : IRiotGamesRateLimiter, IDisposable
             if (_app is null && headers.TryGetValues(ApiConstants.AppRateLimit, out var values1))
             {
                 var value = values1.FirstOrDefault();
-                var limiter = Parse(value);
+                var limiter = Parse(value, _options.Value);
                 if (limiter is not null)
                 {
                     _logger.InitializedAppRateLimit(request.Host, value!);
@@ -112,7 +118,7 @@ sealed public class RiotGamesRateLimiter : IRiotGamesRateLimiter, IDisposable
             if (!_methods.ContainsKey(methodId) && headers.TryGetValues(ApiConstants.MethodRateLimit, out var values2))
             {
                 var value = values2.FirstOrDefault();
-                var limiter = Parse(value);
+                var limiter = Parse(value, _options.Value);
                 if (limiter is not null)
                 {
                     _logger.InitializedMethodRateLimit(request.Host, methodId, value!);
@@ -121,7 +127,7 @@ sealed public class RiotGamesRateLimiter : IRiotGamesRateLimiter, IDisposable
             }
         }
 
-        static ChainedRateLimiter? Parse(string? rateLimit)
+        static ChainedRateLimiter? Parse(string? rateLimit, RiotGamesApiOptions options)
         {
             if (string.IsNullOrEmpty(rateLimit))
                 return null;
@@ -140,7 +146,7 @@ sealed public class RiotGamesRateLimiter : IRiotGamesRateLimiter, IDisposable
                 {
                     TokenLimit = limit,
                     TokensPerPeriod = limit,
-                    ReplenishmentPeriod = TimeSpan.FromSeconds(periodS + 1),
+                    ReplenishmentPeriod = TimeSpan.FromSeconds(periodS) + options.BonusRLDelay,
                     QueueLimit = int.MaxValue,
                 });
 

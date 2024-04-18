@@ -44,9 +44,8 @@ public class RiotGamesApiClient : IRiotGamesApiClient
             if (response.IsSuccessStatusCode || response.StatusCode is HttpStatusCode.NotFound)
                 return response;
 
-            exceptions ??= new();
             var msg = await ReadErrorMessageAsync(response.Content, cancellationToken).ConfigureAwait(false);
-            exceptions.Add(new HttpRequestException(msg, null, response.StatusCode));
+            (exceptions ??= new()).Add(new HttpRequestException(msg, null, response.StatusCode));
 
             if (response.StatusCode is HttpStatusCode.TooManyRequests)
             {
@@ -68,7 +67,6 @@ public class RiotGamesApiClient : IRiotGamesApiClient
                 await Task.Delay(_options.Delay, cancellationToken).ConfigureAwait(false);
             }
         } while (retries < 5);
-        var lastException = exceptions[^1];
         throw new AggregateException($"Request failed after {retries} attempts.", exceptions);
     }
 

@@ -42,6 +42,21 @@ public interface IRiotAccountV1
     }
 
     /// <summary>
+    /// Get account by riot id.
+    /// </summary>
+    /// <param name="region"></param>
+    /// <param name="riotId"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<AccountDto?> GetAccountByRiotIdAsync(string region, RiotId riotId, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(region);
+        ArgumentNullException.ThrowIfNull(riotId);
+
+        return GetAccountByRiotIdAsync(region, riotId.GameName, riotId.TagLine, cancellationToken);
+    }
+
+    /// <summary>
     /// Get active shard for a player.
     /// </summary>
     /// <param name="region"></param>

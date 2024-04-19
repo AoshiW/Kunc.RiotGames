@@ -1,29 +1,40 @@
 ﻿using System.Runtime.CompilerServices;
+using System.Text.Json.Serialization;
+using Kunc.RiotGames.JsonConverters;
 
 namespace Kunc.RiotGames.Lol;
 
 /// <summary>
 /// Queue types for Lol (and Tft).
 /// </summary>
+[JsonConverter(typeof(JsonStringEnumConverterWithAltNames<QueueType>))]
 public enum QueueType
 {
-#pragma warning disable CA1707 // Identifiers should not contain underscores
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    RANKED_SOLO_5x5,
-    RANKED_FLEX_SR,
+    [JsonEnumName("RANKED_SOLO_5x5")]
+    RankedSolo5x5,
 
-    RANKED_TFT_DOUBLE_UP,
-    RANKED_TFT_TURBO,
-    RANKED_TFT,
+    [JsonEnumName("RANKED_FLEX_SR")]
+    RankedFlexSR,
+
+    Cherry,
+
+    [JsonEnumName("RANKED_TFT_DOUBLE_UP")]
+    RankedTftDoubleUp,
+
+    [JsonEnumName("RANKED_TFT_TURBO")]
+    RankedTftTurbo,
+
+    [JsonEnumName("RANKED_TFT")]
+    RankedTft,
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-#pragma warning restore CA1707 // Identifiers should not contain underscores
 }
 
 internal static partial class QueueTypeExtensions
 {
     public static void ThrowIfNotLolQueue(this QueueType queue, [CallerArgumentExpression(nameof(queue))] string? paramName = null)
     {
-        if (!(queue is QueueType.RANKED_SOLO_5x5 or QueueType.RANKED_FLEX_SR))
+        if (!(queue is QueueType.RankedSolo5x5 or QueueType.RankedFlexSR or QueueType.Cherry))
         {
             throw new ArgumentException($"Value '{queue}' is not valid LoL Queue", paramName);
         }
@@ -31,7 +42,7 @@ internal static partial class QueueTypeExtensions
 
     public static void ThrowIfNotTftQueue(this QueueType queue, [CallerArgumentExpression(nameof(queue))] string? paramName = null)
     {
-        if (!(queue is QueueType.RANKED_TFT or QueueType.RANKED_TFT_TURBO or QueueType.RANKED_TFT_DOUBLE_UP))
+        if (!(queue is QueueType.RankedTft or QueueType.RankedTftTurbo or QueueType.RankedTftDoubleUp))
         {
             throw new ArgumentException($"Value '{queue}' is not valid TFT Queue", paramName);
         }
@@ -41,12 +52,13 @@ internal static partial class QueueTypeExtensions
     {
         return queue switch
         {
-            QueueType.RANKED_SOLO_5x5 => "RANKED_SOLO_5x5",
-            QueueType.RANKED_FLEX_SR => "RANKED_FLEX_SR",
+            QueueType.RankedSolo5x5 => "RANKED_SOLO_5x5",
+            QueueType.RankedFlexSR => "RANKED_FLEX_SR",
+            QueueType.Cherry => "CHERRY",
 
-            QueueType.RANKED_TFT_DOUBLE_UP => "RANKED_TFT_DOUBLE_UP",
-            QueueType.RANKED_TFT_TURBO => "RANKED_TFT_TURBO",
-            QueueType.RANKED_TFT => "RANKED_TFT",
+            QueueType.RankedTftDoubleUp => "RANKED_TFT_DOUBLE_UP",
+            QueueType.RankedTftTurbo => "RANKED_TFT_TURBO",
+            QueueType.RankedTft => "RANKED_TFT",
             _ => throw new InvalidOperationException()
         };
     }

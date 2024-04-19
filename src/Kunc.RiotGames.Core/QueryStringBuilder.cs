@@ -8,7 +8,6 @@ namespace Kunc.RiotGames;
 public ref struct QueryStringBuilder
 {
     DefaultInterpolatedStringHandler _handler;
-    bool _hasAny;
 
     /// <summary>
     /// Append query string parametr.
@@ -24,13 +23,7 @@ public ref struct QueryStringBuilder
 
     void AppendKey(string key)
     {
-        var sep = "&";
-        if (!_hasAny)
-        {
-            sep = "?";
-            _hasAny = true;
-        }
-        _handler.AppendLiteral(sep);
+        _handler.AppendLiteral("&");
         _handler.AppendLiteral(key);
         _handler.AppendLiteral("=");
     }
@@ -39,7 +32,7 @@ public ref struct QueryStringBuilder
     /// <returns>The built string.</returns>
     public string ToStringAndClear()
     {
-        _hasAny = false;
+        SetFirstChar();
         return _handler.ToStringAndClear();
     }
 
@@ -47,6 +40,19 @@ public ref struct QueryStringBuilder
     /// <returns>The built string.</returns>
     public override string ToString()
     {
+        SetFirstChar();
         return _handler.ToString();
+    }
+
+    private void SetFirstChar()
+    {
+        if (DefaultInterpolatedStringHandler_pos(ref _handler) > 0)
+            DefaultInterpolatedStringHandler_chars(ref _handler)[0] = '?';
+
+        [UnsafeAccessor(UnsafeAccessorKind.Field, Name = "_chars")]
+        static extern ref readonly Span<char> DefaultInterpolatedStringHandler_chars(ref DefaultInterpolatedStringHandler handler);
+
+        [UnsafeAccessor(UnsafeAccessorKind.Field, Name = "_pos")]
+        static extern ref readonly int DefaultInterpolatedStringHandler_pos(ref DefaultInterpolatedStringHandler handler);
     }
 }

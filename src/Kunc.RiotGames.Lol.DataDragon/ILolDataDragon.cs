@@ -14,7 +14,7 @@ public interface ILolDataDragon
     Task<Dictionary<string, ChampionBaseDto>> GetAllChampionsBaseAsync(string version, string language, CancellationToken cancellationToken = default);
     Task<ChampionDto> GetChampionsAsync(string version, string language, string id, CancellationToken cancellationToken = default);
     Task<ChallengeDto[]> GetChallengesAsync(string version, string language, CancellationToken cancellationToken = default);
-    Task<Dictionary<string, ItemDto>> GetItemsAsync(string version, string language, CancellationToken cancellationToken = default  );
+    Task<Dictionary<string, ItemDto>> GetItemsAsync(string version, string language, CancellationToken cancellationToken = default);
     Task<Dictionary<string, MapDto>> GetMapsAsync(string version, string language, CancellationToken cancellationToken = default);
     Task<Dictionary<string, ProfileIconDto>> GetProfileIconsAsync(string version, string language, CancellationToken cancellationToken = default);
     Task<RuneReforgedDto[]> GetRunesReforgedAsync(string version, string language, CancellationToken cancellationToken = default);

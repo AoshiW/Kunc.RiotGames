@@ -14,7 +14,7 @@
 		<IncludeSymbols>True</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
         
-        <IsAotCompatible>true</IsAotCompatible>
+        <!--<IsAotCompatible>true</IsAotCompatible>-->
 	</PropertyGroup>
 
 	<ItemGroup>

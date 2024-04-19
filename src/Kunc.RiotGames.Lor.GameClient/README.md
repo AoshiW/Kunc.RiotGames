@@ -3,7 +3,7 @@
 
 [Game Client API](https://developer.riotgames.com/docs/lor#game-client-api) for Legends of Runeterra.
 
-## Usage
+## How to Use
 ```cs
 var options = new LorGameClientOptions();
 var lorGameClient = new LorGameClient(options);

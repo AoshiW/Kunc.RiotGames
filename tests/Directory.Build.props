@@ -2,8 +2,12 @@
     <Import Project="../Directory.Build.props" />
 
     <PropertyGroup>
+        <IsPackable>false</IsPackable>
+        <IsTestProject>true</IsTestProject>
+        
         <NoWarn>$(NoWarn);CA1707</NoWarn>
     </PropertyGroup>
+
 
 </Project>
 

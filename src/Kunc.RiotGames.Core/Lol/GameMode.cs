@@ -1,11 +1,12 @@
 ﻿using System.Text.Json.Serialization;
+using Kunc.RiotGames.JsonConverters;
 
 namespace Kunc.RiotGames.Lol;
 
 /// <summary>
 /// Game modes in League of Legends.
 /// </summary>
-[JsonConverter(typeof(JsonStringEnumConverter<GameMode>))]
+[JsonConverter(typeof(JsonStringEnumConverterWithAltNames<GameMode>))]
 public enum GameMode
 {
     /// <summary>
@@ -118,20 +119,26 @@ public enum GameMode
     /// </summary>
     PracticeTool,
 
-#pragma warning disable CA1707 // Identifiers should not contain underscores
     /// <summary>
     /// Tutorial part 1: Welcome to League
     /// </summary>
-    TUTORIAL_MODULE_1,
+    [JsonEnumName("TUTORIAL_MODULE_1")]
+    TutorialModule1,
 
     /// <summary>
     /// Tutorial part 2: Power Up
     /// </summary>
-    TUTORIAL_MODULE_2,
+    [JsonEnumName("TUTORIAL_MODULE_2")]
+    TutorialModule2,
 
     /// <summary>
     /// Tutorial part 3: Shop for Gear
     /// </summary>
-    TUTORIAL_MODULE_3,
-#pragma warning restore CA1707 // Identifiers should not contain underscores
+    [JsonEnumName("TUTORIAL_MODULE_3")]
+    TutorialModule3,
+
+    /// <summary>
+    /// Teamfight Tactics
+    /// </summary>
+    Tft,
 }

@@ -5,7 +5,7 @@ This is a C# implementation of the C# library [RiotGames/LoRDeckCodes](https://g
 This library is faster and more efficient (at least 50% less memory allocation).
 
 
-## Usage
+## How to Use
 ```cs
 var deck1 = new List<DeckItem>()
 {

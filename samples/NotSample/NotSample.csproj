@@ -10,10 +10,11 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="8.0.0" />
-        <PackageReference Include="NeoSmart.Caching.Sqlite.AspNetCore" Version="7.0.2" />
+        <PackageReference Include="NeoSmart.Caching.Sqlite.AspNetCore" Version="8.0.0" />
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\src\Kunc.RiotGames.Api\Kunc.RiotGames.Api.csproj" />
         <ProjectReference Include="..\..\src\Kunc.RiotGames.Lol.DataDragon\Kunc.RiotGames.Lol.DataDragon.csproj" />
         <ProjectReference Include="..\..\src\Kunc.RiotGames.Lol.LeagueClientUpdate\Kunc.RiotGames.Lol.LeagueClientUpdate.csproj" />
         <ProjectReference Include="..\..\src\Kunc.RiotGames.Lor.DeckCodes\Kunc.RiotGames.Lor.DeckCodes.csproj" />
@@ -21,6 +22,9 @@
     </ItemGroup>
     
     <ItemGroup>
+      <None Update="appsettings.local.json">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </None>
       <None Update="appsettings.json">
         <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       </None>

@@ -7,6 +7,7 @@ The rate limiter is automatically set according to your api key.
 ## How to Use
 ```cs
 var api = RiotGamesApi.Create(c => c.ApiKey = "RGAPI-...");
+// or
 using var services = new ServiceCollection()
     .AddRiotGamesApi(c => c.ApiKey = "RGAPI-...")
     .BuildServiceProvider();

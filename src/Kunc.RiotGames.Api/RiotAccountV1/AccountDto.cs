@@ -5,6 +5,9 @@ namespace Kunc.RiotGames.Api.RiotAccountV1;
 
 public class AccountDto : BaseDto
 {
+    /// <summary>
+    /// Player Universal Unique Identifier.
+    /// </summary>
     [JsonPropertyName("puuid")]
     public string Puuid { get; set; } = string.Empty;
 

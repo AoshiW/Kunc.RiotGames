@@ -7,6 +7,12 @@ namespace Kunc.RiotGames.Api.LolMatchV5;
 public class InfoDto : BaseDto
 {
     /// <summary>
+    /// Refer to indicate if the game ended in termination.
+    /// </summary>
+    [JsonPropertyName("endOfGameResult")]
+    public string EndOfGameResult { get; set; } = string.Empty; // todo enum
+    
+    /// <summary>
     /// Date when the game is created on the game server.
     /// </summary>
     [JsonPropertyName("gameCreation")]

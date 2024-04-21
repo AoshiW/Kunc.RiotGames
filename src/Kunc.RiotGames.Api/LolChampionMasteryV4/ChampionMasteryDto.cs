@@ -3,6 +3,9 @@ using Kunc.RiotGames.JsonConverters;
 
 namespace Kunc.RiotGames.Api.LolChampionMasteryV4;
 
+/// <summary>
+/// This object contains single Champion Mastery information for player and champion combination.
+/// </summary>
 public class ChampionMasteryDto : BaseDto
 {
     /// <summary>

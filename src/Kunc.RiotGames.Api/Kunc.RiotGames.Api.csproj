@@ -17,12 +17,5 @@
     <ItemGroup>
         <ProjectReference Include="..\Kunc.RiotGames.Core\Kunc.RiotGames.Core.csproj" />
     </ItemGroup>
-
-    <ItemGroup>
-      <None Update="README.md">
-        <PackagePath>\</PackagePath>
-        <Pack>True</Pack>
-      </None>
-    </ItemGroup>
-
+    
 </Project>

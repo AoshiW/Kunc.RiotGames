@@ -4,6 +4,9 @@ namespace Kunc.RiotGames.Api.LorMatchV1;
 
 public class PlayerDto : BaseDto
 {
+    /// <summary>
+    /// Player Universal Unique Identifier.
+    /// </summary>
     [JsonPropertyName("puuid")]
     public string Puuid { get; set; } = string.Empty;
 

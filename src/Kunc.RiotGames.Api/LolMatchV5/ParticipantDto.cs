@@ -198,6 +198,9 @@ public class ParticipantDto : BaseDto, IKda
     [JsonPropertyName("profileIcon")]
     public int ProfileIcon { get; set; }
 
+    /// <summary>
+    /// Player Universal Unique Identifier.
+    /// </summary>
     [JsonPropertyName("puuid")]
     public string Puuid { get; set; } = string.Empty;
 

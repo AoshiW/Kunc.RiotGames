@@ -17,7 +17,7 @@ class EventInfo
         EventAttribute = attribute;
         MethodInfo = methodInfo;
         Target = target;
-        ArgTypes = new ArgType[parameterInfos.Length];
+        ArgTypes = parameterInfos.Length is 0 ? [] : new ArgType[parameterInfos.Length];
         for (int i = 0; i < parameterInfos.Length; i++)
         {
             var item = parameterInfos[i];

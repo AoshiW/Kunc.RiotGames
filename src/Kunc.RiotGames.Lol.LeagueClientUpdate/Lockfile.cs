@@ -125,7 +125,12 @@ public sealed class Lockfile : IEquatable<Lockfile?>, ISpanFormattable, ISpanPar
 
         if (int.TryParse(numberProcessId, provider, out var processId) && int.TryParse(numberPort, provider, out var port))
         {
-            result = new Lockfile(name.ToString(), processId, port, password.ToString(), protocol.ToString());
+            //name and protocol should be the same value every time
+            const string defaultName = "LeagueClient";
+            var nameStr = name.SequenceEqual(defaultName) ? defaultName : name.ToString();
+            var protocolStr = protocol.SequenceEqual(Uri.UriSchemeHttps) ? Uri.UriSchemeHttps : protocol.ToString();
+
+            result = new Lockfile(nameStr, processId, port, password.ToString(), protocolStr);
             return true;
         }
         return false;

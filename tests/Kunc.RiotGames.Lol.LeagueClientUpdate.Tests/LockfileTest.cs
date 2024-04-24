@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace Kunc.RiotGames.Lol.LeagueClientUpdate.Test;
+namespace Kunc.RiotGames.Lol.LeagueClientUpdate.Tests;
 
 [TestClass]
 public class LockfileTest

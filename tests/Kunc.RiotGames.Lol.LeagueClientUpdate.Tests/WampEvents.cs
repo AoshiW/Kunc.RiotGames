@@ -1,10 +1,10 @@
-﻿namespace Kunc.RiotGames.Lol.LeagueClientUpdate.Test;
+﻿namespace Kunc.RiotGames.Lol.LeagueClientUpdate.Tests;
 
 [TestClass]
 public class WampEvents
 {
     static readonly NullWamp Wamp = new();
-    static readonly Func<LolLeagueClientUpdate> NewLcu = () => new(Lockfile.Empty, Wamp);
+    static readonly Func<LolLeagueClientUpdate> NewLcu = () => new(new NullLockfileProvieder(), Wamp);
 
     [TestMethod]
     public void Test()

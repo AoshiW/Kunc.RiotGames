@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Kunc.RiotGames.Lol.LeagueClientUpdate;
 
-public sealed partial class Wamp : IWamp
+public sealed class Wamp : IWamp
 {
     /// <inheritdoc/>
     public event EventHandler<JsonElement[]>? OnMessage;
@@ -42,8 +42,8 @@ public sealed partial class Wamp : IWamp
             return;
         _cancellationTokenSource = new();
         var cancellationToken = _cancellationTokenSource.Token;
-        var buffer = new byte[4 * 1024];
-        var memorBuffer = new Memory<byte>(buffer);
+        var array = new byte[4 * 1024];
+        var memory = new Memory<byte>(array);
         var memoryStream = new MemoryStream();
         while (!cancellationToken.IsCancellationRequested)
         {
@@ -52,22 +52,22 @@ public sealed partial class Wamp : IWamp
                 switch (_socket.State)
                 {
                     case WebSocketState.Open:
-                        var received = await _socket.ReceiveAsync(memorBuffer, cancellationToken).ConfigureAwait(false);
+                        var received = await _socket.ReceiveAsync(memory, cancellationToken).ConfigureAwait(false);
                         if (received.MessageType == WebSocketMessageType.Close)
                             break;
                         if (received.EndOfMessage && memoryStream.Position == 0)
                         {
-                            LogFullMessageReceived(received.Count);
-                            var data = JsonSerializer.Deserialize(buffer.AsSpan(0, received.Count), LcuJsonContext.Default.JsonElementArray)!;
+                            _logger.LogFullMessageReceived(received.Count);
+                            var data = JsonSerializer.Deserialize(array.AsSpan(0, received.Count), LcuJsonContext.Default.JsonElementArray)!;
                             OnMessage?.Invoke(this, data);
                             break;
                         }
-                        memoryStream.Write(buffer, 0, received.Count);
+                        memoryStream.Write(array, 0, received.Count);
                         if (received.EndOfMessage)
                         {
-                            LogFullMessageReceived(memoryStream.Position);
-                            var memmoryBuffer = memoryStream.GetBuffer();
-                            var data = JsonSerializer.Deserialize(memmoryBuffer.AsSpan(0, (int)memoryStream.Position), LcuJsonContext.Default.JsonElementArray)!;
+                            _logger.LogFullMessageReceived(memoryStream.Position);
+                            var memoryBuffer = memoryStream.GetBuffer();
+                            var data = JsonSerializer.Deserialize(memoryBuffer.AsSpan(0, (int)memoryStream.Position), LcuJsonContext.Default.JsonElementArray)!;
                             OnMessage?.Invoke(this, data);
                             memoryStream.SetLength(0);
                         }
@@ -83,11 +83,11 @@ public sealed partial class Wamp : IWamp
             { /* NOP */ }
             catch (Exception ex)
             {
-                LogEventLoopException(ex);
+                _logger.LogEventLoopException(ex);
                 OnMessageException?.Invoke(this, ex);
             }
         }
-        LogDisconnected();
+        _logger.LogDisconnected();
         OnDisconnect?.Invoke(this, EventArgs.Empty);
     }
 
@@ -106,7 +106,7 @@ public sealed partial class Wamp : IWamp
         _socket.Options.Credentials = lockfile.ToCredential();
         await _socket.ConnectAsync(new Uri($"wss://127.0.0.1:{lockfile.Port}"), token).ConfigureAwait(false);
         OnConnect?.Invoke(this, EventArgs.Empty);
-        LogConnected();
+        _logger.LogConnected();
         _eventLoopTask = EventLoop();
     }
 

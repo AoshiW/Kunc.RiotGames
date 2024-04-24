@@ -7,27 +7,9 @@ namespace Kunc.RiotGames.Lol.LeagueClientUpdate;
 
 public partial class LolLeagueClientUpdate : IDisposable
 {
-    /// <summary>
-    /// Gets or sets the lockfile used by the client.
-    /// </summary>
-    /// <remarks>
-    /// Changing the lockfile will update the client's base address and authentication headers.
-    /// </remarks>
-    public Lockfile Lockfile
-    {
-        get => _lockfile;
-        set
-        {
-            ArgumentNullException.ThrowIfNull(value);
-            _lockfile = value;
-            Client.BaseAddress = new Uri($"https://127.0.0.1:{_lockfile.Port}/");
-            Client.DefaultRequestHeaders.Authorization = _lockfile.ToAuthenticationHeaderValue();
-            _ = Wamp.CloseAsync(default).ConfigureAwait(false);
-        }
-    }
-    private Lockfile _lockfile = default!;
     private bool _disposedValue;
     private readonly ILogger<LolLeagueClientUpdate> _logger;
+    private readonly ILockfileProvider _lockfileProvider;
 
     /// <summary>
     /// Internal HttpClient for sending requests.
@@ -40,13 +22,13 @@ public partial class LolLeagueClientUpdate : IDisposable
     /// <summary>
     /// Initializes a new instance of the <see cref="LolLeagueClientUpdate"/> class with the specified <see cref="Lockfile"/>.
     /// </summary>
-    /// <param name="lockfile"></param>
+    /// <param name="lockfileProvider"></param>
     /// <param name="wamp"></param>
     /// <param name="loggerFactory"></param>
     /// <exception cref="ArgumentNullException"></exception>
-    public LolLeagueClientUpdate(Lockfile lockfile, IWamp? wamp = null, ILoggerFactory? loggerFactory = null)
+    public LolLeagueClientUpdate(ILockfileProvider lockfileProvider, IWamp? wamp = null, ILoggerFactory? loggerFactory = null)
     {
-        ArgumentNullException.ThrowIfNull(lockfile);
+        ArgumentNullException.ThrowIfNull(lockfileProvider);
         loggerFactory ??= NullLoggerFactory.Instance;
         var clientHandler = new HttpClientHandler()
         {
@@ -54,21 +36,47 @@ public partial class LolLeagueClientUpdate : IDisposable
             ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator,
         };
         Client = new HttpClient(clientHandler);
+        _lockfileProvider = lockfileProvider;
+        _lockfileProvider.Created += _lockfileProvider_Created;
+        _lockfileProvider.Deleted += _lockfileProviedr_Deleted;
         Wamp = wamp ?? new Wamp(loggerFactory.CreateLogger<Wamp>());
-        Lockfile = lockfile;
         Wamp.OnMessage += OnMessage;
         _logger = loggerFactory.CreateLogger<LolLeagueClientUpdate>();
+        TryInit();
+    }
+
+    private async void TryInit()
+    {
+        var lockfile = await _lockfileProvider.GetLockfileAsync();
+        if (lockfile is null)
+            return;
+        _lockfileProvider_Created(_lockfileProvider, lockfile);
+    }
+
+    private void _lockfileProviedr_Deleted(object? sender, EventArgs e)
+    {
+        Wamp.CloseAsync(default);
+        Client.BaseAddress = null;
+    }
+
+    private void _lockfileProvider_Created(object? sender, Lockfile e)
+    {
+        Client.BaseAddress = new Uri($"https://127.0.0.1:{e.Port}/");
+        Client.DefaultRequestHeaders.Authorization = e.ToAuthenticationHeaderValue();
+        ConnectWampAsyncCore(e, default);
     }
 
     /// <inheritdoc/>
     public Task<HttpResponseMessage> SendAsync(HttpRequestMessage httpRequestMessage, CancellationToken cancellationToken = default)
     {
+        CheckLockfile();
         return Client.SendAsync(httpRequestMessage, cancellationToken);
     }
 
     /// <inheritdoc/>
     public async Task<HttpResponseMessage> SendAsync<T>(HttpMethod method, string requestUri, T value, JsonSerializerOptions? options = null, CancellationToken cancellationToken = default)
     {
+        CheckLockfile();
         ArgumentNullException.ThrowIfNull(requestUri);
         ArgumentNullException.ThrowIfNull(value);
         using var request = new HttpRequestMessage(method, requestUri)
@@ -81,8 +89,15 @@ public partial class LolLeagueClientUpdate : IDisposable
     /// <inheritdoc/>
     public Task<T?> GetAsync<T>(string requestUri, CancellationToken cancellationToken = default)
     {
+        CheckLockfile();
         ArgumentNullException.ThrowIfNull(requestUri);
         return Client.GetFromJsonAsync<T>(requestUri, cancellationToken);
+    }
+
+    private void CheckLockfile()
+    {
+        if (Client.BaseAddress is null)
+            throw new InvalidOperationException("Lockfile data is not available.");
     }
 
     /// <summary>
@@ -94,10 +109,16 @@ public partial class LolLeagueClientUpdate : IDisposable
     /// </param>
     protected virtual void Dispose(bool disposing)
     {
-        if (!_disposedValue && disposing)
+        if (!_disposedValue)
         {
-            _cancellationTokenSource?.Dispose();
-            Client.Dispose();
+            if (disposing)
+            {
+                _cancellationTokenSource?.Dispose();
+                Client.Dispose();
+                Wamp.Dispose();
+            }
+            _lockfileProvider.Created -= _lockfileProvider_Created;
+            _lockfileProvider.Deleted -= _lockfileProviedr_Deleted;
             _disposedValue = true;
         }
     }

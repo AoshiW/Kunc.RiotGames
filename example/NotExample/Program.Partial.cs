@@ -19,10 +19,8 @@ partial class Program
 
     static readonly IServiceProvider _service = new ServiceCollection()
         .AddSingleton(Configuration)
-        .AddLogging(x => x.AddConfiguration(Configuration.GetSection("Logging")).AddSimpleConsole())
-        .AddSingleton(x => File.Exists(Lockfile.DefaulthPath) ? Lockfile.FromFileAsync().GetAwaiter().GetResult() : Lockfile.Empty)
-        .AddSingleton<ILolLeagueClientUpdate, LolLeagueClientUpdate>()
-        //.AddSingleton<IWamp, NullWamp>() // testing
+        .AddLogging(c => c.AddConfiguration(Configuration.GetSection("Logging")).AddSimpleConsole())
+        .AddLolLeagueClientUpdate()
         .AddSingleton<ILorDeckEncoder, LorDeckEncoder>()
         .AddLorGameClient()
         .AddLolDataDragon()

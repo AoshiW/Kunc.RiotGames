@@ -21,8 +21,15 @@ public partial class LolLeagueClientUpdate : ILolLeagueClientUpdate
     /// <inheritdoc/>
     public async Task ConnectWampAsync(CancellationToken token = default)
     {
+        var lockfile = await _lockfileProvider.GetLockfileAsync(token).ConfigureAwait(false);
+        if (lockfile is null)
+            throw new InvalidOperationException();
+        await ConnectWampAsyncCore(lockfile, token).ConfigureAwait(false);
+    }
+    async Task ConnectWampAsyncCore(Lockfile lockfile, CancellationToken token)
+    {
         _cancellationTokenSource = new();
-        await Wamp.ConnectAsync(Lockfile, token).ConfigureAwait(false);
+        await Wamp.ConnectAsync(lockfile, token).ConfigureAwait(false);
         await Wamp.SendAsync(SubscribeOnJsonApiEvent, WebSocketMessageType.Text, token).ConfigureAwait(false);
     }
 
@@ -44,10 +51,6 @@ public partial class LolLeagueClientUpdate : ILolLeagueClientUpdate
         if (!e[1].ValueEquals("OnJsonApiEvent"u8))
             return;
 
-        object? boxedCancellationToken = null;
-        CacheArray cacheArray = default;
-        JsonElement eventTypeProp = data.GetProperty("eventType"u8);
-        JsonElement uriProp = data.GetProperty("uri"u8);
         EventInfo[] eventLocalCopy;
         lock (_lock)
         {
@@ -59,6 +62,10 @@ public partial class LolLeagueClientUpdate : ILolLeagueClientUpdate
             eventLocalCopy = _readOnlyEvents;
         }
 
+        object? boxedCancellationToken = null;
+        CacheArray cacheArray = default;
+        JsonElement eventTypeProp = data.GetProperty("eventType"u8);
+        JsonElement uriProp = data.GetProperty("uri"u8);
         foreach (var item in eventLocalCopy)
         {
             if (!uriProp.ValueEquals(item.EventAttribute.Uri) ||
@@ -78,11 +85,11 @@ public partial class LolLeagueClientUpdate : ILolLeagueClientUpdate
             try
             {
                 item.Invoke(args);
-                LogInvokeMethod(item.MethodInfo);
+                _logger.LogInvokeMethod(item.MethodInfo);
             }
             catch (Exception ex)
             {
-                LogExceptionWhenInvokeWampDelegate(item.MethodInfo, ex);
+                _logger.LogExceptionWhenInvokeWampDelegate(item.MethodInfo, ex);
             }
         }
     }
@@ -115,7 +122,7 @@ public partial class LolLeagueClientUpdate : ILolLeagueClientUpdate
     void SubscribeCore(LcuEventAttribute attribute, MethodInfo methodInfo, object? target)
     {
         var di = new EventInfo(attribute, methodInfo, target);
-        LogRegisterDelegate(methodInfo);
+        _logger.LogRegisterDelegate(methodInfo);
         lock (_lock)
         {
             _isEdited = true;
@@ -178,7 +185,7 @@ public partial class LolLeagueClientUpdate : ILolLeagueClientUpdate
             SubscribeCore(attribute, methodInfo, currentMethodTarget);
             count++;
         }
-        LogTotalSubscribedMethods(count, type);
+        _logger.LogTotalSubscribedMethods(count, type);
         return count;
     }
 

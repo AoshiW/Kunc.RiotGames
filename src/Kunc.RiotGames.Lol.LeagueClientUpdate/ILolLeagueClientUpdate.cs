@@ -4,7 +4,6 @@ namespace Kunc.RiotGames.Lol.LeagueClientUpdate;
 
 public interface ILolLeagueClientUpdate
 {
-    Lockfile Lockfile { get; set; }
     HttpClient Client { get; }
     IWamp Wamp { get; }
 

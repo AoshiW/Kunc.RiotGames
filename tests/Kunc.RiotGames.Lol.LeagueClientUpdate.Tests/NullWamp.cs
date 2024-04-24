@@ -1,7 +1,7 @@
 ﻿using System.Net.WebSockets;
 using System.Text.Json;
 
-namespace Kunc.RiotGames.Lol.LeagueClientUpdate.Test;
+namespace Kunc.RiotGames.Lol.LeagueClientUpdate.Tests;
 
 class NullWamp : IWamp
 {

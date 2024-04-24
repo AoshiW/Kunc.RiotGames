@@ -1,4 +1,4 @@
-﻿namespace Kunc.RiotGames.Lol.LeagueClientUpdate.Test;
+﻿namespace Kunc.RiotGames.Lol.LeagueClientUpdate.Tests;
 
 class Wrapper<T>
 {

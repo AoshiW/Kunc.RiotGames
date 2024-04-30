@@ -26,7 +26,7 @@ public class SpellDto : PassiveDto
     public string CooldownBurn { get; set; } = string.Empty;
 
     [JsonPropertyName("cost")]
-    public int[] Cost { get; set; }
+    public int[] Cost { get; set; } = [];
 
     [JsonPropertyName("costBurn")]
     public string CostBurn { get; set; } = string.Empty;

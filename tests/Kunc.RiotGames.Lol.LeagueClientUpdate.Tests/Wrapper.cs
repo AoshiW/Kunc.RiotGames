@@ -1,6 +1,6 @@
 ﻿namespace Kunc.RiotGames.Lol.LeagueClientUpdate.Tests;
 
-class Wrapper<T>
+sealed class Wrapper<T>
 {
     private readonly Action<Wrapper<T>> _onEvent;
 

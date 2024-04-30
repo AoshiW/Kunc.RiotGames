@@ -50,10 +50,12 @@ public class ItemDto : BaseDto
     public Dictionary<string, bool> Maps { get; set; } = new();
 
     [JsonPropertyName("stats")]
-    public StatsDto Stats { get; set; }
+    [JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]
+    public StatsDto Stats { get; set; } = new();
 
     [JsonPropertyName("effect")]
-    public EffectDto Effect { get; set; }
+    [JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]
+    public EffectDto Effect { get; set; } = new();
 
     [JsonPropertyName("depth")]
     public int Depth { get; set; }

@@ -102,6 +102,9 @@ public class WampEvents
     }
 }
 
+#pragma warning disable
+// I don't care about warnings in classes created for testing
+
 class SomeClass
 {
     public Wrapper<bool> IsInvoked { get; set; } = new();

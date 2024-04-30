@@ -63,7 +63,7 @@ public partial class LolLeagueClientUpdate : IDisposable
     {
         Client.BaseAddress = new Uri($"https://127.0.0.1:{e.Port}/");
         Client.DefaultRequestHeaders.Authorization = e.ToAuthenticationHeaderValue();
-        ConnectWampAsyncCore(e, default);
+        _ = ConnectWampAsyncCore(e, default);
     }
 
     /// <inheritdoc/>

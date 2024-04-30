@@ -1,6 +1,6 @@
 ﻿namespace Kunc.RiotGames.Api.Tests;
 
-internal class AccountInfo
+internal sealed class AccountInfo
 {
     public string RiotId { get; set; } = default!;
 

@@ -19,6 +19,9 @@ public class InfoDto : BaseDto
     [JsonConverter(typeof(UnixTimestampDateTimeOffsetMsConverter))]
     public DateTimeOffset GameCreation { get; set; }
 
+    /// <summary>
+    /// Returns the max timePlayed of any participant in the game.
+    /// </summary>
     [JsonPropertyName("gameDuration")]
     [JsonConverter(typeof(JsonTimeSpanSecondsConverter))]
     public TimeSpan GameDuration { get; set; }

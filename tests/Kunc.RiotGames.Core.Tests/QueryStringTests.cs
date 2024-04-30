@@ -17,18 +17,18 @@ public class QueryStringTests
         opt.MyString = s;
         Assert.AreEqual($"?{nameof(opt.MyInt)}={i}&{nameof(opt.MyString)}={s}", opt.ToString());
     }
+}
 
-    class SomeOptions : QueryString
+file sealed class SomeOptions : QueryString
+{
+    public int? MyInt { get; set; }
+    public string? MyString { get; set; }
+
+    protected override void ToStringCore(ref QueryStringBuilder builder)
     {
-        public int? MyInt { get; set; }
-        public string? MyString { get; set; }
-
-        protected override void ToStringCore(ref QueryStringBuilder builder)
-        {
-            if (MyInt.HasValue)
-                builder.Append(nameof(MyInt), MyInt.Value);
-            if (MyString is not null)
-                builder.Append(nameof(MyString), MyString);
-        }
+        if (MyInt.HasValue)
+            builder.Append(nameof(MyInt), MyInt.Value);
+        if (MyString is not null)
+            builder.Append(nameof(MyString), MyString);
     }
 }

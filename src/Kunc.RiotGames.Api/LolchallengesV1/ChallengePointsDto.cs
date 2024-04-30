@@ -8,7 +8,7 @@ public class ChallengePointsDto : BaseDto
     public double Percentile { get; set; }
 
     [JsonPropertyName("level")]
-    public string Level { get; set; }
+    public string Level { get; set; } = string.Empty; // todo enum
 
     [JsonPropertyName("max")]
     public int Max { get; set; }

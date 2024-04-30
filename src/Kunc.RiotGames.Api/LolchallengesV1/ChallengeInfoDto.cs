@@ -6,7 +6,7 @@ namespace Kunc.RiotGames.Api.LolChallengesV1;
 public class ChallengeInfoDto : BaseDto
 {
     [JsonPropertyName("level")]
-    public string Level { get; set; }
+    public string Level { get; set; } = string.Empty; // todo enum
 
     [JsonPropertyName("value")]
     public double Value { get; set; }

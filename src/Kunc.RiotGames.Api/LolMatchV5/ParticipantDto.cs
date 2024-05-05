@@ -263,11 +263,11 @@ public class ParticipantDto : BaseDto, IKda
     public string TeamPosition { get; set; } = string.Empty;
 
     [JsonPropertyName("timeCCingOthers")]
-    [JsonConverter(typeof(JsonTimeSpanMillisecondsConverter))]
+    [JsonConverter(typeof(JsonTimeSpanSecondsConverter))]
     public TimeSpan TimeCCingOthers { get; set; }
 
     [JsonPropertyName("timePlayed")]
-    [JsonConverter(typeof(JsonTimeSpanMillisecondsConverter))]
+    [JsonConverter(typeof(JsonTimeSpanSecondsConverter))]
     public TimeSpan TimePlayed { get; set; }
 
     [JsonPropertyName("totalAllyJungleMinionsKilled")]

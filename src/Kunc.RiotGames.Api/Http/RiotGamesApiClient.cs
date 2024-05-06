@@ -76,7 +76,15 @@ public class RiotGamesApiClient : IRiotGamesApiClient
         var response = await SendAsync(request, options, cancellationToken).ConfigureAwait(false);
         if (response.IsSuccessStatusCode)
         {
-            return await response.Content.ReadFromJsonAsync<T>(_options.JsonSerializerOptions, cancellationToken).ConfigureAwait(false);
+            try
+            {
+                return await response.Content.ReadFromJsonAsync<T>(_options.JsonSerializerOptions, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogDeserializeException(ex, request);
+                throw;
+            }
         }
         return default;
     }

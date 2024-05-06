@@ -22,4 +22,17 @@ public class RiotRequestMessage
             }.Uri,
         };
     }
+
+    /// <inheritdoc/>
+    public override string ToString()
+    {
+        var url = new UriBuilder()
+        {
+            Scheme = Uri.UriSchemeHttps,
+            Host = $"{Host}.api.riotgames.com",
+            Path = Path,
+            Query = Query?.ToString(),
+        };
+        return $"{HttpMethod} {url}";
+    }
 }

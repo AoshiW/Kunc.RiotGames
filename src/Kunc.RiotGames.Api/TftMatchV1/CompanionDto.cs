@@ -2,5 +2,5 @@
 
 public class CompanionDto : BaseDto
 {
-    //todo
+    //todo missing props
 }

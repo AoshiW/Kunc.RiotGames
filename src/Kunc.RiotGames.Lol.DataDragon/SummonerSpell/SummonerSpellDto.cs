@@ -20,7 +20,7 @@ public class SummonerSpellDto : BaseDto
     [JsonPropertyName("maxrank")]
     public int MaxRank { get; set; }
 
-    //todo => TimeSpan
+    //todo => TimeSpan[]
     [JsonPropertyName("cooldown")]
     public double[] Cooldown { get; set; } = [];
 

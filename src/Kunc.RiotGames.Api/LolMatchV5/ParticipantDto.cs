@@ -89,7 +89,7 @@ public class ParticipantDto : BaseDto, IKda
     [JsonPropertyName("goldSpent")]
     public int GoldSpent { get; set; }
 
-    //todo enum
+    //todo enum TOP JUNGLE MIDDLE BOTTOM UTILITY Invalid
     [JsonPropertyName("individualPosition")]
     public string IndividualPosition { get; set; } = string.Empty;
 
@@ -258,7 +258,7 @@ public class ParticipantDto : BaseDto, IKda
     [JsonPropertyName("teamId")]
     public TeamId TeamId { get; set; }
 
-    //todo enum
+    //todo enum TOP JUNGLE MIDDLE BOTTOM UTILITY string.Empty
     [JsonPropertyName("teamPosition")]
     public string TeamPosition { get; set; } = string.Empty;
 

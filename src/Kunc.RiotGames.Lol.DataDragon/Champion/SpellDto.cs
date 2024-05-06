@@ -18,7 +18,7 @@ public class SpellDto : PassiveDto
     [JsonPropertyName("maxrank")]
     public int MaxRank { get; set; }
 
-    // todo => timespan
+    // todo => timespan[]
     [JsonPropertyName("cooldown")]
     public double[] Cooldown { get; set; } = [];
 

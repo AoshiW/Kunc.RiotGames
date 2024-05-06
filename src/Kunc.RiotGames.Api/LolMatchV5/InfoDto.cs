@@ -10,8 +10,8 @@ public class InfoDto : BaseDto
     /// Refer to indicate if the game ended in termination.
     /// </summary>
     [JsonPropertyName("endOfGameResult")]
-    public string EndOfGameResult { get; set; } = string.Empty; // todo enum
-    
+    public string EndOfGameResult { get; set; } = string.Empty; // todo enum Abort_Unexpected GameComplete
+
     /// <summary>
     /// Date when the game is created on the game server.
     /// </summary>

@@ -9,6 +9,9 @@ namespace Kunc.RiotGames.Lol;
 [JsonConverter(typeof(JsonStringEnumConverterWithAltNames<GameMode>))]
 public enum GameMode
 {
+    [JsonEnumName("")]
+    EmptyString,
+
     /// <summary>
     /// Classic Summoner's Rift and Twisted Treeline games.
     /// </summary>

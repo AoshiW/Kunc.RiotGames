@@ -84,4 +84,9 @@ public enum MapId
     /// Teamfight Tactics map
     /// </summary>
     Convergence = 22,
+
+    /// <summary>
+    /// Arena map
+    /// </summary>
+    RingsOfWrath = 30,
 }

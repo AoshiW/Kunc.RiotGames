@@ -8,6 +8,9 @@ namespace Kunc.RiotGames.Lol;
 [JsonConverter(typeof(JsonStringEnumConverterWithAltNames<GameType>))]
 public enum GameType
 {
+    [JsonEnumName("")]
+    EmptyString,
+
     [JsonEnumName("CUSTOM_GAME")]
     CustomGame,
 

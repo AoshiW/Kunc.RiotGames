@@ -47,7 +47,7 @@ public partial class LolLeagueClientUpdate : IDisposable
 
     private async void TryInit()
     {
-        var lockfile = await _lockfileProvider.GetLockfileAsync();
+        var lockfile = await _lockfileProvider.GetLockfileAsync().ConfigureAwait(false);
         if (lockfile is null)
             return;
         _lockfileProvider_Created(_lockfileProvider, lockfile);

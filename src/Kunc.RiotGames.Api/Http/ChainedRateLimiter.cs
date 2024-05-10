@@ -25,7 +25,7 @@ internal class ChainedRateLimiter : RateLimiter
         var leases = new RateLimitLease[_length];
         for (int i = 0; i < _length; i++)
         {
-            leases[i] = await _limiters[i].AcquireAsync(permitCount, cancellationToken);
+            leases[i] = await _limiters[i].AcquireAsync(permitCount, cancellationToken).ConfigureAwait(false);
         }
         return new ChainedRateLimitLease(leases);
     }

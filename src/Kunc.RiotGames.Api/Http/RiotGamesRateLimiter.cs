@@ -76,13 +76,13 @@ sealed public class RiotGamesRateLimiter : IRiotGamesRateLimiter, IDisposable
         public async ValueTask<RateLimitLease> AcquireAppAsync(CancellationToken cancellationToken)
         {
             if (_app is not null)
-                return await _app.AcquireAsync(1, cancellationToken);
+                return await _app.AcquireAsync(1, cancellationToken).ConfigureAwait(false);
 
-            await _appSS.WaitAsync(cancellationToken);
+            await _appSS.WaitAsync(cancellationToken).ConfigureAwait(false);
             if (_app is not null)
             {
                 _appSS.Release();
-                return await _app.AcquireAsync(1, cancellationToken);
+                return await _app.AcquireAsync(1, cancellationToken).ConfigureAwait(false);
             }
             return new SemaphoreSlimLease(_appSS);
         }
@@ -90,13 +90,13 @@ sealed public class RiotGamesRateLimiter : IRiotGamesRateLimiter, IDisposable
         public async ValueTask<RateLimitLease> AcquireMethodAsync(string methodId, CancellationToken cancellationToken)
         {
             if (_methods.TryGetValue(methodId, out var limiter))
-                return await limiter.AcquireAsync(1, cancellationToken);
+                return await limiter.AcquireAsync(1, cancellationToken).ConfigureAwait(false);
 
-            await _methodSS.WaitAsync(cancellationToken);
+            await _methodSS.WaitAsync(cancellationToken).ConfigureAwait(false);
             if (_methods.TryGetValue(methodId, out limiter))
             {
                 _methodSS.Release();
-                return await limiter.AcquireAsync(1, cancellationToken);
+                return await limiter.AcquireAsync(1, cancellationToken).ConfigureAwait(false);
             }
             return new SemaphoreSlimLease(_methodSS);
         }

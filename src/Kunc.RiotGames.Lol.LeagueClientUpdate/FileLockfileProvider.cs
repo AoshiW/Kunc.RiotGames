@@ -51,7 +51,7 @@ public class FileLockfileProvider : ILockfileProvider
         {
             if(!File.Exists(path))
                 return default;
-            return await Lockfile.FromFileAsync(path, cancellationToken);
+            return await Lockfile.FromFileAsync(path, cancellationToken).ConfigureAwait(false);
         }
     }
 
@@ -77,7 +77,7 @@ public class FileLockfileProvider : ILockfileProvider
 
     private async void InvokeCreated()
     {
-        _lockfile = await GetLockfileAsync(default);
+        _lockfile = await GetLockfileAsync(default).ConfigureAwait(false);
         Debug.Assert(_lockfile is not null);
 
         _logger.LogCreate(_lockfile);

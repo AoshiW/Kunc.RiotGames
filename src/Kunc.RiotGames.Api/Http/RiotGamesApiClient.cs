@@ -32,15 +32,15 @@ public class RiotGamesApiClient : IRiotGamesApiClient
         do
         {
             // first check the methodRl, then appRl!
-            using var methodRl = await _rateLimiter.AcquireMethodAsync(request.Host, request.MethodId, cancellationToken);
-            using var appRl = await _rateLimiter.AcquireAppAsync(request.Host, cancellationToken);
+            using var methodRl = await _rateLimiter.AcquireMethodAsync(request.Host, request.MethodId, cancellationToken).ConfigureAwait(false);
+            using var appRl = await _rateLimiter.AcquireAppAsync(request.Host, cancellationToken).ConfigureAwait(false);
             retries++;
             using var httpRequestMessage = request.ToHttpRequestMessage();
             if (options.IncludeApiKey)
                 httpRequestMessage.Headers.Add(ApiConstants.RiotToken, _options.ApiKey);
             var response = await _client.SendAsync(httpRequestMessage, cancellationToken).ConfigureAwait(false);
 
-            await _rateLimiter.UpdateAsync(request.Host, request, response, cancellationToken);
+            await _rateLimiter.UpdateAsync(request.Host, request, response, cancellationToken).ConfigureAwait(false);
             if (response.IsSuccessStatusCode || response.StatusCode is HttpStatusCode.NotFound)
                 return response;
 

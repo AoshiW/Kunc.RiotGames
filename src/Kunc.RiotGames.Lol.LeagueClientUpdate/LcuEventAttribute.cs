@@ -23,10 +23,12 @@ public sealed class LcuEventAttribute : Attribute
     /// Initializes a new instance of the <see cref="LcuEventAttribute"/> class
     /// </summary>
     /// <param name="uri">The Uri of the event.</param>
-    /// <exception cref="ArgumentNullException">Thrown if <paramref name="uri"/> is null.</exception>
+    /// <exception cref="ArgumentException">Thrown if <paramref name="uri"/> is <see  langword="null"/> or consists only of white-space characters.</exception>
     public LcuEventAttribute(string uri)
     {
-        ArgumentNullException.ThrowIfNull(uri);
+        ArgumentException.ThrowIfNullOrWhiteSpace(uri);
+        if (uri[0] != '/')
+            uri = '/' + uri;
         Uri = uri;
     }
 }

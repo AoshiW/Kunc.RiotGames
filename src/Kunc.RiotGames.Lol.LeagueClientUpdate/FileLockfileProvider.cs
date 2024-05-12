@@ -84,6 +84,13 @@ public class FileLockfileProvider : ILockfileProvider
         Created?.Invoke(this, _lockfile);
     }
 
+    /// <summary>
+    /// Releases the unmanaged resources and optionally disposes of the managed resources.
+    /// </summary>
+    /// <param name="disposing">
+    /// <see langword="true"/> to release both managed and unmanaged resources;
+    /// <see langword="false"/> to releases only unmanaged resources.
+    /// </param>
     protected virtual void Dispose(bool disposing)
     {
         if (!_disposedValue)

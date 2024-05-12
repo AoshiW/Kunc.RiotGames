@@ -5,6 +5,6 @@ namespace Kunc.RiotGames.Lol.LeagueClientUpdate;
 
 [JsonSerializable(typeof(LcuEventArgs<JsonElement>))]
 [JsonSerializable(typeof(JsonElement[]))]
-internal partial class LcuJsonContext : JsonSerializerContext
+internal partial class JsonContext : JsonSerializerContext
 {
 }

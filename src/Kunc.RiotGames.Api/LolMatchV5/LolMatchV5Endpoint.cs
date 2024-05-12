@@ -50,7 +50,7 @@ public class LolMatchV5Endpoint : ILolMatchV5
     }
 
     /// <inheritdoc/>
-    public async Task<MatchTimelineDto?> GetMatchTimelineAsync(string region, string matchId, CancellationToken cancellationToken = default)
+    public async Task<TimelineDto?> GetMatchTimelineAsync(string region, string matchId, CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(region);
         ArgumentException.ThrowIfNullOrEmpty(matchId);
@@ -62,6 +62,6 @@ public class LolMatchV5Endpoint : ILolMatchV5
             MethodId = "/lol/match/v5/matches/{matchId}/timeline",
             Path = $"/lol/match/v5/matches/{matchId}/timeline",
         };
-        return await _client.SendAndDeserializeAsync<MatchTimelineDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return await _client.SendAndDeserializeAsync<TimelineDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 }

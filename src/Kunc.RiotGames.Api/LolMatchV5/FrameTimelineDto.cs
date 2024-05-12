@@ -6,11 +6,11 @@ namespace Kunc.RiotGames.Api.LolMatchV5;
 public class FrameTimelineDto : BaseDto
 {
     [JsonPropertyName("events")]
-    public MatchEventDto[] Events { get; set; } = [];
+    public EventsTimelineDto[] Events { get; set; } = [];
 
     [JsonPropertyName("participantFrames")]
     [JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]
-    public Dictionary<int, MatchParticipantFrameDto> ParticipantFrames { get; set; } = new();
+    public Dictionary<int, ParticipantFrameDto> ParticipantFrames { get; set; } = new();
 
     [JsonPropertyName("timestamp")]
     [JsonConverter(typeof(JsonTimeSpanMillisecondsConverter))]

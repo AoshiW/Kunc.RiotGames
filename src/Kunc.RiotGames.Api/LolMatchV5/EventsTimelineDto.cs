@@ -4,7 +4,7 @@ using Kunc.RiotGames.Lol;
 
 namespace Kunc.RiotGames.Api.LolMatchV5;
 
-public class MatchEventDto : BaseDto
+public class EventsTimelineDto : BaseDto
 {
     [JsonPropertyName("actualStartTime")]
     [JsonConverter(typeof(JsonTimeSpanMillisecondsConverter))]
@@ -73,7 +73,7 @@ public class MatchEventDto : BaseDto
     public int? ParticipantId { get; set; }
 
     [JsonPropertyName("position")]
-    public MatchPosition? Position { get; set; }
+    public PositionDto? Position { get; set; }
 
     [JsonPropertyName("realTimestamp")]
     [JsonConverter(typeof(UnixTimestampDateTimeOffsetMsConverter))]

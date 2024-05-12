@@ -29,5 +29,5 @@ public interface ILolMatchV5
     /// <param name="matchId"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<MatchTimelineDto?> GetMatchTimelineAsync(string region, string matchId, CancellationToken cancellationToken = default);
+    Task<TimelineDto?> GetMatchTimelineAsync(string region, string matchId, CancellationToken cancellationToken = default);
 }

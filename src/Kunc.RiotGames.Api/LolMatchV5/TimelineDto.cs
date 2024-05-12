@@ -2,7 +2,7 @@
 
 namespace Kunc.RiotGames.Api.LolMatchV5;
 
-public class MatchTimelineDto : BaseDto
+public class TimelineDto : BaseDto
 {
     /// <summary>
     /// Match metadata.

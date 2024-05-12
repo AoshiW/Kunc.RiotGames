@@ -28,23 +28,21 @@ class RootObject { /* Properties */ }
 TODO
 
 #### Event delegate
-As a delegate you can use __any__ method that has 0-3 parameters, the order of the parameters does not matter.
+As a delegate you can use __any__ method that has 0-3 parameters (the order of the parameters does not matter).
 
 The parameters must be:
 - type sender: `object`, `LolLeagueClientUpdate` ,`ILolLeagueClientUpdate`
-- type eventArgs: here you can use __any__ type that represents an object that was sent through wamp
-- `CancellationToken`, token will by canceled when you call `CloseWampAsync`
-
-__Don't forget to call `ConnectWampAsync` to start WebSocket!__
+- type eventArgs: here you can use __any__ type that represents an object that was sent through WAMP
+- `CancellationToken`, token will by cancelled when WAMP is disconnect.
 
 ```cs
-Lcu.Subscribe("/lol-gameflow/v1/gameflow-phase", () => { });
-Lcu.Subscribe([LcuEvent("/lol-gameflow/v1/gameflow-phase")] () => { });
-Lcu.Subscribe(new LcuEventAttribute("/lol-gameflow/v1/gameflow-phase"), () => { });
+// Subcire event manually
+Lcu.Subscribe("/lol-gameflow/v1/gameflow-phase", (/* parameters */) => { /* code */ });
+Lcu.Subscribe([LcuEvent("/lol-gameflow/v1/gameflow-phase")] (/* parameters */) => { /* code */ });
+Lcu.Subscribe(new LcuEventAttribute("/lol-gameflow/v1/gameflow-phase"), (/* parameters */) => { /* code */ });
 
+// Subscire all events from a given class
 Lcu.SubscribeAll<SomeClass>();
-
-await Lcu.ConnectWampAsync();
 
 class SomeClass
 {

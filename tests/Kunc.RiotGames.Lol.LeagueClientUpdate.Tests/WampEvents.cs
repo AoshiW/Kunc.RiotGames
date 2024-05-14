@@ -10,7 +10,7 @@ public class WampEvents
     public void Test()
     {
         var lcu = NewLcu();
-        const string url1 = "random";
+        const string url1 = "/random";
         var isInvoked = new Wrapper<bool>();
         lcu.Subscribe(url1, isInvoked.EventHandler);
 
@@ -35,7 +35,7 @@ public class WampEvents
     public void CheckEventInvocationWhenIfExceptionIsThrow()
     {
         var lcu = NewLcu();
-        const string url1 = "random";
+        const string url1 = "/random";
         var isInvoked = new Wrapper<bool>();
 #pragma warning disable CA2201, IDE0053 // Do not raise reserved exception types, Use expression body for lambda expression
         lcu.Subscribe(url1, () => { throw new Exception(); });
@@ -62,7 +62,7 @@ public class WampEvents
         {
             Data = "Null",
             EventType = "Create",
-            Uri = "url2",
+            Uri = "/url2",
         });
         Assert.IsFalse(obj.IsInvoked.Value);
 
@@ -70,7 +70,7 @@ public class WampEvents
         {
             Data = "Null",
             EventType = "Create",
-            Uri = "url",
+            Uri = "/url",
         });
         Assert.IsTrue(obj.IsInvoked.Value);
     }
@@ -79,7 +79,7 @@ public class WampEvents
     public void Unsubscribe()
     {
         var lcu = NewLcu();
-        const string url1 = "random";
+        const string url1 = "/random";
         var isInvoked = new Wrapper<bool>();
         lcu.Subscribe(url1, isInvoked.EventHandler);
 

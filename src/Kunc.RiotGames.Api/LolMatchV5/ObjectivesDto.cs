@@ -16,6 +16,10 @@ public class ObjectivesDto : BaseDto
     [JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]
     public ObjectiveDto Dragon { get; set; } = new();
 
+    [JsonPropertyName("horde")]
+    [JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]
+    public ObjectiveDto Horde { get; set; } = new();
+
     [JsonPropertyName("inhibitor")]
     [JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]
     public ObjectiveDto Inhibitor { get; set; } = new();

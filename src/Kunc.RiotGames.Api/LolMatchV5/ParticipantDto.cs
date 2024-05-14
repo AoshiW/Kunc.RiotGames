@@ -6,6 +6,12 @@ namespace Kunc.RiotGames.Api.LolMatchV5;
 
 public class ParticipantDto : BaseDto, IKda
 {
+    [JsonPropertyName("allInPings")]
+    public int AllInPings { get; set; }
+
+    [JsonPropertyName("assistMePings")]
+    public int AssistMePings { get; set; }
+
     /// <inheritdoc/>
     [JsonPropertyName("assists")]
     public int Assists { get; set; }
@@ -31,6 +37,9 @@ public class ParticipantDto : BaseDto, IKda
     [JsonPropertyName("championName")]
     public string ChampionName { get; set; } = string.Empty;
 
+    [JsonPropertyName("commandPings")]
+    public int CommandPings { get; set; }
+
     /// <remarks>
     /// This field is currently only utilized for Kayn's transformations. (Legal values: 0 - None, 1 - Slayer, 2 - Assassin)
     /// </remarks>
@@ -49,6 +58,9 @@ public class ParticipantDto : BaseDto, IKda
     [JsonPropertyName("damageDealtToTurrets")]
     public int DamageDealtToTurrets { get; set; }
 
+    [JsonPropertyName("dangerPings")]
+    public int DangerPings { get; set; }
+
     [JsonPropertyName("damageSelfMitigated")]
     public int DamageSelfMitigated { get; set; }
 
@@ -64,6 +76,15 @@ public class ParticipantDto : BaseDto, IKda
 
     [JsonPropertyName("dragonKills")]
     public int DragonKills { get; set; }
+
+    [JsonPropertyName("eligibleForProgression")]
+    public bool IsEligibleForProgression { get; set; }
+
+    [JsonPropertyName("enemyMissingPings")]
+    public int EnemyMissingPings { get; set; }
+
+    [JsonPropertyName("enemyVisionPings")]
+    public int EnemyVisionPings { get; set; }
 
     [JsonPropertyName("firstBloodAssist")]
     public bool HasFirstBloodAssist { get; set; }
@@ -86,6 +107,9 @@ public class ParticipantDto : BaseDto, IKda
     [JsonPropertyName("goldEarned")]
     public int GoldEarned { get; set; }
 
+    [JsonPropertyName("getBackPings")]
+    public int GetBackPings { get; set; }
+
     [JsonPropertyName("goldSpent")]
     public int GoldSpent { get; set; }
 
@@ -96,6 +120,9 @@ public class ParticipantDto : BaseDto, IKda
     [JsonPropertyName("inhibitorKills")]
     public int InhibitorKills { get; set; }
 
+    /// <remarks>
+    /// Takedowns is kill/assist
+    /// </remarks>
     [JsonPropertyName("inhibitorTakedowns")]
     public int InhibitorTakedowns { get; set; }
 
@@ -158,12 +185,21 @@ public class ParticipantDto : BaseDto, IKda
     [JsonPropertyName("magicDamageTaken")]
     public int MagicDamageTaken { get; set; }
 
+    [JsonPropertyName("missions")]
+    public MissionsDto Missions { get;set;}
+
     [JsonPropertyName("neutralMinionsKilled")]
     public int NeutralMinionsKilled { get; set; }
+
+    [JsonPropertyName("needVisionPings")]
+    public int NeedVisionPings { get; set; }
 
     [JsonPropertyName("nexusKills")]
     public int NexusKills { get; set; }
 
+    /// <remarks>
+    /// Takedowns is kill/assist
+    /// </remarks>
     [JsonPropertyName("nexusTakedowns")]
     public int NexusTakedowns { get; set; }
 
@@ -175,6 +211,9 @@ public class ParticipantDto : BaseDto, IKda
 
     [JsonPropertyName("objectivesStolenAssists")]
     public int ObjectivesStolenAssists { get; set; }
+
+    [JsonPropertyName("onMyWayPings")]
+    public int OnMyWayPings { get; set; }
 
     [JsonPropertyName("participantId")]
     public int ParticipantId { get; set; }
@@ -194,6 +233,9 @@ public class ParticipantDto : BaseDto, IKda
 
     [JsonPropertyName("physicalDamageTaken")]
     public int PhysicalDamageTaken { get; set; }
+
+    [JsonPropertyName("pushPings")]
+    public int PushPings { get; set; }
 
     [JsonPropertyName("profileIcon")]
     public int ProfileIcon { get; set; }
@@ -335,6 +377,9 @@ public class ParticipantDto : BaseDto, IKda
     [JsonPropertyName("visionScore")]
     public int VisionScore { get; set; }
 
+    [JsonPropertyName("visionClearedPings")]
+    public int VisionClearedPings { get; set; }
+
     [JsonPropertyName("visionWardsBoughtInGame")]
     public int VisionWardsBoughtInGame { get; set; }
 
@@ -347,47 +392,14 @@ public class ParticipantDto : BaseDto, IKda
     [JsonPropertyName("win")]
     public bool IsWinner { get; set; }
 
-    [JsonPropertyName("allInPings")]
-    public int AllInPings { get; set; }
-
-    [JsonPropertyName("assistMePings")]
-    public int AssistMePings { get; set; }
-
     [JsonPropertyName("baitPings")]
     public int BaitPings { get; set; }
 
     [JsonPropertyName("basicPings")]
     public int BasicPings { get; set; }
 
-    [JsonPropertyName("commandPings")]
-    public int CommandPings { get; set; }
-
-    [JsonPropertyName("dangerPings")]
-    public int DangerPings { get; set; }
-
-    [JsonPropertyName("enemyMissingPings")]
-    public int EnemyMissingPings { get; set; }
-
-    [JsonPropertyName("getBackPings")]
-    public int GetBackPings { get; set; }
-
     [JsonPropertyName("holdPings")]
     public int HoldPings { get; set; }
-
-    [JsonPropertyName("onMyWayPings")]
-    public int OnMyWayPings { get; set; }
-
-    [JsonPropertyName("pPushPings")]
-    public int PushPings { get; set; }
-
-    [JsonPropertyName("needVisionPings")]
-    public int NeedVisionPings { get; set; }
-
-    [JsonPropertyName("enemyVisionPings")]
-    public int EnemyVisionPings { get; set; }
-
-    [JsonPropertyName("visionClearedPings")]
-    public int VisionClearedPings { get; set; }
 
     /// <summary>
     /// <see cref="TotalMinionsKilled"/> + <see cref="NeutralMinionsKilled"/>
@@ -395,10 +407,8 @@ public class ParticipantDto : BaseDto, IKda
     [JsonIgnore]
     public int CreepScore => TotalMinionsKilled + NeutralMinionsKilled;
 
-    public string GetRiotId()
+    public RiotId GetRiotId()
     {
-        return $"{RiotIdGameName}#{RiotIdTagLine}";
+        return new(RiotIdGameName, RiotIdTagLine);
     }
 }
-
-//teamPosition/individualposotopn came as LolClashV1.Position without Fill, Unselected

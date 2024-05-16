@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
-using Kunc.RiotGames;
+
+namespace Kunc.RiotGames.Lol.GameClient.LiveClientData;
 
 public class AbilityDto : BaseDto
 {
@@ -7,7 +8,7 @@ public class AbilityDto : BaseDto
     public string DisplayName { get; set; } = string.Empty;
 
     [JsonPropertyName("id")]
-    public int Id { get; set; }
+    public string Id { get; set; }
 
     [JsonPropertyName("rawDescription")]
     public string RawDescription { get; set; } = string.Empty;

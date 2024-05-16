@@ -1,11 +1,14 @@
 ﻿using System.Net.Http.Json;
-using Kunc.RiotGames.Lol.GameClient.LiveClientData;
 
-namespace Kunc.RiotGames.Lol.GameClient;
+namespace Kunc.RiotGames.Lol.GameClient.LiveClientData;
 
 public class LiveClientDataEndpoint
 {
-    private readonly HttpClient _client = new()
+    private readonly HttpClient _client = new(new HttpClientHandler()
+    {
+        ClientCertificateOptions = ClientCertificateOption.Manual,
+        ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator,
+    })
     {
         BaseAddress = new("https://127.0.0.1:2999"),
     };
@@ -37,7 +40,7 @@ public class LiveClientDataEndpoint
     }
 
     /// <summary>
-    /// Returns the player name
+    /// Returns the player RiotId.
     /// </summary>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
@@ -87,53 +90,53 @@ public class LiveClientDataEndpoint
     /// <summary>
     /// Retrieve the list of the current scores for the player.
     /// </summary>
-    /// <param name="summonerName">Summoner name of player.</param>
+    /// <param name="riotId">RiotID GameName (with tag) of the player.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     /// 
-    public async Task<PlayerScoresDto> GetPlayerScoresAsync(string summonerName, CancellationToken cancellationToken = default)
+    public async Task<PlayerScoresDto> GetPlayerScoresAsync(RiotId riotId, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(summonerName);
-        var data = await _client.GetFromJsonAsync<PlayerScoresDto>($"/liveclientdata/playerscores?summonerName={summonerName}", cancellationToken).ConfigureAwait(false);
+        ArgumentNullException.ThrowIfNull(riotId);
+        var data = await _client.GetFromJsonAsync<PlayerScoresDto>($"/liveclientdata/playerscores?riotId={riotId}", cancellationToken).ConfigureAwait(false);
         return data!;
     }
 
     /// <summary>
     /// Retrieve the list of the summoner spells for the player.
     /// </summary>
-    /// <param name="summonerName">Summoner name of player.</param>
+    /// <param name="riotId">RiotID GameName (with tag) of the player.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public async Task<SummonerSpellsDto> GetPlayerSummonerSpellsAsync(string summonerName, CancellationToken cancellationToken = default)
+    public async Task<SummonerSpellsDto> GetPlayerSummonerSpellsAsync(RiotId riotId, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(summonerName);
-        var data = await _client.GetFromJsonAsync<SummonerSpellsDto>($"/liveclientdata/playersummonerspells?summonerName={summonerName}", cancellationToken).ConfigureAwait(false);
+        ArgumentNullException.ThrowIfNull(riotId);
+        var data = await _client.GetFromJsonAsync<SummonerSpellsDto>($"/liveclientdata/playersummonerspells?riotId={riotId}", cancellationToken).ConfigureAwait(false);
         return data!;
     }
 
     /// <summary>
     /// Retrieve the basic runes of any player.
     /// </summary>
-    /// <param name="summonerName">Summoner name of player.</param>
+    /// <param name="riotId">RiotID GameName (with tag) of the player.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public async Task<MainRunesDto> GetPlayerMainRunesAsync(string summonerName, CancellationToken cancellationToken = default)
+    public async Task<MainRunesDto> GetPlayerMainRunesAsync(RiotId riotId, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(summonerName);
-        var data = await _client.GetFromJsonAsync<MainRunesDto>($"/liveclientdata/playermainrunes?summonerName={summonerName}", cancellationToken).ConfigureAwait(false);
+        ArgumentNullException.ThrowIfNull(riotId);
+        var data = await _client.GetFromJsonAsync<MainRunesDto>($"/liveclientdata/playermainrunes?riotId={riotId}", cancellationToken).ConfigureAwait(false);
         return data!;
     }
 
     /// <summary>
     /// Retrieve the list of items for the player.
     /// </summary>
-    /// <param name="summonerName">Summoner name of player.</param>
+    /// <param name="riotId">RiotID GameName (with tag) of the player.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public async Task<PlayerItemDto[]> GetPlayerItemsAsync(string summonerName, CancellationToken cancellationToken = default)
+    public async Task<PlayerItemDto[]> GetPlayerItemsAsync(RiotId riotId, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(summonerName);
-        var data = await _client.GetFromJsonAsync<PlayerItemDto[]>($"/liveclientdata/playeritems?summonerName={summonerName}", cancellationToken).ConfigureAwait(false);
+        ArgumentNullException.ThrowIfNull(riotId);
+        var data = await _client.GetFromJsonAsync<PlayerItemDto[]>($"/liveclientdata/playeritems?riotId={riotId}", cancellationToken).ConfigureAwait(false);
         return data!;
     }
 

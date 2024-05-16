@@ -23,7 +23,7 @@ public class PlayerDto : BaseDto
     public int Level { get; set; }
 
     [JsonPropertyName("position")]
-    public string Position { get; set; }
+    public string Position { get; set; } // todo enum
 
     [JsonPropertyName("rawChampionName")]
     public string RawChampionName { get; set; } = string.Empty;
@@ -34,6 +34,15 @@ public class PlayerDto : BaseDto
     [JsonPropertyName("respawnTimer")]
     [JsonConverter(typeof(JsonTimeSpanSecondsConverter))]
     public TimeSpan RespawnTimer { get; set; }
+
+    [JsonPropertyName("riotId")]
+    public RiotId RiotId { get; set; } = default!;
+
+    [JsonPropertyName("riotIdGameName")]
+    public string RiotIdGameName { get; set; } = string.Empty;
+
+    [JsonPropertyName("riotIdTagLine")]
+    public string RiotIdTagLine { get; set; } = string.Empty;
 
     [JsonPropertyName("runes")]
     [JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]

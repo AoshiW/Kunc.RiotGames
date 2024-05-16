@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
-using Kunc.RiotGames;
 
+namespace Kunc.RiotGames.Lol.GameClient.LiveClientData;
 public class RuneDto : BaseDto
 {
     [JsonPropertyName("displayName")]

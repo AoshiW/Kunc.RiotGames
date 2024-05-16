@@ -22,8 +22,17 @@ public class ActivePlayerDto : BaseDto
     [JsonPropertyName("level")]
     public int Level { get; set; }
 
+    [JsonPropertyName("riotId")]
+    public RiotId RiotId { get; set; } = default!;
+
+    [JsonPropertyName("riotIdGameName")]
+    public string RiotIdGameName { get; set; } = string.Empty;
+
+    [JsonPropertyName("riotIdTagLine")]
+    public string RiotIdTagLine { get; set; } = string.Empty;
+
     [JsonPropertyName("summonerName")]
-    public RiotId SummonerName { get; set; } = default!;
+    public string SummonerName { get; set; } = string.Empty;
 
     [JsonPropertyName("teamRelativeColors")]
     public bool TeamRelativeColors { get; set; }

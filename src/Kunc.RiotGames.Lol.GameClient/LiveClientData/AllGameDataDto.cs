@@ -12,9 +12,9 @@ public class AllGameDataDto : BaseDto
 
     [JsonPropertyName("events")]
     [JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]
-    public EventsDto Events { get; set; } = new();
+    public EventDataDto Events { get; set; } = new();
 
     [JsonPropertyName("gameData")]
     [JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]
-    public AllGameDataDto GameData { get; set; } = new();
+    public GameStatsDto GameData { get; set; } = new();
 }

@@ -5,10 +5,12 @@ using Kunc.RiotGames.JsonConverters;
 namespace Kunc.RiotGames;
 
 [JsonConverter(typeof(RiotIdConverter))]
-public sealed class RiotId : ISpanParsable<RiotId>, ISpanFormattable
+public sealed class RiotId : IRiotId, ISpanParsable<RiotId>, ISpanFormattable
 {
+    /// <inheritdoc/>
     public string GameName { get; }
 
+    /// <inheritdoc/>
     public string TagLine { get; }
 
     /// <summary>

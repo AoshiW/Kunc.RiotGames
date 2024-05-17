@@ -48,7 +48,7 @@ public interface IRiotAccountV1
     /// <param name="riotId"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<AccountDto?> GetAccountByRiotIdAsync(string region, RiotId riotId, CancellationToken cancellationToken = default)
+    Task<AccountDto?> GetAccountByRiotIdAsync(string region, IRiotId riotId, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(region);
         ArgumentNullException.ThrowIfNull(riotId);

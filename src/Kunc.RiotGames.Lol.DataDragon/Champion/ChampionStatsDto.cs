@@ -71,7 +71,7 @@ public class ChampionStatsDto : BaseDto
     /// <param name="growth">Growth stats per level.</param>
     /// <param name="level"></param>
     /// <returns></returns>
-    private static double StatsAtLevel(double @base, double growth, int level)
+    public static double StatsAtLevel(double @base, double growth, int level)
     {
         int num = level - 1;
         return @base + growth * num * (0.7025 + 0.0175 * num);

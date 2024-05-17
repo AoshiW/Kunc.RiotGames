@@ -14,15 +14,15 @@ internal enum Base32FormattingOptions
 /// </summary>
 internal static class Base32
 {
-    private static readonly char[] Alphabet =
-    {
+    private static ReadOnlySpan<char> Alphabet =>
+    [
         'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
         'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
         'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
         'Y', 'Z', '2', '3', '4', '5', '6', '7'
-    };
-    private static ReadOnlySpan<byte> ReversedMapAlphabet => new byte[]
-    {
+    ];
+    private static ReadOnlySpan<byte> ReversedMapAlphabet =>
+    [
       //   0     1     2     3     4     5     6     7     8    9     10    11    12    13    14    16
         0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, //  0 -  15
         0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, // 16 -  31
@@ -32,7 +32,7 @@ internal static class Base32
           15,   16,   17,   18,   19,   20,   21,   22,   23,   24,   25, 0xff, 0xff, 0xff, 0xff, 0xff, // 80 -  95
         0xff,    0,    1,    2,    3,    4,    5,    6,    7,    8,    9,   10,   11,   12,   13,   14, // 96 - 111
           15,   16,   17,   18,   19,   20,   21,   22,   23,   24,   25, 0xff, 0xff, 0xff, 0xff, 0xff, //112 - 127
-    };
+    ];
     private const int Mask = 31;
     private const int Shift = 5;
     private const char PaddingChar = '=';
@@ -169,31 +169,25 @@ internal static class Base32
             _ => throw new UnreachableException()
         };
 
+        Span<char> rest = stackalloc char[8];
+
         b0 = (offset < bytes.Length) ? bytes[offset++] : default;
         b1 = (offset < bytes.Length) ? bytes[offset++] : default;
-        chars[written++] = (numCharsToOutput >= 1) ? Alphabet[b0 >> 3] : PaddingChar;
-        chars[written++] = (numCharsToOutput >= 2) ? Alphabet[((b0 & 0x07) << 2) | (b1 >> 6)] : PaddingChar;
-
-        if (written == length)
-            return true;
         b2 = (offset < bytes.Length) ? bytes[offset++] : default;
-        chars[written++] = (numCharsToOutput >= 3) ? Alphabet[(b1 >> 1) & 0x1f] : PaddingChar;
-        chars[written++] = (numCharsToOutput >= 4) ? Alphabet[((b1 & 0x01) << 4) | (b2 >> 4)] : PaddingChar;
-
-        if (written == length)
-            return true;
         b3 = (offset < bytes.Length) ? bytes[offset++] : default;
-        chars[written++] = (numCharsToOutput >= 5) ? Alphabet[(((b2 & 0x0f) << 1) | (b3 >> 7))] : PaddingChar;
-
-        if (written == length)
-            return true;
         b4 = (offset < bytes.Length) ? bytes[offset++] : default;
-        chars[written++] = (numCharsToOutput >= 6) ? Alphabet[(b3 >> 2) & 0x1f] : PaddingChar;
-        chars[written++] = (numCharsToOutput >= 7) ? Alphabet[((b3 & 0x3) << 3) | (b4 >> 5)] : PaddingChar;
 
-        if (written == length)
-            return true;
-        chars[written++] = (numCharsToOutput >= 8) ? Alphabet[b4 & 0x1f] : PaddingChar;
+        rest[0] = (numCharsToOutput >= 1) ? Alphabet[b0 >> 3] : PaddingChar;
+        rest[1] = (numCharsToOutput >= 2) ? Alphabet[((b0 & 0x07) << 2) | (b1 >> 6)] : PaddingChar;
+        rest[2] = (numCharsToOutput >= 3) ? Alphabet[(b1 >> 1) & 0x1f] : PaddingChar;
+        rest[3] = (numCharsToOutput >= 4) ? Alphabet[((b1 & 0x01) << 4) | (b2 >> 4)] : PaddingChar;
+        rest[4] = (numCharsToOutput >= 5) ? Alphabet[(((b2 & 0x0f) << 1) | (b3 >> 7))] : PaddingChar;
+        rest[5] = (numCharsToOutput >= 6) ? Alphabet[(b3 >> 2) & 0x1f] : PaddingChar;
+        rest[6] = (numCharsToOutput >= 7) ? Alphabet[((b3 & 0x3) << 3) | (b4 >> 5)] : PaddingChar;
+        rest[7] = (numCharsToOutput >= 8) ? Alphabet[b4 & 0x1f] : PaddingChar;
+
+        rest.Slice(0, length - written).CopyTo(chars.Slice(written));
+        written = length;
         return true;
     }
 }

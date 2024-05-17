@@ -18,7 +18,7 @@ public static class LolDataDragonServiceCollectionExtensions
     {
         ArgumentNullException.ThrowIfNull(services);
         services.AddOptions();
-        services.TryAdd(ServiceDescriptor.Singleton<ILolDataDragon, LolDataDragon>());
+        services.TryAdd(ServiceDescriptor.Singleton(typeof(ILolDataDragon), typeof(LolDataDragon)));
         if (configure is not null)
         {
             services.Configure(configure);

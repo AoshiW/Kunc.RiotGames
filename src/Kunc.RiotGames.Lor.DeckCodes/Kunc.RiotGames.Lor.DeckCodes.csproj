@@ -7,8 +7,4 @@
 	  <Version>0.2.3</Version>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="CommunityToolkit.HighPerformance" />
-  </ItemGroup>
-
 </Project>

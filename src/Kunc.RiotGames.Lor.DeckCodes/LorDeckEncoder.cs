@@ -16,9 +16,9 @@
  * limitations under the License.
  */
 
+using System.Buffers;
 using System.Globalization;
 using System.Runtime.InteropServices;
-using CommunityToolkit.HighPerformance.Buffers;
 
 namespace Kunc.RiotGames.Lor.DeckCodes;
 
@@ -60,23 +60,6 @@ public class LorDeckEncoder : ILorDeckEncoder
         }
     }
 
-    private readonly StringPool? _stringPool;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="LorDeckEncoder"/> class.
-    /// </summary>
-    /// <param name="stringPool">A <see cref="StringPool"/> for caching CardCode <see cref="string"/>s, set to <see langword="null"/> for disabled.</param>
-    public LorDeckEncoder(StringPool? stringPool)
-    {
-        _stringPool = stringPool;
-    }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="LorDeckEncoder"/> class.
-    /// </summary>
-    public LorDeckEncoder() : this(new StringPool())
-    { }
-
     /// <remarks>
     /// Convert Span (2 char) to uint is more efficient than ToString().
     /// </remarks>
@@ -85,11 +68,15 @@ public class LorDeckEncoder : ILorDeckEncoder
     /// <inheritdoc/>
     public List<T> GetDeckFromCode<T>(ReadOnlySpan<char> deckCode) where T : IDeckItem, new()
     {
-        using var bytesOwner = SpanOwner<byte>.Allocate(Base32.GetByteCount(deckCode));
-        if (!Base32.TryFromBase32(deckCode, bytesOwner.Span, out _))
+        var length = Base32.GetByteCount(deckCode);
+        var bytes = ArrayPool<byte>.Shared.Rent(length);
+        var byteSpan = bytes.AsSpan(0, length);
+
+        if (!Base32.TryFromBase32(deckCode, byteSpan, out _))
+        {
+            ArrayPool<byte>.Shared.Return(bytes);
             throw new ArgumentException("Invalid deck code");
-        var byteSpan = bytesOwner.Span;
-        var result = new List<T>(20);
+        }
 
         //grab format and version
         int format = byteSpan[0] >> 4;
@@ -98,8 +85,11 @@ public class LorDeckEncoder : ILorDeckEncoder
 
         if (version > MaxVersion)
         {
+            ArrayPool<byte>.Shared.Return(bytes);
             throw new ArgumentException("The provided code requires a higher version of this library; please update.");
         }
+
+        var result = new List<T>(20);
 
         for (int i = 3; i > 0; i--)
         {
@@ -141,16 +131,27 @@ public class LorDeckEncoder : ILorDeckEncoder
             };
             result.Add(newEntry);
         }
+        ArrayPool<byte>.Shared.Return(bytes);
         return result;
     }
 
-    private string CreateCardCode(int set, string faction, int number)
+    /// <summary>
+    /// Create CardCode from given arguments.
+    /// </summary>
+    /// <param name="set">Set number.</param>
+    /// <param name="faction">Faction code.</param>
+    /// <param name="number">Card number.</param>
+    /// <returns></returns>
+#pragma warning disable CA1716 // Identifiers should not match keywords
+    protected virtual string CreateCardCode(int set, string faction, int number)
+#pragma warning restore CA1716 // Identifiers should not match keywords
     {
-        Span<char> span = stackalloc char[CardCodeLength];
-        set.TryFormat(span, out _, "00", NumberFormatInfo.InvariantInfo);
-        faction.CopyTo(span.Slice(2));
-        number.TryFormat(span.Slice(4), out _, "000", NumberFormatInfo.InvariantInfo);
-        return _stringPool?.GetOrAdd(span) ?? span.ToString();
+        return string.Create(CardCodeLength, (set, faction, number), static (span, arg) =>
+        {
+            arg.set.TryFormat(span, out _, "00", NumberFormatInfo.InvariantInfo);
+            arg.faction.CopyTo(span.Slice(2));
+            arg.number.TryFormat(span.Slice(4), out _, "000", NumberFormatInfo.InvariantInfo);
+        });
     }
 
     /// <inheritdoc/>

@@ -13,9 +13,7 @@ public struct Rank :
     IComparable,
     IComparable<Rank>,
     ISpanFormattable,
-#if NET8_0_OR_GREATER
     ISpanParsable<Rank>,
-#endif
     IEqualityOperators<Rank, Rank, bool>,
     IComparisonOperators<Rank, Rank, bool>
 {
@@ -179,7 +177,7 @@ public struct Rank :
     {
         return ToString();
     }
-#if NET8_0_OR_GREATER
+
     /// <inheritdoc/>
     public static Rank Parse(ReadOnlySpan<char> s, IFormatProvider? provider)
     {
@@ -224,5 +222,4 @@ public struct Rank :
     {
         return TryParse(s.AsSpan(), provider, out result);
     }
-#endif
 }

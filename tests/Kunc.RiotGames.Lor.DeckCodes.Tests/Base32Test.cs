@@ -55,7 +55,7 @@ public class Base32Test
     {
         byte[] bytes = Encoding.ASCII.GetBytes(input);
         string result = Base32.ToBase32(bytes);
-        Assert.AreEqual(result, expectedOutput);
+        Assert.AreEqual(expectedOutput, result);
     }
 
     [TestMethod]
@@ -64,7 +64,7 @@ public class Base32Test
     {
         byte[] bytes = Encoding.ASCII.GetBytes(input);
         string result = Base32.ToBase32(bytes, Base32FormattingOptions.RemovePadding);
-        Assert.AreEqual(result, expectedOutput.Trim('='));
+        Assert.AreEqual(expectedOutput.Trim('='), result);
     }
 
     [TestMethod]
@@ -76,7 +76,7 @@ public class Base32Test
         Assert.AreEqual(result, expectedOutput);
         bytes = Base32.FromBase32(input.ToLowerInvariant());
         result = Encoding.ASCII.GetString(bytes);
-        Assert.AreEqual(result, expectedOutput);
+        Assert.AreEqual(expectedOutput, result);
     }
 
     [TestMethod]

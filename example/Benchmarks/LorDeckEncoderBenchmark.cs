@@ -15,9 +15,6 @@ public class KuncLorDeckEncoderBenchmark : LorDeckEncoderBenchmarkBase
 
     [Benchmark(Description = "Kunc.GetDeck"), ArgumentsSource(nameof(Inputs))]
     public List<DeckItem> GetDeckKunc(Input type) => DeckEncoder.GetDeckFromCode<DeckItem>(type.Code);
-
-    [Benchmark(Description = "Kunc.GetDeck.NoCache"), ArgumentsSource(nameof(Inputs))]
-    public List<DeckItem> GetDeckKuncNoCache(Input type) => DeckEncoderNoCache.GetDeckFromCode<DeckItem>(type.Code);
 }
 
 [MemoryDiagnoser]
@@ -33,8 +30,7 @@ public class RiotLorDeckEncoderBenchmark : LorDeckEncoderBenchmarkBase
 
 public class LorDeckEncoderBenchmarkBase
 {
-    static protected readonly LorDeckEncoder DeckEncoder = new(new());
-    static protected readonly LorDeckEncoder DeckEncoderNoCache = new(null);
+    static protected readonly LorDeckEncoder DeckEncoder = new();
 
     public IEnumerable<object> Inputs { get; } = new Input[]
     {

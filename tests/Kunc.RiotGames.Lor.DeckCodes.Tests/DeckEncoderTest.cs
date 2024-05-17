@@ -5,7 +5,7 @@ namespace Kunc.RiotGames.Lor.DeckCodes.Tests;
 [TestClass]
 public class DeckEncoderTest
 {
-    static readonly LorDeckEncoder DeckEncoder = new(null);
+    static readonly LorDeckEncoder DeckEncoder = new();
 
     //Tests the encoding of a set of hard coded decks in DeckCodesTestData.txt
     [TestMethod]

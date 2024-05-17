@@ -19,7 +19,6 @@ while (true)
     GameResult gameResult = await lorGameClient.GetGameResultAsync();
     // do stuff
 
-    Console.WriteLine();
     await Task.Delay(5000);
 }
 ```

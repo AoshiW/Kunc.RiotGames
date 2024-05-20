@@ -46,12 +46,6 @@ public class ChampionMasteryDto : BaseDto
     public int ChampionLevel { get; set; }
 
     /// <summary>
-    /// Summoner ID for this entry. (Encrypted)
-    /// </summary>
-    [JsonPropertyName("summonerId")]
-    public string SummonerId { get; set; } = string.Empty;
-
-    /// <summary>
     /// Total number of champion points for this player and champion combination - they are used to determine championLevel.
     /// </summary>
     [JsonPropertyName("championPoints")]

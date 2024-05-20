@@ -1,6 +1,8 @@
 # Kunc.RiotGames.Lol.GameClient
 [![Nuget](https://img.shields.io/nuget/v/Kunc.RiotGames.Lol.GameClient?logo=NuGet&logoColor=blue&style=flat-square)](https://www.nuget.org/packages/Kunc.RiotGames.Lol.GameClient)
 
+[Game Client API](https://developer.riotgames.com/docs/lol#game-client-api_live-client-data-api) for Legends of Legends.
+
 ## How to Use
 ```cs
 var client = new LolGameClient();

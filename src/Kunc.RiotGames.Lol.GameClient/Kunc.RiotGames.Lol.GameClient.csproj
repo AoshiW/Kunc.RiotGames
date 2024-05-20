@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+      <PackageTags>Lol;LeagueOfLegends;GameClient</PackageTags>
+      <Description>Simple client for LeagueOfLegends GameClientAPI.</Description>
+      <Version>0.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

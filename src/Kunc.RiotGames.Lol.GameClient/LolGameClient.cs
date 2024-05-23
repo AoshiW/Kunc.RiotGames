@@ -2,7 +2,8 @@
 
 namespace Kunc.RiotGames.Lol.GameClient;
 
-public class LolGameClient
+public class LolGameClient : ILolGameClient
 {
+    /// <inheritdoc/>
     public ILiveClientData LiveClientData { get; } = new LiveClientDataEndpoint();
 }

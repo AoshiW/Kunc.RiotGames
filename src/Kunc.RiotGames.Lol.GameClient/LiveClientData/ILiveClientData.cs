@@ -1,5 +1,4 @@
-﻿
-namespace Kunc.RiotGames.Lol.GameClient.LiveClientData;
+﻿namespace Kunc.RiotGames.Lol.GameClient.LiveClientData;
 
 public interface ILiveClientData
 {

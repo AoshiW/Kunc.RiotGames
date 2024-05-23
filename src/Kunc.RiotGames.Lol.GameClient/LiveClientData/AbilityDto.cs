@@ -8,7 +8,7 @@ public class AbilityDto : BaseDto
     public string DisplayName { get; set; } = string.Empty;
 
     [JsonPropertyName("id")]
-    public string Id { get; set; }
+    public string Id { get; set; } = string.Empty;
 
     [JsonPropertyName("rawDescription")]
     public string RawDescription { get; set; } = string.Empty;

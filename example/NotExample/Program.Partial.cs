@@ -1,5 +1,6 @@
 using Kunc.RiotGames.Api;
 using Kunc.RiotGames.Lol.DataDragon;
+using Kunc.RiotGames.Lol.GameClient;
 using Kunc.RiotGames.Lol.LeagueClientUpdate;
 using Kunc.RiotGames.Lor.DeckCodes;
 using Kunc.RiotGames.Lor.GameClient;
@@ -24,6 +25,7 @@ partial class Program
         .AddSingleton<ILorDeckEncoder, LorDeckEncoder>()
         .AddLorGameClient()
         .AddLolDataDragon()
+        .AddSingleton<ILolGameClient, LolGameClient>()
         .AddRiotGamesApi(c => c.ApiKey = Configuration["RGAPIKEY"]!)
         .AddSqliteCache(x =>
         {
@@ -35,5 +37,6 @@ partial class Program
     static ILorGameClient LorGameClient => _service.GetRequiredService<ILorGameClient>();
     static ILolLeagueClientUpdate Lcu => _service.GetRequiredService<ILolLeagueClientUpdate>();
     static ILolDataDragon LolDataDragon => _service.GetRequiredService<ILolDataDragon>();
+    static ILolGameClient LolGameClient => _service.GetRequiredService<ILolGameClient>();
     static IRiotGamesApi Api => _service.GetRequiredService<IRiotGamesApi>();
 }

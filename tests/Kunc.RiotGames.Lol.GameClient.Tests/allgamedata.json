@@ -1,0 +1,2448 @@
+{
+  "activePlayer": {
+    "abilities": {
+      "E": {
+        "abilityLevel": 1,
+        "displayName": "Elektronov� bou�n� gran�t CH-2",
+        "id": "HeimerdingerE",
+        "rawDescription": "GeneratedTip_Spell_HeimerdingerE_Description",
+        "rawDisplayName": "GeneratedTip_Spell_HeimerdingerE_DisplayName"
+      },
+      "Passive": {
+        "displayName": "Magitechnick� souzn�n�",
+        "id": "HeimerdingerPassive",
+        "rawDescription": "GeneratedTip_Passive_HeimerdingerPassive_Description",
+        "rawDisplayName": "GeneratedTip_Passive_HeimerdingerPassive_DisplayName"
+      },
+      "Q": {
+        "abilityLevel": 5,
+        "displayName": "Evolu�n� v�i�ka H-28G",
+        "id": "HeimerdingerQ",
+        "rawDescription": "GeneratedTip_Spell_HeimerdingerQ_Description",
+        "rawDisplayName": "GeneratedTip_Spell_HeimerdingerQ_DisplayName"
+      },
+      "R": {
+        "abilityLevel": 2,
+        "displayName": "VYLEP�EN�!!!",
+        "id": "HeimerdingerR",
+        "rawDescription": "GeneratedTip_Spell_HeimerdingerR_Description",
+        "rawDisplayName": "GeneratedTip_Spell_HeimerdingerR_DisplayName"
+      },
+      "W": {
+        "abilityLevel": 3,
+        "displayName": "Magitechnick� mikrorakety",
+        "id": "HeimerdingerW",
+        "rawDescription": "GeneratedTip_Spell_HeimerdingerW_Description",
+        "rawDisplayName": "GeneratedTip_Spell_HeimerdingerW_DisplayName"
+      }
+    },
+    "championStats": {
+      "abilityHaste": 25,
+      "abilityPower": 440.2200012207031,
+      "armor": 55.85499954223633,
+      "armorPenetrationFlat": 0,
+      "armorPenetrationPercent": 1,
+      "attackDamage": 82.0832748413086,
+      "attackRange": 550,
+      "attackSpeed": 0.7325875759124756,
+      "bonusArmorPenetrationPercent": 1,
+      "bonusMagicPenetrationPercent": 1,
+      "critChance": 0,
+      "critDamage": 175,
+      "currentHealth": 1754.275146484375,
+      "healShieldPower": 0,
+      "healthRegenRate": 2.3652501106262207,
+      "lifeSteal": 0,
+      "magicLethality": 0,
+      "magicPenetrationFlat": 18,
+      "magicPenetrationPercent": 1,
+      "magicResist": 41.407501220703125,
+      "maxHealth": 1754.275146484375,
+      "moveSpeed": 429.79998779296875,
+      "omnivamp": 0,
+      "physicalLethality": 0,
+      "physicalVamp": 0,
+      "resourceMax": 1410.5,
+      "resourceRegenRate": 3.004000186920166,
+      "resourceType": "MANA",
+      "resourceValue": 1410.5,
+      "spellVamp": 0,
+      "tenacity": 5
+    },
+    "currentGold": 148.3369140625,
+    "fullRunes": {
+      "generalRunes": [
+        {
+          "displayName": "Z�sah proudem",
+          "id": 8112,
+          "rawDescription": "perk_tooltip_Electrocute",
+          "rawDisplayName": "perk_displayname_Electrocute"
+        },
+        {
+          "displayName": "N�hl� dopad",
+          "id": 8143,
+          "rawDescription": "perk_tooltip_SuddenImpact",
+          "rawDisplayName": "perk_displayname_SuddenImpact"
+        },
+        {
+          "displayName": "Sb�rka bulv",
+          "id": 8138,
+          "rawDescription": "perk_tooltip_EyeballCollection",
+          "rawDisplayName": "perk_displayname_EyeballCollection"
+        },
+        {
+          "displayName": "Ne�navn� lovec",
+          "id": 8105,
+          "rawDescription": "perk_tooltip_8105",
+          "rawDisplayName": "perk_displayname_8105"
+        },
+        {
+          "displayName": "Prsten manov�ho proudu",
+          "id": 8226,
+          "rawDescription": "perk_tooltip_8226",
+          "rawDisplayName": "perk_displayname_8226"
+        },
+        {
+          "displayName": "Se�ehnut�",
+          "id": 8237,
+          "rawDescription": "perk_tooltip_Scorch",
+          "rawDisplayName": "perk_displayname_Scorch"
+        }
+      ],
+      "keystone": {
+        "displayName": "Z�sah proudem",
+        "id": 8112,
+        "rawDescription": "perk_tooltip_Electrocute",
+        "rawDisplayName": "perk_displayname_Electrocute"
+      },
+      "primaryRuneTree": {
+        "displayName": "Dominance",
+        "id": 8100,
+        "rawDescription": "perkstyle_tooltip_7200",
+        "rawDisplayName": "perkstyle_displayname_7200"
+      },
+      "secondaryRuneTree": {
+        "displayName": "�arod�jnictv�",
+        "id": 8200,
+        "rawDescription": "perkstyle_tooltip_7202",
+        "rawDisplayName": "perkstyle_displayname_7202"
+      },
+      "statRunes": [
+        {
+          "id": 5008,
+          "rawDescription": "perk_tooltip_StatModAdaptive"
+        },
+        {
+          "id": 5010,
+          "rawDescription": "perk_tooltip_StatModMovementSpeed"
+        },
+        {
+          "id": 5001,
+          "rawDescription": "perk_tooltip_StatModHealthScaling"
+        }
+      ]
+    },
+    "level": 11,
+    "riotId": "AoshiW#IRON",
+    "riotIdGameName": "AoshiW",
+    "riotIdTagLine": "IRON",
+    "summonerName": "AoshiW#IRON",
+    "teamRelativeColors": true
+  },
+  "allPlayers": [
+    {
+      "championName": "Darius",
+      "isBot": false,
+      "isDead": false,
+      "items": [
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Doran�v me�",
+          "itemID": 1055,
+          "price": 450,
+          "rawDescription": "GeneratedTip_Item_1055_Description",
+          "rawDisplayName": "Item_1055_Name",
+          "slot": 0
+        },
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Trojs�la",
+          "itemID": 3078,
+          "price": 33,
+          "rawDescription": "GeneratedTip_Item_3078_Description",
+          "rawDisplayName": "Item_3078_Name",
+          "slot": 1
+        },
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Ocelov� chr�ni�e",
+          "itemID": 3047,
+          "price": 400,
+          "rawDescription": "GeneratedTip_Item_3047_Description",
+          "rawDisplayName": "Item_3047_Name",
+          "slot": 2
+        },
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Caulfieldovo v�le�n� kladivo",
+          "itemID": 3133,
+          "price": 150,
+          "rawDescription": "GeneratedTip_Item_3133_Description",
+          "rawDisplayName": "Item_3133_Name",
+          "slot": 3
+        },
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Tunel��",
+          "itemID": 2021,
+          "price": 400,
+          "rawDescription": "GeneratedTip_Item_2021_Description",
+          "rawDisplayName": "Item_2021_Name",
+          "slot": 4
+        },
+        {
+          "canUse": true,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Neviditeln� totem",
+          "itemID": 3340,
+          "price": 0,
+          "rawDescription": "GeneratedTip_Item_3340_Description",
+          "rawDisplayName": "Item_3340_Name",
+          "slot": 6
+        }
+      ],
+      "level": 11,
+      "position": "NONE",
+      "rawChampionName": "game_character_displayname_Darius",
+      "respawnTimer": 0,
+      "riotId": "kilerke#cigan",
+      "riotIdGameName": "kilerke",
+      "riotIdTagLine": "cigan",
+      "runes": {
+        "keystone": {
+          "displayName": "Dobyvatel",
+          "id": 8010,
+          "rawDescription": "perk_tooltip_Conqueror",
+          "rawDisplayName": "perk_displayname_Conqueror"
+        },
+        "primaryRuneTree": {
+          "displayName": "P�esnost",
+          "id": 8000,
+          "rawDescription": "perkstyle_tooltip_7201",
+          "rawDisplayName": "perkstyle_displayname_7201"
+        },
+        "secondaryRuneTree": {
+          "displayName": "Odhodl�n�",
+          "id": 8400,
+          "rawDescription": "perkstyle_tooltip_7204",
+          "rawDisplayName": "perkstyle_displayname_7204"
+        }
+      },
+      "scores": {
+        "assists": 4,
+        "creepScore": 50,
+        "deaths": 7,
+        "kills": 12,
+        "wardScore": 0
+      },
+      "skinID": 0,
+      "summonerName": "kilerke#cigan",
+      "summonerSpells": {
+        "summonerSpellOne": {
+          "displayName": "Skok",
+          "rawDescription": "GeneratedTip_SummonerSpell_SummonerFlash_Description",
+          "rawDisplayName": "GeneratedTip_SummonerSpell_SummonerFlash_DisplayName"
+        },
+        "summonerSpellTwo": {
+          "displayName": "Duch",
+          "rawDescription": "GeneratedTip_SummonerSpell_SummonerHaste_Description",
+          "rawDisplayName": "GeneratedTip_SummonerSpell_SummonerHaste_DisplayName"
+        }
+      },
+      "team": "ORDER"
+    },
+    {
+      "championName": "Garen",
+      "isBot": false,
+      "isDead": false,
+      "items": [
+        {
+          "canUse": true,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Krokolam",
+          "itemID": 6631,
+          "price": 700,
+          "rawDescription": "GeneratedTip_Item_6631_Description",
+          "rawDisplayName": "Item_6631_Name",
+          "slot": 0
+        },
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "��lencovy boty",
+          "itemID": 3006,
+          "price": 500,
+          "rawDescription": "GeneratedTip_Item_3006_Description",
+          "rawDisplayName": "Item_3006_Name",
+          "slot": 2
+        },
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Ostnat� vesta",
+          "itemID": 3076,
+          "price": 200,
+          "rawDescription": "GeneratedTip_Item_3076_Description",
+          "rawDisplayName": "Item_3076_Name",
+          "slot": 3
+        },
+        {
+          "canUse": true,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Neviditeln� totem",
+          "itemID": 3340,
+          "price": 0,
+          "rawDescription": "GeneratedTip_Item_3340_Description",
+          "rawDisplayName": "Item_3340_Name",
+          "slot": 6
+        }
+      ],
+      "level": 12,
+      "position": "NONE",
+      "rawChampionName": "game_character_displayname_Garen",
+      "rawSkinName": "game_character_skin_displayname_Garen_19",
+      "respawnTimer": 0,
+      "riotId": "WooonskY#EUNE",
+      "riotIdGameName": "WooonskY",
+      "riotIdTagLine": "EUNE",
+      "runes": {
+        "keystone": {
+          "displayName": "Dobyvatel",
+          "id": 8010,
+          "rawDescription": "perk_tooltip_Conqueror",
+          "rawDisplayName": "perk_displayname_Conqueror"
+        },
+        "primaryRuneTree": {
+          "displayName": "P�esnost",
+          "id": 8000,
+          "rawDescription": "perkstyle_tooltip_7201",
+          "rawDisplayName": "perkstyle_displayname_7201"
+        },
+        "secondaryRuneTree": {
+          "displayName": "Odhodl�n�",
+          "id": 8400,
+          "rawDescription": "perkstyle_tooltip_7204",
+          "rawDisplayName": "perkstyle_displayname_7204"
+        }
+      },
+      "scores": {
+        "assists": 10,
+        "creepScore": 110,
+        "deaths": 2,
+        "kills": 6,
+        "wardScore": 3.375
+      },
+      "skinID": 19,
+      "skinName": "Garen z Demacia Vice",
+      "summonerName": "WooonskY#EUNE",
+      "summonerSpells": {
+        "summonerSpellOne": {
+          "displayName": "Divok� �der",
+          "rawDescription": "GeneratedTip_SummonerSpell_SummonerSmiteAvatarOffensive_Description",
+          "rawDisplayName": "GeneratedTip_SummonerSpell_SummonerSmiteAvatarOffensive_DisplayName"
+        },
+        "summonerSpellTwo": {
+          "displayName": "Skok",
+          "rawDescription": "GeneratedTip_SummonerSpell_SummonerFlash_Description",
+          "rawDisplayName": "GeneratedTip_SummonerSpell_SummonerFlash_DisplayName"
+        }
+      },
+      "team": "ORDER"
+    },
+    {
+      "championName": "Heimerdinger",
+      "isBot": false,
+      "isDead": false,
+      "items": [
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "�ern� pochode�",
+          "itemID": 2503,
+          "price": 700,
+          "rawDescription": "GeneratedTip_Item_2503_Description",
+          "rawDisplayName": "Item_2503_Name",
+          "slot": 0
+        },
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Kouzeln�kovy boty",
+          "itemID": 3020,
+          "price": 800,
+          "rawDescription": "GeneratedTip_Item_3020_Description",
+          "rawDisplayName": "Item_3020_Name",
+          "slot": 1
+        },
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Rabadon�v smrt�c� klobouk",
+          "itemID": 3089,
+          "price": 1100,
+          "rawDescription": "GeneratedTip_Item_3089_Description",
+          "rawDisplayName": "Item_3089_Name",
+          "slot": 2
+        },
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "D�siv� maska",
+          "itemID": 3147,
+          "price": 500,
+          "rawDescription": "GeneratedTip_Item_3147_Description",
+          "rawDisplayName": "Item_3147_Name",
+          "slot": 3
+        },
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Zesiluj�c� kniha",
+          "itemID": 1052,
+          "price": 400,
+          "rawDescription": "GeneratedTip_Item_1052_Description",
+          "rawDisplayName": "Item_1052_Name",
+          "slot": 4
+        },
+        {
+          "canUse": true,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Neviditeln� totem",
+          "itemID": 3340,
+          "price": 0,
+          "rawDescription": "GeneratedTip_Item_3340_Description",
+          "rawDisplayName": "Item_3340_Name",
+          "slot": 6
+        }
+      ],
+      "level": 11,
+      "position": "NONE",
+      "rawChampionName": "game_character_displayname_Heimerdinger",
+      "rawSkinName": "game_character_skin_displayname_Heimerdinger_6",
+      "respawnTimer": 0,
+      "riotId": "AoshiW#IRON",
+      "riotIdGameName": "AoshiW",
+      "riotIdTagLine": "IRON",
+      "runes": {
+        "keystone": {
+          "displayName": "Z�sah proudem",
+          "id": 8112,
+          "rawDescription": "perk_tooltip_Electrocute",
+          "rawDisplayName": "perk_displayname_Electrocute"
+        },
+        "primaryRuneTree": {
+          "displayName": "Dominance",
+          "id": 8100,
+          "rawDescription": "perkstyle_tooltip_7200",
+          "rawDisplayName": "perkstyle_displayname_7200"
+        },
+        "secondaryRuneTree": {
+          "displayName": "�arod�jnictv�",
+          "id": 8200,
+          "rawDescription": "perkstyle_tooltip_7202",
+          "rawDisplayName": "perkstyle_displayname_7202"
+        }
+      },
+      "scores": {
+        "assists": 2,
+        "creepScore": 90,
+        "deaths": 3,
+        "kills": 19,
+        "wardScore": 0
+      },
+      "skinID": 6,
+      "skinName": "Dra�� tren�r Heimerdinger",
+      "summonerName": "AoshiW#IRON",
+      "summonerSpells": {
+        "summonerSpellOne": {
+          "displayName": "Vzn�tit",
+          "rawDescription": "GeneratedTip_SummonerSpell_SummonerDot_Description",
+          "rawDisplayName": "GeneratedTip_SummonerSpell_SummonerDot_DisplayName"
+        },
+        "summonerSpellTwo": {
+          "displayName": "Skok",
+          "rawDescription": "GeneratedTip_SummonerSpell_SummonerFlash_Description",
+          "rawDisplayName": "GeneratedTip_SummonerSpell_SummonerFlash_DisplayName"
+        }
+      },
+      "team": "ORDER"
+    },
+    {
+      "championName": "Caitlyn",
+      "isBot": false,
+      "isDead": false,
+      "items": [
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Doran�v me�",
+          "itemID": 1055,
+          "price": 450,
+          "rawDescription": "GeneratedTip_Item_1055_Description",
+          "rawDisplayName": "Item_1055_Name",
+          "slot": 0
+        },
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "��lencovy boty",
+          "itemID": 3006,
+          "price": 500,
+          "rawDescription": "GeneratedTip_Item_3006_Description",
+          "rawDisplayName": "Item_3006_Name",
+          "slot": 1
+        },
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Ost�� nekone�na",
+          "itemID": 3031,
+          "price": 625,
+          "rawDescription": "GeneratedTip_Item_3031_Description",
+          "rawDisplayName": "Item_3031_Name",
+          "slot": 2
+        },
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Zubat� d�ka",
+          "itemID": 3134,
+          "price": 300,
+          "rawDescription": "GeneratedTip_Item_3134_Description",
+          "rawDisplayName": "Item_3134_Name",
+          "slot": 3
+        },
+        {
+          "canUse": true,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Neviditeln� totem",
+          "itemID": 3340,
+          "price": 0,
+          "rawDescription": "GeneratedTip_Item_3340_Description",
+          "rawDisplayName": "Item_3340_Name",
+          "slot": 6
+        }
+      ],
+      "level": 14,
+      "position": "NONE",
+      "rawChampionName": "game_character_displayname_Caitlyn",
+      "respawnTimer": 0,
+      "riotId": "Bizzaro#3251",
+      "riotIdGameName": "Bizzaro",
+      "riotIdTagLine": "3251",
+      "runes": {
+        "keystone": {
+          "displayName": "Nepolevuj�c� �tok",
+          "id": 8005,
+          "rawDescription": "perk_tooltip_PressTheAttack",
+          "rawDisplayName": "perk_displayname_PressTheAttack"
+        },
+        "primaryRuneTree": {
+          "displayName": "P�esnost",
+          "id": 8000,
+          "rawDescription": "perkstyle_tooltip_7201",
+          "rawDisplayName": "perkstyle_displayname_7201"
+        },
+        "secondaryRuneTree": {
+          "displayName": "�arod�jnictv�",
+          "id": 8200,
+          "rawDescription": "perkstyle_tooltip_7202",
+          "rawDisplayName": "perkstyle_displayname_7202"
+        }
+      },
+      "scores": {
+        "assists": 19,
+        "creepScore": 120,
+        "deaths": 0,
+        "kills": 30,
+        "wardScore": 5.934152126312256
+      },
+      "skinID": 0,
+      "summonerName": "Bizzaro#3251",
+      "summonerSpells": {
+        "summonerSpellOne": {
+          "displayName": "Duch",
+          "rawDescription": "GeneratedTip_SummonerSpell_SummonerHaste_Description",
+          "rawDisplayName": "GeneratedTip_SummonerSpell_SummonerHaste_DisplayName"
+        },
+        "summonerSpellTwo": {
+          "displayName": "Vyl��it",
+          "rawDescription": "GeneratedTip_SummonerSpell_SummonerHeal_Description",
+          "rawDisplayName": "GeneratedTip_SummonerSpell_SummonerHeal_DisplayName"
+        }
+      },
+      "team": "ORDER"
+    },
+    {
+      "championName": "Ashe",
+      "isBot": false,
+      "isDead": false,
+      "items": [
+        {
+          "canUse": true,
+          "consumable": false,
+          "count": 1,
+          "displayName": "S�n� slunovratu",
+          "itemID": 3876,
+          "price": 0,
+          "rawDescription": "GeneratedTip_Item_3876_Description",
+          "rawDisplayName": "Item_3876_Name",
+          "slot": 0
+        },
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Zabij�k kraken�",
+          "itemID": 6672,
+          "price": 200,
+          "rawDescription": "GeneratedTip_Item_6672_Description",
+          "rawDisplayName": "Item_6672_Name",
+          "slot": 1
+        },
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Up�rsk� �ezlo",
+          "itemID": 1053,
+          "price": 550,
+          "rawDescription": "GeneratedTip_Item_1053_Description",
+          "rawDisplayName": "Item_1053_Name",
+          "slot": 2
+        },
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Reflexn� luk",
+          "itemID": 1043,
+          "price": 400,
+          "rawDescription": "GeneratedTip_Item_1043_Description",
+          "rawDisplayName": "Item_1043_Name",
+          "slot": 3
+        },
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "��lencovy boty",
+          "itemID": 3006,
+          "price": 500,
+          "rawDescription": "GeneratedTip_Item_3006_Description",
+          "rawDisplayName": "Item_3006_Name",
+          "slot": 4
+        },
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Krump��",
+          "itemID": 1037,
+          "price": 875,
+          "rawDescription": "GeneratedTip_Item_1037_Description",
+          "rawDisplayName": "Item_1037_Name",
+          "slot": 5
+        },
+        {
+          "canUse": true,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Neviditeln� totem",
+          "itemID": 3340,
+          "price": 0,
+          "rawDescription": "GeneratedTip_Item_3340_Description",
+          "rawDisplayName": "Item_3340_Name",
+          "slot": 6
+        }
+      ],
+      "level": 11,
+      "position": "NONE",
+      "rawChampionName": "game_character_displayname_Ashe",
+      "rawSkinName": "game_character_skin_displayname_Ashe_8",
+      "respawnTimer": 0,
+      "riotId": "Lu2mik#EUNE",
+      "riotIdGameName": "Lu2mik",
+      "riotIdTagLine": "EUNE",
+      "runes": {
+        "keystone": {
+          "displayName": "Nepolevuj�c� �tok",
+          "id": 8005,
+          "rawDescription": "perk_tooltip_PressTheAttack",
+          "rawDisplayName": "perk_displayname_PressTheAttack"
+        },
+        "primaryRuneTree": {
+          "displayName": "P�esnost",
+          "id": 8000,
+          "rawDescription": "perkstyle_tooltip_7201",
+          "rawDisplayName": "perkstyle_displayname_7201"
+        },
+        "secondaryRuneTree": {
+          "displayName": "Povzbuzen�",
+          "id": 8300,
+          "rawDescription": "perkstyle_tooltip_7203",
+          "rawDisplayName": "perkstyle_displayname_7203"
+        }
+      },
+      "scores": {
+        "assists": 18,
+        "creepScore": 40,
+        "deaths": 0,
+        "kills": 13,
+        "wardScore": 13.888980865478516
+      },
+      "skinID": 8,
+      "skinName": "PROJEKT: Ashe",
+      "summonerName": "Lu2mik#EUNE",
+      "summonerSpells": {
+        "summonerSpellOne": {
+          "displayName": "Skok",
+          "rawDescription": "GeneratedTip_SummonerSpell_SummonerFlash_Description",
+          "rawDisplayName": "GeneratedTip_SummonerSpell_SummonerFlash_DisplayName"
+        },
+        "summonerSpellTwo": {
+          "displayName": "Duch",
+          "rawDescription": "GeneratedTip_SummonerSpell_SummonerHaste_Description",
+          "rawDisplayName": "GeneratedTip_SummonerSpell_SummonerHaste_DisplayName"
+        }
+      },
+      "team": "ORDER"
+    },
+    {
+      "championName": "Darius",
+      "isBot": true,
+      "isDead": false,
+      "items": [
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Doran�v me�",
+          "itemID": 1055,
+          "price": 450,
+          "rawDescription": "GeneratedTip_Item_1055_Description",
+          "rawDisplayName": "Item_1055_Name",
+          "slot": 0
+        },
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Rozpolcen� nebe",
+          "itemID": 6610,
+          "price": 850,
+          "rawDescription": "GeneratedTip_Item_6610_Description",
+          "rawDisplayName": "Item_6610_Name",
+          "slot": 1
+        },
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Ocelov� chr�ni�e",
+          "itemID": 3047,
+          "price": 400,
+          "rawDescription": "GeneratedTip_Item_3047_Description",
+          "rawDisplayName": "Item_3047_Name",
+          "slot": 2
+        },
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "F�g",
+          "itemID": 3044,
+          "price": 350,
+          "rawDescription": "GeneratedTip_Item_3044_Description",
+          "rawDisplayName": "Item_3044_Name",
+          "slot": 3
+        },
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Z���c� zrnko",
+          "itemID": 2022,
+          "price": 250,
+          "rawDescription": "GeneratedTip_Item_2022_Description",
+          "rawDisplayName": "Item_2022_Name",
+          "slot": 4
+        },
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "D�ka",
+          "itemID": 1042,
+          "price": 300,
+          "rawDescription": "GeneratedTip_Item_1042_Description",
+          "rawDisplayName": "Item_1042_Name",
+          "slot": 5
+        },
+        {
+          "canUse": true,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Neviditeln� totem",
+          "itemID": 3340,
+          "price": 0,
+          "rawDescription": "GeneratedTip_Item_3340_Description",
+          "rawDisplayName": "Item_3340_Name",
+          "slot": 6
+        }
+      ],
+      "level": 11,
+      "position": "TOP",
+      "rawChampionName": "game_character_displayname_Darius",
+      "rawSkinName": "game_character_skin_displayname_Darius_61",
+      "respawnTimer": 0,
+      "riotId": "Darius bot#BOT",
+      "riotIdGameName": "Darius bot",
+      "riotIdTagLine": "BOT",
+      "runes": {
+        "keystone": {
+          "displayName": "Dobyvatel",
+          "id": 8010,
+          "rawDescription": "perk_tooltip_Conqueror",
+          "rawDisplayName": "perk_displayname_Conqueror"
+        },
+        "primaryRuneTree": {
+          "displayName": "P�esnost",
+          "id": 8000,
+          "rawDescription": "perkstyle_tooltip_7201",
+          "rawDisplayName": "perkstyle_displayname_7201"
+        },
+        "secondaryRuneTree": {
+          "displayName": "Odhodl�n�",
+          "id": 8400,
+          "rawDescription": "perkstyle_tooltip_7204",
+          "rawDisplayName": "perkstyle_displayname_7204"
+        }
+      },
+      "scores": {
+        "assists": 3,
+        "creepScore": 80,
+        "deaths": 10,
+        "kills": 5,
+        "wardScore": 0
+      },
+      "skinID": 61,
+      "skinName": "Porcel�nov� Darius",
+      "summonerName": "Darius bot#BOT",
+      "summonerSpells": {
+        "summonerSpellOne": {
+          "displayName": "Skok",
+          "rawDescription": "GeneratedTip_SummonerSpell_SummonerFlash_Description",
+          "rawDisplayName": "GeneratedTip_SummonerSpell_SummonerFlash_DisplayName"
+        },
+        "summonerSpellTwo": {
+          "displayName": "Duch",
+          "rawDescription": "GeneratedTip_SummonerSpell_SummonerHaste_Description",
+          "rawDisplayName": "GeneratedTip_SummonerSpell_SummonerHaste_DisplayName"
+        }
+      },
+      "team": "CHAOS"
+    },
+    {
+      "championName": "Rumble",
+      "isBot": true,
+      "isDead": true,
+      "items": [
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Ml�d� oh�odr�pa",
+          "itemID": 1101,
+          "price": 450,
+          "rawDescription": "GeneratedTip_Item_1101_Description",
+          "rawDisplayName": "Item_1101_Name",
+          "slot": 0
+        },
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Kouzeln�kovy boty",
+          "itemID": 3020,
+          "price": 800,
+          "rawDescription": "GeneratedTip_Item_3020_Description",
+          "rawDisplayName": "Item_3020_Name",
+          "slot": 1
+        },
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Z���c� zrnko",
+          "itemID": 2022,
+          "price": 250,
+          "rawDescription": "GeneratedTip_Item_2022_Description",
+          "rawDisplayName": "Item_2022_Name",
+          "slot": 2
+        },
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Liandryho utrpen�",
+          "itemID": 6653,
+          "price": 800,
+          "rawDescription": "GeneratedTip_Item_6653_Description",
+          "rawDisplayName": "Item_6653_Name",
+          "slot": 3
+        },
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Ln�n� vesta",
+          "itemID": 1029,
+          "price": 300,
+          "rawDescription": "GeneratedTip_Item_1029_Description",
+          "rawDisplayName": "Item_1029_Name",
+          "slot": 4
+        },
+        {
+          "canUse": true,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Neviditeln� totem",
+          "itemID": 3340,
+          "price": 0,
+          "rawDescription": "GeneratedTip_Item_3340_Description",
+          "rawDisplayName": "Item_3340_Name",
+          "slot": 6
+        }
+      ],
+      "level": 8,
+      "position": "JUNGLE",
+      "rawChampionName": "game_character_displayname_Rumble",
+      "rawSkinName": "game_character_skin_displayname_Rumble_8",
+      "respawnTimer": 4.924934387207031,
+      "riotId": "Rumble bot#BOT",
+      "riotIdGameName": "Rumble bot",
+      "riotIdTagLine": "BOT",
+      "runes": {
+        "keystone": {
+          "displayName": "Temn� �n�",
+          "id": 8128,
+          "rawDescription": "perk_tooltip_DarkHarvest",
+          "rawDisplayName": "perk_displayname_DarkHarvest"
+        },
+        "primaryRuneTree": {
+          "displayName": "Dominance",
+          "id": 8100,
+          "rawDescription": "perkstyle_tooltip_7200",
+          "rawDisplayName": "perkstyle_displayname_7200"
+        },
+        "secondaryRuneTree": {
+          "displayName": "�arod�jnictv�",
+          "id": 8200,
+          "rawDescription": "perkstyle_tooltip_7202",
+          "rawDisplayName": "perkstyle_displayname_7202"
+        }
+      },
+      "scores": {
+        "assists": 3,
+        "creepScore": 20,
+        "deaths": 16,
+        "kills": 2,
+        "wardScore": 0
+      },
+      "skinID": 8,
+      "skinName": "Baron pustin Rumble",
+      "summonerName": "Rumble bot#BOT",
+      "summonerSpells": {
+        "summonerSpellOne": {
+          "displayName": "Skok",
+          "rawDescription": "GeneratedTip_SummonerSpell_SummonerFlash_Description",
+          "rawDisplayName": "GeneratedTip_SummonerSpell_SummonerFlash_DisplayName"
+        },
+        "summonerSpellTwo": {
+          "displayName": "Ude�it",
+          "rawDescription": "GeneratedTip_SummonerSpell_SummonerSmite_Description",
+          "rawDisplayName": "GeneratedTip_SummonerSpell_SummonerSmite_DisplayName"
+        }
+      },
+      "team": "CHAOS"
+    },
+    {
+      "championName": "Irelia",
+      "isBot": true,
+      "isDead": true,
+      "items": [
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Doran�v me�",
+          "itemID": 1055,
+          "price": 450,
+          "rawDescription": "GeneratedTip_Item_1055_Description",
+          "rawDisplayName": "Item_1055_Name",
+          "slot": 0
+        },
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Merkurovy boty",
+          "itemID": 3111,
+          "price": 350,
+          "rawDescription": "GeneratedTip_Item_3111_Description",
+          "rawDisplayName": "Item_3111_Name",
+          "slot": 1
+        },
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "�epel Padl�ho kr�le",
+          "itemID": 3153,
+          "price": 725,
+          "rawDescription": "GeneratedTip_Item_3153_Description",
+          "rawDisplayName": "Item_3153_Name",
+          "slot": 2
+        },
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Z���c� zrnko",
+          "itemID": 2022,
+          "price": 250,
+          "rawDescription": "GeneratedTip_Item_2022_Description",
+          "rawDisplayName": "Item_2022_Name",
+          "slot": 3
+        },
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Tunel��",
+          "itemID": 2021,
+          "price": 400,
+          "rawDescription": "GeneratedTip_Item_2021_Description",
+          "rawDisplayName": "Item_2021_Name",
+          "slot": 4
+        },
+        {
+          "canUse": true,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Neviditeln� totem",
+          "itemID": 3340,
+          "price": 0,
+          "rawDescription": "GeneratedTip_Item_3340_Description",
+          "rawDisplayName": "Item_3340_Name",
+          "slot": 6
+        }
+      ],
+      "level": 9,
+      "position": "MIDDLE",
+      "rawChampionName": "game_character_displayname_Irelia",
+      "rawSkinName": "game_character_skin_displayname_Irelia_49",
+      "respawnTimer": 0.29192543029785156,
+      "riotId": "Irelia bot#BOT",
+      "riotIdGameName": "Irelia bot",
+      "riotIdTagLine": "BOT",
+      "runes": {
+        "keystone": {
+          "displayName": "Nepolevuj�c� �tok",
+          "id": 8005,
+          "rawDescription": "perk_tooltip_PressTheAttack",
+          "rawDisplayName": "perk_displayname_PressTheAttack"
+        },
+        "primaryRuneTree": {
+          "displayName": "P�esnost",
+          "id": 8000,
+          "rawDescription": "perkstyle_tooltip_7201",
+          "rawDisplayName": "perkstyle_displayname_7201"
+        },
+        "secondaryRuneTree": {
+          "displayName": "Povzbuzen�",
+          "id": 8300,
+          "rawDescription": "perkstyle_tooltip_7203",
+          "rawDisplayName": "perkstyle_displayname_7203"
+        }
+      },
+      "scores": {
+        "assists": 4,
+        "creepScore": 40,
+        "deaths": 21,
+        "kills": 3,
+        "wardScore": 0
+      },
+      "skinID": 49,
+      "skinName": "Porcel�nov� Irelia",
+      "summonerName": "Irelia bot#BOT",
+      "summonerSpells": {
+        "summonerSpellOne": {
+          "displayName": "Skok",
+          "rawDescription": "GeneratedTip_SummonerSpell_SummonerFlash_Description",
+          "rawDisplayName": "GeneratedTip_SummonerSpell_SummonerFlash_DisplayName"
+        },
+        "summonerSpellTwo": {
+          "displayName": "Vzn�tit",
+          "rawDescription": "GeneratedTip_SummonerSpell_SummonerDot_Description",
+          "rawDisplayName": "GeneratedTip_SummonerSpell_SummonerDot_DisplayName"
+        }
+      },
+      "team": "CHAOS"
+    },
+    {
+      "championName": "Kai'Sa",
+      "isBot": true,
+      "isDead": true,
+      "items": [
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Doran�v me�",
+          "itemID": 1055,
+          "price": 450,
+          "rawDescription": "GeneratedTip_Item_1055_Description",
+          "rawDisplayName": "Item_1055_Name",
+          "slot": 0
+        },
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Zabij�k kraken�",
+          "itemID": 6672,
+          "price": 200,
+          "rawDescription": "GeneratedTip_Item_6672_Description",
+          "rawDisplayName": "Item_6672_Name",
+          "slot": 1
+        },
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "��lencovy boty",
+          "itemID": 3006,
+          "price": 500,
+          "rawDescription": "GeneratedTip_Item_3006_Description",
+          "rawDisplayName": "Item_3006_Name",
+          "slot": 2
+        },
+        {
+          "canUse": true,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Neviditeln� totem",
+          "itemID": 3340,
+          "price": 0,
+          "rawDescription": "GeneratedTip_Item_3340_Description",
+          "rawDisplayName": "Item_3340_Name",
+          "slot": 6
+        }
+      ],
+      "level": 9,
+      "position": "BOTTOM",
+      "rawChampionName": "game_character_displayname_Kaisa",
+      "rawSkinName": "game_character_skin_displayname_Kaisa_46",
+      "respawnTimer": 17.493309020996094,
+      "riotId": "Kaisa bot#BOT",
+      "riotIdGameName": "Kaisa bot",
+      "riotIdTagLine": "BOT",
+      "runes": {
+        "keystone": {
+          "displayName": "Nepolevuj�c� �tok",
+          "id": 8005,
+          "rawDescription": "perk_tooltip_PressTheAttack",
+          "rawDisplayName": "perk_displayname_PressTheAttack"
+        },
+        "primaryRuneTree": {
+          "displayName": "P�esnost",
+          "id": 8000,
+          "rawDescription": "perkstyle_tooltip_7201",
+          "rawDisplayName": "perkstyle_displayname_7201"
+        },
+        "secondaryRuneTree": {
+          "displayName": "Dominance",
+          "id": 8100,
+          "rawDescription": "perkstyle_tooltip_7200",
+          "rawDisplayName": "perkstyle_displayname_7200"
+        }
+      },
+      "scores": {
+        "assists": 0,
+        "creepScore": 60,
+        "deaths": 16,
+        "kills": 2,
+        "wardScore": 0
+      },
+      "skinID": 46,
+      "skinName": "Hv�zdn� str�kyn� Kai'Sa",
+      "summonerName": "Kaisa bot#BOT",
+      "summonerSpells": {
+        "summonerSpellOne": {
+          "displayName": "Skok",
+          "rawDescription": "GeneratedTip_SummonerSpell_SummonerFlash_Description",
+          "rawDisplayName": "GeneratedTip_SummonerSpell_SummonerFlash_DisplayName"
+        },
+        "summonerSpellTwo": {
+          "displayName": "Duch",
+          "rawDescription": "GeneratedTip_SummonerSpell_SummonerHaste_Description",
+          "rawDisplayName": "GeneratedTip_SummonerSpell_SummonerHaste_DisplayName"
+        }
+      },
+      "team": "CHAOS"
+    },
+    {
+      "championName": "Ashe",
+      "isBot": true,
+      "isDead": false,
+      "items": [
+        {
+          "canUse": true,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Runov� kompas",
+          "itemID": 3866,
+          "price": 400,
+          "rawDescription": "GeneratedTip_Item_3866_Description",
+          "rawDisplayName": "Item_3866_Name",
+          "slot": 0
+        },
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Caulfieldovo v�le�n� kladivo",
+          "itemID": 3133,
+          "price": 150,
+          "rawDescription": "GeneratedTip_Item_3133_Description",
+          "rawDisplayName": "Item_3133_Name",
+          "slot": 1
+        },
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Ionsk� boty jasnosti",
+          "itemID": 3158,
+          "price": 350,
+          "rawDescription": "GeneratedTip_Item_3158_Description",
+          "rawDisplayName": "Item_3158_Name",
+          "slot": 2
+        },
+        {
+          "canUse": false,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Zubat� d�ka",
+          "itemID": 3134,
+          "price": 300,
+          "rawDescription": "GeneratedTip_Item_3134_Description",
+          "rawDisplayName": "Item_3134_Name",
+          "slot": 3
+        },
+        {
+          "canUse": true,
+          "consumable": false,
+          "count": 1,
+          "displayName": "Neviditeln� totem",
+          "itemID": 3340,
+          "price": 0,
+          "rawDescription": "GeneratedTip_Item_3340_Description",
+          "rawDisplayName": "Item_3340_Name",
+          "slot": 6
+        }
+      ],
+      "level": 8,
+      "position": "UTILITY",
+      "rawChampionName": "game_character_displayname_Ashe",
+      "rawSkinName": "game_character_skin_displayname_Ashe_24",
+      "respawnTimer": 0,
+      "riotId": "Ashe bot#BOT",
+      "riotIdGameName": "Ashe bot",
+      "riotIdTagLine": "BOT",
+      "runes": {
+        "keystone": {
+          "displayName": "Nepolevuj�c� �tok",
+          "id": 8005,
+          "rawDescription": "perk_tooltip_PressTheAttack",
+          "rawDisplayName": "perk_displayname_PressTheAttack"
+        },
+        "primaryRuneTree": {
+          "displayName": "P�esnost",
+          "id": 8000,
+          "rawDescription": "perkstyle_tooltip_7201",
+          "rawDisplayName": "perkstyle_displayname_7201"
+        },
+        "secondaryRuneTree": {
+          "displayName": "Povzbuzen�",
+          "id": 8300,
+          "rawDescription": "perkstyle_tooltip_7203",
+          "rawDisplayName": "perkstyle_displayname_7203"
+        }
+      },
+      "scores": {
+        "assists": 2,
+        "creepScore": 10,
+        "deaths": 17,
+        "kills": 0,
+        "wardScore": 0
+      },
+      "skinID": 24,
+      "skinName": "V�l� drak Ashe",
+      "summonerName": "Ashe bot#BOT",
+      "summonerSpells": {
+        "summonerSpellOne": {
+          "displayName": "Vy�erpat",
+          "rawDescription": "GeneratedTip_SummonerSpell_SummonerExhaust_Description",
+          "rawDisplayName": "GeneratedTip_SummonerSpell_SummonerExhaust_DisplayName"
+        },
+        "summonerSpellTwo": {
+          "displayName": "Skok",
+          "rawDescription": "GeneratedTip_SummonerSpell_SummonerFlash_Description",
+          "rawDisplayName": "GeneratedTip_SummonerSpell_SummonerFlash_DisplayName"
+        }
+      },
+      "team": "CHAOS"
+    }
+  ],
+  "events": {
+    "Events": [
+      {
+        "EventID": 0,
+        "EventName": "GameStart",
+        "EventTime": 0.037910498678684235
+      },
+      {
+        "EventID": 1,
+        "EventName": "MinionsSpawning",
+        "EventTime": 65.0443115234375
+      },
+      {
+        "Assisters": [],
+        "EventID": 2,
+        "EventName": "ChampionKill",
+        "EventTime": 93.1436767578125,
+        "KillerName": "AoshiW",
+        "VictimName": "Irelia bot"
+      },
+      {
+        "EventID": 3,
+        "EventName": "FirstBlood",
+        "EventTime": 93.1436767578125,
+        "Recipient": "AoshiW"
+      },
+      {
+        "Assisters": [
+          "Bizzaro"
+        ],
+        "EventID": 4,
+        "EventName": "ChampionKill",
+        "EventTime": 104.04501342773438,
+        "KillerName": "Lu2mik",
+        "VictimName": "Kaisa bot"
+      },
+      {
+        "Assisters": [
+          "Bizzaro"
+        ],
+        "EventID": 5,
+        "EventName": "ChampionKill",
+        "EventTime": 109.82695770263672,
+        "KillerName": "Lu2mik",
+        "VictimName": "Ashe bot"
+      },
+      {
+        "EventID": 6,
+        "EventName": "Multikill",
+        "EventTime": 109.82695770263672,
+        "KillStreak": 2,
+        "KillerName": "Lu2mik"
+      },
+      {
+        "Assisters": [],
+        "EventID": 7,
+        "EventName": "ChampionKill",
+        "EventTime": 110.63076782226562,
+        "KillerName": "Darius bot",
+        "VictimName": "kilerke"
+      },
+      {
+        "Assisters": [],
+        "EventID": 8,
+        "EventName": "ChampionKill",
+        "EventTime": 135.12997436523438,
+        "KillerName": "AoshiW",
+        "VictimName": "Irelia bot"
+      },
+      {
+        "Assisters": [
+          "Lu2mik"
+        ],
+        "EventID": 9,
+        "EventName": "ChampionKill",
+        "EventTime": 147.0122528076172,
+        "KillerName": "Bizzaro",
+        "VictimName": "Kaisa bot"
+      },
+      {
+        "Assisters": [
+          "Lu2mik"
+        ],
+        "EventID": 10,
+        "EventName": "ChampionKill",
+        "EventTime": 159.7942352294922,
+        "KillerName": "Bizzaro",
+        "VictimName": "Ashe bot"
+      },
+      {
+        "Assisters": [],
+        "EventID": 11,
+        "EventName": "ChampionKill",
+        "EventTime": 169.75808715820312,
+        "KillerName": "AoshiW",
+        "VictimName": "Irelia bot"
+      },
+      {
+        "Assisters": [
+          "Irelia bot"
+        ],
+        "EventID": 12,
+        "EventName": "ChampionKill",
+        "EventTime": 178.71607971191406,
+        "KillerName": "Rumble bot",
+        "VictimName": "AoshiW"
+      },
+      {
+        "Assisters": [
+          "Bizzaro"
+        ],
+        "EventID": 13,
+        "EventName": "ChampionKill",
+        "EventTime": 192.80335998535156,
+        "KillerName": "Lu2mik",
+        "VictimName": "Kaisa bot"
+      },
+      {
+        "Assisters": [],
+        "EventID": 14,
+        "EventName": "ChampionKill",
+        "EventTime": 194.21803283691406,
+        "KillerName": "kilerke",
+        "VictimName": "Darius bot"
+      },
+      {
+        "Assisters": [],
+        "EventID": 15,
+        "EventName": "ChampionKill",
+        "EventTime": 230.04483032226562,
+        "KillerName": "AoshiW",
+        "VictimName": "Irelia bot"
+      },
+      {
+        "Assisters": [
+          "Bizzaro"
+        ],
+        "EventID": 16,
+        "EventName": "ChampionKill",
+        "EventTime": 247.51376342773438,
+        "KillerName": "Lu2mik",
+        "VictimName": "Kaisa bot"
+      },
+      {
+        "Assisters": [],
+        "EventID": 17,
+        "EventName": "ChampionKill",
+        "EventTime": 258.52813720703125,
+        "KillerName": "Darius bot",
+        "VictimName": "kilerke"
+      },
+      {
+        "Assisters": [],
+        "EventID": 18,
+        "EventName": "ChampionKill",
+        "EventTime": 275.0755920410156,
+        "KillerName": "AoshiW",
+        "VictimName": "Irelia bot"
+      },
+      {
+        "Assisters": [
+          "Lu2mik"
+        ],
+        "EventID": 19,
+        "EventName": "ChampionKill",
+        "EventTime": 292.0721130371094,
+        "KillerName": "Bizzaro",
+        "VictimName": "Ashe bot"
+      },
+      {
+        "Assisters": [],
+        "EventID": 20,
+        "EventName": "ChampionKill",
+        "EventTime": 309.0068054199219,
+        "KillerName": "AoshiW",
+        "VictimName": "Rumble bot"
+      },
+      {
+        "Assisters": [],
+        "EventID": 21,
+        "EventName": "ChampionKill",
+        "EventTime": 310.3670959472656,
+        "KillerName": "kilerke",
+        "VictimName": "Darius bot"
+      },
+      {
+        "Assisters": [
+          "Bizzaro"
+        ],
+        "EventID": 22,
+        "EventName": "ChampionKill",
+        "EventTime": 313.076416015625,
+        "KillerName": "Lu2mik",
+        "VictimName": "Kaisa bot"
+      },
+      {
+        "Assisters": [],
+        "EventID": 23,
+        "EventName": "ChampionKill",
+        "EventTime": 350.9513244628906,
+        "KillerName": "AoshiW",
+        "VictimName": "Irelia bot"
+      },
+      {
+        "Assisters": [
+          "Lu2mik"
+        ],
+        "EventID": 24,
+        "EventName": "ChampionKill",
+        "EventTime": 355.56646728515625,
+        "KillerName": "Bizzaro",
+        "VictimName": "Rumble bot"
+      },
+      {
+        "Assisters": [],
+        "EventID": 25,
+        "EventName": "ChampionKill",
+        "EventTime": 370.5460510253906,
+        "KillerName": "Lu2mik",
+        "VictimName": "Kaisa bot"
+      },
+      {
+        "Assisters": [],
+        "EventID": 26,
+        "EventName": "ChampionKill",
+        "EventTime": 376.517578125,
+        "KillerName": "Darius bot",
+        "VictimName": "kilerke"
+      },
+      {
+        "Assisters": [],
+        "EventID": 27,
+        "EventName": "ChampionKill",
+        "EventTime": 391.6985168457031,
+        "KillerName": "AoshiW",
+        "VictimName": "Irelia bot"
+      },
+      {
+        "Assisters": [],
+        "EventID": 28,
+        "EventName": "ChampionKill",
+        "EventTime": 414.0346984863281,
+        "KillerName": "Bizzaro",
+        "VictimName": "Ashe bot"
+      },
+      {
+        "Assisters": [],
+        "EventID": 29,
+        "EventName": "ChampionKill",
+        "EventTime": 416.62823486328125,
+        "KillerName": "WooonskY",
+        "VictimName": "Darius bot"
+      },
+      {
+        "Assisters": [],
+        "EventID": 30,
+        "EventName": "ChampionKill",
+        "EventTime": 419.8869934082031,
+        "KillerName": "AoshiW",
+        "VictimName": "Rumble bot"
+      },
+      {
+        "Assisters": [],
+        "EventID": 31,
+        "EventName": "ChampionKill",
+        "EventTime": 428.9657897949219,
+        "KillerName": "Bizzaro",
+        "VictimName": "Kaisa bot"
+      },
+      {
+        "Assisters": [],
+        "EventID": 32,
+        "EventName": "ChampionKill",
+        "EventTime": 430.8904113769531,
+        "KillerName": "AoshiW",
+        "VictimName": "Irelia bot"
+      },
+      {
+        "Assisters": [],
+        "EventID": 33,
+        "EventName": "ChampionKill",
+        "EventTime": 457.07666015625,
+        "KillerName": "AoshiW",
+        "VictimName": "Rumble bot"
+      },
+      {
+        "Assisters": [],
+        "EventID": 34,
+        "EventName": "ChampionKill",
+        "EventTime": 461.2888488769531,
+        "KillerName": "Bizzaro",
+        "VictimName": "Ashe bot"
+      },
+      {
+        "Assisters": [],
+        "EventID": 35,
+        "EventName": "HordeKill",
+        "EventTime": 467.4307861328125,
+        "KillerName": "WooonskY",
+        "Stolen": "False"
+      },
+      {
+        "Assisters": [],
+        "EventID": 36,
+        "EventName": "ChampionKill",
+        "EventTime": 467.49066162109375,
+        "KillerName": "AoshiW",
+        "VictimName": "Irelia bot"
+      },
+      {
+        "Assisters": [
+          "Bizzaro"
+        ],
+        "EventID": 37,
+        "EventName": "ChampionKill",
+        "EventTime": 472.5216064453125,
+        "KillerName": "Lu2mik",
+        "VictimName": "Kaisa bot"
+      },
+      {
+        "Assisters": [],
+        "EventID": 38,
+        "EventName": "HordeKill",
+        "EventTime": 479.9048767089844,
+        "KillerName": "WooonskY",
+        "Stolen": "False"
+      },
+      {
+        "Assisters": [],
+        "EventID": 39,
+        "EventName": "ChampionKill",
+        "EventTime": 485.2035827636719,
+        "KillerName": "Darius bot",
+        "VictimName": "kilerke"
+      },
+      {
+        "Assisters": [],
+        "EventID": 40,
+        "EventName": "HordeKill",
+        "EventTime": 487.6220397949219,
+        "KillerName": "WooonskY",
+        "Stolen": "False"
+      },
+      {
+        "Assisters": [
+          "Lu2mik"
+        ],
+        "EventID": 41,
+        "EventName": "ChampionKill",
+        "EventTime": 502.532958984375,
+        "KillerName": "Bizzaro",
+        "VictimName": "Ashe bot"
+      },
+      {
+        "Assisters": [],
+        "EventID": 42,
+        "EventName": "ChampionKill",
+        "EventTime": 512.975341796875,
+        "KillerName": "WooonskY",
+        "VictimName": "Darius bot"
+      },
+      {
+        "Assisters": [],
+        "EventID": 43,
+        "EventName": "ChampionKill",
+        "EventTime": 545.4937133789062,
+        "KillerName": "AoshiW",
+        "VictimName": "Irelia bot"
+      },
+      {
+        "Assisters": [
+          "Lu2mik"
+        ],
+        "EventID": 44,
+        "EventName": "ChampionKill",
+        "EventTime": 554.0475463867188,
+        "KillerName": "Bizzaro",
+        "VictimName": "Ashe bot"
+      },
+      {
+        "Assisters": [
+          "Lu2mik"
+        ],
+        "EventID": 45,
+        "EventName": "ChampionKill",
+        "EventTime": 566.2863159179688,
+        "KillerName": "Bizzaro",
+        "VictimName": "Kaisa bot"
+      },
+      {
+        "Assisters": [],
+        "EventID": 46,
+        "EventName": "ChampionKill",
+        "EventTime": 578.3939819335938,
+        "KillerName": "AoshiW",
+        "VictimName": "Rumble bot"
+      },
+      {
+        "Assisters": [
+          "Rumble bot",
+          "Darius bot"
+        ],
+        "EventID": 47,
+        "EventName": "ChampionKill",
+        "EventTime": 584.8251342773438,
+        "KillerName": "Irelia bot",
+        "VictimName": "AoshiW"
+      },
+      {
+        "Assisters": [
+          "Bizzaro"
+        ],
+        "EventID": 48,
+        "EventName": "ChampionKill",
+        "EventTime": 592.9019775390625,
+        "KillerName": "Lu2mik",
+        "VictimName": "Ashe bot"
+      },
+      {
+        "Assisters": [],
+        "EventID": 49,
+        "EventName": "TurretKilled",
+        "EventTime": 595.1763916015625,
+        "KillerName": "Bizzaro",
+        "TurretKilled": "Turret_T2_R_03_A"
+      },
+      {
+        "EventID": 50,
+        "EventName": "FirstBrick",
+        "EventTime": 595.1763916015625,
+        "KillerName": "Bizzaro"
+      },
+      {
+        "Assisters": [],
+        "EventID": 51,
+        "EventName": "ChampionKill",
+        "EventTime": 615.0944213867188,
+        "KillerName": "Bizzaro",
+        "VictimName": "Kaisa bot"
+      },
+      {
+        "Assisters": [
+          "WooonskY"
+        ],
+        "EventID": 52,
+        "EventName": "ChampionKill",
+        "EventTime": 622.7413330078125,
+        "KillerName": "kilerke",
+        "VictimName": "Irelia bot"
+      },
+      {
+        "Assisters": [
+          "WooonskY"
+        ],
+        "EventID": 53,
+        "EventName": "ChampionKill",
+        "EventTime": 626.560791015625,
+        "KillerName": "kilerke",
+        "VictimName": "Darius bot"
+      },
+      {
+        "EventID": 54,
+        "EventName": "Multikill",
+        "EventTime": 626.560791015625,
+        "KillStreak": 2,
+        "KillerName": "kilerke"
+      },
+      {
+        "Assisters": [],
+        "EventID": 55,
+        "EventName": "ChampionKill",
+        "EventTime": 657.0714111328125,
+        "KillerName": "Lu2mik",
+        "VictimName": "Rumble bot"
+      },
+      {
+        "Assisters": [],
+        "EventID": 56,
+        "EventName": "ChampionKill",
+        "EventTime": 666.0535278320312,
+        "KillerName": "Lu2mik",
+        "VictimName": "Ashe bot"
+      },
+      {
+        "EventID": 57,
+        "EventName": "Multikill",
+        "EventTime": 666.0535278320312,
+        "KillStreak": 2,
+        "KillerName": "Lu2mik"
+      },
+      {
+        "Assisters": [],
+        "EventID": 58,
+        "EventName": "ChampionKill",
+        "EventTime": 668.6006469726562,
+        "KillerName": "Irelia bot",
+        "VictimName": "kilerke"
+      },
+      {
+        "Assisters": [
+          "Lu2mik"
+        ],
+        "EventID": 59,
+        "EventName": "ChampionKill",
+        "EventTime": 702.564453125,
+        "KillerName": "Bizzaro",
+        "VictimName": "Rumble bot"
+      },
+      {
+        "Assisters": [
+          "Lu2mik"
+        ],
+        "EventID": 60,
+        "EventName": "ChampionKill",
+        "EventTime": 708.63330078125,
+        "KillerName": "Bizzaro",
+        "VictimName": "Kaisa bot"
+      },
+      {
+        "EventID": 61,
+        "EventName": "Multikill",
+        "EventTime": 708.63330078125,
+        "KillStreak": 2,
+        "KillerName": "Bizzaro"
+      },
+      {
+        "Assisters": [],
+        "EventID": 62,
+        "EventName": "ChampionKill",
+        "EventTime": 713.9942626953125,
+        "KillerName": "Darius bot",
+        "VictimName": "WooonskY"
+      },
+      {
+        "Assisters": [
+          "Lu2mik"
+        ],
+        "EventID": 63,
+        "EventName": "ChampionKill",
+        "EventTime": 731.6328125,
+        "KillerName": "Bizzaro",
+        "VictimName": "Ashe bot"
+      },
+      {
+        "Assisters": [],
+        "EventID": 64,
+        "EventName": "TurretKilled",
+        "EventTime": 731.6809692382812,
+        "KillerName": "Minion_T100L1S22N0133",
+        "TurretKilled": "Turret_T2_C_05_A"
+      },
+      {
+        "Assisters": [],
+        "EventID": 65,
+        "EventName": "ChampionKill",
+        "EventTime": 736.240234375,
+        "KillerName": "AoshiW",
+        "VictimName": "Irelia bot"
+      },
+      {
+        "Assisters": [
+          "AoshiW"
+        ],
+        "EventID": 66,
+        "EventName": "ChampionKill",
+        "EventTime": 754.7777709960938,
+        "KillerName": "kilerke",
+        "VictimName": "Rumble bot"
+      },
+      {
+        "Assisters": [],
+        "EventID": 67,
+        "EventName": "ChampionKill",
+        "EventTime": 778.9882202148438,
+        "KillerName": "kilerke",
+        "VictimName": "Irelia bot"
+      },
+      {
+        "Assisters": [
+          "Lu2mik"
+        ],
+        "EventID": 68,
+        "EventName": "ChampionKill",
+        "EventTime": 784.2517700195312,
+        "KillerName": "Bizzaro",
+        "VictimName": "Ashe bot"
+      },
+      {
+        "Assisters": [],
+        "DragonType": "Fire",
+        "EventID": 69,
+        "EventName": "DragonKill",
+        "EventTime": 786.9606323242188,
+        "KillerName": "Lu2mik",
+        "Stolen": "False"
+      },
+      {
+        "Assisters": [],
+        "EventID": 70,
+        "EventName": "ChampionKill",
+        "EventTime": 793.4944458007812,
+        "KillerName": "kilerke",
+        "VictimName": "Rumble bot"
+      },
+      {
+        "Assisters": [
+          "Bizzaro"
+        ],
+        "EventID": 71,
+        "EventName": "TurretKilled",
+        "EventTime": 803.300537109375,
+        "KillerName": "Minion_T100L1S24N0148",
+        "TurretKilled": "Turret_T2_C_04_A"
+      },
+      {
+        "Assisters": [
+          "kilerke"
+        ],
+        "EventID": 72,
+        "EventName": "ChampionKill",
+        "EventTime": 818.6930541992188,
+        "KillerName": "Bizzaro",
+        "VictimName": "Irelia bot"
+      },
+      {
+        "Assisters": [],
+        "EventID": 73,
+        "EventName": "ChampionKill",
+        "EventTime": 822.7739868164062,
+        "KillerName": "Bizzaro",
+        "VictimName": "Ashe bot"
+      },
+      {
+        "EventID": 74,
+        "EventName": "Multikill",
+        "EventTime": 822.7739868164062,
+        "KillStreak": 2,
+        "KillerName": "Bizzaro"
+      },
+      {
+        "Assisters": [],
+        "EventID": 75,
+        "EventName": "ChampionKill",
+        "EventTime": 853.9407958984375,
+        "KillerName": "Lu2mik",
+        "VictimName": "Darius bot"
+      },
+      {
+        "Assisters": [],
+        "EventID": 76,
+        "EventName": "ChampionKill",
+        "EventTime": 861.7529907226562,
+        "KillerName": "Bizzaro",
+        "VictimName": "Irelia bot"
+      },
+      {
+        "Assisters": [
+          "Bizzaro"
+        ],
+        "EventID": 77,
+        "EventName": "TurretKilled",
+        "EventTime": 887.9061889648438,
+        "KillerName": "kilerke",
+        "TurretKilled": "Turret_T2_C_03_A"
+      },
+      {
+        "Assisters": [
+          "Bizzaro"
+        ],
+        "EventID": 78,
+        "EventName": "ChampionKill",
+        "EventTime": 895.027587890625,
+        "KillerName": "kilerke",
+        "VictimName": "Irelia bot"
+      },
+      {
+        "Assisters": [
+          "WooonskY"
+        ],
+        "EventID": 79,
+        "EventName": "HeraldKill",
+        "EventTime": 896.34765625,
+        "KillerName": "Lu2mik",
+        "Stolen": "False"
+      },
+      {
+        "Assisters": [
+          "Lu2mik"
+        ],
+        "EventID": 80,
+        "EventName": "ChampionKill",
+        "EventTime": 902.9407958984375,
+        "KillerName": "AoshiW",
+        "VictimName": "Rumble bot"
+      },
+      {
+        "Assisters": [
+          "Bizzaro"
+        ],
+        "EventID": 81,
+        "EventName": "ChampionKill",
+        "EventTime": 905.334716796875,
+        "KillerName": "kilerke",
+        "VictimName": "Darius bot"
+      },
+      {
+        "Assisters": [
+          "kilerke"
+        ],
+        "EventID": 82,
+        "EventName": "InhibKilled",
+        "EventTime": 906.825439453125,
+        "InhibKilled": "Barracks_T2_C1",
+        "KillerName": "Bizzaro"
+      },
+      {
+        "Assisters": [
+          "Bizzaro"
+        ],
+        "EventID": 83,
+        "EventName": "ChampionKill",
+        "EventTime": 929.1696166992188,
+        "KillerName": "kilerke",
+        "VictimName": "Ashe bot"
+      },
+      {
+        "Assisters": [
+          "Irelia bot",
+          "Ashe bot"
+        ],
+        "EventID": 84,
+        "EventName": "ChampionKill",
+        "EventTime": 934.927734375,
+        "KillerName": "Rumble bot",
+        "VictimName": "kilerke"
+      },
+      {
+        "Assisters": [
+          "kilerke"
+        ],
+        "EventID": 85,
+        "EventName": "ChampionKill",
+        "EventTime": 936.2850341796875,
+        "KillerName": "Bizzaro",
+        "VictimName": "Rumble bot"
+      },
+      {
+        "Assisters": [
+          "kilerke",
+          "Lu2mik"
+        ],
+        "EventID": 86,
+        "EventName": "ChampionKill",
+        "EventTime": 938.5263671875,
+        "KillerName": "Bizzaro",
+        "VictimName": "Irelia bot"
+      },
+      {
+        "EventID": 87,
+        "EventName": "Multikill",
+        "EventTime": 938.5263671875,
+        "KillStreak": 2,
+        "KillerName": "Bizzaro"
+      },
+      {
+        "Assisters": [
+          "Bizzaro"
+        ],
+        "EventID": 88,
+        "EventName": "ChampionKill",
+        "EventTime": 943.0231323242188,
+        "KillerName": "Lu2mik",
+        "VictimName": "Kaisa bot"
+      },
+      {
+        "Assisters": [
+          "WooonskY",
+          "Lu2mik"
+        ],
+        "EventID": 89,
+        "EventName": "ChampionKill",
+        "EventTime": 955.4154052734375,
+        "KillerName": "Bizzaro",
+        "VictimName": "Darius bot"
+      },
+      {
+        "Assisters": [
+          "WooonskY",
+          "Lu2mik"
+        ],
+        "EventID": 90,
+        "EventName": "ChampionKill",
+        "EventTime": 958.1128540039062,
+        "KillerName": "Bizzaro",
+        "VictimName": "Ashe bot"
+      },
+      {
+        "EventID": 91,
+        "EventName": "Multikill",
+        "EventTime": 958.1128540039062,
+        "KillStreak": 2,
+        "KillerName": "Bizzaro"
+      },
+      {
+        "Assisters": [
+          "WooonskY",
+          "Lu2mik"
+        ],
+        "EventID": 92,
+        "EventName": "ChampionKill",
+        "EventTime": 968.555419921875,
+        "KillerName": "Bizzaro",
+        "VictimName": "Rumble bot"
+      },
+      {
+        "Assisters": [
+          "Irelia bot",
+          "Rumble bot",
+          "Darius bot"
+        ],
+        "EventID": 93,
+        "EventName": "ChampionKill",
+        "EventTime": 970.5972290039062,
+        "KillerName": "Kaisa bot",
+        "VictimName": "WooonskY"
+      },
+      {
+        "Assisters": [
+          "WooonskY",
+          "Lu2mik"
+        ],
+        "EventID": 94,
+        "EventName": "ChampionKill",
+        "EventTime": 974.8794555664062,
+        "KillerName": "Bizzaro",
+        "VictimName": "Irelia bot"
+      },
+      {
+        "EventID": 95,
+        "EventName": "Multikill",
+        "EventTime": 974.8794555664062,
+        "KillStreak": 2,
+        "KillerName": "Bizzaro"
+      },
+      {
+        "Assisters": [
+          "Bizzaro"
+        ],
+        "EventID": 96,
+        "EventName": "ChampionKill",
+        "EventTime": 976.49462890625,
+        "KillerName": "Lu2mik",
+        "VictimName": "Kaisa bot"
+      },
+      {
+        "Assisters": [],
+        "EventID": 97,
+        "EventName": "ChampionKill",
+        "EventTime": 982.695068359375,
+        "KillerName": "Bizzaro",
+        "VictimName": "Ashe bot"
+      },
+      {
+        "EventID": 98,
+        "EventName": "Multikill",
+        "EventTime": 982.695068359375,
+        "KillStreak": 3,
+        "KillerName": "Bizzaro"
+      },
+      {
+        "Acer": "Bizzaro",
+        "AcingTeam": "ORDER",
+        "EventID": 99,
+        "EventName": "Ace",
+        "EventTime": 982.695068359375
+      },
+      {
+        "Assisters": [],
+        "EventID": 100,
+        "EventName": "TurretKilled",
+        "EventTime": 991.6463012695312,
+        "KillerName": "Bizzaro",
+        "TurretKilled": "Turret_T2_C_01_A"
+      },
+      {
+        "Assisters": [],
+        "EventID": 101,
+        "EventName": "ChampionKill",
+        "EventTime": 1008.8792114257812,
+        "KillerName": "Bizzaro",
+        "VictimName": "Rumble bot"
+      },
+      {
+        "Assisters": [
+          "Bizzaro"
+        ],
+        "EventID": 102,
+        "EventName": "ChampionKill",
+        "EventTime": 1025.0863037109375,
+        "KillerName": "kilerke",
+        "VictimName": "Irelia bot"
+      },
+      {
+        "Assisters": [
+          "Irelia bot",
+          "Darius bot",
+          "Ashe bot"
+        ],
+        "EventID": 103,
+        "EventName": "ChampionKill",
+        "EventTime": 1030.9697265625,
+        "KillerName": "Kaisa bot",
+        "VictimName": "kilerke"
+      },
+      {
+        "Assisters": [
+          "kilerke",
+          "AoshiW"
+        ],
+        "EventID": 104,
+        "EventName": "ChampionKill",
+        "EventTime": 1032.8831787109375,
+        "KillerName": "Bizzaro",
+        "VictimName": "Darius bot"
+      },
+      {
+        "Assisters": [],
+        "EventID": 105,
+        "EventName": "ChampionKill",
+        "EventTime": 1035.629638671875,
+        "KillerName": "AoshiW",
+        "VictimName": "Kaisa bot"
+      },
+      {
+        "Assisters": [
+          "Bizzaro"
+        ],
+        "EventID": 106,
+        "EventName": "ChampionKill",
+        "EventTime": 1038.62353515625,
+        "KillerName": "AoshiW",
+        "VictimName": "Ashe bot"
+      },
+      {
+        "EventID": 107,
+        "EventName": "Multikill",
+        "EventTime": 1038.62353515625,
+        "KillStreak": 2,
+        "KillerName": "AoshiW"
+      },
+      {
+        "Assisters": [
+          "Bizzaro"
+        ],
+        "EventID": 108,
+        "EventName": "ChampionKill",
+        "EventTime": 1042.71435546875,
+        "KillerName": "AoshiW",
+        "VictimName": "Rumble bot"
+      },
+      {
+        "EventID": 109,
+        "EventName": "Multikill",
+        "EventTime": 1042.71435546875,
+        "KillStreak": 3,
+        "KillerName": "AoshiW"
+      },
+      {
+        "Acer": "AoshiW",
+        "AcingTeam": "ORDER",
+        "EventID": 110,
+        "EventName": "Ace",
+        "EventTime": 1042.71435546875
+      },
+      {
+        "Assisters": [],
+        "EventID": 111,
+        "EventName": "TurretKilled",
+        "EventTime": 1050.039306640625,
+        "KillerName": "Bizzaro",
+        "TurretKilled": "Turret_T2_C_02_A"
+      },
+      {
+        "Assisters": [
+          "Rumble bot"
+        ],
+        "EventID": 112,
+        "EventName": "ChampionKill",
+        "EventTime": 1059.3504638671875,
+        "KillerName": "Irelia bot",
+        "VictimName": "AoshiW"
+      },
+      {
+        "Assisters": [
+          "Bizzaro"
+        ],
+        "EventID": 113,
+        "EventName": "ChampionKill",
+        "EventTime": 1063.825927734375,
+        "KillerName": "WooonskY",
+        "VictimName": "Irelia bot"
+      },
+      {
+        "Assisters": [
+          "Bizzaro"
+        ],
+        "EventID": 114,
+        "EventName": "ChampionKill",
+        "EventTime": 1077.113525390625,
+        "KillerName": "WooonskY",
+        "VictimName": "Rumble bot"
+      },
+      {
+        "Assisters": [
+          "WooonskY"
+        ],
+        "EventID": 115,
+        "EventName": "ChampionKill",
+        "EventTime": 1079.8975830078125,
+        "KillerName": "Bizzaro",
+        "VictimName": "Kaisa bot"
+      },
+      {
+        "Assisters": [
+          "WooonskY"
+        ],
+        "EventID": 116,
+        "EventName": "ChampionKill",
+        "EventTime": 1086.1156005859375,
+        "KillerName": "Bizzaro",
+        "VictimName": "Darius bot"
+      },
+      {
+        "EventID": 117,
+        "EventName": "Multikill",
+        "EventTime": 1086.1156005859375,
+        "KillStreak": 2,
+        "KillerName": "Bizzaro"
+      },
+      {
+        "Assisters": [
+          "Bizzaro"
+        ],
+        "EventID": 118,
+        "EventName": "ChampionKill",
+        "EventTime": 1088.907470703125,
+        "KillerName": "WooonskY",
+        "VictimName": "Ashe bot"
+      },
+      {
+        "Acer": "WooonskY",
+        "AcingTeam": "ORDER",
+        "EventID": 119,
+        "EventName": "Ace",
+        "EventTime": 1088.907470703125
+      },
+      {
+        "Assisters": [
+          "WooonskY",
+          "Lu2mik"
+        ],
+        "EventID": 120,
+        "EventName": "ChampionKill",
+        "EventTime": 1100.34423828125,
+        "KillerName": "Bizzaro",
+        "VictimName": "Irelia bot"
+      },
+      {
+        "Assisters": [
+          "Bizzaro"
+        ],
+        "EventID": 121,
+        "EventName": "ChampionKill",
+        "EventTime": 1110.090087890625,
+        "KillerName": "WooonskY",
+        "VictimName": "Rumble bot"
+      },
+      {
+        "Assisters": [
+          "WooonskY"
+        ],
+        "EventID": 122,
+        "EventName": "ChampionKill",
+        "EventTime": 1117.482421875,
+        "KillerName": "kilerke",
+        "VictimName": "Kaisa bot"
+      },
+      {
+        "EventID": 123,
+        "EventName": "GameEnd",
+        "EventTime": 1123.30810546875,
+        "Result": "Win"
+      }
+    ]
+  },
+  "gameData": {
+    "gameMode": "CLASSIC",
+    "gameTime": 1126.7901611328125,
+    "mapName": "Map11",
+    "mapNumber": 11,
+    "mapTerrain": "Default"
+  }
+}

@@ -16,6 +16,7 @@
     <ItemGroup>
         <ProjectReference Include="..\..\src\Kunc.RiotGames.Api\Kunc.RiotGames.Api.csproj" />
         <ProjectReference Include="..\..\src\Kunc.RiotGames.Lol.DataDragon\Kunc.RiotGames.Lol.DataDragon.csproj" />
+        <ProjectReference Include="..\..\src\Kunc.RiotGames.Lol.GameClient\Kunc.RiotGames.Lol.GameClient.csproj" />
         <ProjectReference Include="..\..\src\Kunc.RiotGames.Lol.LeagueClientUpdate\Kunc.RiotGames.Lol.LeagueClientUpdate.csproj" />
         <ProjectReference Include="..\..\src\Kunc.RiotGames.Lor.DeckCodes\Kunc.RiotGames.Lor.DeckCodes.csproj" />
         <ProjectReference Include="..\..\src\Kunc.RiotGames.Lor.GameClient\Kunc.RiotGames.Lor.GameClient.csproj" />

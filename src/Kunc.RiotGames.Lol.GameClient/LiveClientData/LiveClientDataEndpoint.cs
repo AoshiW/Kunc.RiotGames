@@ -62,7 +62,7 @@ public class LiveClientDataEndpoint : ILiveClientData
     }
 
     /// <inheritdoc/>
-    public async Task<PlayerScoresDto> GetPlayerScoresAsync(RiotId riotId, CancellationToken cancellationToken = default)
+    public async Task<PlayerScoresDto> GetPlayerScoresAsync(IRiotId riotId, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(riotId);
         var data = await _client.GetFromJsonAsync<PlayerScoresDto>($"/liveclientdata/playerscores?riotId={riotId}", cancellationToken).ConfigureAwait(false);
@@ -70,7 +70,7 @@ public class LiveClientDataEndpoint : ILiveClientData
     }
 
     /// <inheritdoc/>
-    public async Task<SummonerSpellsDto> GetPlayerSummonerSpellsAsync(RiotId riotId, CancellationToken cancellationToken = default)
+    public async Task<SummonerSpellsDto> GetPlayerSummonerSpellsAsync(IRiotId riotId, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(riotId);
         var data = await _client.GetFromJsonAsync<SummonerSpellsDto>($"/liveclientdata/playersummonerspells?riotId={riotId}", cancellationToken).ConfigureAwait(false);
@@ -78,7 +78,7 @@ public class LiveClientDataEndpoint : ILiveClientData
     }
 
     /// <inheritdoc/>
-    public async Task<MainRunesDto> GetPlayerMainRunesAsync(RiotId riotId, CancellationToken cancellationToken = default)
+    public async Task<MainRunesDto> GetPlayerMainRunesAsync(IRiotId riotId, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(riotId);
         var data = await _client.GetFromJsonAsync<MainRunesDto>($"/liveclientdata/playermainrunes?riotId={riotId}", cancellationToken).ConfigureAwait(false);
@@ -86,7 +86,7 @@ public class LiveClientDataEndpoint : ILiveClientData
     }
 
     /// <inheritdoc/>
-    public async Task<PlayerItemDto[]> GetPlayerItemsAsync(RiotId riotId, CancellationToken cancellationToken = default)
+    public async Task<PlayerItemDto[]> GetPlayerItemsAsync(IRiotId riotId, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(riotId);
         var data = await _client.GetFromJsonAsync<PlayerItemDto[]>($"/liveclientdata/playeritems?riotId={riotId}", cancellationToken).ConfigureAwait(false);

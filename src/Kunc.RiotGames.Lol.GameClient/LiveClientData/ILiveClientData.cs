@@ -60,7 +60,7 @@ public interface ILiveClientData
     /// <param name="riotId">RiotID GameName (with tag) of the player.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<PlayerItemDto[]> GetPlayerItemsAsync(RiotId riotId, CancellationToken cancellationToken = default);
+    Task<PlayerItemDto[]> GetPlayerItemsAsync(IRiotId riotId, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Retrieve the list of heroes in the game and their stats.
@@ -76,7 +76,7 @@ public interface ILiveClientData
     /// <param name="riotId">RiotID GameName (with tag) of the player.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<MainRunesDto> GetPlayerMainRunesAsync(RiotId riotId, CancellationToken cancellationToken = default);
+    Task<MainRunesDto> GetPlayerMainRunesAsync(IRiotId riotId, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Retrieve the list of the current scores for the player.
@@ -84,7 +84,7 @@ public interface ILiveClientData
     /// <param name="riotId">RiotID GameName (with tag) of the player.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<PlayerScoresDto> GetPlayerScoresAsync(RiotId riotId, CancellationToken cancellationToken = default);
+    Task<PlayerScoresDto> GetPlayerScoresAsync(IRiotId riotId, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Retrieve the list of the summoner spells for the player.
@@ -92,5 +92,5 @@ public interface ILiveClientData
     /// <param name="riotId">RiotID GameName (with tag) of the player.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<SummonerSpellsDto> GetPlayerSummonerSpellsAsync(RiotId riotId, CancellationToken cancellationToken = default);
+    Task<SummonerSpellsDto> GetPlayerSummonerSpellsAsync(IRiotId riotId, CancellationToken cancellationToken = default);
 }

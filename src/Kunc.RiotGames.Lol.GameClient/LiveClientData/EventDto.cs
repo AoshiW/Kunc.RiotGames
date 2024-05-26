@@ -31,7 +31,7 @@ public class EventDto : BaseDto
     
     public string? KillerName { get; set; }
     
-    public string? KillStreak { get; set; }
+    public int? KillStreak { get; set; }
     
     public string? Recipient { get; set; }
     

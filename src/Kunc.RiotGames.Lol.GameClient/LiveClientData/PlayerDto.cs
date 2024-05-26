@@ -7,7 +7,7 @@ namespace Kunc.RiotGames.Lol.GameClient.LiveClientData;
 public class PlayerDto : BaseDto
 {
     [JsonPropertyName("championName")]
-    public string ChampionName { get; set; }
+    public string ChampionName { get; set; } = string.Empty;
 
     [MemberNotNullWhen(true, nameof(Runes))]
     [JsonPropertyName("isBot")]

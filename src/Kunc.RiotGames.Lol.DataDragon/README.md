@@ -1,6 +1,9 @@
 # Kunc.RiotGames.Lol.DataDragon
 [![Nuget](https://img.shields.io/nuget/v/Kunc.RiotGames.Lol.DataDragon?logo=NuGet&logoColor=blue&style=flat-square)](https://www.nuget.org/packages/Kunc.RiotGames.Lol.DataDragon)
 
+## Features
+Caching
+
 ## How to Use
 ```cs
 var options = new LolDataDragonOptions();

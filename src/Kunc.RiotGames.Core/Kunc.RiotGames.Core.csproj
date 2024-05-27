@@ -2,8 +2,8 @@
 
     <PropertyGroup>
         <RootNamespace>Kunc.RiotGames</RootNamespace>
-        <Description></Description>
-        <Version>0.1.4</Version>
+        <Description>Core package for other Kunc.RiotGames.* packages.</Description>
+        <Version>0.1.5</Version>
     </PropertyGroup>
 
     <ItemGroup>

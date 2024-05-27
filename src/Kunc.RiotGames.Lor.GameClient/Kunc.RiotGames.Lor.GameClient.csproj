@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <PackageTags>Lor;GameClient;LegendsOfRuneterra;Runeterra</PackageTags>
-        <Version>0.1.4</Version>
+        <Version>0.1.5</Version>
         <Description>Simple client for LegendsOfRuneterra GameClientAPI.</Description>
     </PropertyGroup>
 

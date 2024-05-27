@@ -8,10 +8,7 @@ public class LorGameClientOptions : IOptions<LorGameClientOptions>
     /// <summary>
     /// Options to control the behavior during deserialization.
     /// </summary>
-    public JsonSerializerOptions JsonSerializerOptions { get; set; } = new()
-    {
-        TypeInfoResolver = JsonContext.Default
-    };
+    public JsonSerializerOptions JsonSerializerOptions { get; set; } = new();
 
     public int Port { get; set; } = 21337;
 

@@ -15,10 +15,7 @@ public class LolDataDragonOptions : IOptions<LolDataDragonOptions>
     /// <summary>
     /// Options to control the behavior during deserialization.
     /// </summary>
-    public JsonSerializerOptions JsonSerializerOptions { get; set; } = new()
-    {
-        TypeInfoResolver = JsonContext.Default,
-    };
+    public JsonSerializerOptions JsonSerializerOptions { get; set; } = new();
 
     LolDataDragonOptions IOptions<LolDataDragonOptions>.Value => this;
 }

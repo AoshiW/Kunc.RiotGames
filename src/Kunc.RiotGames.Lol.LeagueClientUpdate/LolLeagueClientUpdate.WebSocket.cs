@@ -47,7 +47,7 @@ public partial class LolLeagueClientUpdate : ILolLeagueClientUpdate
         if (e.Length != 3 || e[0].GetInt32() != 8)
             return;
         var data = e[2];
-        OnLcuEvent?.Invoke(this, data.Deserialize(JsonContext.Default.LcuEventArgsJsonElement)!);
+        OnLcuEvent?.Invoke(this, data.Deserialize<LcuEventArgs<JsonElement>>()!);
         if (!e[1].ValueEquals("OnJsonApiEvent"u8))
             return;
 

@@ -1,8 +1,6 @@
 # Kunc.RiotGames
 
-TODO
-
-## Table 
+## Packages 
 All packages are available through [NuGet](https://www.nuget.org/packages?q=Kunc.RiotGames.).
 
 Package                                |NuGet| Description

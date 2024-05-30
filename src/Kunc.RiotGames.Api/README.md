@@ -13,9 +13,7 @@ using var services = new ServiceCollection()
     .BuildServiceProvider();
 var api = services.GetRequiredService<IRiotGamesApi>();
 
-var account = await api.RiotAccountV1.GetAccountByRiotIdAsync(Regions.EUROPE, "AoshiW", "IRON");
-// or
-//var account = await api.RiotAccountV1.GetAccountByRiotIdAsync(Regions.EUROPE, "AoshiW#IRON");
+var account = await api.RiotAccountV1.GetAccountByRiotIdAsync(Regions.EUROPE, "AoshiW#IRON");
 Console.WriteLine($"Account: {account.GetRiotId()}");
 
 var summoner = await api.LolSummonerV4.GetSummonerByPuuidAsync(Regions.EUN1, account.Puuid);

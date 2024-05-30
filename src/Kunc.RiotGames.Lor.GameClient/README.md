@@ -8,19 +8,14 @@
 var options = new LorGameClientOptions();
 var lorGameClient = new LorGameClient(options);
 
-while (true)
-{
-    PositionalRectangles positionalRectangles = await lorGameClient.GetPositionalRectanglesAsync();
-    // do stuff
+PositionalRectangles positionalRectangles = await lorGameClient.GetPositionalRectanglesAsync();
+// do stuff
 
-    StaticDecklist staticDecklist = await lorGameClient.GetStaticDecklistAsync();
-    // do stuff
+StaticDecklist staticDecklist = await lorGameClient.GetStaticDecklistAsync();
+// do stuff
 
-    GameResult gameResult = await lorGameClient.GetGameResultAsync();
-    // do stuff
-
-    await Task.Delay(5000);
-}
+GameResult gameResult = await lorGameClient.GetGameResultAsync();
+// do stuff
 ```
 
 ## Disclaimer

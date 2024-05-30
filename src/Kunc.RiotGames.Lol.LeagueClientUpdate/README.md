@@ -1,4 +1,6 @@
 # Kunc.RiotGames.Lol.LeagueClientUpdate
+[![Nuget](https://img.shields.io/nuget/v/Kunc.RiotGames.Lol.LeagueClientUpdate?logo=NuGet&logoColor=blue&style=flat-square)](https://www.nuget.org/packages/Kunc.RiotGames.Lol.LeagueClientUpdate)
+
 Simple client for interacting with the League of Legends LCU.
 
 ## How to use

@@ -1,8 +1,11 @@
 # Kunc.RiotGames.Lol.DataDragon
 [![Nuget](https://img.shields.io/nuget/v/Kunc.RiotGames.Lol.DataDragon?logo=NuGet&logoColor=blue&style=flat-square)](https://www.nuget.org/packages/Kunc.RiotGames.Lol.DataDragon)
 
+Simple client for League of Legends DataDragon.
+
 ## Features
-Caching
+- Caching
+- Support for `"latest"` version
 
 ## How to Use
 ```cs
@@ -12,7 +15,7 @@ var lolDataDragon = new LolDataDragon(options);
 using var services= new ServiceCollection()
     .AddLolDataDragon()
     .BuildServiceProvider();
-var api = services.GetRequiredService<ILolDataDragon>();
+var lolDataDragon = services.GetRequiredService<ILolDataDragon>();
 
 int count = 5;
 var language = "en_US";
@@ -20,6 +23,8 @@ var versions = await lolDataDragon.GetVersionsAsync();
 var lastVersion = versions[0];
 
 Dictionary<string, ChampionDto> champions = await lolDataDragon.GetAllChampionsAsync(lastVersion, language);
+// or
+// Dictionary<string, ChampionDto> champions = await lolDataDragon.GetAllChampionsAsync("latest", language);
 
 Console.WriteLine($"Top {count} champions with the biggest attack range:");
 foreach (var champion in champions.Values.OrderByDescending(c => c.Stats.AttackRange).Take(count))

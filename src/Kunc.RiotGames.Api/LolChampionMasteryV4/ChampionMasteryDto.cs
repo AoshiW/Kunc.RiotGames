@@ -21,12 +21,6 @@ public class ChampionMasteryDto : BaseDto
     public long ChampionPointsUntilNextLevel { get; set; }
 
     /// <summary>
-    /// Is chest granted for this champion or not in current season.
-    /// </summary>
-    [JsonPropertyName("chestGranted")]
-    public bool IsChestGranted { get; set; }
-
-    /// <summary>
     /// Champion ID for this entry.
     /// </summary>
     [JsonPropertyName("championId")]

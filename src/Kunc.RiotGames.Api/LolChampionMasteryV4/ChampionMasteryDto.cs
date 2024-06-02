@@ -56,4 +56,17 @@ public class ChampionMasteryDto : BaseDto
     /// </summary>
     [JsonPropertyName("tokensEarned")]
     public int TokensEarned { get; set; }
+
+    [JsonPropertyName("markRequiredForNextLevel")]
+    public int MarkRequiredForNextLevel { get; set; }
+
+    [JsonPropertyName("championSeasonMilestone")]
+    public int ChampionSeasonMilestone { get; set; }
+
+    [JsonPropertyName("milestoneGrades")]
+    public string[]? MilestoneGrades { get; set; }
+
+    [JsonPropertyName("nextSeasonMilestone")]
+    [JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]
+    public SeasonMilestoneDto NextSeasonMilestone { get; set; } = new();
 }

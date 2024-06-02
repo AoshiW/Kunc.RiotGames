@@ -3,7 +3,7 @@
   <PropertyGroup>
       <PackageTags>Lol;LeagueOfLegends;GameClient</PackageTags>
       <Description>Simple client for LeagueOfLegends GameClientAPI.</Description>
-      <Version>0.1.0</Version>
+      <Version>0.1.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

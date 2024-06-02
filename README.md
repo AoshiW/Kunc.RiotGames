@@ -1,6 +1,9 @@
 # Kunc.RiotGames
+`Kunc.RiotGames` is a collection of libraries to help you work with the RiotGames API, and things like DDragon, LCU , etc.
 
-## Packages 
+TODO 
+
+## Packages
 All packages are available through [NuGet](https://www.nuget.org/packages?q=Kunc.RiotGames.).
 
 Package                                |NuGet| Description

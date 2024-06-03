@@ -16,7 +16,7 @@ public class TftMatchV1Endpoint : ITftMatchV1
     }
 
     /// <inheritdoc/>
-    public async Task<string[]> GetListOfMatchIdsAsync(string region, string puuid, ListOfMatchIdsQuery? query = null, CancellationToken cancellationToken = default)
+    public async Task<string[]> GetMatchIdsAsync(string region, string puuid, MatchIdsQuery? query = null, CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(region);
         ArgumentException.ThrowIfNullOrEmpty(puuid);

@@ -11,7 +11,7 @@ public class LolMatchV5Test : ApiBase<TGame.LOL>
         var acc = GetConfiguration("Summoner").Get<AccountInfo>()!;
         var region = ToBigRegion(acc.Region);
 
-        var matchIds = await Api.LolMatchV5.GetListOfMatchIdsAsync(region, acc.Puuid);
+        var matchIds = await Api.LolMatchV5.GetMatchIdsAsync(region, acc.Puuid);
 
         Assert.IsTrue(matchIds.Length > 0);
         bool isFirstMatch = true;

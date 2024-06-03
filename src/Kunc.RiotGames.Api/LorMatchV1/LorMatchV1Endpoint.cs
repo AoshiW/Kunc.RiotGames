@@ -16,7 +16,7 @@ public class LorMatchV1Endpoint : ILorMatchV1
     }
 
     /// <inheritdoc/>
-    public async Task<string[]> GetListOfMatchIdsAsync(string region, string puuid, CancellationToken cancellationToken = default)
+    public async Task<string[]> GetMatchIdsAsync(string region, string puuid, CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(region);
         ArgumentException.ThrowIfNullOrEmpty(puuid);

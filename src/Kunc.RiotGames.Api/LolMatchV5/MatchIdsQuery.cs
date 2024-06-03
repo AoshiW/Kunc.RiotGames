@@ -1,6 +1,6 @@
 ﻿namespace Kunc.RiotGames.Api.LolMatchV5;
 
-public class ListOfMatchIdsQuery : QueryString
+public class MatchIdsQuery : QueryString
 {
     public DateTimeOffset? StartTime { get; set; }
 

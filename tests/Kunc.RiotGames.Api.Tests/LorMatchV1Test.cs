@@ -10,7 +10,7 @@ public class LorMatchV1Test : ApiBase<TGame.LOR>
     {
         var masterPlayer = GetConfiguration("MasterPlayer").Get<AccountInfo>()!;
 
-        var matchIds = await Api.LorMatchV1.GetListOfMatchIdsAsync(masterPlayer.Region, masterPlayer.Puuid);
+        var matchIds = await Api.LorMatchV1.GetMatchIdsAsync(masterPlayer.Region, masterPlayer.Puuid);
 
         Assert.IsTrue(matchIds.Length > 0);
 

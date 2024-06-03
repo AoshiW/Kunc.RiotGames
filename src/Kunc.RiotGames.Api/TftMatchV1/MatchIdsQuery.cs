@@ -1,6 +1,6 @@
 ﻿namespace Kunc.RiotGames.Api.TftMatchV1;
 
-public class ListOfMatchIdsQuery : QueryString
+public class MatchIdsQuery : QueryString
 {
     public DateTimeOffset? StartTime { get; set; }
 

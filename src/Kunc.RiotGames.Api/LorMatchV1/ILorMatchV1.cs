@@ -9,7 +9,7 @@ public interface ILorMatchV1
     /// <param name="puuid"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<string[]> GetListOfMatchIdsAsync(string region, string puuid, CancellationToken cancellationToken = default);
+    Task<string[]> GetMatchIdsAsync(string region, string puuid, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Get a match by id.

@@ -11,7 +11,7 @@ public class TftMatchV1Test : ApiBase<TGame.TFT>
         var acc = GetConfiguration("Summoner").Get<AccountInfo>()!;
         var region = ToBigRegion(acc.Region);
 
-        var matchIds = await Api.TftMatchV1.GetListOfMatchIdsAsync(region, acc.Puuid);
+        var matchIds = await Api.TftMatchV1.GetMatchIdsAsync(region, acc.Puuid);
 
         Assert.IsTrue(matchIds.Length > 0);
         bool isFirstMatch = true;

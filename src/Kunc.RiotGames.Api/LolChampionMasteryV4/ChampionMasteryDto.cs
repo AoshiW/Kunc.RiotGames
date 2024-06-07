@@ -52,10 +52,10 @@ public class ChampionMasteryDto : BaseDto
     public long ChampionPointsSinceLastLevel { get; set; }
 
     /// <summary>
-    /// The token earned for this champion at the current championLevel. When the championLevel is advanced the tokensEarned resets to 0.
+    /// The marks earned for this champion.
     /// </summary>
     [JsonPropertyName("tokensEarned")]
-    public int TokensEarned { get; set; }
+    public int MarksEarned { get; set; }
 
     [JsonPropertyName("markRequiredForNextLevel")]
     public int MarkRequiredForNextLevel { get; set; }
@@ -63,8 +63,11 @@ public class ChampionMasteryDto : BaseDto
     [JsonPropertyName("championSeasonMilestone")]
     public int ChampionSeasonMilestone { get; set; }
 
+    // if NextSeasonMilestone.IsBonus is false the default value is null,
+    // if NextSeasonMilestone.IsBonus is true the default value is an empty array
+    // for better consistency the type will not be nullable and the default value will be an empty array
     [JsonPropertyName("milestoneGrades")]
-    public string[]? MilestoneGrades { get; set; }
+    public string[] MilestoneGrades { get; set; } = [];
 
     [JsonPropertyName("nextSeasonMilestone")]
     [JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]

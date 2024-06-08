@@ -1,12 +1,11 @@
 ﻿using System.Buffers;
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Jobs;
 using Kunc.RiotGames.Lor.DeckCodes;
 
 namespace Benchmarks;
 
 [MemoryDiagnoser]
-[ShortRunJob(RuntimeMoniker.Net70)]
+[ShortRunJob]
 public class Base32Benchmark
 {
     public IEnumerable<object> Strings() => new string[]

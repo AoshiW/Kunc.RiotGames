@@ -8,7 +8,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="MSTest.TestAdapter" />
     <PackageReference Include="MSTest.TestFramework" />
-    <PackageReference Include="coverlet.collector" >
+    <PackageReference Include="coverlet.collector">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -16,12 +16,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Kunc.RiotGames.Lol.LeagueClientUpdate\Kunc.RiotGames.Lol.LeagueClientUpdate.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="lockfile">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

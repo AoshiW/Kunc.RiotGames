@@ -18,6 +18,10 @@ public class FileLockfileProvider : ILockfileProvider
     /// <inheritdoc/>
     public event EventHandler? Deleted;
 
+    /// <summary>
+    /// The default path where lockfile is located.
+    /// </summary>
+    /// <exception cref="PlatformNotSupportedException"></exception>
     protected virtual string LockfileDirectory =>
         OperatingSystem.IsWindows() ? @"C:\Riot Games\League of Legends\"
         : throw new PlatformNotSupportedException();
@@ -47,12 +51,20 @@ public class FileLockfileProvider : ILockfileProvider
             ? ValueTask.FromResult<Lockfile?>(_lockfile)
             : GetLockfileAsyncCore(_filePath, cancellationToken);
 
-        static async ValueTask<Lockfile?> GetLockfileAsyncCore(string path, CancellationToken cancellationToken)
+        static ValueTask<Lockfile?> GetLockfileAsyncCore(string path, CancellationToken cancellationToken)
         {
             if(!File.Exists(path))
                 return default;
-            return await Lockfile.FromFileAsync(path, cancellationToken).ConfigureAwait(false);
+            return FromFileAsync(path, cancellationToken)!;
         }
+    }
+
+    static async ValueTask<Lockfile> FromFileAsync(string path, CancellationToken cancellationToken = default)
+    {
+        using var stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+        using var reader = new StreamReader(stream);
+        var lockfile = await reader.ReadToEndAsync(cancellationToken).ConfigureAwait(false);
+        return Lockfile.Parse(lockfile.AsSpan().Trim(), null);
     }
 
     private void FileSystemWatcherEvent(object sender, FileSystemEventArgs e)

@@ -17,14 +17,6 @@ public sealed class Lockfile : IEquatable<Lockfile?>, ISpanFormattable, ISpanPar
     private static Lockfile? _empty;
 
     /// <summary>
-    /// The default path where lockfile is located.
-    /// </summary>
-    /// <exception cref="PlatformNotSupportedException"></exception>
-    public static string DefaulthPath
-        => OperatingSystem.IsWindows() ? @"C:\Riot Games\League of Legends\lockfile"
-        : throw new PlatformNotSupportedException();
-
-    /// <summary>
     /// Process name.
     /// </summary>
     public string Name { get; }
@@ -64,24 +56,6 @@ public sealed class Lockfile : IEquatable<Lockfile?>, ISpanFormattable, ISpanPar
         Port = port;
         Password = password;
         Protocol = protocol;
-    }
-
-    /// <summary>
-    /// Get lockfile from specific path.
-    /// </summary>
-    /// <remarks>
-    /// Unfortunately, the <paramref name="cancellationToken"/> parameter is ignored for .NET 6.
-    /// </remarks>
-    /// <param name="path">Path to file. If not set, <see cref="DefaulthPath"/> is used.</param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    public static async Task<Lockfile> FromFileAsync(string? path = null, CancellationToken cancellationToken = default)
-    {
-        path ??= DefaulthPath;
-        using var stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-        using var reader = new StreamReader(stream);
-        var lockfile = await reader.ReadToEndAsync(cancellationToken).ConfigureAwait(false);
-        return Parse(lockfile, null);
     }
 
     /// <inheritdoc/>

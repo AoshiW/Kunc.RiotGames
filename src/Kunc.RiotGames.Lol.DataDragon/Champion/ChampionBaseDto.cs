@@ -8,7 +8,8 @@ public class ChampionBaseDto : BaseDto
     public string Id { get; set; } = string.Empty;
 
     [JsonPropertyName("key")]
-    public string Key { get; set; } = string.Empty;
+    [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
+    public int Key { get; set; }
 
     [JsonPropertyName("name")]
     public string Name { get; set; } = string.Empty;

@@ -6,9 +6,15 @@ namespace Kunc.RiotGames.Api.LolMatchV5;
 
 public class ParticipantDto : BaseDto, IKda
 {
+    /// <summary>
+    /// Yellow crossed swords
+    /// </summary>
     [JsonPropertyName("allInPings")]
     public int AllInPings { get; set; }
 
+    /// <summary>
+    /// Green flag
+    /// </summary>
     [JsonPropertyName("assistMePings")]
     public int AssistMePings { get; set; }
 
@@ -37,6 +43,9 @@ public class ParticipantDto : BaseDto, IKda
     [JsonPropertyName("championName")]
     public string ChampionName { get; set; } = string.Empty;
 
+    /// <summary>
+    /// Blue generic ping (ALT+click)
+    /// </summary>
     [JsonPropertyName("commandPings")]
     public int CommandPings { get; set; }
 
@@ -80,9 +89,15 @@ public class ParticipantDto : BaseDto, IKda
     [JsonPropertyName("eligibleForProgression")]
     public bool IsEligibleForProgression { get; set; }
 
+    /// <summary>
+    /// Yellow questionmark
+    /// </summary>
     [JsonPropertyName("enemyMissingPings")]
     public int EnemyMissingPings { get; set; }
 
+    /// <summary>
+    /// Red eyeball
+    /// </summary>
     [JsonPropertyName("enemyVisionPings")]
     public int EnemyVisionPings { get; set; }
 
@@ -104,11 +119,14 @@ public class ParticipantDto : BaseDto, IKda
     [JsonPropertyName("gameEndedInSurrender")]
     public bool GameEndedInSurrender { get; set; }
 
-    [JsonPropertyName("goldEarned")]
-    public int GoldEarned { get; set; }
-
+    /// <summary>
+    /// Yellow circle with horizontal line
+    /// </summary>
     [JsonPropertyName("getBackPings")]
     public int GetBackPings { get; set; }
+
+    [JsonPropertyName("goldEarned")]
+    public int GoldEarned { get; set; }
 
     [JsonPropertyName("goldSpent")]
     public int GoldSpent { get; set; }
@@ -188,9 +206,15 @@ public class ParticipantDto : BaseDto, IKda
     [JsonPropertyName("missions")]
     public MissionsDto Missions { get;set;}
 
+    /// <remarks>
+    /// neutralMinionsKilled = mNeutralMinionsKilled, which is incremented on kills of kPet and kJungleMonster
+    /// </remarks>
     [JsonPropertyName("neutralMinionsKilled")]
     public int NeutralMinionsKilled { get; set; }
 
+    /// <summary>
+    /// Green ward
+    /// </summary>
     [JsonPropertyName("needVisionPings")]
     public int NeedVisionPings { get; set; }
 
@@ -212,6 +236,9 @@ public class ParticipantDto : BaseDto, IKda
     [JsonPropertyName("objectivesStolenAssists")]
     public int ObjectivesStolenAssists { get; set; }
 
+    /// <summary>
+    /// Blue arrow pointing at ground
+    /// </summary>
     [JsonPropertyName("onMyWayPings")]
     public int OnMyWayPings { get; set; }
 
@@ -234,6 +261,9 @@ public class ParticipantDto : BaseDto, IKda
     [JsonPropertyName("physicalDamageTaken")]
     public int PhysicalDamageTaken { get; set; }
 
+    /// <summary>
+    /// Green minion
+    /// </summary>
     [JsonPropertyName("pushPings")]
     public int PushPings { get; set; }
 
@@ -291,9 +321,6 @@ public class ParticipantDto : BaseDto, IKda
     [JsonPropertyName("summonerLevel")]
     public int SummonerLevel { get; set; }
 
-    [JsonPropertyName("summonerName")]
-    public string SummonerName { get; set; } = string.Empty;
-
     [JsonPropertyName("teamEarlySurrendered")]
     public bool TeamEarlySurrendered { get; set; }
 
@@ -330,12 +357,23 @@ public class ParticipantDto : BaseDto, IKda
     [JsonPropertyName("totalEnemyJungleMinionsKilled")]
     public int TotalEnemyJungleMinionsKilled { get; set; }
 
+    /// <remarks>
+    /// Whenever positive health is applied (which translates to all heals in the game but not things like regeneration), totalHeal is incremented by the amount of health received.
+    /// This includes healing enemies, jungle monsters, yourself, etc
+    /// </remarks>
     [JsonPropertyName("totalHeal")]
     public int TotalHeal { get; set; }
 
+    /// <remarks>
+    /// Whenever positive health is applied (which translates to all heals in the game but not things like regeneration), totalHealsOnTeammates is incremented by the amount of health received.
+    /// This is post modified, so if you heal someone missing 5 health for 100 you will get +5 totalHealsOnTeammates
+    /// </remarks>
     [JsonPropertyName("totalHealsOnTeammates")]
     public int TotalHealsOnTeammates { get; set; }
 
+    /// <remarks>
+    /// totalMillionsKilled = mMinionsKilled, which is only incremented on kills of kTeamMinion, kMeleeLaneMinion, kSuperLaneMinion, kRangedLaneMinion and kSiegeLaneMinion
+    /// </remarks>
     [JsonPropertyName("totalMinionsKilled")]
     public int TotalMinionsKilled { get; set; }
 

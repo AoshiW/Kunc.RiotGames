@@ -170,7 +170,7 @@ public partial class LolDataDragon : ILolDataDragon
             {
                 var versions = await obj.GetVersionsAsync(cancellationToken).ConfigureAwait(false);
                 latest = versions[0];
-                await obj._distributedCache.SetStringAsync(cacheKey, latest, obj._options.DefaultCacheEntryOptions, cancellationToken).ConfigureAwait(false);
+                await obj._distributedCache.SetStringAsync(cacheKey, latest, obj._options.DefaultCacheEntryOptions ?? distributedCacheEntryOptions, cancellationToken).ConfigureAwait(false);
             }
             return latest;
         }

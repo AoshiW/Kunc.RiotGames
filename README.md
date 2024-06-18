@@ -20,7 +20,7 @@ Package                                |NuGet| Description
 ## How to Use
 ```cs
 var api = RiotGamesApi.Create(x => x.ApiKey = "RGAPI-...");
-var lolDataDragon = new LolDataDragon(new LolDataDragonOptions());
+var lolDataDragon = LolDataDragon.Create();
 string bigRegion = Regions.EUROPE;
 string smallRegion = Regions.EUN1;
 var riotId = "AoshiW#IRON";

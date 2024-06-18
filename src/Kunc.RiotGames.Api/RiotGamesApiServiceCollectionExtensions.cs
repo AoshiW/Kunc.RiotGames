@@ -35,31 +35,31 @@ public static class RiotGamesApiServiceCollectionExtensions
     {
         ArgumentNullException.ThrowIfNull(services);
         services.AddOptions();
-        services.TryAdd(ServiceDescriptor.Singleton<IRiotGamesRateLimiter, RiotGamesRateLimiter>());
-        services.TryAdd(ServiceDescriptor.Singleton<IRiotGamesApiClient, RiotGamesApiClient>());
-        services.TryAdd(ServiceDescriptor.Singleton<IRiotGamesApi, RiotGamesApi>());
+        services.TryAdd(ServiceDescriptor.Singleton(typeof(IRiotGamesRateLimiter), typeof(RiotGamesRateLimiter)));
+        services.TryAdd(ServiceDescriptor.Singleton(typeof(IRiotGamesApiClient), typeof(RiotGamesApiClient)));
+        services.TryAdd(ServiceDescriptor.Singleton(typeof(IRiotGamesApi), typeof(RiotGamesApi)));
 
-        services.TryAdd(ServiceDescriptor.Singleton<ILolClashV1, LolClashV1Endpoint>());
-        services.TryAdd(ServiceDescriptor.Singleton<ILolChallengesV1, LolChallengesV1Endpoint>());
-        services.TryAdd(ServiceDescriptor.Singleton<ILolChampionMasteryV4, LolChampionMasteryV4Endpoint>());
-        services.TryAdd(ServiceDescriptor.Singleton<ILolChampionV3, LolChampionV3Endpoint>());
-        services.TryAdd(ServiceDescriptor.Singleton<ILolLeagueV4, LolLeagueV4Endpoint>());
-        services.TryAdd(ServiceDescriptor.Singleton<ILolMatchV5, LolMatchV5Endpoint>());
-        services.TryAdd(ServiceDescriptor.Singleton<ILolSpectatorV5, LolSpectatorV5Endpoint>());
-        services.TryAdd(ServiceDescriptor.Singleton<ILolStatusV4, LolStatusV4Endpoint>());
-        services.TryAdd(ServiceDescriptor.Singleton<ILolSummonerV4, LolSummonerV4Endpoint>());
+        services.TryAdd(ServiceDescriptor.Singleton(typeof(ILolClashV1), typeof(LolClashV1Endpoint)));
+        services.TryAdd(ServiceDescriptor.Singleton(typeof(ILolChallengesV1), typeof(LolChallengesV1Endpoint)));
+        services.TryAdd(ServiceDescriptor.Singleton(typeof(ILolChampionMasteryV4), typeof(LolChampionMasteryV4Endpoint)));
+        services.TryAdd(ServiceDescriptor.Singleton(typeof(ILolChampionV3), typeof(LolChampionV3Endpoint)));
+        services.TryAdd(ServiceDescriptor.Singleton(typeof(ILolLeagueV4), typeof(LolLeagueV4Endpoint)));
+        services.TryAdd(ServiceDescriptor.Singleton(typeof(ILolMatchV5), typeof(LolMatchV5Endpoint)));
+        services.TryAdd(ServiceDescriptor.Singleton(typeof(ILolSpectatorV5), typeof(LolSpectatorV5Endpoint)));
+        services.TryAdd(ServiceDescriptor.Singleton(typeof(ILolStatusV4), typeof(LolStatusV4Endpoint)));
+        services.TryAdd(ServiceDescriptor.Singleton(typeof(ILolSummonerV4), typeof(LolSummonerV4Endpoint)));
 
-        services.TryAdd(ServiceDescriptor.Singleton<ILorMatchV1, LorMatchV1Endpoint>());
-        services.TryAdd(ServiceDescriptor.Singleton<ILorRankedV1, LorRankedV1Endpoint>());
-        services.TryAdd(ServiceDescriptor.Singleton<ILorStatusV1, LorStatusV1Endpoint>());
+        services.TryAdd(ServiceDescriptor.Singleton(typeof(ILorMatchV1), typeof(LorMatchV1Endpoint)));
+        services.TryAdd(ServiceDescriptor.Singleton(typeof(ILorRankedV1), typeof(LorRankedV1Endpoint)));
+        services.TryAdd(ServiceDescriptor.Singleton(typeof(ILorStatusV1), typeof(LorStatusV1Endpoint)));
 
-        services.TryAdd(ServiceDescriptor.Singleton<IRiotAccountV1, RiotAccountV1Endpoint>());
+        services.TryAdd(ServiceDescriptor.Singleton(typeof(IRiotAccountV1), typeof(RiotAccountV1Endpoint)));
 
-        services.TryAdd(ServiceDescriptor.Singleton<ITftLeagueV1, TftLeagueV1Endpoint>());
-        services.TryAdd(ServiceDescriptor.Singleton<ITftMatchV1, TftMatchV1Endpoint>());
-        services.TryAdd(ServiceDescriptor.Singleton<ILolSpectatorTftV5, LolSpectatorTftV5Endpoint>());
-        services.TryAdd(ServiceDescriptor.Singleton<ITftStatusV1, TftStatusV1Endpoint>());
-        services.TryAdd(ServiceDescriptor.Singleton<ITftSummonerV1, TftSummonerV1Endpoint>());
+        services.TryAdd(ServiceDescriptor.Singleton(typeof(ITftLeagueV1), typeof(TftLeagueV1Endpoint)));
+        services.TryAdd(ServiceDescriptor.Singleton(typeof(ITftMatchV1), typeof(TftMatchV1Endpoint)));
+        services.TryAdd(ServiceDescriptor.Singleton(typeof(ILolSpectatorTftV5), typeof(LolSpectatorTftV5Endpoint)));
+        services.TryAdd(ServiceDescriptor.Singleton(typeof(ITftStatusV1), typeof(TftStatusV1Endpoint)));
+        services.TryAdd(ServiceDescriptor.Singleton(typeof(ITftSummonerV1), typeof(TftSummonerV1Endpoint)));
 
         if (configure is not null)
         {

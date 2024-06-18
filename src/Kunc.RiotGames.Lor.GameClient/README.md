@@ -5,8 +5,7 @@
 
 ## How to Use
 ```cs
-var options = new LorGameClientOptions();
-var lorGameClient = new LorGameClient(options);
+ILorGameClient lorGameClient = LorGameClient.Create();
 
 PositionalRectangles positionalRectangles = await lorGameClient.GetPositionalRectanglesAsync();
 // do stuff

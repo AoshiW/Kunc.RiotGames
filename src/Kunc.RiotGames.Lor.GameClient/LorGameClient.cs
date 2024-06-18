@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 namespace Kunc.RiotGames.Lor.GameClient;
 
 /// <inheritdoc cref="ILorGameClient"/>
-public class LorGameClient : ILorGameClient, IDisposable
+public partial class LorGameClient : ILorGameClient
 {
     private static readonly Uri StaticDecklistUri = new("static-decklist");
     private static readonly Uri PositionalRectanglesUri = new("positional-rectangles");
@@ -28,6 +28,7 @@ public class LorGameClient : ILorGameClient, IDisposable
     /// <inheritdoc/>
     public async Task<StaticDecklist> GetStaticDecklistAsync(CancellationToken cancellationToken = default)
     {
+        ObjectDisposedException.ThrowIf(_disposedValue, this);
         var decklist = await _client.GetFromJsonAsync<StaticDecklist>(StaticDecklistUri, _options.JsonSerializerOptions, cancellationToken).ConfigureAwait(false);
         return decklist!;
     }
@@ -35,6 +36,7 @@ public class LorGameClient : ILorGameClient, IDisposable
     /// <inheritdoc/>
     public async Task<PositionalRectangles> GetPositionalRectanglesAsync(CancellationToken cancellationToken = default)
     {
+        ObjectDisposedException.ThrowIf(_disposedValue, this);
         var positionalRectangles = await _client.GetFromJsonAsync<PositionalRectangles>(PositionalRectanglesUri, _options.JsonSerializerOptions, cancellationToken).ConfigureAwait(false);
         return positionalRectangles!;
     }
@@ -42,6 +44,7 @@ public class LorGameClient : ILorGameClient, IDisposable
     /// <inheritdoc/>
     public async Task<GameResult> GetGameResultAsync(CancellationToken cancellationToken = default)
     {
+        ObjectDisposedException.ThrowIf(_disposedValue, this);
         var gameResult = await _client.GetFromJsonAsync<GameResult>(GameResultUri, _options.JsonSerializerOptions, cancellationToken).ConfigureAwait(false);
         return gameResult!;
     }

@@ -2,7 +2,7 @@
 
 namespace Kunc.RiotGames.Lol.GameClient;
 
-public interface ILolGameClient
+public interface ILolGameClient : IDisposable
 {
     ILiveClientData LiveClientData { get; }
 }

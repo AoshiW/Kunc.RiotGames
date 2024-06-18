@@ -4,21 +4,23 @@ namespace Kunc.RiotGames.Lol.GameClient.LiveClientData;
 
 public class LiveClientDataEndpoint : ILiveClientData
 {
-    private readonly HttpClient _client = new(new HttpClientHandler()
+    private readonly HttpClient _client;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="LolGameClient"/> class.
+    /// </summary>
+    public LiveClientDataEndpoint(HttpClient client)
     {
-        ClientCertificateOptions = ClientCertificateOption.Manual,
-        ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator,
-    })
-    {
-        BaseAddress = new("https://127.0.0.1:2999"),
-    };
+        ArgumentNullException.ThrowIfNull(client);
+        _client = client;
+    }
 
     /// <inheritdoc/>
     public async Task<AllGameDataDto> GetAllGameDataAsync(int? eventId = null, CancellationToken cancellationToken = default)
     {
         var url = "/liveclientdata/allgamedata";
         if (eventId.HasValue)
-            url += $"teamID={eventId.Value}";
+            url += $"?eventId={eventId.Value}";
         var data = await _client.GetFromJsonAsync<AllGameDataDto>(url, cancellationToken).ConfigureAwait(false);
         return data!;
     }
@@ -56,7 +58,7 @@ public class LiveClientDataEndpoint : ILiveClientData
     {
         var url = "/liveclientdata/playerlist";
         if (teamId.HasValue)
-            url += $"teamID={teamId.Value}";
+            url += $"?teamID={teamId.Value}";
         var data = await _client.GetFromJsonAsync<PlayerDto[]>(url, cancellationToken).ConfigureAwait(false);
         return data!;
     }
@@ -98,7 +100,7 @@ public class LiveClientDataEndpoint : ILiveClientData
     {
         var url = "/liveclientdata/eventdata";
         if (eventId.HasValue)
-            url += $"teamID={eventId.Value}";
+            url += $"?eventId={eventId.Value}";
         var data = await _client.GetFromJsonAsync<EventDataDto>(url, cancellationToken).ConfigureAwait(false);
         return data!;
     }

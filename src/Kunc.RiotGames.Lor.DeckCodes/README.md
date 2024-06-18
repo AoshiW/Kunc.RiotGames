@@ -7,6 +7,8 @@ This library is faster and more efficient (at least 50% less memory allocation).
 
 ## How to Use
 ```cs
+var deckEncoder = new LorDeckEncoder();
+
 var deck1 = new List<DeckItem>()
 {
     new() { CardCode = "01DE002", Count = 4 },
@@ -14,7 +16,6 @@ var deck1 = new List<DeckItem>()
     new() { CardCode = "02BW010", Count = 3 },
     ...
 }
-var deckEncoder = new LorDeckEncoder();
 string code = deckEncoder.GetCodeFromDeck(deck1);
 List<DeckCard> deck2 = deckEncoder.GetDeckFromCode<DeckCard>(code);
 ```

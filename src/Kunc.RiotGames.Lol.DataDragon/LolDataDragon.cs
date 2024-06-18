@@ -15,12 +15,10 @@ using Microsoft.Extensions.Options;
 namespace Kunc.RiotGames.Lol.DataDragon;
 
 /// <inheritdoc cref="ILolDataDragon"/>
-public class LolDataDragon : ILolDataDragon, IDisposable
+public partial class LolDataDragon : ILolDataDragon
 {
-    readonly HttpClient _client = new()
-    {
-        BaseAddress = new Uri("https://ddragon.leagueoflegends.com")
-    };
+    private static readonly DistributedCacheEntryOptions distributedCacheEntryOptions = new();
+    readonly HttpClient _client;
     private readonly IDistributedCache _distributedCache;
     private readonly ILogger<LolDataDragon> _logger;
     private readonly LolDataDragonOptions _options;
@@ -31,19 +29,25 @@ public class LolDataDragon : ILolDataDragon, IDisposable
     /// </summary>
     public LolDataDragon(IOptions<LolDataDragonOptions> options, IDistributedCache? distributedCache = null, ILogger<LolDataDragon>? logger = null)
     {
+        ArgumentNullException.ThrowIfNull(options);
         _options = options.Value;
         _distributedCache = distributedCache ?? NullDistributedCache.Instance;
         _logger = logger ?? NullLogger<LolDataDragon>.Instance;
+        _client = new HttpClient()
+        {
+            BaseAddress = new(_options.BaseAdress)
+        };
     }
 
     async Task<byte[]> GetAsync(string requestUri, CancellationToken cancellationToken = default)
     {
+        ObjectDisposedException.ThrowIf(_disposedValue, this);
         var data = await _distributedCache.GetAsync(requestUri, cancellationToken).ConfigureAwait(false);
         if (data is null)
         {
             _logger.LogDownloading(requestUri);
             data = await _client.GetByteArrayAsync(requestUri, cancellationToken).ConfigureAwait(false);
-            await _distributedCache.SetAsync(requestUri, data, _options.DistributedCacheEntryOptions, cancellationToken).ConfigureAwait(false);
+            await _distributedCache.SetAsync(requestUri, data, _options.DefaultCacheEntryOptions ?? distributedCacheEntryOptions, cancellationToken).ConfigureAwait(false);
         }
         return data;
     }
@@ -166,7 +170,7 @@ public class LolDataDragon : ILolDataDragon, IDisposable
             {
                 var versions = await obj.GetVersionsAsync(cancellationToken).ConfigureAwait(false);
                 latest = versions[0];
-                await obj._distributedCache.SetStringAsync(cacheKey, latest, obj._options.DistributedCacheEntryOptions, cancellationToken).ConfigureAwait(false);
+                await obj._distributedCache.SetStringAsync(cacheKey, latest, obj._options.DefaultCacheEntryOptions, cancellationToken).ConfigureAwait(false);
             }
             return latest;
         }

@@ -2,7 +2,7 @@
 
 namespace Kunc.RiotGames.Lol.LeagueClientUpdate;
 
-public interface ILolLeagueClientUpdate
+public interface ILolLeagueClientUpdate : IDisposable
 {
     HttpClient Client { get; }
     IWamp Wamp { get; }

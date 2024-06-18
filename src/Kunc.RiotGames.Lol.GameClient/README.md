@@ -5,7 +5,7 @@
 
 ## How to Use
 ```cs
-var client = new LolGameClient();
+ILolGameClient client = LolGameClient.Create();
 
 AllGameDataDto allGameData = await client.LiveClientData.GetAllGameDataAsync();
 ```

@@ -16,7 +16,8 @@ using Kunc.RiotGames.Api.TftMatchV1;
 using Kunc.RiotGames.Api.TftSummonerV1;
 
 namespace Kunc.RiotGames.Api;
-public interface IRiotGamesApi
+
+public interface IRiotGamesApi : IDisposable
 {
     ILolClashV1 LolClashV1 { get; }
     ILolChallengesV1 LolChallengesV1 { get; }

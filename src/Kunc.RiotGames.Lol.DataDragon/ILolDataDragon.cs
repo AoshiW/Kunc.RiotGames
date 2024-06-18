@@ -8,7 +8,7 @@ using Kunc.RiotGames.Lol.DataDragon.SummonerSpell;
 
 namespace Kunc.RiotGames.Lol.DataDragon;
 
-public interface ILolDataDragon
+public interface ILolDataDragon : IDisposable
 {
     Task<Dictionary<string, ChampionDto>> GetAllChampionsAsync(string version, string language, CancellationToken cancellationToken = default);
     Task<Dictionary<string, ChampionBaseDto>> GetAllChampionsBaseAsync(string version, string language, CancellationToken cancellationToken = default);

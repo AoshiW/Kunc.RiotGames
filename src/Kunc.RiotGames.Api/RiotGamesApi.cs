@@ -18,39 +18,37 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Kunc.RiotGames.Api;
 
-public class RiotGamesApi : IRiotGamesApi
+public partial class RiotGamesApi : IRiotGamesApi
 {
+    private bool _disposedValue;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="RiotGamesApi"/> class.
     /// </summary>
-    public RiotGamesApi(
-        IRiotAccountV1 riotAccountV1,
-        ILolClashV1 lolClashV1, ILolChallengesV1 lolChallengesV1, ILolChampionMasteryV4 lolChampionMasteryV4, ILolChampionV3 lolChampionV3, ILolLeagueV4 lolLeagueV4, ILolMatchV5 lolMatchV5, ILolSpectatorV5 lolSpectatorV5, ILolStatusV4 lolStatusV4, ILolSummonerV4 lolSummonerV4,
-        ILorMatchV1 lorMatchV1, ILorRankedV1 lorRankedV1, ILorStatusV1 lorStatusV1,
-        ITftLeagueV1 tftLeagueV1, ITftMatchV1 tftMatchV1, ILolSpectatorTftV5 lolSpectatorTftV5, ITftStatusV1 tftStatusV1, ITftSummonerV1 tftSummonerV1
-    )
+    public RiotGamesApi(IServiceProvider services)
     {
-        RiotAccountV1 = riotAccountV1;
+        ArgumentNullException.ThrowIfNull(services);
+        RiotAccountV1 = services.GetRequiredService<IRiotAccountV1>();
 
-        LolClashV1 = lolClashV1;
-        LolChallengesV1 = lolChallengesV1;
-        LolChampionMasteryV4 = lolChampionMasteryV4;
-        LolChampionV3 = lolChampionV3;
-        LolLeagueV4 = lolLeagueV4;
-        LolMatchV5 = lolMatchV5;
-        LolSpectatorV5 = lolSpectatorV5;
-        LolStatusV4 = lolStatusV4;
-        LolSummonerV4 = lolSummonerV4;
+        LolClashV1 = services.GetRequiredService<ILolClashV1>();
+        LolChallengesV1 = services.GetRequiredService<ILolChallengesV1>();
+        LolChampionMasteryV4 = services.GetRequiredService<ILolChampionMasteryV4>();
+        LolChampionV3 = services.GetRequiredService<ILolChampionV3>();
+        LolLeagueV4 = services.GetRequiredService<ILolLeagueV4>();
+        LolMatchV5 = services.GetRequiredService<ILolMatchV5>();
+        LolSpectatorV5 = services.GetRequiredService<ILolSpectatorV5>();
+        LolStatusV4 = services.GetRequiredService<ILolStatusV4>();
+        LolSummonerV4 = services.GetRequiredService<ILolSummonerV4>();
 
-        LorMatchV1 = lorMatchV1;
-        LorRankedV1 = lorRankedV1;
-        LorStatusV1 = lorStatusV1;
+        LorMatchV1 = services.GetRequiredService<ILorMatchV1>();
+        LorRankedV1 = services.GetRequiredService<ILorRankedV1>();
+        LorStatusV1 = services.GetRequiredService<ILorStatusV1>();
 
-        TftLeagueV1 = tftLeagueV1;
-        TftMatchV1 = tftMatchV1;
-        LolSpectatorTftV5 = lolSpectatorTftV5;
-        TftStatusV1 = tftStatusV1;
-        TftSummonerV1 = tftSummonerV1;
+        TftLeagueV1 = services.GetRequiredService<ITftLeagueV1>();
+        TftMatchV1 = services.GetRequiredService<ITftMatchV1>();
+        LolSpectatorTftV5 = services.GetRequiredService<ILolSpectatorTftV5>();
+        TftStatusV1 = services.GetRequiredService<ITftStatusV1>();
+        TftSummonerV1 = services.GetRequiredService<ITftSummonerV1>();
     }
 
     /// <inheritdoc />
@@ -108,72 +106,28 @@ public class RiotGamesApi : IRiotGamesApi
     public ITftSummonerV1 TftSummonerV1 { get; }
 
     /// <summary>
-    /// Creates new instance of <see cref="IRiotGamesApi"/> configured using provided <paramref name="configure"/> delegate.
+    /// Releases the unmanaged resources and optionally disposes of the managed resources.
     /// </summary>
-    /// <param name="configure">A delegate to configure the <see cref="RiotGamesApiOptions"/>.</param>
-    /// <returns>The <see cref="IRiotGamesApi"/> that was created.</returns>
-    public static IRiotGamesApi Create(Action<RiotGamesApiOptions> configure)
+    /// <param name="disposing">
+    /// <see langword="true"/> to release both managed and unmanaged resources;
+    /// <see langword="false"/> to releases only unmanaged resources.
+    /// </param>
+    protected virtual void Dispose(bool disposing)
     {
-        ArgumentNullException.ThrowIfNull(configure);
+        if (!_disposedValue)
+        {
+            if (disposing)
+            {
 
-        var serviceCollection = new ServiceCollection();
-        serviceCollection.AddRiotGamesApi(configure);
-        ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
-        var riotGamesApi = serviceProvider.GetRequiredService<IRiotGamesApi>();
-        return new DisposingRiotGamesApi(riotGamesApi, serviceProvider);
+            }
+            _disposedValue = true;
+        }
     }
 
-    private sealed class DisposingRiotGamesApi : IRiotGamesApi, IDisposable
+    /// <inheritdoc/>
+    public void Dispose()
     {
-        private readonly IRiotGamesApi _riotGamesApi;
-
-        private readonly ServiceProvider _serviceProvider;
-
-        public DisposingRiotGamesApi(IRiotGamesApi loggerFactory, ServiceProvider serviceProvider)
-        {
-            _riotGamesApi = loggerFactory;
-            _serviceProvider = serviceProvider;
-        }
-
-        public ILolClashV1 LolClashV1 => _riotGamesApi.LolClashV1;
-
-        public ILolChallengesV1 LolChallengesV1 => _riotGamesApi.LolChallengesV1;
-
-        public ILolChampionMasteryV4 LolChampionMasteryV4 => _riotGamesApi.LolChampionMasteryV4;
-
-        public ILolChampionV3 LolChampionV3 => _riotGamesApi.LolChampionV3;
-
-        public ILolLeagueV4 LolLeagueV4 => _riotGamesApi.LolLeagueV4;
-
-        public ILolMatchV5 LolMatchV5 => _riotGamesApi.LolMatchV5;
-
-        public ILolStatusV4 LolStatusV4 => _riotGamesApi.LolStatusV4;
-
-        public ILolSpectatorV5 LolSpectatorV5 => _riotGamesApi.LolSpectatorV5;
-
-        public ILolSummonerV4 LolSummonerV4 => _riotGamesApi.LolSummonerV4;
-
-        public ILorMatchV1 LorMatchV1 => _riotGamesApi.LorMatchV1;
-
-        public ILorRankedV1 LorRankedV1 => _riotGamesApi.LorRankedV1;
-
-        public ILorStatusV1 LorStatusV1 => _riotGamesApi.LorStatusV1;
-
-        public IRiotAccountV1 RiotAccountV1 => _riotGamesApi.RiotAccountV1;
-
-        public ITftLeagueV1 TftLeagueV1 => _riotGamesApi.TftLeagueV1;
-
-        public ITftMatchV1 TftMatchV1 => _riotGamesApi.TftMatchV1;
-
-        public ILolSpectatorTftV5 LolSpectatorTftV5 => _riotGamesApi.LolSpectatorTftV5;
-
-        public ITftStatusV1 TftStatusV1 => _riotGamesApi.TftStatusV1;
-
-        public ITftSummonerV1 TftSummonerV1 => _riotGamesApi.TftSummonerV1;
-
-        public void Dispose()
-        {
-            _serviceProvider.Dispose();
-        }
+        Dispose(disposing: true);
+        GC.SuppressFinalize(this);
     }
 }

@@ -6,7 +6,7 @@
 /// <remarks>
 /// <see href="https://developer.riotgames.com/docs/lor#game-client-api" />
 /// </remarks>
-public interface ILorGameClient
+public interface ILorGameClient : IDisposable
 {
     /// <summary>
     /// Get <see cref="GameResult"/> after last game.

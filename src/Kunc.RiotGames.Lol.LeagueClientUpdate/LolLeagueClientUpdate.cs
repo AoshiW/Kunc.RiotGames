@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Kunc.RiotGames.Lol.LeagueClientUpdate;
 
-public partial class LolLeagueClientUpdate : IDisposable
+public partial class LolLeagueClientUpdate
 {
     private bool _disposedValue;
     private readonly ILogger<LolLeagueClientUpdate> _logger;

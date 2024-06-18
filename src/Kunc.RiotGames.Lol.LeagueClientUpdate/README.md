@@ -7,7 +7,7 @@ Simple client for interacting with the League of Legends LCU.
 ```cs
 using Kunc.RiotGames.Lol.LeagueClientUpdate;
 
-LolLeagueClientUpdate lcu = new LolLeagueClientUpdate(new FileLockfileProvieder());
+ILolLeagueClientUpdate lcu = LolLeagueClientUpdate.Create();
 ```
 
 ### API requests

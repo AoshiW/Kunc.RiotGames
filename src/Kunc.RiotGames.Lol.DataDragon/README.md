@@ -9,13 +9,7 @@ Simple client for League of Legends DataDragon.
 
 ## How to Use
 ```cs
-var options = new LolDataDragonOptions();
-var lolDataDragon = new LolDataDragon(options);
-// or
-using var services= new ServiceCollection()
-    .AddLolDataDragon()
-    .BuildServiceProvider();
-var lolDataDragon = services.GetRequiredService<ILolDataDragon>();
+ILolDataDragon lolDataDragon = LolDataDragon.Create();
 
 int count = 5;
 var language = "en_US";

@@ -4,18 +4,19 @@ using Microsoft.Extensions.Options;
 
 namespace Kunc.RiotGames.Lol.DataDragon;
 
+/// <summary>
+/// Options for the <see cref="LolDataDragon"/>.
+/// </summary>
 public class LolDataDragonOptions : IOptions<LolDataDragonOptions>
 {
-    public DistributedCacheEntryOptions DistributedCacheEntryOptions { get; set; } = new()
-    {
-        AbsoluteExpirationRelativeToNow = TimeSpan.FromDays(7),
-        SlidingExpiration = TimeSpan.FromDays(1),
-    };
+    public string BaseAdress { get; set; } = "https://ddragon.leagueoflegends.com";
+
+    public DistributedCacheEntryOptions? DefaultCacheEntryOptions { get; set; }
 
     /// <summary>
     /// Options to control the behavior during deserialization.
     /// </summary>
-    public JsonSerializerOptions JsonSerializerOptions { get; set; } = new();
+    public JsonSerializerOptions? JsonSerializerOptions { get; set; }
 
     LolDataDragonOptions IOptions<LolDataDragonOptions>.Value => this;
 }

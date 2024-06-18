@@ -2,6 +2,9 @@
 
 namespace Kunc.RiotGames.Api;
 
+/// <summary>
+/// Options for the <see cref="RiotGamesApi"/>.
+/// </summary>
 public class RiotGamesApiOptions
 {
     /// <summary>
@@ -13,8 +16,8 @@ public class RiotGamesApiOptions
 
     public TimeSpan BonusRLDelay { get; set; } = TimeSpan.FromMilliseconds(800);
 
-    public JsonSerializerOptions JsonSerializerOptions { get; set; } = new()
-    {
-
-    };
+    /// <summary>
+    /// Options to control the behavior during deserialization.
+    /// </summary>
+    public JsonSerializerOptions? JsonSerializerOptions { get; set; }
 }

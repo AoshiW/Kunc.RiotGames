@@ -204,7 +204,8 @@ public class ParticipantDto : BaseDto, IKda
     public int MagicDamageTaken { get; set; }
 
     [JsonPropertyName("missions")]
-    public MissionsDto Missions { get;set;}
+    [JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]
+    public MissionsDto Missions { get; set; } = new();
 
     /// <remarks>
     /// neutralMinionsKilled = mNeutralMinionsKilled, which is incremented on kills of kPet and kJungleMonster

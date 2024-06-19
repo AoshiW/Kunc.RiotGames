@@ -23,7 +23,7 @@ public class PlayerDto : BaseDto
     public int Level { get; set; }
 
     [JsonPropertyName("position")]
-    public string Position { get; set; } // todo enum
+    public string Position { get; set; } = string.Empty; // todo enum
 
     [JsonPropertyName("rawChampionName")]
     public string RawChampionName { get; set; } = string.Empty;

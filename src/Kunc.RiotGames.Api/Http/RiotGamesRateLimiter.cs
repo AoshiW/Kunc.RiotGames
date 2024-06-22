@@ -176,7 +176,6 @@ sealed public class RiotGamesRateLimiter : IRiotGamesRateLimiter, IDisposable
         sealed class SemaphoreSlimLease : RateLimitLease
         {
             SemaphoreSlim? _semaphoreSlim;
-            readonly object _lock = new();
 
             public SemaphoreSlimLease(SemaphoreSlim semaphoreSlim)
             {
@@ -195,16 +194,10 @@ sealed public class RiotGamesRateLimiter : IRiotGamesRateLimiter, IDisposable
 
             protected override void Dispose(bool disposing)
             {
-                if (_semaphoreSlim is null)
-                    return;
-
-                lock (_lock)
+                var obj = Interlocked.Exchange(ref _semaphoreSlim, null);
+                if (obj is not null)
                 {
-                    if (_semaphoreSlim is null)
-                        return;
-
-                    _semaphoreSlim.Release();
-                    _semaphoreSlim = null;
+                    obj.Release();
                     base.Dispose(disposing);
                 }
             }

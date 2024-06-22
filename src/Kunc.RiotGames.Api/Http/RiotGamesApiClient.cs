@@ -7,12 +7,13 @@ using Microsoft.Extensions.Options;
 
 namespace Kunc.RiotGames.Api.Http;
 
-public class RiotGamesApiClient : IRiotGamesApiClient
+public class RiotGamesApiClient : IRiotGamesApiClient, IDisposable
 {
     private readonly HttpClient _client = new();
     private readonly RiotGamesApiOptions _options;
     private readonly IRiotGamesRateLimiter _rateLimiter;
     private readonly ILogger<RiotGamesApiClient> _logger;
+    private bool _disposedValue;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RiotGamesApiClient"/> class.
@@ -27,6 +28,7 @@ public class RiotGamesApiClient : IRiotGamesApiClient
     /// <inheritdoc/>
     public async Task<HttpResponseMessage> SendAsync(RiotRequestMessage request, RiotRequestOptions options, CancellationToken cancellationToken = default)
     {
+        ObjectDisposedException.ThrowIf(_disposedValue, this);
         int retries = 0;
         List<Exception>? exceptions = null;
         do
@@ -99,5 +101,31 @@ public class RiotGamesApiClient : IRiotGamesApiClient
                     ? message.ToString()
                     : string.Empty;
         return msg;
+    }
+
+    /// <summary>
+    /// Releases the unmanaged resources and optionally disposes of the managed resources.
+    /// </summary>
+    /// <param name="disposing">
+    /// <see langword="true"/> to release both managed and unmanaged resources;
+    /// <see langword="false"/> to releases only unmanaged resources.
+    /// </param>
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!_disposedValue)
+        {
+            if (disposing)
+            {
+                _client.Dispose();
+            }
+            _disposedValue = true;
+        }
+    }
+
+    /// <inheritdoc/>
+    public void Dispose()
+    {
+        Dispose(disposing: true);
+        GC.SuppressFinalize(this);
     }
 }

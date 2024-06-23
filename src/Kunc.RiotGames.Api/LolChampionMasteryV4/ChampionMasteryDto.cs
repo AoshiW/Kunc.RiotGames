@@ -9,13 +9,13 @@ namespace Kunc.RiotGames.Api.LolChampionMasteryV4;
 public class ChampionMasteryDto : BaseDto
 {
     /// <summary>
-    /// Player Universal Unique Identifier. Exact length of 78 characters. (Encrypted)
+    /// Player Universal Unique Identifier. Exact length of 78 characters.
     /// </summary>
     [JsonPropertyName("puuid")]
     public string Puuid { get; set; } = string.Empty;
 
     /// <summary>
-    /// Number of points needed to achieve next level. Zero if player reached maximum champion level for this champion.
+    /// Number of points needed to achieve next level.
     /// </summary>
     [JsonPropertyName("championPointsUntilNextLevel")]
     public long ChampionPointsUntilNextLevel { get; set; }
@@ -51,25 +51,25 @@ public class ChampionMasteryDto : BaseDto
     [JsonPropertyName("championPointsSinceLastLevel")]
     public long ChampionPointsSinceLastLevel { get; set; }
 
-    /// <summary>
-    /// The marks earned for this champion.
-    /// </summary>
-    [JsonPropertyName("tokensEarned")]
-    public int MarksEarned { get; set; }
-
     [JsonPropertyName("markRequiredForNextLevel")]
     public int MarkRequiredForNextLevel { get; set; }
 
     [JsonPropertyName("championSeasonMilestone")]
     public int ChampionSeasonMilestone { get; set; }
 
+    [JsonPropertyName("nextSeasonMilestone")]
+    [JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]
+    public NextSeasonMilestoneDto NextSeasonMilestone { get; set; } = new();
+
+    /// <summary>
+    /// The marks earned for this champion.
+    /// </summary>
+    [JsonPropertyName("tokensEarned")]
+    public int MarksEarned { get; set; }
+
     // if NextSeasonMilestone.IsBonus is false the default value is null,
     // if NextSeasonMilestone.IsBonus is true the default value is an empty array
     // for better consistency the type will not be nullable and the default value will be an empty array
     [JsonPropertyName("milestoneGrades")]
     public string[] MilestoneGrades { get; set; } = [];
-
-    [JsonPropertyName("nextSeasonMilestone")]
-    [JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]
-    public SeasonMilestoneDto NextSeasonMilestone { get; set; } = new();
 }

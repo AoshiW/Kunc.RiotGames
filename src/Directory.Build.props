@@ -13,6 +13,7 @@
 		<EmbedUntrackedSources>True</EmbedUntrackedSources>
 		<IncludeSymbols>True</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <PackageIcon>logo.png</PackageIcon>
         
         <!--<IsAotCompatible>true</IsAotCompatible>-->
 	</PropertyGroup>
@@ -28,6 +29,10 @@
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>
 		</None>
-	</ItemGroup>
+        <None Include="..\..\logo.png">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+    </ItemGroup>
 	
 </Project>

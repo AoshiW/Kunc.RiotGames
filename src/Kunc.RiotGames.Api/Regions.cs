@@ -47,6 +47,11 @@ public static class Regions
     public static string LA2 { get; } = "la2";
 
     /// <summary>
+    /// Middle East and North Africa
+    /// </summary>
+    public static string ME1 { get; } = "me1";
+   
+    /// <summary>
     /// North America
     /// </summary>
     public static string NA1 { get; } = "na1";

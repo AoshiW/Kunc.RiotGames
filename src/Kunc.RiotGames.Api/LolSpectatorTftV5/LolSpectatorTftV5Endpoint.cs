@@ -3,17 +3,13 @@ using Kunc.RiotGames.Api.LolSpectatorV5;
 
 namespace Kunc.RiotGames.Api.LolSpectatorTftV5;
 
-public class LolSpectatorTftV5Endpoint : ILolSpectatorTftV5
+public class LolSpectatorTftV5Endpoint : ApiEndpoint, ILolSpectatorTftV5
 {
-    private readonly IRiotGamesApiClient _client;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="LolSpectatorTftV5Endpoint"/> class.
     /// </summary>
-    public LolSpectatorTftV5Endpoint(IRiotGamesApiClient client)
+    public LolSpectatorTftV5Endpoint(IServiceProvider services) : base(services)
     {
-        ArgumentNullException.ThrowIfNull(client);
-        _client = client;
     }
 
     /// <inheritdoc/>

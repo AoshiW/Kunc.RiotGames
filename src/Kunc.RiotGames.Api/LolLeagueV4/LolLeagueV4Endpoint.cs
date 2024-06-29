@@ -1,20 +1,15 @@
 ﻿using Kunc.RiotGames.Api.Http;
 using Kunc.RiotGames.Lol;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Kunc.RiotGames.Api.LolLeagueV4;
 
-public class LolLeagueV4Endpoint : ILolLeagueV4
+public class LolLeagueV4Endpoint : ApiEndpoint, ILolLeagueV4
 {
-    private readonly IRiotGamesApiClient _client;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="LolLeagueV4Endpoint"/> class.
     /// </summary>
-    public LolLeagueV4Endpoint(IRiotGamesApiClient client)
+    public LolLeagueV4Endpoint(IServiceProvider services) : base(services)
     {
-        ArgumentNullException.ThrowIfNull(client);
-        _client = client;
     }
 
     /// <inheritdoc/>

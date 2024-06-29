@@ -2,17 +2,13 @@
 
 namespace Kunc.RiotGames.Api.SharedStatus;
 
-public class LorStatusV1Endpoint : ILorStatusV1
+public class LorStatusV1Endpoint : ApiEndpoint, ILorStatusV1
 {
-    private readonly IRiotGamesApiClient _client;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="LorStatusV1Endpoint"/> class.
     /// </summary>
-    public LorStatusV1Endpoint(IRiotGamesApiClient client)
+    public LorStatusV1Endpoint(IServiceProvider services) : base(services)
     {
-        ArgumentNullException.ThrowIfNull(client);
-        _client = client;
     }
 
     /// <inheritdoc/>

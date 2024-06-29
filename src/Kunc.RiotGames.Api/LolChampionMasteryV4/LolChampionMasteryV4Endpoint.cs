@@ -2,17 +2,13 @@
 
 namespace Kunc.RiotGames.Api.LolChampionMasteryV4;
 
-public class LolChampionMasteryV4Endpoint : ILolChampionMasteryV4
+public class LolChampionMasteryV4Endpoint : ApiEndpoint, ILolChampionMasteryV4
 {
-    private readonly IRiotGamesApiClient _client;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="LolChampionMasteryV4Endpoint"/> class.
     /// </summary>
-    public LolChampionMasteryV4Endpoint(IRiotGamesApiClient client)
+    public LolChampionMasteryV4Endpoint(IServiceProvider services) : base(services)
     {
-        ArgumentNullException.ThrowIfNull(client);
-        _client = client;
     }
 
     /// <inheritdoc/>

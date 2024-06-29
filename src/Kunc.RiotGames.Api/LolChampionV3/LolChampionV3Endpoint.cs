@@ -2,17 +2,13 @@
 
 namespace Kunc.RiotGames.Api.LolChampionV3;
 
-public class LolChampionV3Endpoint : ILolChampionV3
+public class LolChampionV3Endpoint : ApiEndpoint, ILolChampionV3
 {
-    private readonly IRiotGamesApiClient _client;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="LolChampionV3Endpoint"/> class.
     /// </summary>
-    public LolChampionV3Endpoint(IRiotGamesApiClient client)
+    public LolChampionV3Endpoint(IServiceProvider services) : base(services)
     {
-        ArgumentNullException.ThrowIfNull(client);
-        _client = client;
     }
 
     /// <inheritdoc/>

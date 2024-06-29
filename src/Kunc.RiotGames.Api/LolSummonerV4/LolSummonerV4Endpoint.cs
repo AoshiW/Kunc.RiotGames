@@ -2,17 +2,13 @@
 
 namespace Kunc.RiotGames.Api.LolSummonerV4;
 
-public class LolSummonerV4Endpoint : ILolSummonerV4
+public class LolSummonerV4Endpoint : ApiEndpoint, ILolSummonerV4
 {
-    private readonly IRiotGamesApiClient _client;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="LolSummonerV4Endpoint"/> class.
     /// </summary>
-    public LolSummonerV4Endpoint(IRiotGamesApiClient client)
+    public LolSummonerV4Endpoint(IServiceProvider services) : base(services)
     {
-        ArgumentNullException.ThrowIfNull(client);
-        _client = client;
     }
 
     /// <inheritdoc/>

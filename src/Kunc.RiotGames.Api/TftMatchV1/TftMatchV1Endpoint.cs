@@ -2,17 +2,13 @@
 
 namespace Kunc.RiotGames.Api.TftMatchV1;
 
-public class TftMatchV1Endpoint : ITftMatchV1
+public class TftMatchV1Endpoint : ApiEndpoint, ITftMatchV1
 {
-    private readonly IRiotGamesApiClient _client;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="TftMatchV1Endpoint"/> class.
     /// </summary>
-    public TftMatchV1Endpoint(IRiotGamesApiClient client)
+    public TftMatchV1Endpoint(IServiceProvider services) : base(services)
     {
-        ArgumentNullException.ThrowIfNull(client);
-        _client = client;
     }
 
     /// <inheritdoc/>

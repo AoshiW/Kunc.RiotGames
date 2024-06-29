@@ -2,17 +2,13 @@
 
 namespace Kunc.RiotGames.Api.LolSpectatorV5;
 
-public class LolSpectatorV5Endpoint : ILolSpectatorV5
+public class LolSpectatorV5Endpoint : ApiEndpoint, ILolSpectatorV5
 {
-    private readonly IRiotGamesApiClient _client;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="LolSpectatorV5Endpoint"/> class.
     /// </summary>
-    public LolSpectatorV5Endpoint(IRiotGamesApiClient client)
+    public LolSpectatorV5Endpoint(IServiceProvider services) : base(services)
     {
-        ArgumentNullException.ThrowIfNull(client);
-        _client = client;
     }
 
     /// <inheritdoc/>

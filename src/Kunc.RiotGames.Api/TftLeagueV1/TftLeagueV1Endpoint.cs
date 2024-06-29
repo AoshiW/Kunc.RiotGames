@@ -3,17 +3,13 @@ using Kunc.RiotGames.Lol;
 
 namespace Kunc.RiotGames.Api.TftLeagueV1;
 
-public class TftLeagueV1Endpoint : ITftLeagueV1
+public class TftLeagueV1Endpoint : ApiEndpoint, ITftLeagueV1
 {
-    private readonly IRiotGamesApiClient _client;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="TftLeagueV1Endpoint"/> class.
     /// </summary>
-    public TftLeagueV1Endpoint(IRiotGamesApiClient client)
+    public TftLeagueV1Endpoint(IServiceProvider services) : base(services)
     {
-        ArgumentNullException.ThrowIfNull(client);
-        _client = client;
     }
 
     /// <inheritdoc/>

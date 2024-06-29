@@ -1,17 +1,13 @@
 ﻿using Kunc.RiotGames.Api.Http;
 
 namespace Kunc.RiotGames.Api.SharedStatus;
-public class TftStatusV1Endpoint : ITftStatusV1
+public class TftStatusV1Endpoint : ApiEndpoint, ITftStatusV1
 {
-    private readonly IRiotGamesApiClient _client;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="TftStatusV1Endpoint"/> class.
     /// </summary>
-    public TftStatusV1Endpoint(IRiotGamesApiClient client)
+    public TftStatusV1Endpoint(IServiceProvider services) : base(services)
     {
-        ArgumentNullException.ThrowIfNull(client);
-        _client = client;
     }
 
     /// <inheritdoc/>

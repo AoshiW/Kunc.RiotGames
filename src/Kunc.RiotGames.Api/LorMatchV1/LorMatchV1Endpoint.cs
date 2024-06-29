@@ -2,17 +2,13 @@
 
 namespace Kunc.RiotGames.Api.LorMatchV1;
 
-public class LorMatchV1Endpoint : ILorMatchV1
+public class LorMatchV1Endpoint : ApiEndpoint, ILorMatchV1
 {
-    private readonly IRiotGamesApiClient _client;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="LorMatchV1Endpoint"/> class.
     /// </summary>
-    public LorMatchV1Endpoint(IRiotGamesApiClient client)
+    public LorMatchV1Endpoint(IServiceProvider services) : base(services)
     {
-        ArgumentNullException.ThrowIfNull(client);
-        _client = client;
     }
 
     /// <inheritdoc/>

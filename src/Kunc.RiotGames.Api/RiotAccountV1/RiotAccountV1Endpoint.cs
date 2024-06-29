@@ -1,19 +1,14 @@
 ﻿using Kunc.RiotGames.Api.Http;
-using Kunc.RiotGames.Api.SharedStatus;
 
 namespace Kunc.RiotGames.Api.RiotAccountV1;
 
-public class RiotAccountV1Endpoint : IRiotAccountV1
+public class RiotAccountV1Endpoint : ApiEndpoint, IRiotAccountV1
 {
-    private readonly IRiotGamesApiClient _client;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="RiotAccountV1Endpoint"/> class.
     /// </summary>
-    public RiotAccountV1Endpoint(IRiotGamesApiClient client)
+    public RiotAccountV1Endpoint(IServiceProvider services) : base(services)
     {
-        ArgumentNullException.ThrowIfNull(client);
-        _client = client;
     }
 
     /// <inheritdoc/>

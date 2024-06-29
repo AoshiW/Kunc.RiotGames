@@ -1,18 +1,21 @@
-﻿using Kunc.RiotGames.Api.Http;
+﻿using System.Text.Json;
+using Kunc.RiotGames.Abstractions;
+using Kunc.RiotGames.Api.Http;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Kunc.RiotGames.Api.LolMatchV5;
 
-public class LolMatchV5Endpoint : ILolMatchV5
+public class LolMatchV5Endpoint : ApiEndpoint, ILolMatchV5
 {
-    private readonly IRiotGamesApiClient _client;
+    private readonly IDistributedCache _cache;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="LolMatchV5Endpoint"/> class.
     /// </summary>
-    public LolMatchV5Endpoint(IRiotGamesApiClient client)
+    public LolMatchV5Endpoint(IServiceProvider services) : base(services)
     {
-        ArgumentNullException.ThrowIfNull(client);
-        _client = client;
+        _cache = services.GetService<IDistributedCache>() ?? NullDistributedCache.Instance;
     }
 
     /// <inheritdoc/>
@@ -20,7 +23,7 @@ public class LolMatchV5Endpoint : ILolMatchV5
     {
         ArgumentException.ThrowIfNullOrEmpty(region);
         ArgumentException.ThrowIfNullOrEmpty(puuid);
-
+        
         var request = new RiotRequestMessage()
         {
             HttpMethod = HttpMethod.Get,
@@ -39,14 +42,26 @@ public class LolMatchV5Endpoint : ILolMatchV5
         ArgumentException.ThrowIfNullOrEmpty(region);
         ArgumentException.ThrowIfNullOrEmpty(matchId);
 
-        var request = new RiotRequestMessage()
+        var bytes = await _cache.GetAsync("", cancellationToken).ConfigureAwait(false);
+        if (bytes is null)
         {
-            HttpMethod = HttpMethod.Get,
-            Host = region,
-            MethodId = "/lol/match/v5/matches/{matchId}",
-            Path = $"/lol/match/v5/matches/{matchId}",
-        };
-        return await _client.SendAndDeserializeAsync<MatchDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+            var request = new RiotRequestMessage()
+            {
+                HttpMethod = HttpMethod.Get,
+                Host = region,
+                MethodId = "/lol/match/v5/matches/{matchId}",
+                Path = $"/lol/match/v5/matches/{matchId}",
+            };
+            using var response = await _client.SendAsync(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+            if (response.IsSuccessStatusCode)
+            {
+                bytes = await response.Content.ReadAsByteArrayAsync(cancellationToken).ConfigureAwait(false);
+                await _cache.SetAsync("", bytes, cancellationToken).ConfigureAwait(false);
+            }
+        }
+        return bytes is null
+            ? null
+            : JsonSerializer.Deserialize<MatchDto?>(bytes);
     }
 
     /// <inheritdoc/>

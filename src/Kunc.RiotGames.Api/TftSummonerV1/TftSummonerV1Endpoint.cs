@@ -2,17 +2,13 @@
 
 namespace Kunc.RiotGames.Api.TftSummonerV1;
 
-public class TftSummonerV1Endpoint : ITftSummonerV1
+public class TftSummonerV1Endpoint : ApiEndpoint, ITftSummonerV1
 {
-    private readonly IRiotGamesApiClient _client;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="TftSummonerV1Endpoint"/> class.
     /// </summary>
-    public TftSummonerV1Endpoint(IRiotGamesApiClient client)
+    public TftSummonerV1Endpoint(IServiceProvider services) : base(services)
     {
-        ArgumentNullException.ThrowIfNull(client);
-        _client = client;
     }
 
     /// <inheritdoc/>

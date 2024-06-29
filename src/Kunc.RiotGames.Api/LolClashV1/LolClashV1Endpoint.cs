@@ -2,17 +2,13 @@
 
 namespace Kunc.RiotGames.Api.LolClashV1;
 
-public class LolClashV1Endpoint : ILolClashV1
+public class LolClashV1Endpoint : ApiEndpoint, ILolClashV1
 {
-    private readonly IRiotGamesApiClient _client;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="LolClashV1Endpoint"/> class.
     /// </summary>
-    public LolClashV1Endpoint(IRiotGamesApiClient client)
+    public LolClashV1Endpoint(IServiceProvider services) : base(services)
     {
-        ArgumentNullException.ThrowIfNull(client);
-        _client = client;
     }
 
     /// <inheritdoc/>

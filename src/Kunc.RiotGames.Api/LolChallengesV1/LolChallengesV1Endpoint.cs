@@ -2,17 +2,13 @@
 
 namespace Kunc.RiotGames.Api.LolChallengesV1;
 
-public class LolChallengesV1Endpoint : ILolChallengesV1
+public class LolChallengesV1Endpoint : ApiEndpoint, ILolChallengesV1
 {
-    private readonly IRiotGamesApiClient _client;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="LolChallengesV1Endpoint"/> class.
     /// </summary>
-    public LolChallengesV1Endpoint(IRiotGamesApiClient client)
+    public LolChallengesV1Endpoint(IServiceProvider services) : base(services)
     {
-        ArgumentNullException.ThrowIfNull(client);
-        _client = client;
     }
 
     /// <inheritdoc/>

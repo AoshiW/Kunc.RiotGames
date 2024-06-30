@@ -24,7 +24,7 @@ public class TftLeagueV1Endpoint : ApiEndpoint, ITftLeagueV1
             MethodId = "/tft/league/v1/challenger",
             Path = $"/tft/league/v1/challenger",
         };
-        var data = await _client.SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await Client.SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 
@@ -41,7 +41,7 @@ public class TftLeagueV1Endpoint : ApiEndpoint, ITftLeagueV1
             MethodId = "/tft/league/v1/entries/by-summoner/{summonerId}",
             Path = $"/tft/league/v1/entries/by-summoner/{summonerId}",
         };
-        var data = await _client.SendAndDeserializeAsync<LeagueEntryDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await Client.SendAndDeserializeAsync<LeagueEntryDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 
@@ -58,7 +58,7 @@ public class TftLeagueV1Endpoint : ApiEndpoint, ITftLeagueV1
             Path = $"/tft/league/v1/entries/{tier.ToUpperString()}/{division.ToFastString()}",
             Query = query,
         };
-        var data = await _client.SendAndDeserializeAsync<LeagueEntryDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await Client.SendAndDeserializeAsync<LeagueEntryDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 
@@ -74,7 +74,7 @@ public class TftLeagueV1Endpoint : ApiEndpoint, ITftLeagueV1
             MethodId = "/tft/league/v1/grandmaster",
             Path = $"/tft/league/v1/grandmaster",
         };
-        var data = await _client.SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await Client.SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 
@@ -90,7 +90,7 @@ public class TftLeagueV1Endpoint : ApiEndpoint, ITftLeagueV1
             MethodId = "/tft/league/v1/leagues/{leagueId}",
             Path = $"/tft/league/v1/leagues/{leagueId}",
         };
-        return await _client.SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return await Client.SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc/>
@@ -105,7 +105,7 @@ public class TftLeagueV1Endpoint : ApiEndpoint, ITftLeagueV1
             MethodId = "/tft/league/v1/master",
             Path = $"/tft/league/v1/master",
         };
-        var data = await _client.SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await Client.SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 
@@ -121,7 +121,7 @@ public class TftLeagueV1Endpoint : ApiEndpoint, ITftLeagueV1
             MethodId = "/tft/league/v1/rated-ladders/{queue}/top",
             Path = $"/tft/league/v1/rated-ladders/{queue.ToApiString()}/top",
         };
-        var data = await _client.SendAndDeserializeAsync<TopRatedLadderEntryDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await Client.SendAndDeserializeAsync<TopRatedLadderEntryDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 }

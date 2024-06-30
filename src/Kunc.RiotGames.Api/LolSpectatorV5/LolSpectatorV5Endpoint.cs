@@ -24,7 +24,7 @@ public class LolSpectatorV5Endpoint : ApiEndpoint, ILolSpectatorV5
             MethodId = "/lol/spectator/v5/active-games/by-summoner/{encryptedPUUID}",
             Path = $"/lol/spectator/v5/active-games/by-summoner/{puuid}",
         };
-        return await _client.SendAndDeserializeAsync<CurrentGameInfoDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return await Client.SendAndDeserializeAsync<CurrentGameInfoDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc/>
@@ -39,7 +39,7 @@ public class LolSpectatorV5Endpoint : ApiEndpoint, ILolSpectatorV5
             MethodId = "/lol/spectator/v5/featured-games",
             Path = $"/lol/spectator/v5/featured-games",
         };
-        var data = await _client.SendAndDeserializeAsync<FeaturedGamesDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await Client.SendAndDeserializeAsync<FeaturedGamesDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 }

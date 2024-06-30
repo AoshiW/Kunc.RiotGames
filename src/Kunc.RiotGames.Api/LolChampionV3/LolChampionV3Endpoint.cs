@@ -23,7 +23,7 @@ public class LolChampionV3Endpoint : ApiEndpoint, ILolChampionV3
             MethodId = "/lol/platform/v3/champion-rotations",
             Path = "/lol/platform/v3/champion-rotations",
         };
-        var data = await _client.SendAndDeserializeAsync<ChampionInfoDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await Client.SendAndDeserializeAsync<ChampionInfoDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 }

@@ -24,7 +24,7 @@ public class RiotAccountV1Endpoint : ApiEndpoint, IRiotAccountV1
             MethodId = "/riot/account/v1/accounts/by-puuid/{puuid}",
             Path = $"/riot/account/v1/accounts/by-puuid/{puuid}",
         };
-        var data = await _client.SendAndDeserializeAsync<AccountDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await Client.SendAndDeserializeAsync<AccountDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 
@@ -42,7 +42,7 @@ public class RiotAccountV1Endpoint : ApiEndpoint, IRiotAccountV1
             MethodId = "/riot/account/v1/accounts/by-riot-id/{gameName}/{tagLine}",
             Path = $"/riot/account/v1/accounts/by-riot-id/{gameName}/{tagLine}",
         };
-        return await _client.SendAndDeserializeAsync<AccountDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return await Client.SendAndDeserializeAsync<AccountDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc/>
@@ -58,7 +58,7 @@ public class RiotAccountV1Endpoint : ApiEndpoint, IRiotAccountV1
             MethodId = "/riot/account/v1/active-shards/by-game/{game}/by-puuid/{puuid}",
             Path = $"/riot/account/v1/active-shards/by-game/{game.ToLowerString()}/by-puuid/{puuid}",
         };
-        var data = await _client.SendAndDeserializeAsync<ActiveShardDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await Client.SendAndDeserializeAsync<ActiveShardDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 }

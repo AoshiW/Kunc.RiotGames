@@ -24,7 +24,7 @@ public class LolSummonerV4Endpoint : ApiEndpoint, ILolSummonerV4
             MethodId = "/lol/summoner/v4/summoners/by-puuid/{encryptedPUUID}",
             Path = $"/lol/summoner/v4/summoners/by-puuid/{puuid}",
         };
-        var data = await _client.SendAndDeserializeAsync<SummonerDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await Client.SendAndDeserializeAsync<SummonerDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 
@@ -41,7 +41,7 @@ public class LolSummonerV4Endpoint : ApiEndpoint, ILolSummonerV4
             MethodId = "/lol/summoner/v4/summoners/{encryptedSummonerId}",
             Path = $"/lol/summoner/v4/summoners/{summonerId}",
         };
-        var data = await _client.SendAndDeserializeAsync<SummonerDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await Client.SendAndDeserializeAsync<SummonerDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 }

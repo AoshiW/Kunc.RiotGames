@@ -23,7 +23,7 @@ public class LorRankedV1Endpoint : ApiEndpoint, ILorRankedV1
             MethodId = "/lor/ranked/v1/leaderboards",
             Path = "/lor/ranked/v1/leaderboards",
         };
-        var data = await _client.SendAndDeserializeAsync<LeaderboardDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await Client.SendAndDeserializeAsync<LeaderboardDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 }

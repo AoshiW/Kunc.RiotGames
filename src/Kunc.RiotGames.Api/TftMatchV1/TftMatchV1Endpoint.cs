@@ -25,7 +25,7 @@ public class TftMatchV1Endpoint : ApiEndpoint, ITftMatchV1
             Path = $"/tft/match/v1/matches/by-puuid/{puuid}/ids",
             Query = query,
         };
-        var data = await _client.SendAndDeserializeAsync<string[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await Client.SendAndDeserializeAsync<string[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 
@@ -42,6 +42,6 @@ public class TftMatchV1Endpoint : ApiEndpoint, ITftMatchV1
             MethodId = "/tft/match/v1/matches/{matchId}",
             Path = $"/tft/match/v1/matches/{matchId}",
         };
-        return await _client.SendAndDeserializeAsync<MatchDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return await Client.SendAndDeserializeAsync<MatchDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 }

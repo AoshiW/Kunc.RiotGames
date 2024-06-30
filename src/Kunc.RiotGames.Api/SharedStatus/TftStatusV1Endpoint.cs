@@ -22,7 +22,7 @@ public class TftStatusV1Endpoint : ApiEndpoint, ITftStatusV1
             MethodId = "/tft/status/v1/platform-data",
             Path = $"/tft/status/v1/platform-dataa",
         };
-        var data = await _client.SendAndDeserializeAsync<PlatformDataDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await Client.SendAndDeserializeAsync<PlatformDataDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 }

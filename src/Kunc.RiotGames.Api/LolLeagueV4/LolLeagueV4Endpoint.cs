@@ -24,7 +24,7 @@ public class LolLeagueV4Endpoint : ApiEndpoint, ILolLeagueV4
             MethodId = "/lol/league/v4/challengerleagues/by-queue/{queue}",
             Path = $"/lol/league/v4/challengerleagues/by-queue/{queue.ToApiString()}",
         };
-        var data = await _client.SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await Client.SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 
@@ -41,7 +41,7 @@ public class LolLeagueV4Endpoint : ApiEndpoint, ILolLeagueV4
             MethodId = "/lol/league/v4/entries/by-summoner/{encryptedSummonerId}",
             Path = $"/lol/league/v4/entries/by-summoner/{summonerId}",
         };
-        var data = await _client.SendAndDeserializeAsync<LeagueEntryDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await Client.SendAndDeserializeAsync<LeagueEntryDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 
@@ -57,7 +57,7 @@ public class LolLeagueV4Endpoint : ApiEndpoint, ILolLeagueV4
             MethodId = "/lol/league/v4/entries/{queue}/{tier}/{division}",
             Path = $"/lol/league/v4/entries/{queue.ToApiString()}/{tier.ToUpperString()}/{division.ToFastString()}",
         };
-        var data = await _client.SendAndDeserializeAsync<LeagueEntryDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await Client.SendAndDeserializeAsync<LeagueEntryDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 
@@ -73,7 +73,7 @@ public class LolLeagueV4Endpoint : ApiEndpoint, ILolLeagueV4
             MethodId = "/lol/league/v4/grandmasterleagues/by-queue/{queue}",
             Path = $"/lol/league/v4/grandmasterleagues/by-queue/{queue.ToApiString()}",
         };
-        var data = await _client.SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await Client.SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 
@@ -89,7 +89,7 @@ public class LolLeagueV4Endpoint : ApiEndpoint, ILolLeagueV4
             MethodId = "/lol/league/v4/leagues/{leagueId}",
             Path = $"/lol/league/v4/leagues/{leagueId}",
         };
-        return await _client.SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return await Client.SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc/>
@@ -104,7 +104,7 @@ public class LolLeagueV4Endpoint : ApiEndpoint, ILolLeagueV4
             MethodId = "/lol/league/v4/masterleagues/by-queue/{queue}",
             Path = $"/lol/league/v4/masterleagues/by-queue/{queue.ToApiString()}",
         };
-        var data = await _client.SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await Client.SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 }

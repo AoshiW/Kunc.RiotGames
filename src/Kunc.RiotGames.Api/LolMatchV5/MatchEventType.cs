@@ -51,6 +51,9 @@ public enum MatchEventType
     [JsonEnumName("PAUSE_END")]
     PauseEnd,
 
+    [JsonEnumName("PAUSE_START")]
+    PauseStart,
+
     [JsonEnumName("SKILL_LEVEL_UP")]
     SkillLevelUp,
 

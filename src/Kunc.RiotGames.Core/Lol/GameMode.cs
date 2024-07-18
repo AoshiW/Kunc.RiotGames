@@ -55,7 +55,7 @@ public enum GameMode
     /// <summary>
     /// Snowdown Showdown games
     /// </summary>
-    FiestBlood,
+    FirstBlood,
 
     /// <summary>
     /// Legend of the Poro King games.
@@ -118,6 +118,11 @@ public enum GameMode
     Cherry,
 
     /// <summary>
+    /// Swarm PvE
+    /// </summary>
+    Strawberry,
+
+    /// <summary>
     /// Practice Tool.
     /// </summary>
     PracticeTool,
@@ -144,4 +149,8 @@ public enum GameMode
     /// Teamfight Tactics
     /// </summary>
     Tft,
+
+    SnowUrf,
+
+    WipModeWip,
 }

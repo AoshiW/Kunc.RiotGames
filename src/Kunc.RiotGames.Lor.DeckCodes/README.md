@@ -1,9 +1,11 @@
 ﻿# Kunc.RiotGames.Lor.DeckCodes
 [![Nuget](https://img.shields.io/nuget/v/Kunc.RiotGames.Lor.DeckCodes?logo=NuGet&logoColor=blue&style=flat-square)](https://www.nuget.org/packages/Kunc.RiotGames.Lor.DeckCodes)
 
-This is a C# implementation of the C# library [RiotGames/LoRDeckCodes](https://github.com/RiotGames/LoRDeckCodes).
+This is a better implementation of the C# library [RiotGames/LoRDeckCodes](https://github.com/RiotGames/LoRDeckCodes),
+which is used to encode/decode Legends of Runeterra decks  to/from simple strings.
 This library is faster and more efficient (at least 50% less memory allocation).
 
+Documentation on how this works can be found in the [original repository](https://github.com/RiotGames/LoRDeckCodes/blob/main/README.md).
 
 ## How to Use
 ```cs
@@ -20,7 +22,7 @@ string code = deckEncoder.GetCodeFromDeck(deck1);
 List<DeckCard> deck2 = deckEncoder.GetDeckFromCode<DeckCard>(code);
 ```
 
-You can also use your own class, all you have to do is implement 2 interface\
+You can also use your own class instead of the `DeckItem`, all you have to do is implement these 2 interface\
 `IDeckCard` - to get deck from code\
 `IReadOnlyDeckCard` - to get the code from the deck
 ```cs

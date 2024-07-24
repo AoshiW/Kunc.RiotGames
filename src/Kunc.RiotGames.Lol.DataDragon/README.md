@@ -16,9 +16,9 @@ var language = "en_US";
 var versions = await lolDataDragon.GetVersionsAsync();
 var lastVersion = versions[0];
 
-Dictionary<string, ChampionDto> champions = await lolDataDragon.GetAllChampionsAsync(lastVersion, language);
+Dictionary<string, ChampionDto> champions = await lolDataDragon.GetChampionsAsync(lastVersion, language);
 // or
-// Dictionary<string, ChampionDto> champions = await lolDataDragon.GetAllChampionsAsync("latest", language);
+// Dictionary<string, ChampionDto> champions = await lolDataDragon.GetChampionsAsync("latest", language);
 
 Console.WriteLine($"Top {count} champions with the biggest attack range:");
 foreach (var champion in champions.Values.OrderByDescending(c => c.Stats.AttackRange).Take(count))

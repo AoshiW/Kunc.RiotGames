@@ -41,7 +41,7 @@ foreach (var entry in entries)
 
 const int count = 5;
 ChampionMasteryDto[] masteries = await api.LolChampionMasteryV4.GetAllChampionMasteryEntriesAsync(smallRegion, account.Puuid);
-Dictionary<string, ChampionBaseDto> champions = await lolDataDragon.GetAllChampionsBaseAsync("latest", "en_US");
+Dictionary<string, ChampionBaseDto> champions = await lolDataDragon.GetChampionsBaseAsync("latest", "en_US");
 Console.WriteLine();
 Console.WriteLine($"Top {count} champions:");
 foreach (var mastery in masteries.Take(count))

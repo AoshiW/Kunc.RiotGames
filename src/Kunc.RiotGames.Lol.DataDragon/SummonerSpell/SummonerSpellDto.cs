@@ -33,9 +33,9 @@ public class SummonerSpellDto : BaseDto
     [JsonPropertyName("costBurn")]
     public string CostBurn { get; set; } = string.Empty;
 
-    // todo
-    [JsonPropertyName("datavalues")]
-    public JsonElement Datavalues { get; set; }
+    // it's always empty
+    //[JsonPropertyName("datavalues")]
+    //public JsonElement Datavalues { get; set; }
 
     [JsonPropertyName("effect")]
     public double[]?[] Effect { get; set; } = [];
@@ -46,28 +46,25 @@ public class SummonerSpellDto : BaseDto
     [JsonPropertyName("vars")]
     public JsonElement[] Vars { get; set; } = [];
 
-    //todo? => int
     [JsonPropertyName("key")]
-    public string Key { get; set; } = string.Empty;
+    [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
+    public int Key { get; set; }
 
     [JsonPropertyName("summonerLevel")]
     public int SummonerLevel { get; set; }
 
-    //todo => GameMode
     [JsonPropertyName("modes")]
-    public string[] Modes { get; set; } = [];
+    public GameMode[] Modes { get; set; } = [];
 
     [JsonPropertyName("costType")]
     public string CostType { get; set; } = string.Empty;
 
-    //todo? => int
     [JsonPropertyName("maxammo")]
     public string Maxammo { get; set; } = string.Empty;
 
     [JsonPropertyName("range")]
     public int[] Range { get; set; } = [];
 
-    //todo => int
     [JsonPropertyName("rangeBurn")]
     public string RangeBurn { get; set; } = string.Empty;
 

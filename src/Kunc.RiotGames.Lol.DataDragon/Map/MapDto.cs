@@ -6,8 +6,8 @@ public class MapDto : BaseDto
 {
     public string MapName { get; set; } = string.Empty;
 
-    //todo => int
-    public string MapId { get; set; } = string.Empty;
+    [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
+    public int MapId { get; set; }
 
     [JsonPropertyName("image")]
     [JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]

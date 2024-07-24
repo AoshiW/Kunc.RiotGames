@@ -18,7 +18,8 @@ namespace Kunc.RiotGames.Lol.DataDragon;
 public partial class LolDataDragon : ILolDataDragon
 {
     private static readonly DistributedCacheEntryOptions distributedCacheEntryOptions = new();
-    readonly HttpClient _client;
+    private static readonly DistributedCacheEntryOptions latestDistributedCacheEntryOptions = new() { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5) };
+    private readonly HttpClient _client;
     private readonly IDistributedCache _distributedCache;
     private readonly ILogger<LolDataDragon> _logger;
     private readonly LolDataDragonOptions _options;
@@ -78,7 +79,7 @@ public partial class LolDataDragon : ILolDataDragon
     /// <inheritdoc/>
     public async Task<Dictionary<string, MapDto>> GetMapsAsync(string version, string language, CancellationToken cancellationToken = default)
     {
-        version = await ConverLatestStringAsync(version, cancellationToken).ConfigureAwait(false);
+        version = await ConvertLatestStringAsync(version, cancellationToken).ConfigureAwait(false);
         var uri = $"cdn/{version}/data/{language}/map.json";
         var maps = await GetAsync<RootDto<MapDto>>(uri, cancellationToken).ConfigureAwait(false); ;
         return maps.Data;
@@ -87,7 +88,7 @@ public partial class LolDataDragon : ILolDataDragon
     /// <inheritdoc/>
     public async Task<Dictionary<string, ProfileIconDto>> GetProfileIconsAsync(string version, string language, CancellationToken cancellationToken = default)
     {
-        version = await ConverLatestStringAsync(version, cancellationToken).ConfigureAwait(false);
+        version = await ConvertLatestStringAsync(version, cancellationToken).ConfigureAwait(false);
         var uri = $"cdn/{version}/data/{language}/profileicon.json";
         var profileIcons = await GetAsync<RootDto<ProfileIconDto>>(uri, cancellationToken).ConfigureAwait(false);
         return profileIcons.Data;
@@ -96,7 +97,7 @@ public partial class LolDataDragon : ILolDataDragon
     /// <inheritdoc/>
     public async Task<RuneReforgedDto[]> GetRunesReforgedAsync(string version, string language, CancellationToken cancellationToken = default)
     {
-        version = await ConverLatestStringAsync(version, cancellationToken).ConfigureAwait(false);
+        version = await ConvertLatestStringAsync(version, cancellationToken).ConfigureAwait(false);
         var uri = $"cdn/{version}/data/{language}/runesReforged.json";
         var runesReforged = await GetAsync<RuneReforgedDto[]>(uri, cancellationToken).ConfigureAwait(false);
         return runesReforged;
@@ -105,7 +106,7 @@ public partial class LolDataDragon : ILolDataDragon
     /// <inheritdoc/>
     public async Task<Dictionary<string, SummonerSpellDto>> GetSummonerSpellsAsync(string version, string language, CancellationToken cancellationToken = default)
     {
-        version = await ConverLatestStringAsync(version, cancellationToken).ConfigureAwait(false);
+        version = await ConvertLatestStringAsync(version, cancellationToken).ConfigureAwait(false);
         var uri = $"cdn/{version}/data/{language}/summoner.json";
         var summonerSpell = await GetAsync<RootDto<SummonerSpellDto>>(uri, cancellationToken).ConfigureAwait(false);
         return summonerSpell.Data;
@@ -114,34 +115,34 @@ public partial class LolDataDragon : ILolDataDragon
     /// <inheritdoc/>
     public async Task<Dictionary<string, ItemDto>> GetItemsAsync(string version, string language, CancellationToken cancellationToken = default)
     {
-        version = await ConverLatestStringAsync(version, cancellationToken).ConfigureAwait(false);
+        version = await ConvertLatestStringAsync(version, cancellationToken).ConfigureAwait(false);
         var uri = $"cdn/{version}/data/{language}/item.json";
         var items = await GetAsync<RootDto<ItemDto>>(uri, cancellationToken).ConfigureAwait(false);
         return items.Data;
     }
 
     /// <inheritdoc/>
-    public async Task<Dictionary<string, ChampionBaseDto>> GetAllChampionsBaseAsync(string version, string language, CancellationToken cancellationToken = default)
+    public async Task<Dictionary<string, ChampionBaseDto>> GetChampionsBaseAsync(string version, string language, CancellationToken cancellationToken = default)
     {
-        version = await ConverLatestStringAsync(version, cancellationToken).ConfigureAwait(false);
+        version = await ConvertLatestStringAsync(version, cancellationToken).ConfigureAwait(false);
         var uri = $"cdn/{version}/data/{language}/champion.json";
         var champions = await GetAsync<RootDto<ChampionBaseDto>>(uri, cancellationToken).ConfigureAwait(false);
         return champions.Data;
     }
 
     /// <inheritdoc/>
-    public async Task<Dictionary<string, ChampionDto>> GetAllChampionsAsync(string version, string language, CancellationToken cancellationToken = default)
+    public async Task<Dictionary<string, ChampionDto>> GetChampionsAsync(string version, string language, CancellationToken cancellationToken = default)
     {
-        version = await ConverLatestStringAsync(version, cancellationToken).ConfigureAwait(false);
+        version = await ConvertLatestStringAsync(version, cancellationToken).ConfigureAwait(false);
         var uri = $"cdn/{version}/data/{language}/championFull.json";
         var champions = await GetAsync<RootDto<ChampionDto>>(uri, cancellationToken).ConfigureAwait(false);
         return champions.Data;
     }
 
     /// <inheritdoc/>
-    public async Task<ChampionDto> GetChampionsAsync(string version, string language, string id, CancellationToken cancellationToken = default)
+    public async Task<ChampionDto> GetChampionAsync(string version, string language, string id, CancellationToken cancellationToken = default)
     {
-        version = await ConverLatestStringAsync(version, cancellationToken).ConfigureAwait(false);
+        version = await ConvertLatestStringAsync(version, cancellationToken).ConfigureAwait(false);
         var uri = $"cdn/{version}/data/{language}/champion/{id}.json";
         var champions = await GetAsync<RootDto<ChampionDto>>(uri, cancellationToken).ConfigureAwait(false);
         return champions.Data.First().Value;
@@ -150,13 +151,13 @@ public partial class LolDataDragon : ILolDataDragon
     /// <inheritdoc/>
     public async Task<ChallengeDto[]> GetChallengesAsync(string version, string language, CancellationToken cancellationToken = default)
     {
-        version = await ConverLatestStringAsync(version, cancellationToken).ConfigureAwait(false);
+        version = await ConvertLatestStringAsync(version, cancellationToken).ConfigureAwait(false);
         var uri = $"cdn/{version}/data/{language}/challenges.json";
         var challenges = await GetAsync<ChallengeDto[]>(uri, cancellationToken).ConfigureAwait(false);
         return challenges;
     }
 
-    private ValueTask<string> ConverLatestStringAsync(string version, CancellationToken cancellationToken)
+    private ValueTask<string> ConvertLatestStringAsync(string version, CancellationToken cancellationToken)
     {
         return version == "latest"
             ? GetLatestVersion(this, cancellationToken)
@@ -166,11 +167,11 @@ public partial class LolDataDragon : ILolDataDragon
         {
             const string cacheKey = "lol.ddragon.latestVersion";
             var latest = await obj._distributedCache.GetStringAsync(cacheKey, cancellationToken).ConfigureAwait(false);
-            if (latest == null)
+            if (latest is null)
             {
                 var versions = await obj.GetVersionsAsync(cancellationToken).ConfigureAwait(false);
                 latest = versions[0];
-                await obj._distributedCache.SetStringAsync(cacheKey, latest, obj._options.DefaultCacheEntryOptions ?? distributedCacheEntryOptions, cancellationToken).ConfigureAwait(false);
+                await obj._distributedCache.SetStringAsync(cacheKey, latest, obj._options.DefaultCacheEntryOptions ?? latestDistributedCacheEntryOptions, cancellationToken).ConfigureAwait(false);
             }
             return latest;
         }

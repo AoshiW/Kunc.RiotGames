@@ -36,14 +36,14 @@ public partial class LolDataDragon
             _serviceProvider = serviceProvider;
         }
 
-        public Task<Dictionary<string, ChampionDto>> GetAllChampionsAsync(string version, string language, CancellationToken cancellationToken = default)
+        public Task<Dictionary<string, ChampionDto>> GetChampionsAsync(string version, string language, CancellationToken cancellationToken = default)
         {
-            return _lolDataDragon.GetAllChampionsAsync(version, language, cancellationToken);
+            return _lolDataDragon.GetChampionsAsync(version, language, cancellationToken);
         }
 
-        public Task<Dictionary<string, ChampionBaseDto>> GetAllChampionsBaseAsync(string version, string language, CancellationToken cancellationToken = default)
+        public Task<Dictionary<string, ChampionBaseDto>> GetChampionsBaseAsync(string version, string language, CancellationToken cancellationToken = default)
         {
-            return _lolDataDragon.GetAllChampionsBaseAsync(version, language, cancellationToken);
+            return _lolDataDragon.GetChampionsBaseAsync(version, language, cancellationToken);
         }
 
         public Task<ChallengeDto[]> GetChallengesAsync(string version, string language, CancellationToken cancellationToken = default)
@@ -51,9 +51,9 @@ public partial class LolDataDragon
             return _lolDataDragon.GetChallengesAsync(version, language, cancellationToken);
         }
 
-        public Task<ChampionDto> GetChampionsAsync(string version, string language, string id, CancellationToken cancellationToken = default)
+        public Task<ChampionDto> GetChampionAsync(string version, string language, string id, CancellationToken cancellationToken = default)
         {
-            return _lolDataDragon.GetChampionsAsync(version, language, id, cancellationToken);
+            return _lolDataDragon.GetChampionAsync(version, language, id, cancellationToken);
         }
 
         public Task<Dictionary<string, ItemDto>> GetItemsAsync(string version, string language, CancellationToken cancellationToken = default)

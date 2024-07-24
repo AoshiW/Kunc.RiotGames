@@ -10,9 +10,9 @@ namespace Kunc.RiotGames.Lol.DataDragon;
 
 public interface ILolDataDragon : IDisposable
 {
-    Task<Dictionary<string, ChampionDto>> GetAllChampionsAsync(string version, string language, CancellationToken cancellationToken = default);
-    Task<Dictionary<string, ChampionBaseDto>> GetAllChampionsBaseAsync(string version, string language, CancellationToken cancellationToken = default);
-    Task<ChampionDto> GetChampionsAsync(string version, string language, string id, CancellationToken cancellationToken = default);
+    Task<Dictionary<string, ChampionDto>> GetChampionsAsync(string version, string language, CancellationToken cancellationToken = default);
+    Task<Dictionary<string, ChampionBaseDto>> GetChampionsBaseAsync(string version, string language, CancellationToken cancellationToken = default);
+    Task<ChampionDto> GetChampionAsync(string version, string language, string id, CancellationToken cancellationToken = default);
     Task<ChallengeDto[]> GetChallengesAsync(string version, string language, CancellationToken cancellationToken = default);
     Task<Dictionary<string, ItemDto>> GetItemsAsync(string version, string language, CancellationToken cancellationToken = default);
     Task<Dictionary<string, MapDto>> GetMapsAsync(string version, string language, CancellationToken cancellationToken = default);

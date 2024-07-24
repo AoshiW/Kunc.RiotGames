@@ -1,77 +1,75 @@
-using Microsoft.Extensions.DependencyInjection;
-
 namespace Kunc.RiotGames.Lol.DataDragon.Tests;
 
 [TestClass]
 public class LolDataDragonTest
 {
-    const string language = "en_US";
-    private string? _lastVersion;
-    private readonly ILolDataDragon _dataDragon = new ServiceCollection()
-        .AddDistributedMemoryCache()
-        .AddSingleton<ILolDataDragon, LolDataDragon>()
-        .BuildServiceProvider()
-        .GetRequiredService<ILolDataDragon>();
+    private readonly ILolDataDragon _dataDragon = LolDataDragon.Create();
+
+    public static IEnumerable<(string, string)> DefaultVersionLanguage => [
+        ("latest", "en_US"),
+        ("latest", "cs_CZ"),
+    ];
+
 
     [TestMethod]
-    public async Task GetMaps()
+    [DynamicData(nameof(DefaultVersionLanguage))]
+    public async Task GetMaps(string version, string language)
     {
-        var lastVersion = await GetLastVersionAsync();
-        var maps = await _dataDragon.GetMapsAsync(lastVersion, language, default);
+        var maps = await _dataDragon.GetMapsAsync(version, language, default);
 
         Assert.IsNotNull(maps);
     }
 
     [TestMethod]
-    public async Task GetItems()
+    [DynamicData(nameof(DefaultVersionLanguage))]
+    public async Task GetItems(string version, string language)
     {
-        var lastVersion = await GetLastVersionAsync();
-        var items = await _dataDragon.GetItemsAsync(lastVersion, language, default);
+        var items = await _dataDragon.GetItemsAsync(version, language, default);
 
         Assert.IsNotNull(items);
     }
 
     [TestMethod]
-    public async Task GetSummonerSpells()
+    [DynamicData(nameof(DefaultVersionLanguage))]
+    public async Task GetSummonerSpells(string version, string language)
     {
-        var lastVersion = await GetLastVersionAsync();
-        var summonerSpells = await _dataDragon.GetSummonerSpellsAsync(lastVersion, language, default);
+        var summonerSpells = await _dataDragon.GetSummonerSpellsAsync(version, language, default);
 
         Assert.IsNotNull(summonerSpells);
     }
 
     [TestMethod]
-    public async Task GetProfileIcons()
+    [DynamicData(nameof(DefaultVersionLanguage))]
+    public async Task GetProfileIcons(string version, string language)
     {
-        var lastVersion = await GetLastVersionAsync();
-        var profileIcons = await _dataDragon.GetProfileIconsAsync(lastVersion, language, default);
+        var profileIcons = await _dataDragon.GetProfileIconsAsync(version, language, default);
 
         Assert.IsNotNull(profileIcons);
     }
 
     [TestMethod]
-    public async Task GetAllChampions()
+    [DynamicData(nameof(DefaultVersionLanguage))]
+    public async Task GetChampions(string version, string language)
     {
-        var lastVersion = await GetLastVersionAsync();
-        var champions = await _dataDragon.GetAllChampionsAsync(lastVersion, language, default);
+        var champions = await _dataDragon.GetChampionsAsync(version, language, default);
 
         Assert.IsNotNull(champions);
     }
 
     [TestMethod]
-    public async Task GetAllChampionsBase()
+    [DynamicData(nameof(DefaultVersionLanguage))]
+    public async Task GetChampionsBase(string version, string language)
     {
-        var lastVersion = await GetLastVersionAsync();
-        var champions = await _dataDragon.GetAllChampionsBaseAsync(lastVersion, language, default);
+        var champions = await _dataDragon.GetChampionsBaseAsync(version, language, default);
 
         Assert.IsNotNull(champions);
     }
 
     [TestMethod]
-    public async Task GetChallenges()
+    [DynamicData(nameof(DefaultVersionLanguage))]
+    public async Task GetChallenges(string version, string language)
     {
-        var lastVersion = await GetLastVersionAsync();
-        var challenges = await _dataDragon.GetChallengesAsync(lastVersion, language, default);
+        var challenges = await _dataDragon.GetChallengesAsync(version, language, default);
 
         Assert.IsNotNull(challenges);
     }
@@ -85,25 +83,11 @@ public class LolDataDragonTest
     }
 
     [TestMethod]
-    public async Task GetRunesReforged()
+    [DynamicData(nameof(DefaultVersionLanguage))]
+    public async Task GetRunesReforged(string version, string language)
     {
-        var lastVersion = await GetLastVersionAsync();
-        var runesReforged = await _dataDragon.GetRunesReforgedAsync(lastVersion, language, default);
+        var runesReforged = await _dataDragon.GetRunesReforgedAsync(version, language, default);
 
         Assert.IsNotNull(runesReforged);
-    }
-
-    private ValueTask<string> GetLastVersionAsync()
-    {
-        if (_lastVersion is not null)
-            return ValueTask.FromResult(_lastVersion);
-
-        return GetLastVersionAsyncCore(default);
-
-        async ValueTask<string> GetLastVersionAsyncCore(CancellationToken cancellationToken)
-        {
-            var versions = await _dataDragon.GetVersionsAsync(cancellationToken);
-            return _lastVersion = versions[0];
-        }
     }
 }

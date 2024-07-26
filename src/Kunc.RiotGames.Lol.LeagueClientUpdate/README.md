@@ -20,8 +20,8 @@ var obj = new { challengeIds = new long[] { -1, -1, -1 } };
 await lcu.SendAsync(HttpMethod.Post, "lol-challenges/v1/update-player-preferences/", obj);
 await lcu.Client.PostAsJsonAsync("lol-challenges/v1/update-player-preferences/", obj);
 
-RootObject obj1 = await lcu.GetAsync<RootObject>("lol-summoner/v1/current-summoner");
-RootObject obj2 = await lcu.Client.GetFromJsonAsync<RootObject>("lol-summoner/v1/current-summoner");
+RootObject? obj1 = await lcu.GetAsync<RootObject>("lol-summoner/v1/current-summoner");
+RootObject? obj2 = await lcu.Client.GetFromJsonAsync<RootObject>("lol-summoner/v1/current-summoner");
 
 class RootObject { /* Properties */ }
 ```
@@ -39,9 +39,9 @@ The parameters must be:
 
 ```cs
 // Subcire event manually
-Lcu.Subscribe("/lol-gameflow/v1/gameflow-phase", (/* parameters */) => { /* code */ });
-Lcu.Subscribe([LcuEvent("/lol-gameflow/v1/gameflow-phase")] (/* parameters */) => { /* code */ });
-Lcu.Subscribe(new LcuEventAttribute("/lol-gameflow/v1/gameflow-phase"), (/* parameters */) => { /* code */ });
+lcu.Subscribe("/lol-gameflow/v1/gameflow-phase", (/* parameters */) => { /* code */ });
+lcu.Subscribe([LcuEvent("/lol-gameflow/v1/gameflow-phase")] (/* parameters */) => { /* code */ });
+lcu.Subscribe(new LcuEventAttribute("/lol-gameflow/v1/gameflow-phase"), (/* parameters */) => { /* code */ });
 
 // Subscire all events from a given class
 Lcu.SubscribeAll<SomeClass>();

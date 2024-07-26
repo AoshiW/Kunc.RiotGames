@@ -10,6 +10,7 @@ public partial class LolLeagueClientUpdate
     private bool _disposedValue;
     private readonly ILogger<LolLeagueClientUpdate> _logger;
     private readonly ILockfileProvider _lockfileProvider;
+    private readonly Task _initTask;
 
     /// <summary>
     /// Internal HttpClient for sending requests.
@@ -42,10 +43,10 @@ public partial class LolLeagueClientUpdate
         Wamp = wamp ?? new Wamp(loggerFactory.CreateLogger<Wamp>());
         Wamp.OnMessage += OnMessage;
         _logger = loggerFactory.CreateLogger<LolLeagueClientUpdate>();
-        TryInit();
+        _initTask = InitLockFileAsync();
     }
 
-    private async void TryInit()
+    private async Task InitLockFileAsync()
     {
         var lockfile = await _lockfileProvider.GetLockfileAsync().ConfigureAwait(false);
         if (lockfile is null)
@@ -96,6 +97,8 @@ public partial class LolLeagueClientUpdate
 
     private void CheckLockfile()
     {
+        if (!_initTask.IsCompleted)
+            _initTask.Wait(); 
         if (Client.BaseAddress is null)
             throw new InvalidOperationException("Lockfile data is not available.");
     }

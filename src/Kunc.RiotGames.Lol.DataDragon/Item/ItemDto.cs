@@ -53,10 +53,13 @@ public class ItemDto : BaseDto
     [JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]
     public StatsDto Stats { get; set; } = new();
 
+    [JsonPropertyName("stacks")]
+    public int Stacks { get; set; } = 1;
+
     [JsonPropertyName("effect")]
     [JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]
     public EffectDto Effect { get; set; } = new();
 
     [JsonPropertyName("depth")]
-    public int Depth { get; set; }
+    public int Depth { get; set; } = 1;
 }

@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 namespace Kunc.RiotGames.Api.LolChallengesV1;
 
@@ -26,15 +27,16 @@ public enum State
     Enabled,
 }
 
+[Experimental(DiagnosticIds.KNCRG0000, UrlFormat = DiagnosticIds.UrlFormat)]
 public static class StateExtensions
 {
-    //[Experimental]
+    [Experimental(DiagnosticIds.KNCRG0000, UrlFormat = DiagnosticIds.UrlFormat)]
     public static bool IsVisible(this State state)
     {
         return (state & State.Archived) == State.Archived;
     }
 
-    //[Experimental]
+    [Experimental(DiagnosticIds.KNCRG0000, UrlFormat = DiagnosticIds.UrlFormat)]
     public static bool IsCalculated(this State state)
     {
         return (state & State.Hidden) == State.Hidden;

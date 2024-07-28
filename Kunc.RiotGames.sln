@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
+		DiagnosticIds.md = DiagnosticIds.md
 		Directory.Build.props = Directory.Build.props
 		Directory.Packages.props = Directory.Packages.props
 		LICENSE = LICENSE
@@ -57,9 +58,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kunc.RiotGames.Api", "src\K
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kunc.RiotGames.Api.Tests", "tests\Kunc.RiotGames.Api.Tests\Kunc.RiotGames.Api.Tests.csproj", "{0882BF0B-77D5-4B47-A37A-0A3A581A97A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kunc.RiotGames.Lol.GameClient", "src\Kunc.RiotGames.Lol.GameClient\Kunc.RiotGames.Lol.GameClient.csproj", "{F8C3A9D4-3738-406D-884D-636B403E5DA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kunc.RiotGames.Lol.GameClient", "src\Kunc.RiotGames.Lol.GameClient\Kunc.RiotGames.Lol.GameClient.csproj", "{F8C3A9D4-3738-406D-884D-636B403E5DA6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kunc.RiotGames.Lol.GameClient.Tests", "tests\Kunc.RiotGames.Lol.GameClient.Tests\Kunc.RiotGames.Lol.GameClient.Tests.csproj", "{DD8695C3-FAF2-41D8-9CD7-1DCCB4B1B781}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kunc.RiotGames.Lol.GameClient.Tests", "tests\Kunc.RiotGames.Lol.GameClient.Tests\Kunc.RiotGames.Lol.GameClient.Tests.csproj", "{DD8695C3-FAF2-41D8-9CD7-1DCCB4B1B781}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

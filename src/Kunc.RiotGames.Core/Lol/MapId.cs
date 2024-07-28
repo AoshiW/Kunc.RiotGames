@@ -1,4 +1,6 @@
-﻿namespace Kunc.RiotGames.Lol;
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Kunc.RiotGames.Lol;
 
 /// <summary>
 /// League of Lgends (and Teamfight Tactics) maps 
@@ -89,4 +91,7 @@ public enum MapId
     /// Arena map
     /// </summary>
     RingsOfWrath = 30,
+
+    [Experimental(DiagnosticIds.KNCRG0000, UrlFormat = DiagnosticIds.UrlFormat)]
+    Strawberry = 33,
 }

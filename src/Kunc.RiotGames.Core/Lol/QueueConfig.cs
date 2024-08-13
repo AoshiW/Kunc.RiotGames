@@ -18,52 +18,54 @@ public class QueueConfig : IEquatable<QueueConfig?>
     public int QueueId { get; }
 
     public MapId Map { get; }
+    public GameMode GameMode { get; }
 
     public static implicit operator QueueConfig(int queueId)
     {
         return Queues.TryGetValue(queueId, out var queue)
             ? queue
-            : new(queueId, MapId.None, QueueFlags.None);
+            : new(queueId, MapId.None, GameMode.EmptyString, QueueFlags.None);
     }
 
     static QueueConfig()
     {
         var queues = new Dictionary<int, QueueConfig>();
 
-        Default = new(0, MapId.None, QueueFlags.None);
+        Default = new(0, MapId.None, GameMode.EmptyString, QueueFlags.None);
         queues.Add(Default.QueueId, Default);
 
-        Add(400, MapId.SummonersRiftV2, QueueFlags.PvP); // 5v5 Draft Pick
-        Add(420, MapId.SummonersRiftV2, QueueFlags.PvP | QueueFlags.Ranked); // 5v5 Ranked Solo/Duo
-        Add(440, MapId.SummonersRiftV2, QueueFlags.PvP | QueueFlags.Ranked); // 5v5 Ranked Flex
-        Add(450, MapId.HowlingAbyss, QueueFlags.PvP); // Aram
-        Add(490, MapId.SummonersRiftV2, QueueFlags.PvP); // 5v5 Normal (Quickplay)
-        Add(870, MapId.SummonersRiftV2, QueueFlags.Bots); // Co-op vs. AI Intro Bot games
-        Add(880, MapId.SummonersRiftV2, QueueFlags.Bots); // Co-op vs. AI Beginner Bot games
-        Add(890, MapId.SummonersRiftV2, QueueFlags.Bots); // Co-op vs. AI Intermediate Bot games
-        Add(1090, MapId.Convergence, QueueFlags.PvP); // TFT Normal
-        Add(1100, MapId.Convergence, QueueFlags.PvP | QueueFlags.Ranked); // TFT Ranked
-        Add(1130, MapId.Convergence, QueueFlags.PvP); // TFT Hyper roll
-        Add(1160, MapId.Convergence, QueueFlags.PvP); // TFT Double up (workshop)
-        Add(1700, MapId.RingsOfWrath, QueueFlags.PvP); // Arena
-        Add(1810, MapId.Strawberry, QueueFlags.PvE); // Swarm Solo
-        Add(1820, MapId.Strawberry, QueueFlags.PvE); // Swarm 2 Members
-        Add(1830, MapId.Strawberry, QueueFlags.PvE); // Swarm 3 Members
-        Add(1840, MapId.Strawberry, QueueFlags.PvE); // Swarm 4 Members
+        Add(400, MapId.SummonersRiftV2, GameMode.Classic, QueueFlags.PvP); // 5v5 Draft Pick
+        Add(420, MapId.SummonersRiftV2, GameMode.Classic, QueueFlags.PvP | QueueFlags.Ranked); // 5v5 Ranked Solo/Duo
+        Add(440, MapId.SummonersRiftV2, GameMode.Classic, QueueFlags.PvP | QueueFlags.Ranked); // 5v5 Ranked Flex
+        Add(450, MapId.HowlingAbyss, GameMode.Aram, QueueFlags.PvP); // Aram
+        Add(490, MapId.SummonersRiftV2, GameMode.Classic, QueueFlags.PvP); // 5v5 Normal (Quickplay)
+        Add(870, MapId.SummonersRiftV2, GameMode.TutorialModule1, QueueFlags.Bots); // Co-op vs. AI Intro Bot games
+        Add(880, MapId.SummonersRiftV2, GameMode.TutorialModule2, QueueFlags.Bots); // Co-op vs. AI Beginner Bot games
+        Add(890, MapId.SummonersRiftV2, GameMode.TutorialModule3, QueueFlags.Bots); // Co-op vs. AI Intermediate Bot games
+        Add(1090, MapId.Convergence, GameMode.Tft, QueueFlags.PvP); // TFT Normal
+        Add(1100, MapId.Convergence, GameMode.Tft, QueueFlags.PvP | QueueFlags.Ranked); // TFT Ranked
+        Add(1130, MapId.Convergence, GameMode.Tft, QueueFlags.PvP); // TFT Hyper roll
+        Add(1160, MapId.Convergence, GameMode.Tft, QueueFlags.PvP); // TFT Double up (workshop)
+        Add(1700, MapId.RingsOfWrath, GameMode.Cherry, QueueFlags.PvP); // Arena
+        Add(1810, MapId.Strawberry, GameMode.Strawberry, QueueFlags.PvE); // Swarm Solo
+        Add(1820, MapId.Strawberry, GameMode.Strawberry, QueueFlags.PvE); // Swarm 2 Members
+        Add(1830, MapId.Strawberry, GameMode.Strawberry, QueueFlags.PvE); // Swarm 3 Members
+        Add(1840, MapId.Strawberry, GameMode.Strawberry, QueueFlags.PvE); // Swarm 4 Members
 
         Queues = queues.ToFrozenDictionary();
 
-        void Add(int queueId, MapId map, QueueFlags flags)
+        void Add(int queueId, MapId map, GameMode gameMode, QueueFlags flags)
         {
-            var queue = new QueueConfig(queueId, map, flags);
+            var queue = new QueueConfig(queueId, map, gameMode, flags);
             queues.Add(queueId, queue);
         }
     }
 
-    private QueueConfig(int queueId, MapId mapId, QueueFlags flags)
+    private QueueConfig(int queueId, MapId mapId, GameMode gameMode, QueueFlags flags)
     {
         QueueId = queueId;
         Map = mapId;
+        GameMode = gameMode;
         _flags = flags;
     }
 

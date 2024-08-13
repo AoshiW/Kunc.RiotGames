@@ -12,12 +12,19 @@ public static class LolLeagueClientUpdateServiceCollectionExtensions
     /// Adds Lol LeagueClientUpdate to the specified <see cref="IServiceCollection" />.
     /// </summary>
     /// <param name="services">The <see cref="IServiceCollection" /> to add services to.</param>
+    /// <param name="configure">The <see cref="Action{LolLeagueClientUpdateOptions}"/> configuration delegate.</param>
     /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
-    public static IServiceCollection AddLolLeagueClientUpdate(this IServiceCollection services)
+    public static IServiceCollection AddLolLeagueClientUpdate(this IServiceCollection services, Action<LolLeagueClientUpdateOptions>? configure = null)
     {
         ArgumentNullException.ThrowIfNull(nameof(services));
+        services.AddOptions();
+        services.TryAdd(ServiceDescriptor.Singleton(typeof(IWamp), typeof(Wamp)));
         services.TryAdd(ServiceDescriptor.Singleton(typeof(ILockfileProvider), typeof(FileLockfileProvider)));
         services.TryAdd(ServiceDescriptor.Singleton(typeof(ILolLeagueClientUpdate), typeof(LolLeagueClientUpdate)));
+        if(configure is not null)
+        {
+            services.Configure(configure);
+        }
         return services;
     }
 }

@@ -1,10 +1,17 @@
-﻿namespace Kunc.RiotGames.Lol.LeagueClientUpdate.Tests;
+﻿using Microsoft.Extensions.Options;
+
+namespace Kunc.RiotGames.Lol.LeagueClientUpdate.Tests;
 
 [TestClass]
 public class WampEvents
 {
+    class FakeOptions : IOptions<LolLeagueClientUpdateOptions>
+    {
+        public LolLeagueClientUpdateOptions Value { get; } = new();
+    }
+
     static readonly NullWamp Wamp = new();
-    static readonly Func<LolLeagueClientUpdate> NewLcu = () => new(new NullLockfileProvieder(), Wamp);
+    static ILolLeagueClientUpdate NewLcu() => new LolLeagueClientUpdate(new FakeOptions(), NullLockfileProvieder.Instance, Wamp);
 
     [TestMethod]
     public void Test()
@@ -81,7 +88,7 @@ public class WampEvents
         var lcu = NewLcu();
         const string url1 = "/random";
         var isInvoked = new Wrapper<bool>();
-        lcu.Subscribe(url1, isInvoked.EventHandler);
+        var un = lcu.Subscribe(url1, isInvoked.EventHandler);
 
         Wamp.InvokeOnMessage(new LcuEventArgs<string>()
         {
@@ -91,7 +98,7 @@ public class WampEvents
         });
         Assert.IsTrue(isInvoked.Value);
         isInvoked.Value = false;
-        lcu.Unsubscribe(url1, isInvoked.EventHandler);
+        un.Dispose();
         Wamp.InvokeOnMessage(new LcuEventArgs<string>()
         {
             Data = "Null",

@@ -1,28 +1,22 @@
-﻿using System.Text.Json;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 
 namespace Kunc.RiotGames.Lol.LeagueClientUpdate;
 
 public interface ILolLeagueClientUpdate : IDisposable
 {
-    HttpClient Client { get; }
-    IWamp Wamp { get; }
+    Task<HttpResponseMessage> SendAsync(HttpRequestMessage httpRequestMessage, CancellationToken cancellationToken = default);
+    public Task<T?> GetFromJsonAsync<T>([StringSyntax(StringSyntaxAttribute.Uri)] string requestUri, CancellationToken cancellationToken = default);
+    public Task<HttpResponseMessage> PostAsJsonAsync<T>([StringSyntax(StringSyntaxAttribute.Uri)] string requestUri, T value, CancellationToken cancellationToken = default);
+    public Task<HttpResponseMessage> PutAsJsonAsync<T>([StringSyntax(StringSyntaxAttribute.Uri)] string requestUri, T value, CancellationToken cancellationToken = default);
 
     event EventHandler<LcuEventArgs<JsonElement>>? OnLcuEvent;
-
-    Task<HttpResponseMessage> SendAsync(HttpRequestMessage httpRequestMessage, CancellationToken cancellationToken = default);
-    Task<HttpResponseMessage> SendAsync<T>(HttpMethod method, string requestUri, T value, JsonSerializerOptions? options = null, CancellationToken cancellationToken = default);
-    Task<T?> GetAsync<T>(string requestUri, CancellationToken cancellationToken = default);
-
-    void Subscribe(LcuEventAttribute attribute, Delegate eventHandler);
-    void Subscribe(string uri, Delegate eventHandler);
-    void Subscribe(Delegate eventHandler);
-
-    bool Unsubscribe(LcuEventAttribute attribute, Delegate eventHandler);
-    bool Unsubscribe(string uri, Delegate eventHandler);
-    bool Unsubscribe(Delegate eventHandler);
-
-    int SubscribeAll<T>(T? target = null, MethodOptions options = MethodOptions.Public | MethodOptions.Instance) where T : class;
-
     Task ConnectWampAsync(CancellationToken token = default);
     Task CloseWampAsync(CancellationToken token = default);
+    
+    IDisposable Subscribe(LcuEventAttribute attribute, Delegate eventHandler);
+    IDisposable Subscribe(string uri, Delegate eventHandler);
+    IDisposable Subscribe(Delegate eventHandler);
+    IDisposable[] SubscribeAll<T>(T? target = null, MethodOptions options = MethodOptions.Public | MethodOptions.Instance) where T : class;
+    int UnsubscribeAll();
 }

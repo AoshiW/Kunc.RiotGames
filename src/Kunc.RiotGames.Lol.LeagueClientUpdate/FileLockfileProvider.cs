@@ -13,18 +13,10 @@ public class FileLockfileProvider : ILockfileProvider
     private bool _disposedValue;
 
     /// <inheritdoc/>
-    public event EventHandler<Lockfile>? Created;
+    public event EventHandler<LockFileCreatedEventArgs>? Created;
 
     /// <inheritdoc/>
     public event EventHandler? Deleted;
-
-    /// <summary>
-    /// The default path where lockfile is located.
-    /// </summary>
-    /// <exception cref="PlatformNotSupportedException"></exception>
-    protected virtual string LockfileDirectory =>
-        OperatingSystem.IsWindows() ? @"C:\Riot Games\League of Legends\"
-        : throw new PlatformNotSupportedException();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="FileLockfileProvider"/> class.
@@ -32,14 +24,23 @@ public class FileLockfileProvider : ILockfileProvider
     public FileLockfileProvider(ILogger<FileLockfileProvider>? logger = null)
     {
         _logger = logger ?? NullLogger<FileLockfileProvider>.Instance;
-        _filePath = Path.Combine(LockfileDirectory, "lockfile");
-        _fileSystemWatcher = new FileSystemWatcher(LockfileDirectory, "lockfile")
+        var path = GetLockfilePath();
+        _filePath = Path.Combine(path, "lockfile");
+        _fileSystemWatcher = new FileSystemWatcher(path, "lockfile")
         {
             NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.Attributes, 
             EnableRaisingEvents = true,
         };
         _fileSystemWatcher.Created += FileSystemWatcherEvent;
         _fileSystemWatcher.Deleted += FileSystemWatcherEvent;
+    }
+
+    protected virtual string GetLockfilePath()
+    {
+        // todo get path from process?
+        return OperatingSystem.IsWindows() 
+            ? @"C:\Riot Games\League of Legends\"
+            : throw new PlatformNotSupportedException();
     }
 
     /// <inheritdoc/>
@@ -93,7 +94,10 @@ public class FileLockfileProvider : ILockfileProvider
         Debug.Assert(_lockfile is not null);
 
         _logger.LogCreate(_lockfile);
-        Created?.Invoke(this, _lockfile);
+        Created?.Invoke(this, new()
+        {
+            Lockfile = _lockfile,
+        });
     }
 
     /// <summary>

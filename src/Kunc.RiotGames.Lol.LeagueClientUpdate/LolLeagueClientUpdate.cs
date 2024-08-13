@@ -1,48 +1,46 @@
-﻿using System.Net.Http.Json;
-using System.Text.Json;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Net.Http.Json;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Extensions.Options;
 
 namespace Kunc.RiotGames.Lol.LeagueClientUpdate;
 
 public partial class LolLeagueClientUpdate
 {
-    private bool _disposedValue;
+    private readonly HttpClient _client;
     private readonly ILogger<LolLeagueClientUpdate> _logger;
     private readonly ILockfileProvider _lockfileProvider;
     private readonly Task _initTask;
-
-    /// <summary>
-    /// Internal HttpClient for sending requests.
-    /// </summary>
-    /// <remarks>
-    /// Do not call the "Dispose" function!!
-    /// </remarks>
-    public HttpClient Client { get; }
+    private readonly LolLeagueClientUpdateOptions _options;
+    private bool _disposedValue;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="LolLeagueClientUpdate"/> class with the specified <see cref="Lockfile"/>.
     /// </summary>
+    /// <param name="options"></param>
     /// <param name="lockfileProvider"></param>
     /// <param name="wamp"></param>
-    /// <param name="loggerFactory"></param>
+    /// <param name="logger"></param>
     /// <exception cref="ArgumentNullException"></exception>
-    public LolLeagueClientUpdate(ILockfileProvider lockfileProvider, IWamp? wamp = null, ILoggerFactory? loggerFactory = null)
+    public LolLeagueClientUpdate(IOptions<LolLeagueClientUpdateOptions> options, ILockfileProvider lockfileProvider, IWamp wamp, ILogger<LolLeagueClientUpdate>? logger = null)
     {
+        ArgumentNullException.ThrowIfNull(options);
         ArgumentNullException.ThrowIfNull(lockfileProvider);
-        loggerFactory ??= NullLoggerFactory.Instance;
+        ArgumentNullException.ThrowIfNull(wamp);
+        _options = options.Value;
         var clientHandler = new HttpClientHandler()
         {
             ClientCertificateOptions = ClientCertificateOption.Manual,
             ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator,
         };
-        Client = new HttpClient(clientHandler);
+        _client = new HttpClient(clientHandler);
         _lockfileProvider = lockfileProvider;
         _lockfileProvider.Created += _lockfileProvider_Created;
         _lockfileProvider.Deleted += _lockfileProviedr_Deleted;
-        Wamp = wamp ?? new Wamp(loggerFactory.CreateLogger<Wamp>());
-        Wamp.OnMessage += OnMessage;
-        _logger = loggerFactory.CreateLogger<LolLeagueClientUpdate>();
+        _wamp = wamp;
+        _wamp.OnMessage += OnMessage;
+        _logger = logger ?? NullLogger<LolLeagueClientUpdate>.Instance;
         _initTask = InitLockFileAsync();
     }
 
@@ -51,55 +49,64 @@ public partial class LolLeagueClientUpdate
         var lockfile = await _lockfileProvider.GetLockfileAsync().ConfigureAwait(false);
         if (lockfile is null)
             return;
-        _lockfileProvider_Created(_lockfileProvider, lockfile);
+        _lockfileProvider_Created(_lockfileProvider, new()
+        {
+            Lockfile = lockfile,
+        });
     }
 
     private void _lockfileProviedr_Deleted(object? sender, EventArgs e)
     {
-        Wamp.CloseAsync(default);
-        Client.BaseAddress = null;
+        _wamp.CloseAsync(default);
+        _client.BaseAddress = null;
     }
 
-    private void _lockfileProvider_Created(object? sender, Lockfile e)
+    private void _lockfileProvider_Created(object? sender, LockFileCreatedEventArgs e)
     {
-        Client.BaseAddress = new Uri($"https://127.0.0.1:{e.Port}/");
-        Client.DefaultRequestHeaders.Authorization = e.ToAuthenticationHeaderValue();
-        _ = ConnectWampAsyncCore(e, default);
+        _client.BaseAddress = new Uri($"https://127.0.0.1:{e.Lockfile.Port}/");
+        _client.DefaultRequestHeaders.Authorization = e.Lockfile.ToAuthenticationHeaderValue();
+        if (_options.AutoReconnectToWamp)
+            _ = ConnectWampAsyncCore(e.Lockfile, default);
     }
 
     /// <inheritdoc/>
     public Task<HttpResponseMessage> SendAsync(HttpRequestMessage httpRequestMessage, CancellationToken cancellationToken = default)
     {
         CheckLockfile();
-        return Client.SendAsync(httpRequestMessage, cancellationToken);
+        return _client.SendAsync(httpRequestMessage, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task<HttpResponseMessage> SendAsync<T>(HttpMethod method, string requestUri, T value, JsonSerializerOptions? options = null, CancellationToken cancellationToken = default)
+    public Task<T?> GetFromJsonAsync<T>([StringSyntax(StringSyntaxAttribute.Uri)] string requestUri, CancellationToken cancellationToken = default)
     {
+        ArgumentNullException.ThrowIfNull(requestUri);
         CheckLockfile();
+        return _client.GetFromJsonAsync<T>(requestUri, _options.JsonSerializerOptions, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public Task<HttpResponseMessage> PostAsJsonAsync<T>([StringSyntax(StringSyntaxAttribute.Uri)] string requestUri, T value, CancellationToken cancellationToken = default)
+    {
         ArgumentNullException.ThrowIfNull(requestUri);
         ArgumentNullException.ThrowIfNull(value);
-        using var request = new HttpRequestMessage(method, requestUri)
-        {
-            Content = JsonContent.Create(value, typeof(T), null, options),
-        };
-        return await Client.SendAsync(request, cancellationToken).ConfigureAwait(false);
+        CheckLockfile();
+        return _client.PostAsJsonAsync(requestUri, value, _options.JsonSerializerOptions, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public Task<T?> GetAsync<T>(string requestUri, CancellationToken cancellationToken = default)
+    public Task<HttpResponseMessage> PutAsJsonAsync<T>([StringSyntax(StringSyntaxAttribute.Uri)] string requestUri, T value, CancellationToken cancellationToken = default)
     {
-        CheckLockfile();
         ArgumentNullException.ThrowIfNull(requestUri);
-        return Client.GetFromJsonAsync<T>(requestUri, cancellationToken);
+        ArgumentNullException.ThrowIfNull(value);
+        CheckLockfile();
+        return _client.PutAsJsonAsync(requestUri, value, _options.JsonSerializerOptions, cancellationToken);
     }
 
     private void CheckLockfile()
     {
         if (!_initTask.IsCompleted)
             _initTask.Wait(); 
-        if (Client.BaseAddress is null)
+        if (_client.BaseAddress is null)
             throw new InvalidOperationException("Lockfile data is not available.");
     }
 
@@ -117,8 +124,8 @@ public partial class LolLeagueClientUpdate
             if (disposing)
             {
                 _cancellationTokenSource?.Dispose();
-                Client.Dispose();
-                Wamp.Dispose();
+                _client.Dispose();
+                _wamp.Dispose();
             }
             _lockfileProvider.Created -= _lockfileProvider_Created;
             _lockfileProvider.Deleted -= _lockfileProviedr_Deleted;

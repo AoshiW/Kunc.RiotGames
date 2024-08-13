@@ -11,17 +11,13 @@ ILolLeagueClientUpdate lcu = LolLeagueClientUpdate.Create();
 ```
 
 ### API requests
-To send an API request, you have 2 options:
-1. Use the predefined methods (`GetAsync/SendAsync`) that are a wrapper around `HttpClinet`.
-1. Use `HttpClient` directly (property `Client`), so you can use many existing methods. 
+TODO
 
 ```cs
 var obj = new { challengeIds = new long[] { -1, -1, -1 } };
-await lcu.SendAsync(HttpMethod.Post, "lol-challenges/v1/update-player-preferences/", obj);
-await lcu.Client.PostAsJsonAsync("lol-challenges/v1/update-player-preferences/", obj);
+await lcu.PostAsJsonAsync("lol-challenges/v1/update-player-preferences/", obj);
 
-RootObject? obj1 = await lcu.GetAsync<RootObject>("lol-summoner/v1/current-summoner");
-RootObject? obj2 = await lcu.Client.GetFromJsonAsync<RootObject>("lol-summoner/v1/current-summoner");
+RootObject? obj1 = await lcu.GetFromJsonAsync<RootObject>("lol-summoner/v1/current-summoner");
 
 class RootObject { /* Properties */ }
 ```

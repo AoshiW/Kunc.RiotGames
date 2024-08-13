@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Kunc.RiotGames.Lol.LeagueClientUpdate;
 
@@ -24,7 +25,7 @@ public sealed class LcuEventAttribute : Attribute
     /// </summary>
     /// <param name="uri">The Uri of the event.</param>
     /// <exception cref="ArgumentException">Thrown if <paramref name="uri"/> is <see  langword="null"/> or consists only of white-space characters.</exception>
-    public LcuEventAttribute(string uri)
+    public LcuEventAttribute([StringSyntax(StringSyntaxAttribute.Uri)] string uri)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(uri);
         if (uri[0] != '/')

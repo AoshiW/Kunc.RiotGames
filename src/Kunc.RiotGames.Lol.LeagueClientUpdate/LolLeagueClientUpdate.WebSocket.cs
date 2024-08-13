@@ -6,14 +6,12 @@ namespace Kunc.RiotGames.Lol.LeagueClientUpdate;
 
 public partial class LolLeagueClientUpdate : ILolLeagueClientUpdate
 {
-    readonly object _lock = new();
+    private readonly IWamp _wamp;
+    private readonly object _eventHandlersLock = new();
     private readonly List<EventInfo> _events = [];
     EventInfo[] _readOnlyEvents = [];
-    bool _isEdited = true;
+    bool _areEventHandlersEdited = true;
     CancellationTokenSource? _cancellationTokenSource;
-
-    /// <inheritdoc/>
-    public IWamp Wamp { get; }
 
     /// <inheritdoc/>
     public event EventHandler<LcuEventArgs<JsonElement>>? OnLcuEvent;
@@ -29,15 +27,15 @@ public partial class LolLeagueClientUpdate : ILolLeagueClientUpdate
     async Task ConnectWampAsyncCore(Lockfile lockfile, CancellationToken token)
     {
         _cancellationTokenSource = new();
-        await Wamp.ConnectAsync(lockfile, token).ConfigureAwait(false);
-        await Wamp.SendAsync(SubscribeOnJsonApiEvent, WebSocketMessageType.Text, token).ConfigureAwait(false);
+        await _wamp.ConnectAsync(lockfile, token).ConfigureAwait(false);
+        await _wamp.SendAsync(SubscribeOnJsonApiEvent, WebSocketMessageType.Text, token).ConfigureAwait(false);
     }
 
     /// <inheritdoc/>
     public Task CloseWampAsync(CancellationToken token = default)
     {
         _cancellationTokenSource?.Cancel();
-        return Wamp.CloseAsync(token);
+        return _wamp.CloseAsync(token);
     }
 
     static readonly ReadOnlyMemory<byte> SubscribeOnJsonApiEvent = "[5, \"OnJsonApiEvent\"]"u8.ToArray();
@@ -47,17 +45,17 @@ public partial class LolLeagueClientUpdate : ILolLeagueClientUpdate
         if (e.Length != 3 || e[0].GetInt32() != 8)
             return;
         var data = e[2];
-        OnLcuEvent?.Invoke(this, data.Deserialize<LcuEventArgs<JsonElement>>()!);
+        OnLcuEvent?.Invoke(this, data.Deserialize<LcuEventArgs<JsonElement>>(_options.JsonSerializerOptions)!);
         if (!e[1].ValueEquals("OnJsonApiEvent"u8))
             return;
 
         EventInfo[] eventLocalCopy;
-        lock (_lock)
+        lock (_eventHandlersLock)
         {
-            if (_isEdited)
+            if (_areEventHandlersEdited)
             {
                 _readOnlyEvents = _events.ToArray();
-                _isEdited = false;
+                _areEventHandlersEdited = false;
             }
             eventLocalCopy = _readOnlyEvents;
         }
@@ -78,7 +76,7 @@ public partial class LolLeagueClientUpdate : ILolLeagueClientUpdate
                 args![i] = item.ArgTypes[i] switch
                 {
                     ArgType.Sender => this,
-                    ArgType.EventArgs => item.EventArgsType == typeof(JsonElement) ? data : data.Deserialize(item.EventArgsType!)!,
+                    ArgType.EventArgs => item.EventArgsType == typeof(JsonElement) ? data : data.Deserialize(item.EventArgsType!, _options.JsonSerializerOptions)!,
                     ArgType.CancelationToken => boxedCancellationToken ??= _cancellationTokenSource!.Token,
                     _ => throw new ArgumentOutOfRangeException(null, item.ArgTypes[i], "Unknow enum value.")
                 };
@@ -96,97 +94,98 @@ public partial class LolLeagueClientUpdate : ILolLeagueClientUpdate
     }
 
     /// <inheritdoc/>
-    public void Subscribe(LcuEventAttribute attribute, Delegate eventHandler)
+    public IDisposable Subscribe(LcuEventAttribute attribute, Delegate eventHandler)
     {
         ArgumentNullException.ThrowIfNull(attribute);
         ArgumentNullException.ThrowIfNull(eventHandler);
-        SubscribeCore(attribute, eventHandler.Method, eventHandler.Target);
+        return SubscribeCore(attribute, eventHandler.Method, eventHandler.Target);
     }
 
     /// <inheritdoc/>
-    public void Subscribe(string uri, Delegate eventHandler)
+    public IDisposable Subscribe(string uri, Delegate eventHandler)
     {
         ArgumentNullException.ThrowIfNull(uri);
         ArgumentNullException.ThrowIfNull(eventHandler);
         var attribute = new LcuEventAttribute(uri);
-        SubscribeCore(attribute, eventHandler.Method, eventHandler.Target);
+        return SubscribeCore(attribute, eventHandler.Method, eventHandler.Target);
     }
 
     /// <inheritdoc/>
-    public void Subscribe(Delegate eventHandler)
+    public IDisposable Subscribe(Delegate eventHandler)
     {
         ArgumentNullException.ThrowIfNull(eventHandler);
         var attribute = ThrowIfMissingLcuEventAttribute(eventHandler.Method);
-        SubscribeCore(attribute, eventHandler.Method, eventHandler.Target);
+        return SubscribeCore(attribute, eventHandler.Method, eventHandler.Target);
     }
 
-    void SubscribeCore(LcuEventAttribute attribute, MethodInfo methodInfo, object? target)
+    IDisposable SubscribeCore(LcuEventAttribute attribute, MethodInfo methodInfo, object? target)
     {
         var di = new EventInfo(attribute, methodInfo, target);
         _logger.LogRegisterDelegate(methodInfo);
-        lock (_lock)
+        lock (_eventHandlersLock)
         {
-            _isEdited = true;
+            _areEventHandlersEdited = true;
             _events.Add(di);
         }
+        return new Unsubscribe(this, di);
     }
 
-    /// <inheritdoc/>
-    public bool Unsubscribe(LcuEventAttribute attribute, Delegate eventHandler)
+    sealed class Unsubscribe : IDisposable
     {
-        ArgumentNullException.ThrowIfNull(attribute);
-        ArgumentNullException.ThrowIfNull(eventHandler);
-        lock (_lock)
+        private readonly LolLeagueClientUpdate _lolLeagueClientUpdate;
+        private readonly EventInfo _eventInfo;
+
+        public Unsubscribe(LolLeagueClientUpdate lolLeagueClientUpdate, EventInfo eventInfo)
         {
-            var index = _events.FindIndex(x => x.Equals(attribute, eventHandler.Method, eventHandler.Target));
-            if (index is -1)
-                return false;
-            _events.RemoveAt(index);
-            _isEdited = true;
-            return true;
+            _lolLeagueClientUpdate = lolLeagueClientUpdate;
+            _eventInfo = eventInfo;
+        }
+
+        public void Dispose()
+        {
+            lock (_lolLeagueClientUpdate._eventHandlersLock)
+            {
+                if (_lolLeagueClientUpdate._events.Remove(_eventInfo))
+                {
+                    _lolLeagueClientUpdate._areEventHandlersEdited = true;
+                }
+            }
         }
     }
 
     /// <inheritdoc/>
-    public bool Unsubscribe(string uri, Delegate eventHandler)
-    {
-        ArgumentNullException.ThrowIfNull(uri);
-        ArgumentNullException.ThrowIfNull(eventHandler);
-        var attribute = new LcuEventAttribute(uri);
-        return Unsubscribe(attribute, eventHandler);
-    }
-
-    /// <inheritdoc/>
-    public bool Unsubscribe(Delegate eventHandler)
-    {
-        ArgumentNullException.ThrowIfNull(eventHandler);
-        var attribute = ThrowIfMissingLcuEventAttribute(eventHandler.Method);
-        return Unsubscribe(attribute, eventHandler);
-    }
-
-    /// <inheritdoc/>
-    public int SubscribeAll<T>(T? target, MethodOptions options = MethodOptions.Public | MethodOptions.Instance) where T : class
+    public IDisposable[] SubscribeAll<T>(T? target, MethodOptions options = MethodOptions.Public | MethodOptions.Instance) where T : class
     {
         return SubscribeAllCore(typeof(T), target, options);
+
+        IDisposable[]  SubscribeAllCore(Type type, object? target, MethodOptions options)
+        {
+            var disposables = new List<IDisposable>();
+            var methods = type.GetMethods((BindingFlags)options);
+            foreach (var methodInfo in methods)
+            {
+                var attribute = methodInfo.GetCustomAttribute<LcuEventAttribute>();
+                if (attribute is null)
+                    continue;
+                var currentMethodTarget = methodInfo.IsStatic
+                    ? null
+                    : target ??= Activator.CreateInstance(type);
+                disposables.Add(SubscribeCore(attribute, methodInfo, currentMethodTarget));
+            }
+            _logger.LogTotalSubscribedMethods(disposables.Count, type);
+            return disposables.ToArray();
+        }
     }
 
-
-    int SubscribeAllCore(Type type, object? target, MethodOptions options)
+    public int UnsubscribeAll()
     {
-        var count = 0;
-        var methods = type.GetMethods((BindingFlags)options);
-        foreach (var methodInfo in methods)
+        int count = 0;
+        lock (_eventHandlersLock)
         {
-            var attribute = methodInfo.GetCustomAttribute<LcuEventAttribute>();
-            if (attribute is null)
-                continue;
-            var currentMethodTarget = methodInfo.IsStatic
-                ? null
-                : target ??= Activator.CreateInstance(type);
-            SubscribeCore(attribute, methodInfo, currentMethodTarget);
-            count++;
+            count = _events.Count;
+            _events.Clear();
+            _areEventHandlersEdited = true;
         }
-        _logger.LogTotalSubscribedMethods(count, type);
         return count;
     }
 

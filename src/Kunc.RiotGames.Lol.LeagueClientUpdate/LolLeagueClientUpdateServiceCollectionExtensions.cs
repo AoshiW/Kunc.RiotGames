@@ -16,7 +16,7 @@ public static class LolLeagueClientUpdateServiceCollectionExtensions
     /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
     public static IServiceCollection AddLolLeagueClientUpdate(this IServiceCollection services, Action<LolLeagueClientUpdateOptions>? configure = null)
     {
-        ArgumentNullException.ThrowIfNull(nameof(services));
+        ArgumentNullException.ThrowIfNull(services);
         services.AddOptions();
         services.TryAdd(ServiceDescriptor.Singleton(typeof(IWamp), typeof(Wamp)));
         services.TryAdd(ServiceDescriptor.Singleton(typeof(ILockfileProvider), typeof(FileLockfileProvider)));

@@ -16,7 +16,7 @@ public static class LorGameClientServiceCollectionExtensions
     /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
     public static IServiceCollection AddLorGameClient(this IServiceCollection services, Action<LorGameClientOptions>? configure = null)
     {
-        ArgumentNullException.ThrowIfNull(nameof(services));
+        ArgumentNullException.ThrowIfNull(services);
         services.AddOptions();
         services.TryAdd(ServiceDescriptor.Singleton(typeof(ILorGameClient), typeof(LorGameClient)));
         if (configure is not null)

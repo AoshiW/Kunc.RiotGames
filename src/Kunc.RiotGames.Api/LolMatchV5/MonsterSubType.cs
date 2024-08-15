@@ -6,24 +6,24 @@ namespace Kunc.RiotGames.Api.LolMatchV5;
 [JsonConverter(typeof(JsonStringEnumConverterWithAltNames<MonsterSubType>))]
 public enum MonsterSubType
 {
-    [JsonEnumName("FIRE_DRAGON")]
+    [JsonStringEnumMemberName("FIRE_DRAGON")]
     FireDragon,
 
-    [JsonEnumName("EARTH_DRAGON")]
+    [JsonStringEnumMemberName("EARTH_DRAGON")]
     EarthDragon,
 
-    [JsonEnumName("WATER_DRAGON")]
+    [JsonStringEnumMemberName("WATER_DRAGON")]
     WaterDragon,
 
-    [JsonEnumName("AIR_DRAGON")]
+    [JsonStringEnumMemberName("AIR_DRAGON")]
     AirDragon,
 
-    [JsonEnumName("CHEMTECH_DRAGON")]
+    [JsonStringEnumMemberName("CHEMTECH_DRAGON")]
     ChemtechDragon,
 
-    [JsonEnumName("HEXTECH_DRAGON")]
+    [JsonStringEnumMemberName("HEXTECH_DRAGON")]
     HextechDragon,
 
-    [JsonEnumName("ELDER_DRAGON")]
+    [JsonStringEnumMemberName("ELDER_DRAGON")]
     ElderDragon,
 }

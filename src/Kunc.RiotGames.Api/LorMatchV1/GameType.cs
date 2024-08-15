@@ -6,7 +6,7 @@ namespace Kunc.RiotGames.Api.LorMatchV1;
 [JsonConverter(typeof(JsonStringEnumConverterWithAltNames<GameType>))]
 public enum GameType
 {
-    [JsonEnumName("")]
+    [JsonStringEnumMemberName("")]
     EmptyString,
     Normal,
     Ranked,

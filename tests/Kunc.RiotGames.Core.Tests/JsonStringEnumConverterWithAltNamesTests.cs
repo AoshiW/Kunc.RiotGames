@@ -55,12 +55,12 @@ file enum TestEnum
 {
     Default,
 
-    [JsonEnumName(Constants.first)]
+    [JsonStringEnumMemberName(Constants.first)]
     A = 1 << 1,
 
     B = 1 << 2,
 
-    [JsonEnumName(Constants.LAST)]
+    [JsonStringEnumMemberName(Constants.LAST)]
     C = 1 << 3,
 }
 file static class Constants

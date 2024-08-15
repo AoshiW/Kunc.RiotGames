@@ -9,7 +9,7 @@ namespace Kunc.RiotGames.Lol;
 [JsonConverter(typeof(JsonStringEnumConverterWithAltNames<GameMode>))]
 public enum GameMode
 {
-    [JsonEnumName("")]
+    [JsonStringEnumMemberName("")]
     EmptyString,
 
     /// <summary>
@@ -130,19 +130,19 @@ public enum GameMode
     /// <summary>
     /// Tutorial part 1: Welcome to League
     /// </summary>
-    [JsonEnumName("TUTORIAL_MODULE_1")]
+    [JsonStringEnumMemberName("TUTORIAL_MODULE_1")]
     TutorialModule1,
 
     /// <summary>
     /// Tutorial part 2: Power Up
     /// </summary>
-    [JsonEnumName("TUTORIAL_MODULE_2")]
+    [JsonStringEnumMemberName("TUTORIAL_MODULE_2")]
     TutorialModule2,
 
     /// <summary>
     /// Tutorial part 3: Shop for Gear
     /// </summary>
-    [JsonEnumName("TUTORIAL_MODULE_3")]
+    [JsonStringEnumMemberName("TUTORIAL_MODULE_3")]
     TutorialModule3,
 
     /// <summary>

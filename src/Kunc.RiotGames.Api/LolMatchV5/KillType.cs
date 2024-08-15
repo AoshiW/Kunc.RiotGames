@@ -6,12 +6,12 @@ namespace Kunc.RiotGames.Api.LolMatchV5;
 [JsonConverter(typeof(JsonStringEnumConverterWithAltNames<KillType>))]
 public enum KillType
 {
-    [JsonEnumName("KILL_FIRST_BLOOD")]
+    [JsonStringEnumMemberName("KILL_FIRST_BLOOD")]
     FirstBlood,
 
-    [JsonEnumName("KILL_MULTI")]
+    [JsonStringEnumMemberName("KILL_MULTI")]
     Multi,
 
-    [JsonEnumName("KILL_ACE")]
+    [JsonStringEnumMemberName("KILL_ACE")]
     Ace
 }

@@ -6,63 +6,63 @@ namespace Kunc.RiotGames.Api.LolMatchV5;
 [JsonConverter(typeof(JsonStringEnumConverterWithAltNames<MatchEventType>))]
 public enum MatchEventType
 {
-    [JsonEnumName("BUILDING_KILL")]
+    [JsonStringEnumMemberName("BUILDING_KILL")]
     BuildingKill,
 
-    [JsonEnumName("CHAMPION_KILL")]
+    [JsonStringEnumMemberName("CHAMPION_KILL")]
     ChampionKill,
 
-    [JsonEnumName("CHAMPION_SPECIAL_KILL")]
+    [JsonStringEnumMemberName("CHAMPION_SPECIAL_KILL")]
     ChampionSpecialKill,
 
-    [JsonEnumName("CHAMPION_TRANSFORM")]
+    [JsonStringEnumMemberName("CHAMPION_TRANSFORM")]
     ChampionTransform,
 
-    [JsonEnumName("DRAGON_SOUL_GIVEN")]
+    [JsonStringEnumMemberName("DRAGON_SOUL_GIVEN")]
     DragonSoulGiven,
 
-    [JsonEnumName("ELITE_MONSTER_KILL")]
+    [JsonStringEnumMemberName("ELITE_MONSTER_KILL")]
     EliteMonsterKill,
 
-    [JsonEnumName("GAME_END")]
+    [JsonStringEnumMemberName("GAME_END")]
     GameEnd,
 
-    [JsonEnumName("ITEM_DESTROYED")]
+    [JsonStringEnumMemberName("ITEM_DESTROYED")]
     ItemDestroyed,
 
-    [JsonEnumName("ITEM_SOLD")]
+    [JsonStringEnumMemberName("ITEM_SOLD")]
     ItemSold,
 
-    [JsonEnumName("ITEM_PURCHASED")]
+    [JsonStringEnumMemberName("ITEM_PURCHASED")]
     ItemPurchased,
 
-    [JsonEnumName("ITEM_UNDO")]
+    [JsonStringEnumMemberName("ITEM_UNDO")]
     ItemUndo,
 
-    [JsonEnumName("LEVEL_UP")]
+    [JsonStringEnumMemberName("LEVEL_UP")]
     LevelUp,
 
-    [JsonEnumName("OBJECTIVE_BOUNTY_FINISH")]
+    [JsonStringEnumMemberName("OBJECTIVE_BOUNTY_FINISH")]
     ObjectiveBountyFinish,
 
-    [JsonEnumName("OBJECTIVE_BOUNTY_PRESTART")]
+    [JsonStringEnumMemberName("OBJECTIVE_BOUNTY_PRESTART")]
     ObjectiveBountyPrestart,
 
-    [JsonEnumName("PAUSE_END")]
+    [JsonStringEnumMemberName("PAUSE_END")]
     PauseEnd,
 
-    [JsonEnumName("PAUSE_START")]
+    [JsonStringEnumMemberName("PAUSE_START")]
     PauseStart,
 
-    [JsonEnumName("SKILL_LEVEL_UP")]
+    [JsonStringEnumMemberName("SKILL_LEVEL_UP")]
     SkillLevelUp,
 
-    [JsonEnumName("TURRET_PLATE_DESTROYED")]
+    [JsonStringEnumMemberName("TURRET_PLATE_DESTROYED")]
     TurretPlateDestroyed,
 
-    [JsonEnumName("WARD_KILL")]
+    [JsonStringEnumMemberName("WARD_KILL")]
     WardKill,
 
-    [JsonEnumName("WARD_PLACED")]
+    [JsonStringEnumMemberName("WARD_PLACED")]
     WardPlaced,
 }

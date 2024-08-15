@@ -6,9 +6,9 @@ namespace Kunc.RiotGames.Api.LolMatchV5;
 [JsonConverter(typeof(JsonStringEnumConverterWithAltNames<BuildingType>))]
 public enum BuildingType
 {
-    [JsonEnumName("TOWER_BUILDING")]
+    [JsonStringEnumMemberName("TOWER_BUILDING")]
     Tower,
 
-    [JsonEnumName("INHIBITOR_BUILDING")]
+    [JsonStringEnumMemberName("INHIBITOR_BUILDING")]
     Inhibitor,
 }

@@ -8,7 +8,7 @@ public enum MaintenanceStatus
 {
     Scheduled,
 
-    [JsonEnumName("in_progress")]
+    [JsonStringEnumMemberName("in_progress")]
     InProgress,
 
     Complete,

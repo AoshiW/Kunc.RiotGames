@@ -6,15 +6,15 @@ namespace Kunc.RiotGames.Api.LolMatchV5;
 [JsonConverter(typeof(JsonStringEnumConverterWithAltNames<TowerType>))]
 public enum TowerType
 {
-    [JsonEnumName("OUTER_TURRET")]
+    [JsonStringEnumMemberName("OUTER_TURRET")]
     OuterTurret,
 
-    [JsonEnumName("INNER_TURRET")]
+    [JsonStringEnumMemberName("INNER_TURRET")]
     InnerTurret,
 
-    [JsonEnumName("BASE_TURRET")]
+    [JsonStringEnumMemberName("BASE_TURRET")]
     BaseTurret,
 
-    [JsonEnumName("NEXUS_TURRET")]
+    [JsonStringEnumMemberName("NEXUS_TURRET")]
     NexusTurret,
 }

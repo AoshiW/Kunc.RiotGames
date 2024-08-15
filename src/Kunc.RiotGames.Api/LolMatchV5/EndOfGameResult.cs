@@ -8,12 +8,12 @@ public enum EndOfGameResult
 {
     GameComplete,
 
-    [JsonEnumName("Abort_AntiCheatExit")]
+    [JsonStringEnumMemberName("Abort_AntiCheatExit")]
     AbortAntiCheatExit,
 
-    [JsonEnumName("Abort_TooFewPlayers")]
+    [JsonStringEnumMemberName("Abort_TooFewPlayers")]
     AbortTooFewPlayers,
 
-    [JsonEnumName("Abort_Unexpected")]
+    [JsonStringEnumMemberName("Abort_Unexpected")]
     AbortUnexpected,
 }

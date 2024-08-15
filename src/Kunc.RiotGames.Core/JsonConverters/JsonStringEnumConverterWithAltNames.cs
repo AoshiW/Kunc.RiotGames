@@ -20,7 +20,7 @@ public sealed class JsonStringEnumConverterWithAltNames<[DynamicallyAccessedMemb
     private static JsonEnumNamingPolicy? ResolveNamingPolicy()
     {
         var map = typeof(TEnum).GetFields(BindingFlags.Public | BindingFlags.Static)
-            .Select(f => (f.Name, AttributeName: f.GetCustomAttribute<JsonEnumNameAttribute>()?.Value))
+            .Select(f => (f.Name, AttributeName: f.GetCustomAttribute<JsonStringEnumMemberNameAttribute>()?.Name))
             .Where(pair => pair.AttributeName != null)
             .ToDictionary();
 
@@ -41,17 +41,18 @@ sealed class JsonEnumNamingPolicy : JsonNamingPolicy
         => _map.TryGetValue(name, out string? newName) ? newName : name;
 }
 
+// TODO remove in .NET 9
 [AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
-public sealed class JsonEnumNameAttribute : JsonAttribute
+public sealed class JsonStringEnumMemberNameAttribute : JsonAttribute
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="JsonEnumNameAttribute"/> class.
+    /// Initializes a new instance of the <see cref="JsonStringEnumMemberNameAttribute"/> class.
     /// </summary>
-    public JsonEnumNameAttribute(string value)
+    public JsonStringEnumMemberNameAttribute(string value)
     {
         ArgumentNullException.ThrowIfNull(value);
-        Value = value;
+        Name = value;
     }
 
-    public string Value { get; }
+    public string Name { get; }
 }

@@ -10,6 +10,6 @@ public enum MonsterType
     RiftHerald,
     Dragon,
 
-    [JsonEnumName("BARON_NASHOR")]
+    [JsonStringEnumMemberName("BARON_NASHOR")]
     BaronNashor,
 }

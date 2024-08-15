@@ -11,21 +11,21 @@ namespace Kunc.RiotGames.Lol;
 public enum QueueType
 {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    [JsonEnumName("RANKED_SOLO_5x5")]
+    [JsonStringEnumMemberName("RANKED_SOLO_5x5")]
     RankedSolo5x5,
 
-    [JsonEnumName("RANKED_FLEX_SR")]
+    [JsonStringEnumMemberName("RANKED_FLEX_SR")]
     RankedFlexSR,
 
     Cherry,
 
-    [JsonEnumName("RANKED_TFT_DOUBLE_UP")]
+    [JsonStringEnumMemberName("RANKED_TFT_DOUBLE_UP")]
     RankedTftDoubleUp,
 
-    [JsonEnumName("RANKED_TFT_TURBO")]
+    [JsonStringEnumMemberName("RANKED_TFT_TURBO")]
     RankedTftTurbo,
 
-    [JsonEnumName("RANKED_TFT")]
+    [JsonStringEnumMemberName("RANKED_TFT")]
     RankedTft,
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }

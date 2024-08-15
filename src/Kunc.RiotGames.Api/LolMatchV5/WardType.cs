@@ -6,19 +6,19 @@ namespace Kunc.RiotGames.Api.LolMatchV5;
 [JsonConverter(typeof(JsonStringEnumConverterWithAltNames<WardType>))]
 public enum WardType
 {
-    [JsonEnumName("CONTROL_WARD")]
+    [JsonStringEnumMemberName("CONTROL_WARD")]
     ControlWard,
 
-    [JsonEnumName("YELLOW_TRINKET")]
+    [JsonStringEnumMemberName("YELLOW_TRINKET")]
     YellowTrinket,
 
-    [JsonEnumName("BLUE_TRINKET")]
+    [JsonStringEnumMemberName("BLUE_TRINKET")]
     BlueTrinket,
 
-    [JsonEnumName("SIGHT_WARD")]
+    [JsonStringEnumMemberName("SIGHT_WARD")]
     SightWard,
 
-    [JsonEnumName("TEEMO_MUSHROOM")]
+    [JsonStringEnumMemberName("TEEMO_MUSHROOM")]
     TeemoMushroom,
 
     Undefined,

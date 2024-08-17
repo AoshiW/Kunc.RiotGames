@@ -1,9 +1,8 @@
 ﻿using System.Text.Json.Serialization;
-using Kunc.RiotGames.JsonConverters;
 
 namespace Kunc.RiotGames.Api.LolMatchV5;
 
-[JsonConverter(typeof(JsonStringEnumConverterWithAltNames<BuildingType>))]
+[JsonConverter(typeof(JsonStringEnumConverter<BuildingType>))]
 public enum BuildingType
 {
     [JsonStringEnumMemberName("TOWER_BUILDING")]

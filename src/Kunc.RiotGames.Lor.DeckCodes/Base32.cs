@@ -114,7 +114,7 @@ internal static class Base32
             return string.Empty;
         var length = GetCharCount(bytes, options);
         var base32 = new string('\0', length);
-        unsafe
+        unsafe // TODO remove unsafe in .NET 10, from .NET 9 string.Create allow ref struct as arg
         {
             fixed (char* ptr = base32)
             {

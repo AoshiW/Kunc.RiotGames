@@ -1,9 +1,8 @@
 ﻿using System.Text.Json.Serialization;
-using Kunc.RiotGames.JsonConverters;
 
 namespace Kunc.RiotGames.Api.LolMatchV5;
 
-[JsonConverter(typeof(JsonStringEnumConverterWithAltNames<MonsterType>))]
+[JsonConverter(typeof(JsonStringEnumConverter<MonsterType>))]
 public enum MonsterType
 {
     Horde,

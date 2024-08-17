@@ -15,7 +15,7 @@ public interface ILolLeagueClientUpdate : IDisposable
     Task CloseWampAsync(CancellationToken token = default);
     
     IDisposable Subscribe(LcuEventAttribute attribute, Delegate eventHandler);
-    IDisposable Subscribe(string uri, Delegate eventHandler);
+    IDisposable Subscribe([StringSyntax(StringSyntaxAttribute.Uri)] string uri, Delegate eventHandler);
     IDisposable Subscribe(Delegate eventHandler);
     IDisposable[] SubscribeAll<T>(T? target = null, MethodOptions options = MethodOptions.Public | MethodOptions.Instance) where T : class;
     int UnsubscribeAll();

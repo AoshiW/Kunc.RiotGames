@@ -1,6 +1,5 @@
 ﻿using Kunc.RiotGames.Api.Http;
 using Kunc.RiotGames.Lol;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Kunc.RiotGames.Api.LolLeagueV4;
 

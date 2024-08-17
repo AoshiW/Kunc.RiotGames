@@ -1,9 +1,8 @@
 ﻿using System.Text.Json.Serialization;
-using Kunc.RiotGames.JsonConverters;
 
 namespace Kunc.RiotGames.Api.LolMatchV5;
 
-[JsonConverter(typeof(JsonStringEnumConverterWithAltNames<WardType>))]
+[JsonConverter(typeof(JsonStringEnumConverter<WardType>))]
 public enum WardType
 {
     [JsonStringEnumMemberName("CONTROL_WARD")]

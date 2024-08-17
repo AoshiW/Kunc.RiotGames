@@ -1,5 +1,4 @@
 ﻿using Kunc.RiotGames.Api.Http;
-using Kunc.RiotGames.Api.SharedStatus;
 
 namespace Kunc.RiotGames.Api.RiotAccountV1;
 

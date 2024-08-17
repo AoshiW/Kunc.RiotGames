@@ -41,13 +41,6 @@ class EventInfo
         }
     }
 
-    public bool Equals(LcuEventAttribute attribute, MethodInfo methodInfo, object? target)
-    {
-        return EventAttribute.Equals(attribute)
-            && MethodInfo.Equals(methodInfo)
-            && Target == target;
-    }
-
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public object? Invoke(object?[]? parameters) => MethodInfo.Invoke(Target, parameters);
 }

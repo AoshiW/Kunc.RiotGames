@@ -3,7 +3,7 @@ using Kunc.RiotGames.JsonConverters;
 
 namespace Kunc.RiotGames.Api.LorMatchV1;
 
-[JsonConverter(typeof(JsonStringEnumConverterWithAltNames<GameType>))]
+[JsonConverter(typeof(CustomJsonStringEnumConverter<GameType>))]
 public enum GameType
 {
     [JsonStringEnumMemberName("")]

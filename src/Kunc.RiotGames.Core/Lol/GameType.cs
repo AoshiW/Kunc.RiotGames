@@ -5,7 +5,7 @@ namespace Kunc.RiotGames.Lol;
 /// <summary>
 /// League of Legends game types.
 /// </summary>
-[JsonConverter(typeof(JsonStringEnumConverterWithAltNames<GameType>))]
+[JsonConverter(typeof(CustomJsonStringEnumConverter<GameType>))]
 public enum GameType
 {
     [JsonStringEnumMemberName("")]

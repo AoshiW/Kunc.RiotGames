@@ -1,13 +1,12 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization;
-using Kunc.RiotGames.JsonConverters;
 
 namespace Kunc.RiotGames.Lol;
 
 /// <summary>
 /// Queue types for Lol (and Tft).
 /// </summary>
-[JsonConverter(typeof(JsonStringEnumConverterWithAltNames<QueueType>))]
+[JsonConverter(typeof(JsonStringEnumConverter<QueueType>))]
 public enum QueueType
 {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member

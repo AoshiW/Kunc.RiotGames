@@ -10,7 +10,6 @@ public class LolDataDragonTest
         ("latest", "cs_CZ"),
     ];
 
-
     [TestMethod]
     [DynamicData(nameof(DefaultVersionLanguage))]
     public async Task GetMaps(string version, string language)

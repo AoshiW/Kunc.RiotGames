@@ -1,9 +1,8 @@
 ﻿using System.Text.Json.Serialization;
-using Kunc.RiotGames.JsonConverters;
 
 namespace Kunc.RiotGames.Api.LolMatchV5;
 
-[JsonConverter(typeof(JsonStringEnumConverterWithAltNames<MatchEventType>))]
+[JsonConverter(typeof(JsonStringEnumConverter<MatchEventType>))]
 public enum MatchEventType
 {
     [JsonStringEnumMemberName("BUILDING_KILL")]

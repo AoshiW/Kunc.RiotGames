@@ -1,9 +1,7 @@
 ﻿using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Jobs;
-using Benchmarks.Riot.LoRDeckCodes;
-using Kunc.RiotGames.Lor.DeckCodes;
+using Kunc.RiotGames.Lor.DeckCodes.Benchmarks.Riot.LoRDeckCodes;
 
-namespace Benchmarks;
+namespace Kunc.RiotGames.Lor.DeckCodes.Benchmarks;
 
 [MemoryDiagnoser]
 [ShortRunJob]

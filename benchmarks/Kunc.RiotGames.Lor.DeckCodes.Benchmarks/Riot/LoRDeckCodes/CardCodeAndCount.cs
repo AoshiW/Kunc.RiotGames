@@ -1,6 +1,6 @@
 ﻿#pragma warning disable
 
-namespace Benchmarks.Riot.LoRDeckCodes;
+namespace Kunc.RiotGames.Lor.DeckCodes.Benchmarks.Riot.LoRDeckCodes;
 
 public class CardCodeAndCount
 {

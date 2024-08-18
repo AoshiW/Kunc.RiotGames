@@ -21,7 +21,7 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All"/>
         <InternalsVisibleTo Include="$(AssemblyName).Tests" />
-        <InternalsVisibleTo Include="Benchmarks" />
+        <InternalsVisibleTo Include="$(AssemblyName).Benchmarks" />
 	</ItemGroup>
 
 	<ItemGroup>

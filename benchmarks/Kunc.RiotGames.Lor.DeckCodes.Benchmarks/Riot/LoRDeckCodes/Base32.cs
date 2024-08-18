@@ -3,7 +3,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Benchmarks.Riot.LoRDeckCodes;
+namespace Kunc.RiotGames.Lor.DeckCodes.Benchmarks.Riot.LoRDeckCodes;
 
 public static class Base32
 {

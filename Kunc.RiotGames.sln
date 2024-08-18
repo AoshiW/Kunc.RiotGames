@@ -61,6 +61,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kunc.RiotGames.Lol.GameClient.Tests", "tests\Kunc.RiotGames.Lol.GameClient.Tests\Kunc.RiotGames.Lol.GameClient.Tests.csproj", "{DD8695C3-FAF2-41D8-9CD7-1DCCB4B1B781}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "benchmarks", "benchmarks", "{2D5951B6-2320-4653-96AA-F75D5BD5A904}"
+	ProjectSection(SolutionItems) = preProject
+		benchmarks\Directory.Build.props = benchmarks\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kunc.RiotGames.Lor.DeckCodes.Benchmarks", "benchmarks\Kunc.RiotGames.Lor.DeckCodes.Benchmarks\Kunc.RiotGames.Lor.DeckCodes.Benchmarks.csproj", "{175F5529-CB37-4210-AAC7-FC93A902E01A}"
 EndProject

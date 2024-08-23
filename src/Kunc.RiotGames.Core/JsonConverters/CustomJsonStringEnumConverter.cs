@@ -347,7 +347,7 @@ internal sealed class CustomJsonStringEnumConverter<T> : JsonConverter<T> where 
     {
         Debug.Assert(IsDefinedValueOrCombinationOfValues(key), "must only be invoked against valid enum values.");
         Debug.Assert(
-            s_isFlagsEnum || (dictionaryKeyPolicy is not null && Enum.IsDefined(typeof(T), value)),
+            s_isFlagsEnum || (dictionaryKeyPolicy is not null && Enum.IsDefined<T>(value)),
             "must either be a flag type or computing a dictionary key policy.");
 
         if (s_isFlagsEnum)

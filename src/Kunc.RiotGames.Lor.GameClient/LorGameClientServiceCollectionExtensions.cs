@@ -18,7 +18,7 @@ public static class LorGameClientServiceCollectionExtensions
     {
         ArgumentNullException.ThrowIfNull(services);
         services.AddOptions();
-        services.TryAdd(ServiceDescriptor.Singleton(typeof(ILorGameClient), typeof(LorGameClient)));
+        services.TryAdd(ServiceDescriptor.Singleton<ILorGameClient, LorGameClient>());
         if (configure is not null)
         {
             services.Configure(configure);

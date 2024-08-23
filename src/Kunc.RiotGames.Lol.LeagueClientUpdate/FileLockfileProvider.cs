@@ -11,7 +11,6 @@ public class FileLockfileProvider : ILockfileProvider
     private readonly ILogger<FileLockfileProvider> _logger;
     private Lockfile? _lockfile;
     private bool _disposedValue;
-    private bool isProccesFound;
     private string? _filePath;
 
     /// <inheritdoc/>

@@ -5,13 +5,13 @@ namespace Kunc.RiotGames.Lol.LeagueClientUpdate.Tests;
 [TestClass]
 public class WampEvents
 {
-    class FakeOptions : IOptions<LolLeagueClientUpdateOptions>
+    sealed class FakeOptions : IOptions<LolLeagueClientUpdateOptions>
     {
         public LolLeagueClientUpdateOptions Value { get; } = new();
     }
 
     static readonly NullWamp Wamp = new();
-    static ILolLeagueClientUpdate NewLcu() => new LolLeagueClientUpdate(new FakeOptions(), NullLockfileProvieder.Instance, Wamp);
+    static LolLeagueClientUpdate NewLcu() => new LolLeagueClientUpdate(new FakeOptions(), NullLockfileProvieder.Instance, Wamp);
 
     [TestMethod]
     public void Test()

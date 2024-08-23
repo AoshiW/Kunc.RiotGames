@@ -6,11 +6,13 @@ namespace Kunc.RiotGames.Lol.LeagueClientUpdate;
 
 public class FileLockfileProvider : ILockfileProvider
 {
-    private readonly FileSystemWatcher _fileSystemWatcher;
+    private FileSystemWatcher? _fileSystemWatcher;
+    private readonly PeriodicTimer _timer;
     private readonly ILogger<FileLockfileProvider> _logger;
-    private readonly string _filePath;
     private Lockfile? _lockfile;
     private bool _disposedValue;
+    private bool isProccesFound;
+    private string? _filePath;
 
     /// <inheritdoc/>
     public event EventHandler<LockFileCreatedEventArgs>? Created;
@@ -21,54 +23,73 @@ public class FileLockfileProvider : ILockfileProvider
     /// <summary>
     /// Initializes a new instance of the <see cref="FileLockfileProvider"/> class.
     /// </summary>
-    public FileLockfileProvider(ILogger<FileLockfileProvider>? logger = null)
+    public FileLockfileProvider(ILogger<FileLockfileProvider>? logger = null, TimeProvider? timeProvider = null)
     {
         _logger = logger ?? NullLogger<FileLockfileProvider>.Instance;
-        var path = GetLockfilePath();
-        _filePath = Path.Combine(path, "lockfile");
-        _fileSystemWatcher = new FileSystemWatcher(path, "lockfile")
+        _timer = new(TimeSpan.FromSeconds(5), timeProvider ?? TimeProvider.System);
+        _ = CheckProcessAsync(default);
+    }
+
+    private async Task CheckProcessAsync(CancellationToken cancellationToken)
+    {
+        while (await _timer.WaitForNextTickAsync(cancellationToken))
         {
-            NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.Attributes, 
+            var processes = Process.GetProcessesByName("LeagueClientUx");
+            if (processes.Length == 0)
+            {
+                _logger.LogProcessNotFound();
+                continue;
+            }
+            foreach (var process in processes)
+            {
+                if (process.MainModule is not null)
+                {
+                    _timer.Period = Timeout.InfiniteTimeSpan;
+                    var filenamePath = process.MainModule.FileName;
+                    var path = Path.GetDirectoryName(filenamePath)!;
+                    _filePath = Path.Join(path, "lockfile");
+                    _logger.LogProcessFound();
+                    InitFileSystemWatcher(path);
+                    return;
+                }
+            }
+            _logger.LogProcessFoundNotPath();
+        } 
+    }
+
+    private void InitFileSystemWatcher(string path)
+    {
+        _fileSystemWatcher = new (path, "lockfile")
+        {
+            NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.Attributes,
             EnableRaisingEvents = true,
         };
         _fileSystemWatcher.Created += FileSystemWatcherEvent;
         _fileSystemWatcher.Deleted += FileSystemWatcherEvent;
-    }
+        FileSystemWatcherEvent(_fileSystemWatcher, new(WatcherChangeTypes.Created, path, "lockfile"));
 
-    protected virtual string GetLockfilePath()
-    {
-        // todo get path from process?
-        return OperatingSystem.IsWindows() 
-            ? @"C:\Riot Games\League of Legends\"
-            : throw new PlatformNotSupportedException();
     }
 
     /// <inheritdoc/>
     public ValueTask<Lockfile?> GetLockfileAsync(CancellationToken cancellationToken = default)
     {
-        ObjectDisposedException.ThrowIf(_disposedValue, GetType());
+        ObjectDisposedException.ThrowIf(_disposedValue, this);
 
-        return _lockfile is not null
+        return _lockfile is not null || _filePath is null
             ? ValueTask.FromResult<Lockfile?>(_lockfile)
-            : GetLockfileAsyncCore(_filePath, cancellationToken);
+            : FromFileAsync(_filePath, cancellationToken);
 
-        static ValueTask<Lockfile?> GetLockfileAsyncCore(string path, CancellationToken cancellationToken)
+        static async ValueTask<Lockfile?> FromFileAsync(string path, CancellationToken cancellationToken)
         {
-            if(!File.Exists(path))
-                return default;
-            return FromFileAsync(path, cancellationToken)!;
+            using var stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            using var reader = new StreamReader(stream);
+            var lockfile = await reader.ReadToEndAsync(cancellationToken).ConfigureAwait(false);
+            return Lockfile.Parse(lockfile.AsSpan().Trim(), null);
         }
     }
 
-    static async ValueTask<Lockfile> FromFileAsync(string path, CancellationToken cancellationToken = default)
-    {
-        using var stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-        using var reader = new StreamReader(stream);
-        var lockfile = await reader.ReadToEndAsync(cancellationToken).ConfigureAwait(false);
-        return Lockfile.Parse(lockfile.AsSpan().Trim(), null);
-    }
 
-    private void FileSystemWatcherEvent(object sender, FileSystemEventArgs e)
+    private async void FileSystemWatcherEvent(object sender, FileSystemEventArgs e)
     {
         if (e.Name is not "lockfile")
             return;
@@ -76,7 +97,21 @@ public class FileLockfileProvider : ILockfileProvider
         switch (e.ChangeType)
         {
             case WatcherChangeTypes.Created:
-                InvokeCreated();
+                try
+                {
+                    _lockfile = await GetLockfileAsync(default).ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    return;
+                }
+                Debug.Assert(_lockfile is not null);
+
+                _logger.LogCreate(_lockfile);
+                Created?.Invoke(this, new()
+                {
+                    Lockfile = _lockfile,
+                });
                 break;
             case WatcherChangeTypes.Deleted:
                 _lockfile = default;
@@ -86,18 +121,6 @@ public class FileLockfileProvider : ILockfileProvider
             default:
                 break;
         }
-    }
-
-    private async void InvokeCreated()
-    {
-        _lockfile = await GetLockfileAsync(default).ConfigureAwait(false);
-        Debug.Assert(_lockfile is not null);
-
-        _logger.LogCreate(_lockfile);
-        Created?.Invoke(this, new()
-        {
-            Lockfile = _lockfile,
-        });
     }
 
     /// <summary>
@@ -113,7 +136,7 @@ public class FileLockfileProvider : ILockfileProvider
         {
             if (disposing)
             {
-                _fileSystemWatcher.Dispose();
+                _fileSystemWatcher?.Dispose();
             }
             _disposedValue = true;
         }

@@ -1,10 +1,14 @@
-﻿using System.Diagnostics;
+﻿using System.Buffers.Binary;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Text;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Kunc.RiotGames.Lol.LeagueClientUpdate;
 
 [Experimental("KNCRG0000", UrlFormat = "https://github.com/AoshiW/Kunc.RiotGames/blob/dev/DiagnosticIds.md#{0}")]
-public sealed class ProcessLockfileProvider : ILockfileProvider
+public sealed class ProcessArgsLockfileProvider : ILockfileProvider
 {
     private readonly PeriodicTimer _timer;
     private readonly CancellationTokenSource _cancellationTokenSource = new();
@@ -21,6 +25,7 @@ public sealed class ProcessLockfileProvider : ILockfileProvider
             CreateNoWindow = true,
         }
     };
+    private readonly ILogger<ProcessArgsLockfileProvider> _logger;
     private Lockfile? _lastLockfile;
 
     /// <inheritdoc/>
@@ -30,14 +35,16 @@ public sealed class ProcessLockfileProvider : ILockfileProvider
     public event EventHandler? Deleted;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ProcessLockfileProvider"/> class.
+    /// Initializes a new instance of the <see cref="ProcessArgsLockfileProvider"/> class.
     /// </summary>
-    public ProcessLockfileProvider(TimeProvider? timeProvider = null)
+    public ProcessArgsLockfileProvider(ILogger<ProcessArgsLockfileProvider>? logger, TimeProvider? timeProvider = null)
     {
+        // todo add suppourt for macos?
         if (!OperatingSystem.IsWindows())
             throw new PlatformNotSupportedException();
-        _timer = new PeriodicTimer(TimeSpan.FromSeconds(1), timeProvider ?? TimeProvider.System);
-
+        _timer = new PeriodicTimer(TimeSpan.FromSeconds(7), timeProvider ?? TimeProvider.System);
+        _logger = logger ?? NullLogger<ProcessArgsLockfileProvider>.Instance;
+        
         _ = CheckProcessAsync(_cancellationTokenSource.Token);
     }
 
@@ -45,7 +52,16 @@ public sealed class ProcessLockfileProvider : ILockfileProvider
     {
         while (await _timer.WaitForNextTickAsync(cancellationToken))
         {
-            var newLockfile = await GetLockfileAsync(cancellationToken).ConfigureAwait(false);
+            Lockfile? newLockfile;
+            try
+            {
+                newLockfile = await GetLockfileAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInfoException(ex);
+                continue;
+            }
             if (newLockfile is not null)
             {
                 if (!newLockfile.Equals(_lastLockfile))
@@ -75,14 +91,14 @@ public sealed class ProcessLockfileProvider : ILockfileProvider
     }
 
     /// <inheritdoc/>
-    public ValueTask<Lockfile?> GetLockfileAsync(CancellationToken cancellationToken = default)
+    public async ValueTask<Lockfile?> GetLockfileAsync(CancellationToken cancellationToken = default)
     {
-        _process.Start();
-        var r = _process.StandardOutput.ReadToEnd().AsSpan().Trim();
-        var result = r.IsEmpty
-            ? default
-            : ExtrackLockfile(r);
-        return ValueTask.FromResult(result);
+            _process.Start();
+            var output = await _process.StandardOutput.ReadToEndAsync(cancellationToken);
+            var lockfile = output.AsSpan().Trim().IsEmpty
+                ? default
+                : ExtrackLockfile(output.AsSpan().Trim());
+        return lockfile;
     }
 
     static Lockfile ExtrackLockfile(ReadOnlySpan<char> s)

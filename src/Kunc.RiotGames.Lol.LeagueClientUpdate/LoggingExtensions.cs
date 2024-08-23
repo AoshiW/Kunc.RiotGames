@@ -24,9 +24,21 @@ internal static partial class LoggingExtensions
     [LoggerMessage(LogLevel.Debug, "Total {count} methods were subscribed from {type}.")]
     public static partial void LogTotalSubscribedMethods(this ILogger<LolLeagueClientUpdate> logger, int count, Type type);
 
+    [LoggerMessage(LogLevel.Debug, "Process not found.")]
+    public static partial void LogProcessNotFound(this ILogger<FileLockfileProvider> logger);
+
+    [LoggerMessage(LogLevel.Information, "Process found.")]
+    public static partial void LogProcessFound(this ILogger<FileLockfileProvider> logger);
+
+    [LoggerMessage(LogLevel.Error, "Process found, but cant get path.")]
+    public static partial void LogProcessFoundNotPath(this ILogger<FileLockfileProvider> logger);
+
 
     [LoggerMessage(LogLevel.Error, "Exception was throw in WAMP event loop.")]
     public static partial void LogEventLoopException(this ILogger<Wamp> logger, Exception ex);
+
+    [LoggerMessage(LogLevel.Information, "Exception was throw.")]
+    public static partial void LogInfoException(this ILogger logger, Exception ex);
 
     [LoggerMessage(LogLevel.Information, "Connected.")]
     public static partial void LogConnected(this ILogger<Wamp> logger);

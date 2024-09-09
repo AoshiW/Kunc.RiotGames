@@ -46,6 +46,7 @@ public class QueueConfig : IEquatable<QueueConfig?>
         Add(1100, MapId.Convergence, GameMode.Tft, QueueFlags.PvP | QueueFlags.Ranked); // TFT Ranked
         Add(1130, MapId.Convergence, GameMode.Tft, QueueFlags.PvP); // TFT Hyper roll
         Add(1160, MapId.Convergence, GameMode.Tft, QueueFlags.PvP); // TFT Double up (workshop)
+        Add(1220, MapId.Convergence, GameMode.Tft, QueueFlags.PvE);
         Add(1700, MapId.RingsOfWrath, GameMode.Cherry, QueueFlags.PvP); // Arena
         Add(1810, MapId.Strawberry, GameMode.Strawberry, QueueFlags.PvE); // Swarm Solo
         Add(1820, MapId.Strawberry, GameMode.Strawberry, QueueFlags.PvE); // Swarm 2 Members

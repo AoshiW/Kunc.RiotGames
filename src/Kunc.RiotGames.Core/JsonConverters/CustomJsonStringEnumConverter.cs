@@ -246,7 +246,7 @@ internal sealed class CustomJsonStringEnumConverter<T> : JsonConverter<T> where 
     private bool TryParseNamedEnum(ReadOnlySpan<char> source, out T result)
     {
 #if NET9_0_OR_GREATER
-        Dictionary<string, EnumFieldInfo>.AlternateLookup<ReadOnlySpan<char>> lookup = _enumFieldInfoIndex.GetAlternateLookup<string, EnumFieldInfo, ReadOnlySpan<char>>();
+        Dictionary<string, EnumFieldInfo>.AlternateLookup<ReadOnlySpan<char>> lookup = _enumFieldInfoIndex.GetAlternateLookup<ReadOnlySpan<char>>();
 #else
         Dictionary<string, EnumFieldInfo> lookup = _enumFieldInfoIndex;
 #endif

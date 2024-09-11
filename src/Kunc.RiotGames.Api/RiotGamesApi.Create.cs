@@ -1,4 +1,4 @@
-﻿using Kunc.RiotGames.Api.LolChallengesV1;
+﻿//using Kunc.RiotGames.Api.LolChallengesV1;
 using Kunc.RiotGames.Api.LolChampionMasteryV4;
 using Kunc.RiotGames.Api.LolChampionV3;
 using Kunc.RiotGames.Api.LolClashV1;
@@ -49,7 +49,7 @@ public partial class RiotGamesApi
 
         public ILolClashV1 LolClashV1 => _riotGamesApi.LolClashV1;
 
-        public ILolChallengesV1 LolChallengesV1 => _riotGamesApi.LolChallengesV1;
+        //public ILolChallengesV1 LolChallengesV1 => _riotGamesApi.LolChallengesV1;
 
         public ILolChampionMasteryV4 LolChampionMasteryV4 => _riotGamesApi.LolChampionMasteryV4;
 

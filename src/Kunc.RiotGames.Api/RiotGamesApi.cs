@@ -1,4 +1,4 @@
-﻿using Kunc.RiotGames.Api.LolChallengesV1;
+﻿//using Kunc.RiotGames.Api.LolChallengesV1;
 using Kunc.RiotGames.Api.LolChampionMasteryV4;
 using Kunc.RiotGames.Api.LolChampionV3;
 using Kunc.RiotGames.Api.LolClashV1;
@@ -31,7 +31,7 @@ public partial class RiotGamesApi : IRiotGamesApi
         RiotAccountV1 = services.GetRequiredService<IRiotAccountV1>();
 
         LolClashV1 = services.GetRequiredService<ILolClashV1>();
-        LolChallengesV1 = services.GetRequiredService<ILolChallengesV1>();
+        //LolChallengesV1 = services.GetRequiredService<ILolChallengesV1>();
         LolChampionMasteryV4 = services.GetRequiredService<ILolChampionMasteryV4>();
         LolChampionV3 = services.GetRequiredService<ILolChampionV3>();
         LolLeagueV4 = services.GetRequiredService<ILolLeagueV4>();
@@ -55,7 +55,7 @@ public partial class RiotGamesApi : IRiotGamesApi
     public IRiotAccountV1 RiotAccountV1 { get; }
 
     /// <inheritdoc />
-    public ILolChallengesV1 LolChallengesV1 { get; }
+    //public ILolChallengesV1 LolChallengesV1 { get; }
 
     /// <inheritdoc />
     public ILolChampionMasteryV4 LolChampionMasteryV4 { get; }

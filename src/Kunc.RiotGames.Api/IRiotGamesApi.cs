@@ -1,4 +1,4 @@
-﻿using Kunc.RiotGames.Api.LolChallengesV1;
+﻿//using Kunc.RiotGames.Api.LolChallengesV1;
 using Kunc.RiotGames.Api.LolChampionMasteryV4;
 using Kunc.RiotGames.Api.LolChampionV3;
 using Kunc.RiotGames.Api.LolClashV1;
@@ -20,7 +20,7 @@ namespace Kunc.RiotGames.Api;
 public interface IRiotGamesApi : IDisposable
 {
     ILolClashV1 LolClashV1 { get; }
-    ILolChallengesV1 LolChallengesV1 { get; }
+    //ILolChallengesV1 LolChallengesV1 { get; }
     ILolChampionMasteryV4 LolChampionMasteryV4 { get; }
     ILolChampionV3 LolChampionV3 { get; }
     ILolLeagueV4 LolLeagueV4 { get; }

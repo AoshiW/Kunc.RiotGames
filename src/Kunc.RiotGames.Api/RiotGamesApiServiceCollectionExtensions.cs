@@ -1,5 +1,5 @@
 ﻿using Kunc.RiotGames.Api.Http;
-//using Kunc.RiotGames.Api.LolChallengesV1;
+using Kunc.RiotGames.Api.LolChallengesV1;
 using Kunc.RiotGames.Api.LolChampionMasteryV4;
 using Kunc.RiotGames.Api.LolChampionV3;
 using Kunc.RiotGames.Api.LolClashV1;
@@ -40,7 +40,7 @@ public static class RiotGamesApiServiceCollectionExtensions
         services.TryAdd(ServiceDescriptor.Singleton<IRiotGamesApi, RiotGamesApi>());
 
         services.TryAdd(ServiceDescriptor.Singleton<ILolClashV1, LolClashV1Endpoint>());
-        //services.TryAdd(ServiceDescriptor.Singleton<ILolChallengesV1, LolChallengesV1Endpoint>());
+        services.TryAdd(ServiceDescriptor.Singleton<ILolChallengesV1, LolChallengesV1Endpoint>());
         services.TryAdd(ServiceDescriptor.Singleton<ILolChampionMasteryV4, LolChampionMasteryV4Endpoint>());
         services.TryAdd(ServiceDescriptor.Singleton<ILolChampionV3, LolChampionV3Endpoint>());
         services.TryAdd(ServiceDescriptor.Singleton<ILolLeagueV4, LolLeagueV4Endpoint>());

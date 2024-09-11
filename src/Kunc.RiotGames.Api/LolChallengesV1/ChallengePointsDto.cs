@@ -2,7 +2,6 @@
 
 namespace Kunc.RiotGames.Api.LolChallengesV1;
 
-//
 public class ChallengePointsDto : BaseDto
 {
     [JsonPropertyName("percentile")]

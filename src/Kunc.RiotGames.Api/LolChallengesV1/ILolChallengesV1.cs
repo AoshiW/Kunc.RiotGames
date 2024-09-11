@@ -1,6 +1,5 @@
 ﻿namespace Kunc.RiotGames.Api.LolChallengesV1;
 
-//
 public interface ILolChallengesV1
 {
     /// <summary>

@@ -2,7 +2,6 @@
 using Kunc.RiotGames.JsonConverters;
 
 namespace Kunc.RiotGames.Api.LolChallengesV1;
-//
 
 public class ChallengeConfigInfoDto : BaseDto
 {

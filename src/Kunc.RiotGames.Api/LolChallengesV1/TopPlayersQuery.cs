@@ -1,6 +1,5 @@
 ﻿namespace Kunc.RiotGames.Api.LolChallengesV1;
 
-//
 public class TopPlayersQuery : QueryString
 {
     public int? Limit { get; set; }

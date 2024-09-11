@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 
-//
 namespace Kunc.RiotGames.Api.LolChallengesV1;
 
 [JsonConverter(typeof(JsonStringEnumConverter<State>))]

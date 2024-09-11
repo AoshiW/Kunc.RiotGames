@@ -1,6 +1,5 @@
 ﻿using Kunc.RiotGames.Api.Http;
 
-//
 namespace Kunc.RiotGames.Api.LolChallengesV1;
 
 public class LolChallengesV1Endpoint : ILolChallengesV1

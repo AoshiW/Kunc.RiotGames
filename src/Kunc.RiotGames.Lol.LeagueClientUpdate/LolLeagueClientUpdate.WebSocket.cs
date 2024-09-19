@@ -158,7 +158,7 @@ public partial class LolLeagueClientUpdate : ILolLeagueClientUpdate
     {
         return SubscribeAllCore(typeof(T), target, options);
 
-        IDisposable[]  SubscribeAllCore(Type type, object? target, MethodOptions options)
+        IDisposable[] SubscribeAllCore(Type type, object? target, MethodOptions options)
         {
             var disposables = new List<IDisposable>();
             var methods = type.GetMethods((BindingFlags)options);

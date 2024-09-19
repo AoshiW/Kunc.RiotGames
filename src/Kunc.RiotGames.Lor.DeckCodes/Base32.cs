@@ -181,7 +181,7 @@ internal static class Base32
         rest[1] = (numCharsToOutput >= 2) ? Alphabet[((b0 & 0x07) << 2) | (b1 >> 6)] : PaddingChar;
         rest[2] = (numCharsToOutput >= 3) ? Alphabet[(b1 >> 1) & 0x1f] : PaddingChar;
         rest[3] = (numCharsToOutput >= 4) ? Alphabet[((b1 & 0x01) << 4) | (b2 >> 4)] : PaddingChar;
-        rest[4] = (numCharsToOutput >= 5) ? Alphabet[(((b2 & 0x0f) << 1) | (b3 >> 7))] : PaddingChar;
+        rest[4] = (numCharsToOutput >= 5) ? Alphabet[((b2 & 0x0f) << 1) | (b3 >> 7)] : PaddingChar;
         rest[5] = (numCharsToOutput >= 6) ? Alphabet[(b3 >> 2) & 0x1f] : PaddingChar;
         rest[6] = (numCharsToOutput >= 7) ? Alphabet[((b3 & 0x3) << 3) | (b4 >> 5)] : PaddingChar;
         rest[7] = (numCharsToOutput >= 8) ? Alphabet[b4 & 0x1f] : PaddingChar;

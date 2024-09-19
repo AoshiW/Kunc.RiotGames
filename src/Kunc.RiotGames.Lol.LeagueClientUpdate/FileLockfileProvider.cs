@@ -53,7 +53,7 @@ public class FileLockfileProvider : ILockfileProvider
                 }
             }
             _logger.LogProcessFoundNotPath();
-        } 
+        }
     }
 
     private void InitFileSystemWatcher(string path)

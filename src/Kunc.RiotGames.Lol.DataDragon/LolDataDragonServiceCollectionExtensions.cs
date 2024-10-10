@@ -18,6 +18,9 @@ public static class LolDataDragonServiceCollectionExtensions
     {
         ArgumentNullException.ThrowIfNull(services);
         services.AddOptions();
+#pragma warning disable EXTEXP0018 // todo remove #pragma warning disable EXTEXP0018
+        services.AddHybridCache();
+#pragma warning restore EXTEXP0018
         services.TryAdd(ServiceDescriptor.Singleton<ILolDataDragon, LolDataDragon>());
         if (configure is not null)
         {

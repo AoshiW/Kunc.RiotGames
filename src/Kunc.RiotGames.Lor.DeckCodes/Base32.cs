@@ -37,7 +37,10 @@ internal static class Base32
     private const int Shift = 5;
     private const char PaddingChar = '=';
 
-    public static int GetByteCount(ReadOnlySpan<char> chars) => chars.TrimEnd(PaddingChar).Length * Shift / 8;
+    public static int GetByteCount(ReadOnlySpan<char> chars)
+    {
+        return chars.TrimEnd(PaddingChar).Length * Shift / 8;
+    }
 
     public static int GetCharCount(ReadOnlySpan<byte> bytes, Base32FormattingOptions options)
     {

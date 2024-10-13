@@ -23,7 +23,7 @@ public class DeserializeTest
         DeserializeJsonsInDirectory<GameResult>(Path.Combine("Data", "GameResult"));
     }
 
-    static void DeserializeJsonsInDirectory<T>(string path)
+    private static void DeserializeJsonsInDirectory<T>(string path)
     {
         var isEmpty = true;
         foreach (var item in Directory.EnumerateFiles(path))

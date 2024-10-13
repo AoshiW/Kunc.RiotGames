@@ -1,6 +1,5 @@
 ﻿using System.Buffers;
 using System.Collections.Concurrent;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
@@ -14,7 +13,7 @@ namespace Kunc.RiotGames.JsonConverters;
 
 // MS in .NET 9 add supports for alternative names for enum member names (https://github.com/dotnet/runtime/issues/74385)
 // but Riot sometimes returns an empty string as a value and this scenario is not supported in .NET
-// so here is the copied JeonConverter which is modified to allow empty string as an alternative enum member name
+// so here is the copied JsonConverter which is modified to allow empty string as an alternative enum member name
 internal sealed class CustomJsonStringEnumConverter<T> : JsonConverter<T> where T : struct, Enum
 {
     private static readonly TypeCode s_enumTypeCode = Type.GetTypeCode(typeof(T));
@@ -200,8 +199,8 @@ internal sealed class CustomJsonStringEnumConverter<T> : JsonConverter<T> where 
         ReadOnlySpan<char> source = charBuffer.Trim();
         ConcurrentDictionary<string, ulong>.AlternateLookup<ReadOnlySpan<char>> lookup = _nameCacheForReading.GetAlternateLookup<ReadOnlySpan<char>>();
 #else
-            string source = ((ReadOnlySpan<char>)charBuffer).Trim().ToString();
-            ConcurrentDictionary<string, ulong> lookup = _nameCacheForReading;
+        string source = ((ReadOnlySpan<char>)charBuffer).Trim().ToString();
+        ConcurrentDictionary<string, ulong> lookup = _nameCacheForReading;
 #endif
         if (lookup.TryGetValue(source, out ulong key))
         {
@@ -568,7 +567,7 @@ internal sealed class CustomJsonStringEnumConverter<T> : JsonConverter<T> where 
 }
 
 [Flags]
-enum EnumConverterOptions
+internal enum EnumConverterOptions
 {
     /// <summary>
     /// Allow string values.
@@ -610,7 +609,7 @@ file class ThrowHelper
     }
 }
 
-static partial class JsonHelpers
+internal static partial class JsonHelpers
 {
     [UnsafeAccessor(UnsafeAccessorKind.Method, Name = "get_ValueLength")]
     public static extern int get_ValueLength(ref Utf8JsonReader reader);
@@ -635,7 +634,7 @@ file ref partial struct ValueStringBuilder
     }
     public int Length
     {
-        get => _pos;
+        readonly get => _pos;
         set
         {
             Debug.Assert(value >= 0);

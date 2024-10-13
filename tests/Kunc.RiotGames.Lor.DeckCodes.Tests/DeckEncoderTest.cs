@@ -5,7 +5,7 @@ namespace Kunc.RiotGames.Lor.DeckCodes.Tests;
 [TestClass]
 public class DeckEncoderTest
 {
-    static readonly LorDeckEncoder DeckEncoder = new();
+    private static readonly LorDeckEncoder DeckEncoder = new();
 
     //Tests the encoding of a set of hard coded decks in DeckCodesTestData.txt
     [TestMethod]
@@ -536,7 +536,7 @@ public class DeckEncoderTest
         Assert.ThrowsException<ArgumentException>(() => DeckEncoder.GetDeckFromCode<DeckItem>(singleCardDeckWithVersion10));
     }
 
-    static bool VerifyRehydration(List<DeckItem> d, List<DeckItem> rehydratedList)
+    private static bool VerifyRehydration(List<DeckItem> d, List<DeckItem> rehydratedList)
     {
         if (d.Count != rehydratedList.Count)
             return false;

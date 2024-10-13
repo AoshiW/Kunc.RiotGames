@@ -13,7 +13,7 @@ public interface ILolLeagueClientUpdate : IDisposable
     event EventHandler<LcuEventArgs<JsonElement>>? OnLcuEvent;
     Task ConnectWampAsync(CancellationToken token = default);
     Task CloseWampAsync(CancellationToken token = default);
-    
+
     IDisposable Subscribe(LcuEventAttribute attribute, Delegate eventHandler);
     IDisposable Subscribe([StringSyntax(StringSyntaxAttribute.Uri)] string uri, Delegate eventHandler);
     IDisposable Subscribe(Delegate eventHandler);

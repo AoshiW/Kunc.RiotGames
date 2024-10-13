@@ -200,7 +200,7 @@ public partial class LolLeagueClientUpdate : ILolLeagueClientUpdate
 
 file struct CacheArray
 {
-    object[]? _array1, _array2, _array3;
+    private object[]? _array1, _array2, _array3;
 
     public object[]? Get(int length)
     {

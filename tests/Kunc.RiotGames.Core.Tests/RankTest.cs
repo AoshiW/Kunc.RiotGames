@@ -30,7 +30,6 @@ public class RankTest
         Assert.IsTrue(data.SequenceEqual(copy));
     }
 
-#if NET8_0_OR_GREATER
     [TestMethod]
     [DataRow(Rank.UnrankedString)]
     [DataRow("Gold I 5lp")]
@@ -53,5 +52,4 @@ public class RankTest
     {
         Assert.IsFalse(Rank.TryParse(str, null, out _));
     }
-#endif
 }

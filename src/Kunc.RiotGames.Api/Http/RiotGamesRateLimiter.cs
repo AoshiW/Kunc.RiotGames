@@ -7,7 +7,7 @@ using Microsoft.Extensions.Options;
 
 namespace Kunc.RiotGames.Api.Http;
 
-sealed public class RiotGamesRateLimiter : IRiotGamesRateLimiter, IDisposable
+public sealed class RiotGamesRateLimiter : IRiotGamesRateLimiter, IDisposable
 {
     private readonly ConcurrentDictionary<string, RegionRateLimiter> _regionsRateLimiters = new();
     private readonly ILogger<RiotGamesRateLimiter> _logger;
@@ -175,7 +175,7 @@ sealed public class RiotGamesRateLimiter : IRiotGamesRateLimiter, IDisposable
 
         sealed class SemaphoreSlimLease : RateLimitLease
         {
-            SemaphoreSlim? _semaphoreSlim;
+            private SemaphoreSlim? _semaphoreSlim;
 
             public SemaphoreSlimLease(SemaphoreSlim semaphoreSlim)
             {

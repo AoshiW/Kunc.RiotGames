@@ -49,8 +49,10 @@ public struct Rank :
         => Tier == Tier.Unranked || Division == Division.None;
 
     /// <inheritdoc/>
-    public readonly override bool Equals(object? obj)
-        => obj is Rank rank && Equals(rank);
+    public override readonly bool Equals(object? obj)
+    {
+        return obj is Rank rank && Equals(rank);
+    }
 
     /// <inheritdoc/>
     public readonly bool Equals(Rank other)
@@ -61,32 +63,46 @@ public struct Rank :
     }
 
     /// <inheritdoc/>
-    public readonly override int GetHashCode()
-        => HashCode.Combine(Tier, Division, LeaguePoints);
+    public override readonly int GetHashCode()
+    {
+        return HashCode.Combine(Tier, Division, LeaguePoints);
+    }
 
     /// <inheritdoc/>
     public static bool operator ==(Rank left, Rank right)
-        => left.Equals(right);
+    {
+        return left.Equals(right);
+    }
 
     /// <inheritdoc/>
     public static bool operator !=(Rank left, Rank right)
-        => !(left == right);
+    {
+        return !(left == right);
+    }
 
     /// <inheritdoc/>
     public static bool operator >(Rank left, Rank right)
-        => left.CompareTo(right) > 0;
+    {
+        return left.CompareTo(right) > 0;
+    }
 
     /// <inheritdoc/>
     public static bool operator >=(Rank left, Rank right)
-        => left.CompareTo(right) >= 0;
+    {
+        return left.CompareTo(right) >= 0;
+    }
 
     /// <inheritdoc/>
     public static bool operator <(Rank left, Rank right)
-        => left.CompareTo(right) < 0;
+    {
+        return left.CompareTo(right) < 0;
+    }
 
     /// <inheritdoc/>
     public static bool operator <=(Rank left, Rank right)
-        => left.CompareTo(right) <= 0;
+    {
+        return left.CompareTo(right) <= 0;
+    }
 
     /// <inheritdoc/>
     public readonly int CompareTo(Rank other)
@@ -151,10 +167,10 @@ public struct Rank :
     internal const string UnrankedString = "Unranked";
 
     /// <inheritdoc/>
-    public readonly override string ToString()
-        => IsUnranked
-        ? UnrankedString
-        : $"{Tier} {Division} {LeaguePoints}LP";
+    public override readonly string ToString()
+    {
+        return ToString(null, null);
+    }
 
     /// <inheritdoc/>
     public readonly bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider? provider)
@@ -175,7 +191,11 @@ public struct Rank :
     /// <inheritdoc/>
     public readonly string ToString(string? format, IFormatProvider? formatProvider)
     {
-        return ToString();
+        // todo add support for alternative formats?
+        // (it must be compatible with parsing)
+        return IsUnranked
+            ? UnrankedString
+            : $"{Tier} {Division} {LeaguePoints}LP";
     }
 
     /// <inheritdoc/>

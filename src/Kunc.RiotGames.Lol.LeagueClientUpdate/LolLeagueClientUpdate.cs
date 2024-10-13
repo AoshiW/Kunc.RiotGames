@@ -105,7 +105,7 @@ public partial class LolLeagueClientUpdate
     private void CheckLockfile()
     {
         if (!_initTask.IsCompleted)
-            _initTask.Wait(); 
+            _initTask.Wait();
         if (_client.BaseAddress is null)
             throw new InvalidOperationException("Lockfile data is not available.");
     }

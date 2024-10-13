@@ -19,7 +19,7 @@ public class QueryStringTests
     }
 }
 
-file sealed class SomeOptions : QueryString
+sealed file class SomeOptions : QueryString
 {
     public int? MyInt { get; set; }
     public string? MyString { get; set; }

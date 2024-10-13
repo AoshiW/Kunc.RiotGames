@@ -28,7 +28,7 @@ public class RiotLorDeckEncoderBenchmark : LorDeckEncoderBenchmarkBase
 
 public class LorDeckEncoderBenchmarkBase
 {
-    static protected readonly LorDeckEncoder DeckEncoder = new();
+    protected static readonly LorDeckEncoder DeckEncoder = new();
 
     public IEnumerable<object> Inputs { get; } = new Input[]
     {

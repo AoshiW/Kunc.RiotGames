@@ -42,5 +42,8 @@ class EventInfo
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public object? Invoke(object?[]? parameters) => MethodInfo.Invoke(Target, parameters);
+    public object? Invoke(object?[]? parameters)
+    {
+        return MethodInfo.Invoke(Target, parameters);
+    }
 }

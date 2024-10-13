@@ -34,7 +34,10 @@ public class DeckItem : IReadOnlyDeckItem, IDeckItem, IEquatable<DeckItem?>
     public int Count { get; set; }
 
     /// <inheritdoc/>
-    public override bool Equals(object? obj) => Equals(obj as DeckItem);
+    public override bool Equals(object? obj)
+    {
+        return Equals(obj as DeckItem);
+    }
 
     /// <inheritdoc/>
     public bool Equals(DeckItem? other)
@@ -45,17 +48,26 @@ public class DeckItem : IReadOnlyDeckItem, IDeckItem, IEquatable<DeckItem?>
     }
 
     /// <inheritdoc/>
-    public override int GetHashCode() => HashCode.Combine(CardCode, Count);
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(CardCode, Count);
+    }
 
     /// <summary>Compares two values to determine equality.</summary>
     /// <param name="left">The value to compare with <paramref name="right" />.</param>
     /// <param name="right">The value to compare with <paramref name="left" />.</param>
     /// <returns><c>true</c> if <paramref name="left" /> is equal to <paramref name="right" />; otherwise, <c>false</c>.</returns>
-    public static bool operator ==(DeckItem? left, DeckItem? right) => EqualityComparer<DeckItem>.Default.Equals(left, right);
+    public static bool operator ==(DeckItem? left, DeckItem? right)
+    {
+        return EqualityComparer<DeckItem>.Default.Equals(left, right);
+    }
 
     /// <summary>Compares two values to determine inequality.</summary>
     /// <param name="left">The value to compare with <paramref name="right" />.</param>
     /// <param name="right">The value to compare with <paramref name="left" />.</param>
     /// <returns><c>true</c> if <paramref name="left" /> is not equal to <paramref name="right" />; otherwise, <c>false</c>.</returns>
-    public static bool operator !=(DeckItem? left, DeckItem? right) => !(left == right);
+    public static bool operator !=(DeckItem? left, DeckItem? right)
+    {
+        return !(left == right);
+    }
 }

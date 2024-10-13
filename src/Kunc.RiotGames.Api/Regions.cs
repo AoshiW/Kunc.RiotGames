@@ -50,7 +50,7 @@ public static class Regions
     /// Middle East and North Africa
     /// </summary>
     public static string ME1 { get; } = "me1";
-   
+
     /// <summary>
     /// North America
     /// </summary>

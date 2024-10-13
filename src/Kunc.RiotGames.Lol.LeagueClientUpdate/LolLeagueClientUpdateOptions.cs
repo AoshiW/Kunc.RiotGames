@@ -2,7 +2,7 @@
 
 namespace Kunc.RiotGames.Lol.LeagueClientUpdate;
 
-public class LolLeagueClientUpdateOptions 
+public class LolLeagueClientUpdateOptions
 {
     public bool AutoReconnectToWamp { get; set; } = true;
 

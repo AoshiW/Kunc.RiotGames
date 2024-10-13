@@ -1,7 +1,5 @@
-﻿using System.Buffers.Binary;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Text;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 
@@ -39,12 +37,12 @@ public sealed class ProcessArgsLockfileProvider : ILockfileProvider
     /// </summary>
     public ProcessArgsLockfileProvider(ILogger<ProcessArgsLockfileProvider>? logger, TimeProvider? timeProvider = null)
     {
-        // todo add suppourt for macos?
+        // todo add suppourt for MacOS?
         if (!OperatingSystem.IsWindows())
             throw new PlatformNotSupportedException();
         _timer = new PeriodicTimer(TimeSpan.FromSeconds(7), timeProvider ?? TimeProvider.System);
         _logger = logger ?? NullLogger<ProcessArgsLockfileProvider>.Instance;
-        
+
         _ = CheckProcessAsync(_cancellationTokenSource.Token);
     }
 
@@ -93,15 +91,15 @@ public sealed class ProcessArgsLockfileProvider : ILockfileProvider
     /// <inheritdoc/>
     public async ValueTask<Lockfile?> GetLockfileAsync(CancellationToken cancellationToken = default)
     {
-            _process.Start();
-            var output = await _process.StandardOutput.ReadToEndAsync(cancellationToken);
-            var lockfile = output.AsSpan().Trim().IsEmpty
-                ? default
-                : ExtrackLockfile(output.AsSpan().Trim());
+        _process.Start();
+        var output = await _process.StandardOutput.ReadToEndAsync(cancellationToken);
+        var lockfile = output.AsSpan().Trim().IsEmpty
+            ? default
+            : ExtrackLockfile(output.AsSpan().Trim());
         return lockfile;
     }
 
-    static Lockfile ExtrackLockfile(ReadOnlySpan<char> s)
+    private static Lockfile ExtrackLockfile(ReadOnlySpan<char> s)
     {
         return new("LeagueClient", 0, ExtractValue<int>(s, "--app-port="), ExtractValue<string>(s, "--remoting-auth-token="), "https");
 

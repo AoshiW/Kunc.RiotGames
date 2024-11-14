@@ -23,9 +23,10 @@ public class TftMatchV1Test : ApiBase<TGame.TFT>
             if (isFirstMatch)
             {
                 isFirstMatch = false;
-                if (DateTimeOffset.UtcNow - match.Info.GameDatetime > TimeSpan.FromDays(60))
+                var lastGameTimeDiff = DateTimeOffset.UtcNow - match.Info.GameDateTime;
+                if (lastGameTimeDiff.Days > 60)
                 {
-                    Assert.Fail("The game is too old for testing. / The player no longer plays the game.");
+                    Assert.Fail($"The game is too old for testing. / The player no longer plays the game.\nLast game: {lastGameTimeDiff.Days} days ago");
                 }
             }
         }

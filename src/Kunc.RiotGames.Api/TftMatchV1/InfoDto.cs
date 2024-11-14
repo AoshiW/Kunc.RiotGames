@@ -7,7 +7,7 @@ public class InfoDto : BaseDto
 {
     [JsonPropertyName("game_datetime")]
     [JsonConverter(typeof(UnixTimestampDateTimeOffsetMsConverter))]
-    public DateTimeOffset GameDatetime { get; set; }
+    public DateTimeOffset GameDateTime { get; set; }
 
     [JsonPropertyName("game_length")]
     [JsonConverter(typeof(JsonTimeSpanSecondsConverter))]

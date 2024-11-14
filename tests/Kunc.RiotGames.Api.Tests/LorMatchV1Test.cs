@@ -26,9 +26,10 @@ public class LorMatchV1Test : ApiBase<TGame.LOR>
             if (isFirstMatch)
             {
                 isFirstMatch = false;
-                if (DateTimeOffset.UtcNow - match.Info.GameStartTime > TimeSpan.FromDays(60))
+                var lastGameTimeDiff = DateTimeOffset.UtcNow - match.Info.GameStartTime;
+                if (lastGameTimeDiff.Days > 60)
                 {
-                    Assert.Fail("The game is too old for testing. / The player no longer plays the game.");
+                    Assert.Fail($"The game is too old for testing. / The player no longer plays the game.\nLast game: {lastGameTimeDiff.Days} days ago");
                 }
             }
         }

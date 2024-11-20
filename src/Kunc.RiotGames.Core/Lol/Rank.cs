@@ -1,7 +1,6 @@
 ﻿#pragma warning disable IDE0046 // Use conditional expression for return
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Numerics;
 
 namespace Kunc.RiotGames.Lol;
 
@@ -13,9 +12,7 @@ public struct Rank :
     IComparable,
     IComparable<Rank>,
     ISpanFormattable,
-    ISpanParsable<Rank>,
-    IEqualityOperators<Rank, Rank, bool>,
-    IComparisonOperators<Rank, Rank, bool>
+    ISpanParsable<Rank>
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="Rank"/> class.

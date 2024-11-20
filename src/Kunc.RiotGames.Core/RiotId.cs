@@ -5,7 +5,7 @@ using Kunc.RiotGames.JsonConverters;
 namespace Kunc.RiotGames;
 
 [JsonConverter(typeof(RiotIdConverter))]
-public sealed class RiotId : IRiotId, ISpanParsable<RiotId>, ISpanFormattable
+public sealed class RiotId : IRiotId, ISpanParsable<RiotId>, ISpanFormattable, IEquatable<RiotId?>
 {
     /// <inheritdoc/>
     public string GameName { get; }
@@ -77,5 +77,25 @@ public sealed class RiotId : IRiotId, ISpanParsable<RiotId>, ISpanFormattable
     public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider? provider)
     {
         return destination.TryWrite($"{GameName}#{TagLine}", out charsWritten);
+    }
+
+    /// <inheritdoc/>
+    public override bool Equals(object? obj)
+    {
+        return Equals(obj as RiotId);
+    }
+
+    /// <inheritdoc/>
+    public bool Equals(RiotId? other)
+    {
+        return other is not null &&
+               GameName == other.GameName &&
+               TagLine == other.TagLine;
+    }
+
+    /// <inheritdoc/>
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(GameName, TagLine);
     }
 }

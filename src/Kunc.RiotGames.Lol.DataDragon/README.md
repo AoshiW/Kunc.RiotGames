@@ -9,18 +9,19 @@ Simple client for League of Legends DataDragon.
 
 ## How to Use
 ```cs
+using Kunc.RiotGames.Lol.DataDragon;
 ILolDataDragon lolDataDragon = LolDataDragon.Create();
 
 int count = 5;
 var language = "en_US";
 var versions = await lolDataDragon.GetVersionsAsync();
 var lastVersion = versions[0];
+// or
+// lastVersion = "latest";
 
 Dictionary<string, ChampionDto> champions = await lolDataDragon.GetChampionsAsync(lastVersion, language);
-// or
-// Dictionary<string, ChampionDto> champions = await lolDataDragon.GetChampionsAsync("latest", language);
 
-Console.WriteLine($"Top {count} champions with the biggest attack range:");
+Console.WriteLine($"Top {count} champions with the largest attack range:");
 foreach (var champion in champions.Values.OrderByDescending(c => c.Stats.AttackRange).Take(count))
 {
     Console.WriteLine($"{champion.Name}  {champion.Stats.AttackRange}");

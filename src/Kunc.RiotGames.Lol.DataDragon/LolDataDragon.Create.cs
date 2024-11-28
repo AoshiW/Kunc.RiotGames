@@ -5,6 +5,7 @@ using Kunc.RiotGames.Lol.DataDragon.Map;
 using Kunc.RiotGames.Lol.DataDragon.ProfileIcon;
 using Kunc.RiotGames.Lol.DataDragon.RuneReforged;
 using Kunc.RiotGames.Lol.DataDragon.SummonerSpell;
+using Microsoft.Extensions.Caching.Hybrid;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Kunc.RiotGames.Lol.DataDragon;
@@ -20,6 +21,20 @@ public partial class LolDataDragon
     {
         var serviceCollection = new ServiceCollection();
         serviceCollection.AddLolDataDragon(configure);
+        serviceCollection.Configure<LolDataDragonOptions>(c =>
+        {
+            c.LatestVersionCacheEntryOptions ??= new()
+            {
+                Flags = HybridCacheEntryFlags.DisableDistributedCache,
+                LocalCacheExpiration = TimeSpan.FromMinutes(5),
+            };
+        });
+#pragma warning disable EXTEXP0018 // todo remove #pragma warning disable EXTEXP0018
+        serviceCollection.Configure<HybridCacheOptions>(c =>
+        {
+            c.MaximumPayloadBytes = 5 * 1024 * 1024;
+        });
+#pragma warning restore EXTEXP0018 
         ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
         var lolDataDragon = serviceProvider.GetRequiredService<ILolDataDragon>();
         return new DisposingLolDataDragon(lolDataDragon, serviceProvider);

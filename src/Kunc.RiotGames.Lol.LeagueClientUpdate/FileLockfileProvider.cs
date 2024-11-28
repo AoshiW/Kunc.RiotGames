@@ -58,7 +58,7 @@ public class FileLockfileProvider : ILockfileProvider
 
     private void InitFileSystemWatcher(string path)
     {
-        _fileSystemWatcher = new (path, "lockfile")
+        _fileSystemWatcher = new(path, "lockfile")
         {
             NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.Attributes,
             EnableRaisingEvents = true,

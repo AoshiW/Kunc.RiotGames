@@ -29,5 +29,7 @@ public interface ILorDeckEncoder
 
     /// <inheritdoc cref="GetDeckFromCode{T}(ReadOnlySpan{char})"/>
     List<T> GetDeckFromCode<T>(string deckCode) where T : IDeckItem, new()
-        => GetDeckFromCode<T>(deckCode.AsSpan());
+    {
+        return GetDeckFromCode<T>(deckCode.AsSpan());
+    }
 }

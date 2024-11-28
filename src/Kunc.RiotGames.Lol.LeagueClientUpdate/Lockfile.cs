@@ -7,8 +7,7 @@ using System.Text.Unicode;
 
 namespace Kunc.RiotGames.Lol.LeagueClientUpdate;
 
-public sealed class Lockfile : IEquatable<Lockfile?>, ISpanFormattable, ISpanParsable<Lockfile>
-    , IUtf8SpanFormattable, IUtf8SpanParsable<Lockfile>
+public sealed class Lockfile : IEquatable<Lockfile?>, ISpanFormattable, ISpanParsable<Lockfile>, IUtf8SpanFormattable, IUtf8SpanParsable<Lockfile>
 {
     /// <summary>
     /// Represent a Lockfile with default values.
@@ -59,7 +58,10 @@ public sealed class Lockfile : IEquatable<Lockfile?>, ISpanFormattable, ISpanPar
     }
 
     /// <inheritdoc/>
-    public override bool Equals(object? obj) => Equals(obj as Lockfile);
+    public override bool Equals(object? obj)
+    {
+        return Equals(obj as Lockfile);
+    }
 
     /// <inheritdoc/>
     public bool Equals(Lockfile? other)
@@ -73,7 +75,10 @@ public sealed class Lockfile : IEquatable<Lockfile?>, ISpanFormattable, ISpanPar
     }
 
     /// <inheritdoc/>
-    public override int GetHashCode() => HashCode.Combine(Name, ProcessID, Port, Password, Protocol);
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Name, ProcessID, Port, Password, Protocol);
+    }
 
     /// <inheritdoc/>
     public static Lockfile Parse(ReadOnlySpan<char> s, IFormatProvider? provider)
@@ -167,19 +172,28 @@ public sealed class Lockfile : IEquatable<Lockfile?>, ISpanFormattable, ISpanPar
     /// Create <see cref="NetworkCredential"/> from lockfile.
     /// </summary>
     /// <returns></returns>
-    public NetworkCredential ToCredential() => new("riot", Password);
+    public NetworkCredential ToCredential()
+    {
+        return new("riot", Password);
+    }
 
     /// <inheritdoc/>
     public override string ToString()
-        => $"{Name}:{ProcessID}:{Port}:{Password}:{Protocol}";
+    {
+        return ToString(null, null);
+    }
 
     /// <inheritdoc/>
     public string ToString(string? format, IFormatProvider? formatProvider)
-        => ToString();
+    {
+        return $"{Name}:{ProcessID}:{Port}:{Password}:{Protocol}";
+    }
 
     /// <inheritdoc/>
     public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider? provider)
-        => destination.TryWrite($"{Name}:{ProcessID}:{Port}:{Password}:{Protocol}", out charsWritten);
+    {
+        return destination.TryWrite($"{Name}:{ProcessID}:{Port}:{Password}:{Protocol}", out charsWritten);
+    }
 
     /// <inheritdoc/>
     public bool TryFormat(Span<byte> utf8Destination, out int bytesWritten, ReadOnlySpan<char> format, IFormatProvider? provider)

@@ -29,7 +29,7 @@ public class ChallengesDto : BaseDto
     public int BlastConeOppositeOpponentCount { get; set; }
 
     [JsonPropertyName("bountyGold")]
-    public int BountyGold { get; set; }
+    public float BountyGold { get; set; }
 
     [JsonPropertyName("buffsStolen")]
     public int BuffsStolen { get; set; }

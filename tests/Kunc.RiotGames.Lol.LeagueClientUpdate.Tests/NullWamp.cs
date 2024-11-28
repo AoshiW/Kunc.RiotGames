@@ -36,7 +36,7 @@ sealed class NullWamp : IWamp
         });
     }
 
-    void InvokeOnMessage(string jsonMessage)
+    private void InvokeOnMessage(string jsonMessage)
     {
         var eventArg = JsonSerializer.Deserialize<JsonElement[]>(jsonMessage);
         OnMessage!.Invoke(this, eventArg!);

@@ -20,7 +20,7 @@ public class InfoTimelineDto : BaseDto
 
     [JsonPropertyName("gameId")]
     public long GameId { get; set; }
-    
+
     [JsonPropertyName("participants")]
     public ParticipantTimelineDto[] Participants { get; set; } = [];
 }

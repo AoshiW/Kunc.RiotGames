@@ -1,6 +1,6 @@
 ﻿namespace Kunc.RiotGames.Lol.LeagueClientUpdate.Tests;
 
-sealed class Wrapper<T>
+internal sealed class Wrapper<T>
 {
     private readonly Action<Wrapper<T>> _onEvent;
 
@@ -16,7 +16,9 @@ sealed class Wrapper<T>
             _onEvent = x => x.Value = (T)(object)true;
         }
         else
+        {
             throw new NotSupportedException();
+        }
     }
 
     public T Value { get; set; } = default!;

@@ -34,7 +34,7 @@ public class Base32Test
         return bytes;
     }
 
-    static IEnumerable<object[]> TestData { get; } = new[]
+    private static IEnumerable<object[]> TestData { get; } = new[]
     {
         new[] { "", "" },
         new[] {"f", "MY======" },

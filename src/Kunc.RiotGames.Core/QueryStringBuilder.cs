@@ -7,7 +7,7 @@ namespace Kunc.RiotGames;
 /// </summary>
 public ref struct QueryStringBuilder
 {
-    DefaultInterpolatedStringHandler _handler;
+    private DefaultInterpolatedStringHandler _handler;
 
     /// <summary>
     /// Append query string parametr.
@@ -21,7 +21,7 @@ public ref struct QueryStringBuilder
         _handler.AppendFormatted(value);
     }
 
-    void AppendKey(string key)
+    private void AppendKey(string key)
     {
         _handler.AppendLiteral("&");
         _handler.AppendLiteral(key);

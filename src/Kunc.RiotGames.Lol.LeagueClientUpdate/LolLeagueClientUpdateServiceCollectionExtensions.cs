@@ -21,7 +21,7 @@ public static class LolLeagueClientUpdateServiceCollectionExtensions
         services.TryAdd(ServiceDescriptor.Singleton<IWamp, Wamp>());
         services.TryAdd(ServiceDescriptor.Singleton<ILockfileProvider, FileLockfileProvider>());
         services.TryAdd(ServiceDescriptor.Singleton<ILolLeagueClientUpdate, LolLeagueClientUpdate>());
-        if(configure is not null)
+        if (configure is not null)
         {
             services.Configure(configure);
         }

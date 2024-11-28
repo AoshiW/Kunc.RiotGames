@@ -5,7 +5,7 @@ namespace Kunc.RiotGames.Lol.LeagueClientUpdate.Tests;
 [TestClass]
 public class LockfileTest
 {
-    const string TestData = "LeagueClient:11784:53453:zKLoQxuPDFO3_0ZVSwQjQQ:https";
+    private const string TestData = "LeagueClient:11784:53453:zKLoQxuPDFO3_0ZVSwQjQQ:https";
 
     [TestMethod]
     [DataRow(TestData)]

@@ -2,7 +2,7 @@
 
 public class RiotRequestOptions
 {
-    static internal readonly RiotRequestOptions Default = new();
+    internal static readonly RiotRequestOptions Default = new();
 
     public bool IncludeApiKey { get; set; } = true;
 }

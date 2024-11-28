@@ -63,7 +63,10 @@ public class LorDeckEncoder : ILorDeckEncoder
     /// <remarks>
     /// Convert Span (2 char) to uint is more efficient than ToString().
     /// </remarks>
-    private static uint ConvertFactionToUInt(ReadOnlySpan<char> span) => (uint)span[0] << 16 | span[1];
+    private static uint ConvertFactionToUInt(ReadOnlySpan<char> span)
+    {
+        return (uint)span[0] << 16 | span[1];
+    }
 
     /// <inheritdoc/>
     public List<T> GetDeckFromCode<T>(ReadOnlySpan<char> deckCode) where T : IDeckItem, new()

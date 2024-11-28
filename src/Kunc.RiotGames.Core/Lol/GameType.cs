@@ -2,6 +2,7 @@
 using Kunc.RiotGames.JsonConverters;
 
 namespace Kunc.RiotGames.Lol;
+
 /// <summary>
 /// League of Legends game types.
 /// </summary>

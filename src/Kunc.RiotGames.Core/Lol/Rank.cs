@@ -65,37 +65,56 @@ public struct Rank :
         return HashCode.Combine(Tier, Division, LeaguePoints);
     }
 
-    /// <inheritdoc/>
+    /// <summary>Compares two values to determine equality.</summary>
+    /// <param name="left">The value to compare with <paramref name="right" />.</param>
+    /// <param name="right">The value to compare with <paramref name="left" />.</param>
+    /// <returns><c>true</c> if <paramref name="left" /> is equal to <paramref name="right" />; otherwise, <c>false</c>.</returns>
     public static bool operator ==(Rank left, Rank right)
     {
         return left.Equals(right);
     }
 
-    /// <inheritdoc/>
+
+    /// <summary>Compares two values to determine inequality.</summary>
+    /// <param name="left">The value to compare with <paramref name="right" />.</param>
+    /// <param name="right">The value to compare with <paramref name="left" />.</param>
+    /// <returns><c>true</c> if <paramref name="left" /> is not equal to <paramref name="right" />; otherwise, <c>false</c>.</returns>
     public static bool operator !=(Rank left, Rank right)
     {
         return !(left == right);
     }
 
-    /// <inheritdoc/>
+    /// <summary>Compares two values to determine which is greater.</summary>
+    /// <param name="left">The value to compare with <paramref name="right" />.</param>
+    /// <param name="right">The value to compare with <paramref name="left" />.</param>
+    /// <returns><c>true</c> if <paramref name="left" /> is greater than <paramref name="right" />; otherwise, <c>false</c>.</returns>
     public static bool operator >(Rank left, Rank right)
     {
         return left.CompareTo(right) > 0;
     }
 
-    /// <inheritdoc/>
+    /// <summary>Compares two values to determine which is greater or equal.</summary>
+    /// <param name="left">The value to compare with <paramref name="right" />.</param>
+    /// <param name="right">The value to compare with <paramref name="left" />.</param>
+    /// <returns><c>true</c> if <paramref name="left" /> is greater than or equal to <paramref name="right" />; otherwise, <c>false</c>.</returns>
     public static bool operator >=(Rank left, Rank right)
     {
         return left.CompareTo(right) >= 0;
     }
 
-    /// <inheritdoc/>
+    /// <summary>Compares two values to determine which is less.</summary>
+    /// <param name="left">The value to compare with <paramref name="right" />.</param>
+    /// <param name="right">The value to compare with <paramref name="left" />.</param>
+    /// <returns><c>true</c> if <paramref name="left" /> is less than <paramref name="right" />; otherwise, <c>false</c>.</returns>
     public static bool operator <(Rank left, Rank right)
     {
         return left.CompareTo(right) < 0;
     }
 
-    /// <inheritdoc/>
+    /// <summary>Compares two values to determine which is less or equal.</summary>
+    /// <param name="left">The value to compare with <paramref name="right" />.</param>
+    /// <param name="right">The value to compare with <paramref name="left" />.</param>
+    /// <returns><c>true</c> if <paramref name="left" /> is less than or equal to <paramref name="right" />; otherwise, <c>false</c>.</returns>
     public static bool operator <=(Rank left, Rank right)
     {
         return left.CompareTo(right) <= 0;
@@ -168,6 +187,13 @@ public struct Rank :
     {
         return ToString(null, null);
     }
+
+    // TODO: it would be cool to have some formatting options, 
+    // examples:
+    // output with/without LP
+    // IRON 4 vs IRON IV (roman vs arabic numerals)
+    // IRON 4 vs Iron 4
+    // add anything else?
 
     /// <inheritdoc/>
     public readonly bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider? provider)

@@ -6,7 +6,6 @@ Simple client for interacting with the League of Legends LCU.
 ## How to use
 ```cs
 using Kunc.RiotGames.Lol.LeagueClientUpdate;
-
 ILolLeagueClientUpdate lcu = LolLeagueClientUpdate.Create();
 ```
 

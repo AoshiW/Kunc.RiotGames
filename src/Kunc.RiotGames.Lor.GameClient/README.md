@@ -5,6 +5,7 @@
 
 ## How to Use
 ```cs
+using Kunc.RiotGames.Lor.GameClient;
 ILorGameClient lorGameClient = LorGameClient.Create();
 
 PositionalRectangles positionalRectangles = await lorGameClient.GetPositionalRectanglesAsync();

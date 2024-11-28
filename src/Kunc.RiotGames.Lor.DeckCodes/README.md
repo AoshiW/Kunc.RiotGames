@@ -9,6 +9,7 @@ Documentation on how this works can be found in the [original repository](https:
 
 ## How to Use
 ```cs
+using Kunc.RiotGames.Lor.DeckCodes;
 var deckEncoder = new LorDeckEncoder();
 
 var deck1 = new List<DeckItem>()

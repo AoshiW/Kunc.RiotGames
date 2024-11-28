@@ -69,6 +69,12 @@ public class LorDeckEncoder : ILorDeckEncoder
     }
 
     /// <inheritdoc/>
+    public List<T> GetDeckFromCode<T>(string deckCode) where T : IDeckItem, new()
+    {
+        return GetDeckFromCode<T>(deckCode.AsSpan());
+    }
+
+    /// <inheritdoc/>
     public List<T> GetDeckFromCode<T>(ReadOnlySpan<char> deckCode) where T : IDeckItem, new()
     {
         var length = Base32.GetByteCount(deckCode);
@@ -239,20 +245,20 @@ public class LorDeckEncoder : ILorDeckEncoder
         Span<byte> buffer = stackalloc byte[10];
         foreach (var item in CollectionsMarshal.AsSpan(nOfs))
         {
-            VarintTranslator.TryGetVarint(item.Count, buffer, out var w);
-            bytes.AddRange(buffer.Slice(0, w));
+            VarintTranslator.TryGetVarint(item.Count, buffer, out var written);
+            bytes.AddRange(buffer.Slice(0, written));
 
             ParseCardCode(item.CardCode, out int setNumber, out var factionCode, out int cardNumber);
             int factionNumber = FactionCodeInfo[ConvertFactionToUInt(factionCode)].Identifier;
 
-            VarintTranslator.TryGetVarint(setNumber, buffer, out w);
-            bytes.AddRange(buffer.Slice(0, w));
+            VarintTranslator.TryGetVarint(setNumber, buffer, out written);
+            bytes.AddRange(buffer.Slice(0, written));
 
-            VarintTranslator.TryGetVarint(factionNumber, buffer, out w);
-            bytes.AddRange(buffer.Slice(0, w));
+            VarintTranslator.TryGetVarint(factionNumber, buffer, out written);
+            bytes.AddRange(buffer.Slice(0, written));
 
-            VarintTranslator.TryGetVarint(cardNumber, buffer, out w);
-            bytes.AddRange(buffer.Slice(0, w));
+            VarintTranslator.TryGetVarint(cardNumber, buffer, out written);
+            bytes.AddRange(buffer.Slice(0, written));
         }
     }
 
@@ -321,32 +327,32 @@ public class LorDeckEncoder : ILorDeckEncoder
     private static void EncodeGroupOf<T>(List<List<T>> groupOf, List<byte> bytes) where T : IReadOnlyDeckItem
     {
         Span<byte> buffer = stackalloc byte[10];
-        VarintTranslator.TryGetVarint(groupOf.Count, buffer, out var w);
-        bytes.AddRange(buffer.Slice(0, w));
+        VarintTranslator.TryGetVarint(groupOf.Count, buffer, out var written);
+        bytes.AddRange(buffer.Slice(0, written));
         foreach (var currentList in CollectionsMarshal.AsSpan(groupOf))
         {
             //how many cards in current group?
-            VarintTranslator.TryGetVarint(currentList.Count, buffer, out w);
-            bytes.AddRange(buffer.Slice(0, w));
+            VarintTranslator.TryGetVarint(currentList.Count, buffer, out written);
+            bytes.AddRange(buffer.Slice(0, written));
 
             //what is this group, as identified by a set and faction pair
             string currentCardCode = currentList[0].CardCode;
             ParseCardCode(currentCardCode, out int currentSetNumber, out var currentFactionCode);
             int currentFactionNumber = FactionCodeInfo[ConvertFactionToUInt(currentFactionCode)].Identifier;
 
-            VarintTranslator.TryGetVarint(currentSetNumber, buffer, out w);
-            bytes.AddRange(buffer.Slice(0, w));
+            VarintTranslator.TryGetVarint(currentSetNumber, buffer, out written);
+            bytes.AddRange(buffer.Slice(0, written));
 
-            VarintTranslator.TryGetVarint(currentFactionNumber, buffer, out w);
-            bytes.AddRange(buffer.Slice(0, w));
+            VarintTranslator.TryGetVarint(currentFactionNumber, buffer, out written);
+            bytes.AddRange(buffer.Slice(0, written));
 
             //what are the cards, as identified by the third section of card code only now, within this group?
             foreach (var item in CollectionsMarshal.AsSpan(currentList))
             {
                 var sequenceNumber = item.CardCode.AsSpan(4, 3);
                 int number = int.Parse(sequenceNumber, NumberFormatInfo.InvariantInfo);
-                VarintTranslator.TryGetVarint(number, buffer, out w);
-                bytes.AddRange(buffer.Slice(0, w));
+                VarintTranslator.TryGetVarint(number, buffer, out written);
+                bytes.AddRange(buffer.Slice(0, written));
             }
         }
     }

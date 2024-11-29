@@ -4,11 +4,11 @@ using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Kunc.RiotGames.Lol.LeagueClientUpdate;
 
-public class FileLockfileProvider : ILockfileProvider
+public class FileOverProcessLockfileProvider : ILockfileProvider
 {
     private FileSystemWatcher? _fileSystemWatcher;
     private readonly PeriodicTimer _timer;
-    private readonly ILogger<FileLockfileProvider> _logger;
+    private readonly ILogger<FileOverProcessLockfileProvider> _logger;
     private Lockfile? _lockfile;
     private bool _disposedValue;
     private string? _filePath;
@@ -20,18 +20,18 @@ public class FileLockfileProvider : ILockfileProvider
     public event EventHandler? Deleted;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="FileLockfileProvider"/> class.
+    /// Initializes a new instance of the <see cref="FileOverProcessLockfileProvider"/> class.
     /// </summary>
-    public FileLockfileProvider(ILogger<FileLockfileProvider>? logger = null, TimeProvider? timeProvider = null)
+    public FileOverProcessLockfileProvider(ILogger<FileOverProcessLockfileProvider>? logger = null, TimeProvider? timeProvider = null)
     {
-        _logger = logger ?? NullLogger<FileLockfileProvider>.Instance;
+        _logger = logger ?? NullLogger<FileOverProcessLockfileProvider>.Instance;
         _timer = new(TimeSpan.FromSeconds(5), timeProvider ?? TimeProvider.System);
         _ = CheckProcessAsync(default);
     }
 
     private async Task CheckProcessAsync(CancellationToken cancellationToken)
     {
-        while (await _timer.WaitForNextTickAsync(cancellationToken))
+        while (await _timer.WaitForNextTickAsync(cancellationToken) && !_disposedValue)
         {
             var processes = Process.GetProcessesByName("LeagueClientUx");
             if (processes.Length == 0)
@@ -102,6 +102,7 @@ public class FileLockfileProvider : ILockfileProvider
                 }
                 catch (Exception ex)
                 {
+                    _logger.LogInfoException(ex);
                     return;
                 }
                 Debug.Assert(_lockfile is not null);
@@ -136,6 +137,7 @@ public class FileLockfileProvider : ILockfileProvider
             if (disposing)
             {
                 _fileSystemWatcher?.Dispose();
+                _timer.Dispose();
             }
             _disposedValue = true;
         }

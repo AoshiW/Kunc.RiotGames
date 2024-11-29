@@ -25,7 +25,6 @@ public sealed class Wamp : IWamp
 
     private ClientWebSocket? _socket;
     private CancellationTokenSource? _cancellationTokenSource;
-    private Task _eventLoopTask = Task.CompletedTask;
     private readonly ILogger<Wamp> _logger;
 
     /// <summary>
@@ -36,7 +35,7 @@ public sealed class Wamp : IWamp
         _logger = logger;
     }
 
-    private async Task EventLoop()
+    private async Task EventLoopAsync()
     {
         if (!IsConnected)
             return;
@@ -107,7 +106,7 @@ public sealed class Wamp : IWamp
         await _socket.ConnectAsync(new Uri($"wss://127.0.0.1:{lockfile.Port}"), token).ConfigureAwait(false);
         OnConnect?.Invoke(this, EventArgs.Empty);
         _logger.LogConnected();
-        _eventLoopTask = EventLoop();
+        _ = EventLoopAsync();
     }
 
     /// <inheritdoc/>

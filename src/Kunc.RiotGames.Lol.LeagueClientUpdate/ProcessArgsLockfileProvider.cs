@@ -101,7 +101,7 @@ public sealed class ProcessArgsLockfileProvider : ILockfileProvider
 
     private static Lockfile ExtrackLockfile(ReadOnlySpan<char> s)
     {
-        return new("LeagueClient", 0, ExtractValue<int>(s, "--app-port="), ExtractValue<string>(s, "--remoting-auth-token="), "https");
+        return new("LeagueClient", 0, ExtractValue<int>(s, "--app-port="), ExtractValue<string>(s, "--remoting-auth-token="), Uri.UriSchemeHttps);
 
         static T ExtractValue<T>(ReadOnlySpan<char> s, ReadOnlySpan<char> key) where T : ISpanParsable<T>
         {

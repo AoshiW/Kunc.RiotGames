@@ -1,17 +1,22 @@
-﻿using System.Net.WebSockets;
+﻿using System.Diagnostics;
+using System.Net.WebSockets;
 using System.Reflection;
 using System.Text.Json;
+
+#if NET8_0
+using Lock = System.Object;
+#endif
 
 namespace Kunc.RiotGames.Lol.LeagueClientUpdate;
 
 public partial class LolLeagueClientUpdate : ILolLeagueClientUpdate
 {
     private readonly IWamp _wamp;
-    private readonly object _eventHandlersLock = new();
+    private readonly Lock _eventHandlersLock = new();
     private readonly List<EventInfo> _events = [];
-    EventInfo[] _readOnlyEvents = [];
-    bool _areEventHandlersEdited = true;
-    CancellationTokenSource? _cancellationTokenSource;
+    private EventInfo[] _readOnlyEvents = [];
+    private bool _areEventHandlersEdited = true;
+    private CancellationTokenSource? _cancellationTokenSource;
 
     /// <inheritdoc/>
     public event EventHandler<LcuEventArgs<JsonElement>>? OnLcuEvent;
@@ -24,6 +29,7 @@ public partial class LolLeagueClientUpdate : ILolLeagueClientUpdate
             throw new InvalidOperationException();
         await ConnectWampAsyncCore(lockfile, token).ConfigureAwait(false);
     }
+
     async Task ConnectWampAsyncCore(Lockfile lockfile, CancellationToken token)
     {
         _cancellationTokenSource = new();
@@ -49,7 +55,7 @@ public partial class LolLeagueClientUpdate : ILolLeagueClientUpdate
         if (!e[1].ValueEquals("OnJsonApiEvent"u8))
             return;
 
-        EventInfo[] eventLocalCopy;
+        EventInfo[] eventsLocalCopy;
         lock (_eventHandlersLock)
         {
             if (_areEventHandlersEdited)
@@ -57,38 +63,38 @@ public partial class LolLeagueClientUpdate : ILolLeagueClientUpdate
                 _readOnlyEvents = _events.ToArray();
                 _areEventHandlersEdited = false;
             }
-            eventLocalCopy = _readOnlyEvents;
+            eventsLocalCopy = _readOnlyEvents;
         }
 
         object? boxedCancellationToken = null;
         CacheArray cacheArray = default;
         JsonElement eventTypeProp = data.GetProperty("eventType"u8);
         JsonElement uriProp = data.GetProperty("uri"u8);
-        foreach (var item in eventLocalCopy)
+        foreach (var eventInfo in eventsLocalCopy)
         {
-            if (!uriProp.ValueEquals(item.EventAttribute.Uri) ||
-                (item.EventAttribute.EventType is not null && !eventTypeProp.ValueEquals(item.EventAttribute.EventType)))
+            if (!uriProp.ValueEquals(eventInfo.EventAttribute.Uri) ||
+                (eventInfo.EventAttribute.EventType is not null && !eventTypeProp.ValueEquals(eventInfo.EventAttribute.EventType)))
                 continue;
 
-            var args = cacheArray.Get(item.ArgTypes.Length);
-            for (int i = 0; i < item.ArgTypes.Length; i++)
+            var args = cacheArray.Get(eventInfo.ArgTypes.Length);
+            for (int i = 0; i < eventInfo.ArgTypes.Length; i++)
             {
-                args![i] = item.ArgTypes[i] switch
+                args![i] = eventInfo.ArgTypes[i] switch
                 {
                     ArgType.Sender => this,
-                    ArgType.EventArgs => item.EventArgsType == typeof(JsonElement) ? data : data.Deserialize(item.EventArgsType!, _options.JsonSerializerOptions)!,
+                    ArgType.EventArgs => eventInfo.EventArgsType == typeof(JsonElement) ? data : data.Deserialize(eventInfo.EventArgsType!, _options.JsonSerializerOptions)!,
                     ArgType.CancelationToken => boxedCancellationToken ??= _cancellationTokenSource!.Token,
-                    _ => throw new ArgumentOutOfRangeException(null, item.ArgTypes[i], "Unknow enum value.")
+                    _ => throw new UnreachableException($"Unknow enum value '{eventInfo.ArgTypes[i]}'.")
                 };
             }
             try
             {
-                item.Invoke(args);
-                _logger.LogInvokeMethod(item.MethodInfo);
+                eventInfo.Invoke(args);
+                _logger.LogInvokeMethod(eventInfo.MethodInfo);
             }
             catch (Exception ex)
             {
-                _logger.LogExceptionWhenInvokeWampDelegate(item.MethodInfo, ex);
+                _logger.LogExceptionWhenInvokeWampDelegate(eventInfo.MethodInfo, ex);
             }
         }
     }

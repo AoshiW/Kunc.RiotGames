@@ -19,7 +19,7 @@ public static class LolLeagueClientUpdateServiceCollectionExtensions
         ArgumentNullException.ThrowIfNull(services);
         services.AddOptions();
         services.TryAdd(ServiceDescriptor.Singleton<IWamp, Wamp>());
-        services.TryAdd(ServiceDescriptor.Singleton<ILockfileProvider, FileLockfileProvider>());
+        services.TryAdd(ServiceDescriptor.Singleton<ILockfileProvider, FileOverProcessLockfileProvider>());
         services.TryAdd(ServiceDescriptor.Singleton<ILolLeagueClientUpdate, LolLeagueClientUpdate>());
         if (configure is not null)
         {

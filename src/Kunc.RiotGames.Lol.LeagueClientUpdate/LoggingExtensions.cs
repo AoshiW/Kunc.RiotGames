@@ -6,10 +6,10 @@ namespace Kunc.RiotGames.Lol.LeagueClientUpdate;
 internal static partial class LoggingExtensions
 {
     [LoggerMessage(LogLevel.Information, "lockfile was created: {lockfile}")]
-    public static partial void LogCreate(this ILogger<FileLockfileProvider> logger, Lockfile lockfile);
+    public static partial void LogCreate(this ILogger<FileOverProcessLockfileProvider> logger, Lockfile lockfile);
 
     [LoggerMessage(LogLevel.Information, "lockfile was deleted")]
-    public static partial void LogDelete(this ILogger<FileLockfileProvider> logger);
+    public static partial void LogDelete(this ILogger<FileOverProcessLockfileProvider> logger);
 
 
     [LoggerMessage(LogLevel.Error, "Exception was throw when was invoked WAMP delegate: {methodInfo}")]
@@ -25,13 +25,13 @@ internal static partial class LoggingExtensions
     public static partial void LogTotalSubscribedMethods(this ILogger<LolLeagueClientUpdate> logger, int count, Type type);
 
     [LoggerMessage(LogLevel.Debug, "Process not found.")]
-    public static partial void LogProcessNotFound(this ILogger<FileLockfileProvider> logger);
+    public static partial void LogProcessNotFound(this ILogger<FileOverProcessLockfileProvider> logger);
 
     [LoggerMessage(LogLevel.Information, "Process found.")]
-    public static partial void LogProcessFound(this ILogger<FileLockfileProvider> logger);
+    public static partial void LogProcessFound(this ILogger<FileOverProcessLockfileProvider> logger);
 
     [LoggerMessage(LogLevel.Error, "Process found, but cant get path.")]
-    public static partial void LogProcessFoundNotPath(this ILogger<FileLockfileProvider> logger);
+    public static partial void LogProcessFoundNotPath(this ILogger<FileOverProcessLockfileProvider> logger);
 
 
     [LoggerMessage(LogLevel.Error, "Exception was throw in WAMP event loop.")]
@@ -39,6 +39,7 @@ internal static partial class LoggingExtensions
 
     [LoggerMessage(LogLevel.Information, "Exception was throw.")]
     public static partial void LogInfoException(this ILogger logger, Exception ex);
+
 
     [LoggerMessage(LogLevel.Information, "Connected.")]
     public static partial void LogConnected(this ILogger<Wamp> logger);

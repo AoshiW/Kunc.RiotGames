@@ -4,7 +4,7 @@
 Simple client for League of Legends DataDragon.
 
 ## Features
-- Caching (by default, only in memory; for persistent cache, registerwd `IDistributedCache` service)
+- Caching (by default, only in memory; for persistent cache, register `IDistributedCache` service)
 - Support for `"latest"` version
 
 ## How to Use

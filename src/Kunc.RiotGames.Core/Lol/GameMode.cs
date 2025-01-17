@@ -153,6 +153,13 @@ public enum GameMode
     SnowUrf,
 
     WipModeWip,
+    WipModeWip3,
+    WipModeWip4,
+    
+    CS,
 
+    /// <summary>
+    /// Swiftplay
+    /// </summary>
     SwiftPlay,
 }

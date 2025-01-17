@@ -8,7 +8,7 @@ public enum MonsterType
     Horde,
     RiftHerald,
     Dragon,
-
+    Atakhan,
     [JsonStringEnumMemberName("BARON_NASHOR")]
     BaronNashor,
 }

@@ -1,4 +1,6 @@
-﻿namespace Kunc.RiotGames.Api.Tests;
+﻿using Microsoft.Extensions.Configuration;
+
+namespace Kunc.RiotGames.Api.Tests;
 
 [TestClass]
 public class LolClashV1Test : ApiBase<TGame.LOL>
@@ -11,5 +13,16 @@ public class LolClashV1Test : ApiBase<TGame.LOL>
         Assert.IsNotNull(tournaments);
         if (tournaments.Length == 0)
             Assert.Inconclusive();
+    }
+
+    [TestMethod]
+    public async Task GetPlayersByPuuidAsync()
+    {
+        var summoner = GetConfiguration("Summoner").Get<AccountInfo>()!;
+
+        var players = await Api.LolClashV1.GetPlayersByPuuidAsync(summoner.Region, summoner.Puuid);
+
+        _ = players;
+        Assert.Inconclusive("This test is only to verify that the endpoint does not throw exception.");
     }
 }

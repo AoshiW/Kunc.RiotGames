@@ -3,17 +3,17 @@
 public interface ILolClashV1
 {
     /// <summary>
-    /// Get players by summoner ID.
+    /// Get players by PUUID.
     /// </summary>
     /// <remarks>
-    /// This endpoint returns a list of active Clash players for a given summoner ID.
+    /// This endpoint returns a list of active Clash players for a given PUUID.
     /// If a summoner registers for multiple tournaments at the same time (e.g., Saturday and Sunday) then both registrations would appear in this list.
     /// </remarks>
     /// <param name="region"></param>
-    /// <param name="summonerId"></param>
+    /// <param name="puuid"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<PlayerDto[]> GetPlayersBySummonerIdAsync(string region, string summonerId, CancellationToken cancellationToken = default);
+    Task<PlayerDto[]> GetPlayersByPuuidAsync(string region, string puuid, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Get team by ID.

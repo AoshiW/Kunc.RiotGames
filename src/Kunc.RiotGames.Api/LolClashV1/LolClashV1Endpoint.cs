@@ -16,17 +16,17 @@ public class LolClashV1Endpoint : ILolClashV1
     }
 
     /// <inheritdoc/>
-    public async Task<PlayerDto[]> GetPlayersBySummonerIdAsync(string region, string summonerId, CancellationToken cancellationToken = default)
+    public async Task<PlayerDto[]> GetPlayersByPuuidAsync(string region, string puuid, CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(region);
-        ArgumentException.ThrowIfNullOrEmpty(summonerId);
+        ArgumentException.ThrowIfNullOrEmpty(puuid);
 
         var request = new RiotRequestMessage()
         {
             HttpMethod = HttpMethod.Get,
             Host = region,
-            MethodId = "/lol/clash/v1/players/by-summoner/{summonerId}",
-            Path = $"/lol/clash/v1/players/by-summoner/{summonerId}",
+            MethodId = "/lol/clash/v1/players/by-puuid/{puuid}",
+            Path = $"/lol/clash/v1/players/by-puuid/{puuid}",
         };
         var data = await _client.SendAndDeserializeAsync<PlayerDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;

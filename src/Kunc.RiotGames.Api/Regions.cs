@@ -62,11 +62,6 @@ public static class Regions
     public static string OC1 { get; } = "oc1";
 
     /// <summary>
-    /// The Philippines
-    /// </summary>
-    public static string PH2 { get; } = "ph2";
-
-    /// <summary>
     /// Russia
     /// </summary>
     public static string RU { get; } = "ru";
@@ -75,11 +70,6 @@ public static class Regions
     /// Singapore, Malaysia, Indonesia
     /// </summary>
     public static string SG2 { get; } = "sg2";
-
-    /// <summary>
-    /// Thailand
-    /// </summary>
-    public static string TH2 { get; } = "th2";
 
     /// <summary>
     /// Turkey

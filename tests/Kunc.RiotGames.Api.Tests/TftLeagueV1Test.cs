@@ -46,7 +46,7 @@ public class TftLeagueV1Test : ApiBase<TGame.TFT>
     [TestMethod]
     public async Task GetAllLeaguesEntriesAsync()
     {
-        var entries = await Api.TftLeagueV1.GetAllLeaguesEntriesAsync(Regions.PH2, Tier.Emerald, Division.II);
+        var entries = await Api.TftLeagueV1.GetAllLeaguesEntriesAsync(Regions.SG2, Tier.Emerald, Division.II);
 
         Assert.AreNotEqual(0, entries.Length);
     }

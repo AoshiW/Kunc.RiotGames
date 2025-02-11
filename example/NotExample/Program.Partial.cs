@@ -8,7 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NeoSmart.Caching.Sqlite;
-using NeoSmart.Caching.Sqlite.AspNetCore;
 
 partial class Program
 {

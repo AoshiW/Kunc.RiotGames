@@ -4,8 +4,8 @@ namespace Kunc.RiotGames.Api.LolClashV1;
 
 public class PlayerDto : BaseDto
 {
-    [JsonPropertyName("summonerId")]
-    public string SummonerId { get; set; } = string.Empty;
+    [JsonPropertyName("puuid")]
+    public string Puuid { get; set; } = string.Empty;
 
     [JsonPropertyName("teamId")]
     public string? TeamId { get; set; }

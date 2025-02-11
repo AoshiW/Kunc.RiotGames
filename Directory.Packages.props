@@ -6,14 +6,14 @@
     <PackageVersion Include="BenchmarkDotNet" Version="0.14.0" />
     <PackageVersion Include="Microsoft.Extensions.Caching.Hybrid" Version="9.1.0-preview.1.25064.3" />
     <PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="8.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.1" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="9.0.1" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="9.0.1" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.1" />
-    <PackageVersion Include="Microsoft.Extensions.Options" Version="9.0.1" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.2" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="9.0.2" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="9.0.2" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.2" />
+    <PackageVersion Include="Microsoft.Extensions.Options" Version="9.0.2" />
     <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.1" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.1" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.2" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.2" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
     <PackageVersion Include="MSTest.TestAdapter" Version="3.7.3" />
     <PackageVersion Include="MSTest.TestFramework" Version="3.7.3" />
@@ -21,7 +21,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageVersion>
-    <PackageVersion Include="System.Text.Json" Version="9.0.1" />
-    <PackageVersion Include="System.Threading.RateLimiting" Version="9.0.1" />
+    <PackageVersion Include="System.Text.Json" Version="9.0.2" />
+    <PackageVersion Include="System.Threading.RateLimiting" Version="9.0.2" />
   </ItemGroup>
 </Project>

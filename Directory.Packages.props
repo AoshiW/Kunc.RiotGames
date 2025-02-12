@@ -4,7 +4,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="BenchmarkDotNet" Version="0.14.0" />
-    <PackageVersion Include="Microsoft.Extensions.Caching.Hybrid" Version="9.1.0-preview.1.25064.3" />
+    <PackageVersion Include="Microsoft.Extensions.Caching.Hybrid" Version="9.2.0-preview.1.25105.6" />
     <PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="8.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.2" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="9.0.2" />

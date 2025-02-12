@@ -59,7 +59,8 @@ public partial class LolDataDragon : ILolDataDragon
     public async Task<string[]> GetVersionsAsync(CancellationToken cancellationToken = default)
     {
         const string uri = "api/versions.json";
-        var versions = await GetAsync<string[]>(uri, [], cancellationToken).ConfigureAwait(false);
+        string[] tags = ["dataDragon", "dataDragon.versions.json"];
+        var versions = await GetAsync<string[]>(uri, tags, cancellationToken).ConfigureAwait(false);
         return versions!;
     }
 
@@ -67,7 +68,8 @@ public partial class LolDataDragon : ILolDataDragon
     public async Task<string[]> GetLanguagesAsync(CancellationToken cancellationToken = default)
     {
         const string uri = "cdn/languages.json";
-        var versions = await GetAsync<string[]>(uri, [], cancellationToken).ConfigureAwait(false);
+        string[] tags = ["dataDragon", "dataDragon.languages.json"];
+        var versions = await GetAsync<string[]>(uri, tags, cancellationToken).ConfigureAwait(false);
         return versions!;
     }
 
@@ -76,7 +78,8 @@ public partial class LolDataDragon : ILolDataDragon
     {
         version = await ConvertLatestStringAsync(version, cancellationToken).ConfigureAwait(false);
         var uri = $"cdn/{version}/data/{language}/map.json";
-        var maps = await GetAsync<RootDto<MapDto>>(uri, [/* todo add tags */], cancellationToken).ConfigureAwait(false); ;
+        string[] tags = ["dataDragon", $"dataDragon.version.{version}", $"dataDragon.language.{language}", "dataDragon.maps.json"];
+        var maps = await GetAsync<RootDto<MapDto>>(uri, tags, cancellationToken).ConfigureAwait(false); ;
         return maps.Data;
     }
 
@@ -85,7 +88,8 @@ public partial class LolDataDragon : ILolDataDragon
     {
         version = await ConvertLatestStringAsync(version, cancellationToken).ConfigureAwait(false);
         var uri = $"cdn/{version}/data/{language}/profileicon.json";
-        var profileIcons = await GetAsync<RootDto<ProfileIconDto>>(uri, [/* todo add tags */], cancellationToken).ConfigureAwait(false);
+        string[] tags = ["dataDragon", $"dataDragon.version.{version}", $"dataDragon.language.{language}", "dataDragon.profileicon.json"];
+        var profileIcons = await GetAsync<RootDto<ProfileIconDto>>(uri, tags, cancellationToken).ConfigureAwait(false);
         return profileIcons.Data;
     }
 
@@ -94,7 +98,8 @@ public partial class LolDataDragon : ILolDataDragon
     {
         version = await ConvertLatestStringAsync(version, cancellationToken).ConfigureAwait(false);
         var uri = $"cdn/{version}/data/{language}/runesReforged.json";
-        var runesReforged = await GetAsync<RuneReforgedDto[]>(uri, [/* todo add tags */], cancellationToken).ConfigureAwait(false);
+        string[] tags = ["dataDragon", $"dataDragon.version.{version}", $"dataDragon.language.{language}", "dataDragon.runesReforged.json"];
+        var runesReforged = await GetAsync<RuneReforgedDto[]>(uri, tags, cancellationToken).ConfigureAwait(false);
         return runesReforged;
     }
 
@@ -103,7 +108,8 @@ public partial class LolDataDragon : ILolDataDragon
     {
         version = await ConvertLatestStringAsync(version, cancellationToken).ConfigureAwait(false);
         var uri = $"cdn/{version}/data/{language}/summoner.json";
-        var summonerSpell = await GetAsync<RootDto<SummonerSpellDto>>(uri, [/* todo add tags */], cancellationToken).ConfigureAwait(false);
+        string[] tags = ["dataDragon", $"dataDragon.version.{version}", $"dataDragon.language.{language}", "dataDragon.summoner.json"];
+        var summonerSpell = await GetAsync<RootDto<SummonerSpellDto>>(uri, tags, cancellationToken).ConfigureAwait(false);
         return summonerSpell.Data;
     }
 
@@ -112,7 +118,8 @@ public partial class LolDataDragon : ILolDataDragon
     {
         version = await ConvertLatestStringAsync(version, cancellationToken).ConfigureAwait(false);
         var uri = $"cdn/{version}/data/{language}/item.json";
-        var items = await GetAsync<RootDto<ItemDto>>(uri, [/* todo add tags */], cancellationToken).ConfigureAwait(false);
+        string[] tags = ["dataDragon", $"dataDragon.version.{version}", $"dataDragon.language.{language}", "dataDragon.item.json"];
+        var items = await GetAsync<RootDto<ItemDto>>(uri, tags, cancellationToken).ConfigureAwait(false);
         return items.Data;
     }
 
@@ -121,7 +128,8 @@ public partial class LolDataDragon : ILolDataDragon
     {
         version = await ConvertLatestStringAsync(version, cancellationToken).ConfigureAwait(false);
         var uri = $"cdn/{version}/data/{language}/champion.json";
-        var champions = await GetAsync<RootDto<ChampionBaseDto>>(uri, [/* todo add tags */], cancellationToken).ConfigureAwait(false);
+        string[] tags = ["dataDragon", $"dataDragon.version.{version}", $"dataDragon.language.{language}", "dataDragon.champion.json"];
+        var champions = await GetAsync<RootDto<ChampionBaseDto>>(uri, tags, cancellationToken).ConfigureAwait(false);
         return champions.Data;
     }
 
@@ -130,7 +138,8 @@ public partial class LolDataDragon : ILolDataDragon
     {
         version = await ConvertLatestStringAsync(version, cancellationToken).ConfigureAwait(false);
         var uri = $"cdn/{version}/data/{language}/championFull.json";
-        var champions = await GetAsync<RootDto<ChampionDto>>(uri, [/* todo add tags */], cancellationToken).ConfigureAwait(false);
+        string[] tags = ["dataDragon", $"dataDragon.version.{version}", $"dataDragon.language.{language}", "dataDragon.championFull.json"];
+        var champions = await GetAsync<RootDto<ChampionDto>>(uri, tags, cancellationToken).ConfigureAwait(false);
         return champions.Data;
     }
 
@@ -139,7 +148,8 @@ public partial class LolDataDragon : ILolDataDragon
     {
         version = await ConvertLatestStringAsync(version, cancellationToken).ConfigureAwait(false);
         var uri = $"cdn/{version}/data/{language}/champion/{id}.json";
-        var champions = await GetAsync<RootDto<ChampionDto>>(uri, [/* todo add tags */], cancellationToken).ConfigureAwait(false);
+        string[] tags = ["dataDragon", $"dataDragon.version.{version}", $"dataDragon.language.{language}", $"dataDragon.champion.{id}.json"];
+        var champions = await GetAsync<RootDto<ChampionDto>>(uri, tags, cancellationToken).ConfigureAwait(false);
         return champions.Data.First().Value;
     }
 
@@ -148,7 +158,8 @@ public partial class LolDataDragon : ILolDataDragon
     {
         version = await ConvertLatestStringAsync(version, cancellationToken).ConfigureAwait(false);
         var uri = $"cdn/{version}/data/{language}/challenges.json";
-        var challenges = await GetAsync<ChallengeDto[]>(uri, [/* todo add tags */], cancellationToken).ConfigureAwait(false);
+        string[] tags = ["dataDragon", $"dataDragon.version.{version}", $"dataDragon.language.{language}", "dataDragon.challenges.json"];
+        var challenges = await GetAsync<ChallengeDto[]>(uri, tags, cancellationToken).ConfigureAwait(false);
         return challenges;
     }
 

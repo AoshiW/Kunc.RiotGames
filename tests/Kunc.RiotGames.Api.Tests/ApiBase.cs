@@ -55,7 +55,6 @@ public abstract class ApiBase<TGame>
     private static readonly HashSet<string> SEA = new(StringComparer.OrdinalIgnoreCase)
     {
         Regions.OC1,
-        Regions.PH2,
         Regions.SG2,
         Regions.TW2,
         Regions.VN2,

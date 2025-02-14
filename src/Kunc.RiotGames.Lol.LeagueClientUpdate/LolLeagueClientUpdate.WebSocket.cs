@@ -124,7 +124,9 @@ public partial class LolLeagueClientUpdate : ILolLeagueClientUpdate
         return SubscribeCore(attribute, eventHandler.Method, eventHandler.Target);
     }
 
+#pragma warning disable CA1859 // Use concrete types when possible for improved performance
     IDisposable SubscribeCore(LcuEventAttribute attribute, MethodInfo methodInfo, object? target)
+#pragma warning restore CA1859 // Use concrete types when possible for improved performance
     {
         var di = new EventInfo(attribute, methodInfo, target);
         _logger.LogRegisterDelegate(methodInfo);

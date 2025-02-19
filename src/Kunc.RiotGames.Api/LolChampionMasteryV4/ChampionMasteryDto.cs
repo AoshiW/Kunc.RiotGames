@@ -9,7 +9,7 @@ namespace Kunc.RiotGames.Api.LolChampionMasteryV4;
 public class ChampionMasteryDto : BaseDto
 {
     /// <summary>
-    /// Player Universal Unique Identifier. Exact length of 78 characters.
+    /// Player Universal Unique Identifier.
     /// </summary>
     [JsonPropertyName("puuid")]
     public string Puuid { get; set; } = string.Empty;

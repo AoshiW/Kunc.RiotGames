@@ -34,4 +34,10 @@ public class LeagueItemDto : BaseDto
     /// </summary>
     [JsonPropertyName("summonerId")]
     public string SummonerId { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Player Universal Unique Identifier.
+    /// </summary>
+    [JsonPropertyName("puuid")]
+    public string Puuid { get; set; } = string.Empty;
 }

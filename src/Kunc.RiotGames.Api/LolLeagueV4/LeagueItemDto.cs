@@ -5,6 +5,13 @@ namespace Kunc.RiotGames.Api.LolLeagueV4;
 
 public class LeagueItemDto : BaseDto
 {
+
+    /// <summary>
+    /// Player Universal Unique Identifier.
+    /// </summary>
+    [JsonPropertyName("puuid")]
+    public string Puuid { get; set; } = string.Empty;
+
     [JsonPropertyName("freshBlood")]
     public bool IsFreshBlood { get; set; }
 

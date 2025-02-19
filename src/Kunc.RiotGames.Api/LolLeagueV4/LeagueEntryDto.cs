@@ -15,6 +15,12 @@ public class LeagueEntryDto : BaseDto
     [JsonPropertyName("summonerId")]
     public string SummonerId { get; set; } = string.Empty;
 
+    /// <summary>
+    /// Player Universal Unique Identifier.
+    /// </summary>
+    [JsonPropertyName("puuid")]
+    public string Puuid { get; set; } = string.Empty;
+
     [JsonPropertyName("queueType")]
     public QueueType QueueType { get; set; }
 

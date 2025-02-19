@@ -27,7 +27,7 @@ public class SummonerDto : BaseDto
     public string Id { get; set; } = string.Empty;
 
     /// <summary>
-    /// Encrypted PUUID.Exact length of 78 characters.
+    /// Player Universal Unique Identifier.
     /// </summary>
     [JsonPropertyName("puuid")]
     public string Puuid { get; set; } = string.Empty;

@@ -1,22 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
-    <PropertyGroup>
-        <IsPackable>false</IsPackable>
-        <IsTestProject>true</IsTestProject>
-    </PropertyGroup>
+﻿<Project Sdk="MSTest.Sdk">
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.NET.Test.Sdk" />
-        <PackageReference Include="MSTest.TestAdapter" />
-        <PackageReference Include="MSTest.TestFramework" />
-        <PackageReference Include="coverlet.collector">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\..\src\Kunc.RiotGames.Lol.DataDragon\Kunc.RiotGames.Lol.DataDragon.csproj" />
+        <ProjectReference Include="..\..\src\Kunc.RiotGames.Lol.DataDragon\Kunc.RiotGames.Lol.DataDragon.csproj" />
     </ItemGroup>
 
 </Project>

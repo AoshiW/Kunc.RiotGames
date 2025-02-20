@@ -23,6 +23,9 @@ public enum MatchEventType
     [JsonStringEnumMemberName("ELITE_MONSTER_KILL")]
     EliteMonsterKill,
 
+    [JsonStringEnumMemberName("FEAT_UPDATE")]
+    FeatUpdate,
+
     [JsonStringEnumMemberName("GAME_END")]
     GameEnd,
 

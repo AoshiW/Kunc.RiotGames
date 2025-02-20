@@ -31,6 +31,12 @@ public class EventsTimelineDto : BaseDto
     [JsonPropertyName("gameId")]
     public long? GameId { get; set; }
 
+    [JsonPropertyName("featType")]
+    public int? FeatType { get; set; }
+
+    [JsonPropertyName("featValue")]
+    public int? FeatValue { get; set; }
+
     [JsonPropertyName("goldGain")]
     public int? GoldGain { get; set; }
 

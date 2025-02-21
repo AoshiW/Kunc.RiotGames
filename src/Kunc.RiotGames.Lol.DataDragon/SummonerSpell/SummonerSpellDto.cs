@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Kunc.RiotGames.Lol.DataDragon.SummonerSpell;
@@ -34,8 +35,9 @@ public class SummonerSpellDto : BaseDto
     public string CostBurn { get; set; } = string.Empty;
 
     // it's always empty
-    //[JsonPropertyName("datavalues")]
-    //public JsonElement Datavalues { get; set; }
+    [Experimental(DiagnosticIds.KNCRG0000, UrlFormat = DiagnosticIds.UrlFormat)]
+    [JsonPropertyName("datavalues")]
+    public JsonElement DataValues { get; set; }
 
     [JsonPropertyName("effect")]
     public double[]?[] Effect { get; set; } = [];

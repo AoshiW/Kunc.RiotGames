@@ -23,16 +23,19 @@ public partial class LolDataDragon
         serviceCollection.AddLolDataDragon(configure);
         serviceCollection.Configure<LolDataDragonOptions>(c =>
         {
-            c.LatestVersionCacheEntryOptions ??= new()
+            c.LatestVersionCacheEntryOptions = new()
             {
-                Flags = HybridCacheEntryFlags.DisableDistributedCache,
                 LocalCacheExpiration = TimeSpan.FromMinutes(5),
+            };
+            c.DefaultCacheEntryOptions = new()
+            {
+                LocalCacheExpiration = TimeSpan.FromHours(1),
             };
         });
 #pragma warning disable EXTEXP0018 // todo remove #pragma warning disable EXTEXP0018
         serviceCollection.Configure<HybridCacheOptions>(c =>
         {
-            c.MaximumPayloadBytes = 5 * 1024 * 1024;
+            c.MaximumPayloadBytes = long.Max(c.MaximumPayloadBytes, 4 * 1024 * 1024); // the biggest json file is 2.5 MB
         });
 #pragma warning restore EXTEXP0018 
         ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();

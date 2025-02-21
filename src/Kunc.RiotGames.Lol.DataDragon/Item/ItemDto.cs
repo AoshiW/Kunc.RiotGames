@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 namespace Kunc.RiotGames.Lol.DataDragon.Item;
 
@@ -12,6 +13,12 @@ public class ItemDto : BaseDto
 
     [JsonPropertyName("colloq")]
     public string Colloq { get; set; } = string.Empty;
+
+    [JsonPropertyName("consumed")]
+    public bool Consumed { get; set; }
+
+    [JsonPropertyName("consumeOnFull")]
+    public bool ConsumeOnFull { get; set; }
 
     [JsonPropertyName("plaintext")]
     public string PlainText { get; set; } = string.Empty;
@@ -49,6 +56,9 @@ public class ItemDto : BaseDto
     [JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]
     public Dictionary<string, bool> Maps { get; set; } = new();
 
+    [JsonPropertyName("specialRecipe")]
+    public int? SpecialRecipe { get; set; } = 1;
+
     [JsonPropertyName("stats")]
     [JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]
     public StatsDto Stats { get; set; } = new();
@@ -56,6 +66,7 @@ public class ItemDto : BaseDto
     [JsonPropertyName("stacks")]
     public int Stacks { get; set; } = 1;
 
+    [Experimental(DiagnosticIds.KNCRG0000, UrlFormat = DiagnosticIds.UrlFormat)]
     [JsonPropertyName("effect")]
     [JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]
     public EffectDto Effect { get; set; } = new();

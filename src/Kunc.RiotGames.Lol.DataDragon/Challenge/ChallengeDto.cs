@@ -13,6 +13,9 @@ public class ChallengeDto : BaseDto
     [JsonPropertyName("description")]
     public string Description { get; set; } = string.Empty;
 
+    [JsonPropertyName("shortDescription")]
+    public string ShortDescription { get; set; } = string.Empty;
+
     [JsonPropertyName("hasLeaderboard")]
     public bool HasLeaderboard { get; set; }
 

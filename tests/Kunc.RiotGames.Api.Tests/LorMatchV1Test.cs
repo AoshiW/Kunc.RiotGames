@@ -6,7 +6,7 @@ namespace Kunc.RiotGames.Api.Tests;
 public class LorMatchV1Test : ApiBase<TGame.LOR>
 {
     [TestMethod]
-    public async Task GetChampionFreeRotationsAsync()
+    public async Task GetMatchIdsAsync()
     {
         var masterPlayer = GetConfiguration("MasterPlayer").Get<AccountInfo>()!;
 

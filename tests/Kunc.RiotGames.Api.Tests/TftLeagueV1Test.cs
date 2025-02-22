@@ -50,4 +50,12 @@ public class TftLeagueV1Test : ApiBase<TGame.TFT>
 
         Assert.AreNotEqual(0, entries.Length);
     }
+
+    [TestMethod]
+    public async Task GetTopRatedLadderAsync()
+    {
+        var topRatedLadder = await Api.TftLeagueV1.GetTopRatedLadderAsync(Regions.SG2, QueueType.RankedTftTurbo);
+
+        Assert.AreNotEqual(0, topRatedLadder.Length);
+    }
 }

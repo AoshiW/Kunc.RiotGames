@@ -8,6 +8,11 @@ public class TeamDto : BaseDto
     [JsonPropertyName("bans")]
     public BanDto[] Bans { get; set; } = [];
 
+    // todo EPIC_MONSTER_KILL, FIRST_BLOOD, FIRST_TURRET
+    [JsonPropertyName("feats")]
+    [JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]
+    public Dictionary<string, Feat> Feats { get; set; } = new();
+
     [JsonPropertyName("objectives")]
     [JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]
     public ObjectivesDto Objectives { get; set; } = new();

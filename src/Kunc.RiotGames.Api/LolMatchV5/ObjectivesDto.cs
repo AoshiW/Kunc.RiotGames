@@ -4,6 +4,10 @@ namespace Kunc.RiotGames.Api.LolMatchV5;
 
 public class ObjectivesDto : BaseDto
 {
+    [JsonPropertyName("atakhan")]
+    [JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]
+    public ObjectiveDto Atakhan { get; set; } = new();
+
     [JsonPropertyName("baron")]
     [JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]
     public ObjectiveDto Baron { get; set; } = new();

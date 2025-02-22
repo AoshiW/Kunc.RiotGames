@@ -114,7 +114,7 @@ public class TftLeagueV1Endpoint : ITftLeagueV1
     }
 
     /// <inheritdoc/>
-    public async Task<TopRatedLadderEntryDto[]> GetTopRatedLadderAsync(string region, QueueType queue, CancellationToken cancellationToken)
+    public async Task<TopRatedLadderEntryDto[]> GetTopRatedLadderAsync(string region, QueueType queue, CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(region);
 

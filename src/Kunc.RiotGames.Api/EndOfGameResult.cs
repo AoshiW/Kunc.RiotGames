@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Kunc.RiotGames.Api.LolMatchV5;
+namespace Kunc.RiotGames.Api;
 
 [JsonConverter(typeof(JsonStringEnumConverter<EndOfGameResult>))]
 public enum EndOfGameResult

@@ -7,9 +7,16 @@ namespace Kunc.RiotGames.Api.LolChampionMasteryV4;
 /// </summary>
 public class NextSeasonMilestoneDto : BaseDto
 {
+    [JsonPropertyName("totalGamesRequires")]
+    public int TotalGamesRequires { get; set; }
+
     [JsonPropertyName("milestoneGrades")]
     [JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]
     public Dictionary<string, int> MilestoneGrades { get; set; } = new();
+
+    [JsonPropertyName("requireGradeCounts")]
+    [JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]
+    public Dictionary<string, int> RequireGradeCounts { get; set; } = new();
 
     /// <summary>
     /// Reward marks.

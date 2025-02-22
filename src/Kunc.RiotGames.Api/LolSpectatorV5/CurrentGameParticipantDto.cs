@@ -42,6 +42,9 @@ public class CurrentGameParticipantDto : BaseDto
     [JsonPropertyName("puuid")]
     public string Puuid { get; set; } = string.Empty;
 
+    [JsonPropertyName("riotId")]
+    public RiotId RiotId { get; set; } = default!;
+
     /// <summary>
     /// The encrypted summoner ID of this participant.
     /// </summary>

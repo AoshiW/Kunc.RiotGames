@@ -41,6 +41,9 @@ public class ParticipantDto : BaseDto
     [JsonPropertyName("teamId")]
     public TeamId TeamId { get; set; }
 
+    [JsonPropertyName("riotId")]
+    public RiotId RiotId { get; set; } = default!;
+
     /// <summary>
     /// The ID of the first summoner spell used by this participant.
     /// </summary>

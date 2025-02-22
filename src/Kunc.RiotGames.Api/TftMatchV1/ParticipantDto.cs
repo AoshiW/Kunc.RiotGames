@@ -73,6 +73,12 @@ public class ParticipantDto : BaseDto
     [JsonPropertyName("traits")]
     public TraitDto[] Traits { get; set; } = [];
 
+    [JsonPropertyName("riotIdGameName")]
+    public string RiotIdGameName { get; set; } = string.Empty;
+
+    [JsonPropertyName("riotIdTagline")]
+    public string RiotIdTagline { get; set; } = string.Empty;
+
     /// <summary>
     /// A list of active units for the participant.
     /// </summary>

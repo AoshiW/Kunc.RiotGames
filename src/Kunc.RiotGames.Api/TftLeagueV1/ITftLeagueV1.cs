@@ -64,5 +64,5 @@ public interface ITftLeagueV1
     /// <param name="queue"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<TopRatedLadderEntryDto[]> GetTopRatedLadderAsync(string region, QueueType queue, CancellationToken cancellationToken);
+    Task<TopRatedLadderEntryDto[]> GetTopRatedLadderAsync(string region, QueueType queue, CancellationToken cancellationToken = default);
 }

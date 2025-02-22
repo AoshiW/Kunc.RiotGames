@@ -4,6 +4,7 @@ using Kunc.RiotGames.Lol.GameClient;
 using Kunc.RiotGames.Lol.LeagueClientUpdate;
 using Kunc.RiotGames.Lor.DeckCodes;
 using Kunc.RiotGames.Lor.GameClient;
+using Microsoft.Extensions.Caching.Hybrid;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -23,13 +24,30 @@ partial class Program
         .AddLolLeagueClientUpdate()
         .AddSingleton<ILorDeckEncoder, LorDeckEncoder>()
         .AddLorGameClient()
-        .AddLolDataDragon()
+        .AddLolDataDragon(c =>
+        {
+            c.LatestVersionCacheEntryOptions = new()
+            {
+                Flags = HybridCacheEntryFlags.DisableDistributedCache,
+                LocalCacheExpiration = TimeSpan.FromMinutes(5),
+            };
+            c.DefaultCacheEntryOptions = new()
+            {
+                Expiration = TimeSpan.FromDays(7),
+            };
+        })
         .AddSingleton<ILolGameClient, LolGameClient>()
         .AddRiotGamesApi(c => c.ApiKey = Configuration["RGAPIKEY"]!)
         .AddSqliteCache(x =>
         {
             x.CachePath = "cache.sqlite";
         })
+#pragma warning disable EXTEXP0018 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+        .Configure<HybridCacheOptions>(c =>
+        {
+            c.MaximumPayloadBytes *= 4; // the biggest json file for LolDataDragon is 2.5 MB
+        })
+#pragma warning restore EXTEXP0018 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         .BuildServiceProvider();
 
     static ILorDeckEncoder LorDeckEncoder => _service.GetRequiredService<ILorDeckEncoder>();

@@ -33,17 +33,17 @@ public class LolLeagueV4Endpoint : ILolLeagueV4
     }
 
     /// <inheritdoc/>
-    public async Task<LeagueEntryDto[]> LeagueEntriesForSummonerAsync(string region, string summonerId, CancellationToken cancellationToken = default)
+    public async Task<LeagueEntryDto[]> LeagueEntriesForSummonerAsync(string region, string puuid, CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(region);
-        ArgumentException.ThrowIfNullOrEmpty(summonerId);
+        ArgumentException.ThrowIfNullOrEmpty(puuid);
 
         var request = new RiotRequestMessage()
         {
             HttpMethod = HttpMethod.Get,
             Host = region,
-            MethodId = "/lol/league/v4/entries/by-summoner/{encryptedSummonerId}",
-            Path = $"/lol/league/v4/entries/by-summoner/{summonerId}",
+            MethodId = "/lol/league/v4/entries/by-puuid/{puuid}",
+            Path = $"/lol/league/v4/entries/by-puuid/{puuid}",
         };
         var data = await _client.SendAndDeserializeAsync<LeagueEntryDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;

@@ -10,12 +10,6 @@ public class LeagueEntryDto : BaseDto
     public Guid LeagueId { get; set; }
 
     /// <summary>
-    /// Player's encrypted summonerId.
-    /// </summary>
-    [JsonPropertyName("summonerId")]
-    public string SummonerId { get; set; } = string.Empty;
-
-    /// <summary>
     /// Player Universal Unique Identifier.
     /// </summary>
     [JsonPropertyName("puuid")]

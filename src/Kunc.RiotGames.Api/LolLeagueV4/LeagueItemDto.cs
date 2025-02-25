@@ -35,10 +35,4 @@ public class LeagueItemDto : BaseDto
 
     [JsonPropertyName("losses")]
     public int Losses { get; set; }
-
-    /// <summary>
-    /// Player's encrypted summonerId.
-    /// </summary>
-    [JsonPropertyName("summonerId")]
-    public string SummonerId { get; set; } = string.Empty;
 }

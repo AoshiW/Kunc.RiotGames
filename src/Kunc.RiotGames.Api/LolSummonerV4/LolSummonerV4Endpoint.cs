@@ -31,21 +31,4 @@ public class LolSummonerV4Endpoint : ILolSummonerV4
         var data = await _client.SendAndDeserializeAsync<SummonerDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
-
-    /// <inheritdoc/>
-    public async Task<SummonerDto> GetSummonerBySummonerIdAsync(string region, string summonerId, CancellationToken cancellationToken = default)
-    {
-        ArgumentException.ThrowIfNullOrEmpty(region);
-        ArgumentException.ThrowIfNullOrEmpty(summonerId);
-
-        var request = new RiotRequestMessage()
-        {
-            HttpMethod = HttpMethod.Get,
-            Host = region,
-            MethodId = "/lol/summoner/v4/summoners/{encryptedSummonerId}",
-            Path = $"/lol/summoner/v4/summoners/{summonerId}",
-        };
-        var data = await _client.SendAndDeserializeAsync<SummonerDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
-        return data!;
-    }
 }

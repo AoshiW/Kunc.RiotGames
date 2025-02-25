@@ -46,12 +46,6 @@ public class CurrentGameParticipantDto : BaseDto
     public RiotId RiotId { get; set; } = default!;
 
     /// <summary>
-    /// The encrypted summoner ID of this participant.
-    /// </summary>
-    [JsonPropertyName("summonerId")]
-    public string SummonerId { get; set; } = string.Empty;
-
-    /// <summary>
     /// The ID of the first summoner spell used by this participant.
     /// </summary>
     [JsonPropertyName("spell1Id")]

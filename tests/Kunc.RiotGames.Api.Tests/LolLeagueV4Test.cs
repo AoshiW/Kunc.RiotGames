@@ -33,9 +33,8 @@ public class LolLeagueV4Test : ApiBase<TGame.LOL>
     public async Task LeagueEntriesForSummonerAsync()
     {
         var acc = GetConfiguration("Summoner").Get<AccountInfo>()!;
-        var summonerId = GetConfiguration("Summoner:Id").Get<string>()!;
 
-        var entries = await Api.LolLeagueV4.LeagueEntriesForSummonerAsync(acc.Region, summonerId);
+        var entries = await Api.LolLeagueV4.LeagueEntriesForSummonerAsync(acc.Region, acc.Puuid);
 
         Assert.IsNotNull(entries);
         if (entries.Length == 0)

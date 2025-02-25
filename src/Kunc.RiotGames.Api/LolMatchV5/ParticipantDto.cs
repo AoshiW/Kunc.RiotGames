@@ -316,9 +316,6 @@ public class ParticipantDto : BaseDto, IKda
     [JsonPropertyName("summoner2Id")]
     public int Summoner2Id { get; set; }
 
-    [JsonPropertyName("summonerId")]
-    public string SummonerId { get; set; } = string.Empty;
-
     [JsonPropertyName("summonerLevel")]
     public int SummonerLevel { get; set; }
 

@@ -24,12 +24,6 @@ public class ParticipantDto : BaseDto
     public string Puuid { get; set; } = string.Empty;
 
     /// <summary>
-    /// The encrypted summoner ID of this participant.
-    /// </summary>
-    [JsonPropertyName("summonerId")]
-    public string SummonerId { get; set; } = string.Empty;
-
-    /// <summary>
     /// The ID of the champion played by this participant.
     /// </summary>
     [JsonPropertyName("championId")]

@@ -14,15 +14,4 @@ public class LolSummonerV4Test : ApiBase<TGame.LOL>
 
         Assert.IsNotNull(summoner);
     }
-
-    [TestMethod]
-    public async Task GetSummonerBySummonerIdAsync()
-    {
-        var acc = GetConfiguration("Summoner").Get<AccountInfo>()!;
-        var summonerId = GetConfiguration("Summoner:Id").Get<string>()!;
-
-        var summoner = await Api.LolSummonerV4.GetSummonerBySummonerIdAsync(acc.Region, summonerId);
-
-        Assert.IsNotNull(summoner);
-    }
 }

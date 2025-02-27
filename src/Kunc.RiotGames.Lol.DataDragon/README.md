@@ -5,7 +5,7 @@ Simple client for League of Legends DataDragon.
 
 ## Features
 - Caching (by default, only in memory; for persistent cache, register `IDistributedCache` service)
-- Support for `"latest"` version
+- Support for `"latest"` version (automatically converts the string `"latest"` to the latest version e.g.:`"15.1.1"`)
 
 ## How to Use
 ```cs

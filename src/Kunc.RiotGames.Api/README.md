@@ -2,7 +2,8 @@
 [![Nuget](https://img.shields.io/nuget/v/Kunc.RiotGames.Api?logo=NuGet&logoColor=blue&style=flat-square)](https://www.nuget.org/packages/Kunc.RiotGames.Api)
 
 ## Features
-The rate limiter is automatically set according to your api key.
+- Rate limiting (The rate limiter is automatically set according to your api key.)
+- Caching (By default it's disabled; More info [here](#caching). )
 
 ## How to Use
 ```cs
@@ -26,6 +27,9 @@ foreach (var entry in entries)
     Console.WriteLine($"{entry.QueueType}: {entry.ToRank()}");
 }
 ```
+
+### Caching
+TODO
 
 ## Disclaimer
 `Kunc.RiotGames.Api` isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.

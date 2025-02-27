@@ -2,18 +2,13 @@
 
 namespace Kunc.RiotGames.Api.SharedStatus;
 
-public class LorStatusV1Endpoint : ILorStatusV1
+public class LorStatusV1Endpoint : EndpointBase, ILorStatusV1
 {
-    private readonly IRiotGamesApiClient _client;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="LorStatusV1Endpoint"/> class.
     /// </summary>
-    public LorStatusV1Endpoint(IRiotGamesApiClient client)
-    {
-        ArgumentNullException.ThrowIfNull(client);
-        _client = client;
-    }
+    public LorStatusV1Endpoint(IServiceProvider service) : base(service)
+    { }
 
     /// <inheritdoc/>
     public async Task<PlatformDataDto> GetStatus(string region, CancellationToken cancellationToken = default)
@@ -24,10 +19,10 @@ public class LorStatusV1Endpoint : ILorStatusV1
         {
             HttpMethod = HttpMethod.Get,
             Host = region,
-            MethodId = "/lor/status/v1/platform-data",
+            MethodId = MethodId.Lor_StatusV1_PlatformData,
             Path = $"/lor/status/v1/platform-data",
         };
-        var data = await _client.SendAndDeserializeAsync<PlatformDataDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await SendAndDeserializeAsync<PlatformDataDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 }

@@ -3,18 +3,13 @@ using Kunc.RiotGames.Lol;
 
 namespace Kunc.RiotGames.Api.LolLeagueV4;
 
-public class LolLeagueV4Endpoint : ILolLeagueV4
+public class LolLeagueV4Endpoint : EndpointBase, ILolLeagueV4
 {
-    private readonly IRiotGamesApiClient _client;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="LolLeagueV4Endpoint"/> class.
     /// </summary>
-    public LolLeagueV4Endpoint(IRiotGamesApiClient client)
-    {
-        ArgumentNullException.ThrowIfNull(client);
-        _client = client;
-    }
+    public LolLeagueV4Endpoint(IServiceProvider service) : base(service)
+    { }
 
     /// <inheritdoc/>
     public async Task<LeagueListDto> GetChallengerLeagueAsync(string region, QueueType queue, CancellationToken cancellationToken = default)
@@ -25,10 +20,10 @@ public class LolLeagueV4Endpoint : ILolLeagueV4
         {
             HttpMethod = HttpMethod.Get,
             Host = region,
-            MethodId = "/lol/league/v4/challengerleagues/by-queue/{queue}",
+            MethodId = MethodId.Lol_LeagueV4_Challenger,
             Path = $"/lol/league/v4/challengerleagues/by-queue/{queue.ToApiString()}",
         };
-        var data = await _client.SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 
@@ -42,10 +37,10 @@ public class LolLeagueV4Endpoint : ILolLeagueV4
         {
             HttpMethod = HttpMethod.Get,
             Host = region,
-            MethodId = "/lol/league/v4/entries/by-puuid/{puuid}",
+            MethodId = MethodId.Lol_LeagueV4_Entries_ByPuuid,
             Path = $"/lol/league/v4/entries/by-puuid/{puuid}",
         };
-        var data = await _client.SendAndDeserializeAsync<LeagueEntryDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await SendAndDeserializeAsync<LeagueEntryDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 
@@ -58,10 +53,10 @@ public class LolLeagueV4Endpoint : ILolLeagueV4
         {
             HttpMethod = HttpMethod.Get,
             Host = region,
-            MethodId = "/lol/league/v4/entries/{queue}/{tier}/{division}",
+            MethodId = MethodId.Lol_LeagueV4_Entries,
             Path = $"/lol/league/v4/entries/{queue.ToApiString()}/{tier.ToUpperString()}/{division.ToFastString()}",
         };
-        var data = await _client.SendAndDeserializeAsync<LeagueEntryDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await SendAndDeserializeAsync<LeagueEntryDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 
@@ -74,10 +69,10 @@ public class LolLeagueV4Endpoint : ILolLeagueV4
         {
             HttpMethod = HttpMethod.Get,
             Host = region,
-            MethodId = "/lol/league/v4/grandmasterleagues/by-queue/{queue}",
+            MethodId = MethodId.Lol_LeagueV4_Grandmaster,
             Path = $"/lol/league/v4/grandmasterleagues/by-queue/{queue.ToApiString()}",
         };
-        var data = await _client.SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 
@@ -90,10 +85,10 @@ public class LolLeagueV4Endpoint : ILolLeagueV4
         {
             HttpMethod = HttpMethod.Get,
             Host = region,
-            MethodId = "/lol/league/v4/leagues/{leagueId}",
+            MethodId = MethodId.Lol_LeagueV4_League,
             Path = $"/lol/league/v4/leagues/{leagueId}",
         };
-        return await _client.SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return await SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc/>
@@ -105,10 +100,10 @@ public class LolLeagueV4Endpoint : ILolLeagueV4
         {
             HttpMethod = HttpMethod.Get,
             Host = region,
-            MethodId = "/lol/league/v4/masterleagues/by-queue/{queue}",
+            MethodId = MethodId.Lol_LeagueV4_Master,
             Path = $"/lol/league/v4/masterleagues/by-queue/{queue.ToApiString()}",
         };
-        var data = await _client.SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 }

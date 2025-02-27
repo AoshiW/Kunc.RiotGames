@@ -72,26 +72,6 @@ public class RiotGamesApiClient : IRiotGamesApiClient, IDisposable
         throw new AggregateException($"Request failed after {retries} attempts.", exceptions);
     }
 
-    /// <inheritdoc/>
-    public async Task<T?> SendAndDeserializeAsync<T>(RiotRequestMessage request, RiotRequestOptions options, CancellationToken cancellationToken = default)
-    {
-        var response = await SendAsync(request, options, cancellationToken).ConfigureAwait(false);
-        if (response.IsSuccessStatusCode)
-        {
-            try
-            {
-                return await response.Content.ReadFromJsonAsync<T>(_options.JsonSerializerOptions, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogDeserializeException(ex, request);
-                throw;
-            }
-        }
-        return default;
-    }
-
-
     async ValueTask<string> ReadErrorMessageAsync(HttpContent content, CancellationToken cancellationToken)
     {
         var jsonElement = await content.ReadFromJsonAsync<JsonElement>(_options.JsonSerializerOptions, cancellationToken).ConfigureAwait(false);

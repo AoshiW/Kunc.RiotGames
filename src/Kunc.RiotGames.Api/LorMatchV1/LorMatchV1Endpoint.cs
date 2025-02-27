@@ -2,18 +2,13 @@
 
 namespace Kunc.RiotGames.Api.LorMatchV1;
 
-public class LorMatchV1Endpoint : ILorMatchV1
+public class LorMatchV1Endpoint : EndpointBase, ILorMatchV1
 {
-    private readonly IRiotGamesApiClient _client;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="LorMatchV1Endpoint"/> class.
     /// </summary>
-    public LorMatchV1Endpoint(IRiotGamesApiClient client)
-    {
-        ArgumentNullException.ThrowIfNull(client);
-        _client = client;
-    }
+    public LorMatchV1Endpoint(IServiceProvider service) : base(service)
+    { }
 
     /// <inheritdoc/>
     public async Task<string[]> GetMatchIdsAsync(string region, string puuid, CancellationToken cancellationToken = default)
@@ -25,10 +20,10 @@ public class LorMatchV1Endpoint : ILorMatchV1
         {
             HttpMethod = HttpMethod.Get,
             Host = region,
-            MethodId = "/lor/match/v1/matches/by-puuid/{puuid}/ids",
+            MethodId = MethodId.Lor_MatchV1_MatchIds,
             Path = $"/lor/match/v1/matches/by-puuid/{puuid}/ids",
         };
-        var data = await _client.SendAndDeserializeAsync<string[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await SendAndDeserializeAsync<string[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 
@@ -42,9 +37,9 @@ public class LorMatchV1Endpoint : ILorMatchV1
         {
             HttpMethod = HttpMethod.Get,
             Host = region,
-            MethodId = "/lor/match/v1/matches/{matchId}",
+            MethodId = MethodId.Lor_MatchV1_Match,
             Path = $"/lor/match/v1/matches/{matchId}",
         };
-        return await _client.SendAndDeserializeAsync<MatchDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return await SendAndDeserializeAsync<MatchDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 }

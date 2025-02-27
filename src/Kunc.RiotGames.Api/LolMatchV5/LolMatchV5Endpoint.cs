@@ -2,17 +2,13 @@
 
 namespace Kunc.RiotGames.Api.LolMatchV5;
 
-public class LolMatchV5Endpoint : ILolMatchV5
+public class LolMatchV5Endpoint : EndpointBase, ILolMatchV5
 {
-    private readonly IRiotGamesApiClient _client;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="LolMatchV5Endpoint"/> class.
     /// </summary>
-    public LolMatchV5Endpoint(IRiotGamesApiClient client)
+    public LolMatchV5Endpoint(IServiceProvider service) : base(service)
     {
-        ArgumentNullException.ThrowIfNull(client);
-        _client = client;
     }
 
     /// <inheritdoc/>
@@ -25,11 +21,11 @@ public class LolMatchV5Endpoint : ILolMatchV5
         {
             HttpMethod = HttpMethod.Get,
             Host = region,
-            MethodId = "/lol/match/v5/matches/by-puuid/{puuid}/ids",
+            MethodId = MethodId.Lol_MatchV5_MatchIds,
             Path = $"/lol/match/v5/matches/by-puuid/{puuid}/ids",
             Query = query,
         };
-        var data = await _client.SendAndDeserializeAsync<string[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await SendAndDeserializeAsync<string[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 
@@ -43,10 +39,10 @@ public class LolMatchV5Endpoint : ILolMatchV5
         {
             HttpMethod = HttpMethod.Get,
             Host = region,
-            MethodId = "/lol/match/v5/matches/{matchId}",
+            MethodId = MethodId.Lol_MatchV5_Match,
             Path = $"/lol/match/v5/matches/{matchId}",
         };
-        return await _client.SendAndDeserializeAsync<MatchDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return await SendAndDeserializeAsync<MatchDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc/>
@@ -59,9 +55,9 @@ public class LolMatchV5Endpoint : ILolMatchV5
         {
             HttpMethod = HttpMethod.Get,
             Host = region,
-            MethodId = "/lol/match/v5/matches/{matchId}/timeline",
+            MethodId = MethodId.Lol_MatchV5_Timeline,
             Path = $"/lol/match/v5/matches/{matchId}/timeline",
         };
-        return await _client.SendAndDeserializeAsync<TimelineDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return await SendAndDeserializeAsync<TimelineDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 }

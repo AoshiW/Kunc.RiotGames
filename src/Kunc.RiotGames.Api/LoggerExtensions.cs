@@ -1,4 +1,5 @@
-﻿using Kunc.RiotGames.Api.Http;
+﻿using System.Net;
+using Kunc.RiotGames.Api.Http;
 using Microsoft.Extensions.Logging;
 
 namespace Kunc.RiotGames.Api;
@@ -16,4 +17,7 @@ internal static partial class LoggerExtensions
 
     [LoggerMessage(LogLevel.Information, "Method rate limiter is initialized, Region: {region}, MethodId: {methodId} RateLimits: {rateLimits}")]
     public static partial void InitializedMethodRateLimit(this ILogger logger, string region, string methodId, string rateLimits);
+
+    [LoggerMessage(LogLevel.Information, "Request: {uri} , statusCode: {statusCode}")]
+    public static partial void LogRequest(this ILogger logger, Uri? uri, HttpStatusCode statusCode);
 }

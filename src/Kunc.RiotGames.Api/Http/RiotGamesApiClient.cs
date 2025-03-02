@@ -40,7 +40,9 @@ public class RiotGamesApiClient : IRiotGamesApiClient, IDisposable
             using var httpRequestMessage = request.ToHttpRequestMessage();
             if (options.IncludeApiKey)
                 httpRequestMessage.Headers.Add(ApiConstants.RiotToken, _options.ApiKey);
+
             var response = await _client.SendAsync(httpRequestMessage, cancellationToken).ConfigureAwait(false);
+            _logger.LogRequest(httpRequestMessage.RequestUri, response.StatusCode);
 
             await _rateLimiter.UpdateAsync(request.Host, request, response, cancellationToken).ConfigureAwait(false);
             if (response.IsSuccessStatusCode || response.StatusCode is HttpStatusCode.NotFound)

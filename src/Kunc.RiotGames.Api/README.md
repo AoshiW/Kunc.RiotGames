@@ -30,6 +30,10 @@ foreach (var entry in entries)
 
 ### Caching
 TODO
+
+How to enable caching:
+1. you can enable it globally for all endpoints by setting `DefaultCacheEntryOptions`. 
+2. you can enable/modify it only for some endpoints using `MethodCacheEntryOptions[]` (per endpoint setting takes precedence over global)
 ```cs
 Services.AddRiotGamesApi(c =>
 {
@@ -42,5 +46,6 @@ Services.AddRiotGamesApi(c =>
     c.MethodCacheEntryOptions["/riot/account/v1/accounts/by-riot-id/{gameName}/{tagLine}"] = new HybridCacheEntryOptions() { ... };
 })
 ```
+
 ## Disclaimer
 `Kunc.RiotGames.Api` isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.

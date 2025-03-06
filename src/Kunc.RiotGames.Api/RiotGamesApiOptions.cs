@@ -22,7 +22,7 @@ public class RiotGamesApiOptions
     /// </summary>
     public JsonSerializerOptions? JsonSerializerOptions { get; set; }
 
-    public HybridCacheEntryOptions DefaultCacheEntryOptions { get; set; } = new() 
+    public HybridCacheEntryOptions? DefaultCacheEntryOptions { get; set; } = new() 
     { 
         Flags = HybridCacheEntryFlags.DisableLocalCache | HybridCacheEntryFlags.DisableDistributedCache 
     };

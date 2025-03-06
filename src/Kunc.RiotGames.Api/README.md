@@ -30,6 +30,18 @@ foreach (var entry in entries)
 
 ### Caching
 TODO
-
+```cs
+Services.AddRiotGamesApi(c =>
+{
+    c.ApiKey = "RGAPI-...";
+    
+    // global
+    c.DefaultCacheEntryOptions = new HybridCacheEntryOptions() { ... };
+    
+    // per endpoint
+    c.MethodCacheEntryOptions["enpoint url"] = new HybridCacheEntryOptions() { ... };
+    c.MethodCacheEntryOptions["/riot/account/v1/accounts/by-riot-id/{gameName}/{tagLine}"] = new HybridCacheEntryOptions() { ... };
+})
+```
 ## Disclaimer
 `Kunc.RiotGames.Api` isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.

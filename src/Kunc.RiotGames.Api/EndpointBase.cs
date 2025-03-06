@@ -1,5 +1,5 @@
-﻿using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.Text.Json;
 using Kunc.RiotGames.Api.Http;
 using Microsoft.Extensions.Caching.Hybrid;
@@ -33,14 +33,15 @@ public abstract class EndpointBase
 
     internal async Task<T?> SendAndDeserializeAsync<T>(RiotRequestMessage request, RiotRequestOptions options, CancellationToken cancellationToken = default)
     {
-        var cacheKey = $"{request.Host}{request.Path}";
+        var cacheKey = request.GetCacheKey();
+        var cacheOptions = Options.MethodCacheEntryOptions.GetValueOrDefault(request.MethodId) ?? Options.DefaultCacheEntryOptions;
 
         // unfortunately it is not possible to dynamically set whether the response should be cached
         // so the cache must be called twice (1. to test if the data is available; 2. to save the data)
         // but it loses stampede protection.
         // alternative solution: cache everything and if we don't want to cache something then delete it immediately
         // https://github.com/dotnet/aspnetcore/issues/56483
-        var bytes = await HybridCache.GetAsync<byte[]>(cacheKey, cancellationToken).ConfigureAwait(false);
+        var bytes = await HybridCache.GetAsync<byte[]>(cacheKey, cacheOptions, cancellationToken).ConfigureAwait(false);
 
         if (bytes is null)
         {
@@ -50,9 +51,9 @@ public abstract class EndpointBase
 
             bytes = await response.Content.ReadAsByteArrayAsync(cancellationToken).ConfigureAwait(false);
 
-            await HybridCache.GetOrCreateAsync(cacheKey, bytes, static (bytes, _) => ValueTask.FromResult(bytes),
-                Options.MethodCacheEntryOptions.GetValueOrDefault(request.MethodId) ?? Options.DefaultCacheEntryOptions,
-                null, // todo add tags (maybe as a method argument (or in RiotRequestOptions))
+            await HybridCache.SetAsync(cacheKey, bytes,
+                cacheOptions,
+                null, // todo add tags ... maybe as a method argument (or in RiotRequestMessage?)
                 cancellationToken).ConfigureAwait(false);
         }
 
@@ -70,10 +71,14 @@ public abstract class EndpointBase
 
 static file class Extensions
 {
-    static readonly HybridCacheEntryOptions CacheOnly = new() { Flags = HybridCacheEntryFlags.DisableUnderlyingData };
+    private static readonly ConcurrentDictionary<HybridCacheEntryFlags, HybridCacheEntryOptions> Cache = new();
 
-    public static ValueTask<T?> GetAsync<T>(this HybridCache hybridCache, string key, CancellationToken cancellationToken = default)
+    public static ValueTask<T?> GetAsync<T>(this HybridCache hybridCache, string key, HybridCacheEntryOptions? options = null, CancellationToken cancellationToken = default)
     {
-        return hybridCache.GetOrCreateAsync<T?>(key, static _ => throw new UnreachableException(), CacheOnly, null, cancellationToken);
+        options = Cache.GetOrAdd(options?.Flags ?? HybridCacheEntryFlags.None, key => new()
+        {
+            Flags = key | HybridCacheEntryFlags.DisableUnderlyingData
+        });
+        return hybridCache.GetOrCreateAsync<T?>(key, static _ => throw new UnreachableException(), options, null, cancellationToken);
     }
 }

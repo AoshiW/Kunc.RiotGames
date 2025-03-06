@@ -35,4 +35,10 @@ public class RiotRequestMessage
         };
         return $"{HttpMethod} {url}";
     }
+
+    internal string GetCacheKey()
+    {
+        return $"{Host}_{Path}{Query}";
+        
+    }
 }

@@ -38,8 +38,7 @@ Services.AddRiotGamesApi(c =>
     // global
     c.DefaultCacheEntryOptions = new HybridCacheEntryOptions() { ... };
     
-    // per endpoint
-    c.MethodCacheEntryOptions["enpoint url"] = new HybridCacheEntryOptions() { ... };
+    // per endpoint (the endpoint url is used as the key)
     c.MethodCacheEntryOptions["/riot/account/v1/accounts/by-riot-id/{gameName}/{tagLine}"] = new HybridCacheEntryOptions() { ... };
 })
 ```

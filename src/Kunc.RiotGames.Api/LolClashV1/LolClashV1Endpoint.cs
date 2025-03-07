@@ -2,18 +2,13 @@
 
 namespace Kunc.RiotGames.Api.LolClashV1;
 
-public class LolClashV1Endpoint : ILolClashV1
+public class LolClashV1Endpoint : EndpointBase, ILolClashV1
 {
-    private readonly IRiotGamesApiClient _client;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="LolClashV1Endpoint"/> class.
     /// </summary>
-    public LolClashV1Endpoint(IRiotGamesApiClient client)
-    {
-        ArgumentNullException.ThrowIfNull(client);
-        _client = client;
-    }
+    public LolClashV1Endpoint(IServiceProvider service) : base(service)
+    { }
 
     /// <inheritdoc/>
     public async Task<PlayerDto[]> GetPlayersByPuuidAsync(string region, string puuid, CancellationToken cancellationToken = default)
@@ -25,10 +20,10 @@ public class LolClashV1Endpoint : ILolClashV1
         {
             HttpMethod = HttpMethod.Get,
             Host = region,
-            MethodId = "/lol/clash/v1/players/by-puuid/{puuid}",
+            MethodId = MethodId.Lol_ClashV1_Player,
             Path = $"/lol/clash/v1/players/by-puuid/{puuid}",
         };
-        var data = await _client.SendAndDeserializeAsync<PlayerDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await SendAndDeserializeAsync<PlayerDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 
@@ -42,10 +37,10 @@ public class LolClashV1Endpoint : ILolClashV1
         {
             HttpMethod = HttpMethod.Get,
             Host = region,
-            MethodId = "/lol/clash/v1/teams/{teamId}",
+            MethodId = MethodId.Lol_ClashV1_Team,
             Path = $"/lol/clash/v1/teams/{teamId}",
         };
-        return await _client.SendAndDeserializeAsync<TeamDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return await SendAndDeserializeAsync<TeamDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc/>
@@ -57,10 +52,10 @@ public class LolClashV1Endpoint : ILolClashV1
         {
             HttpMethod = HttpMethod.Get,
             Host = region,
-            MethodId = "/lol/clash/v1/tournaments",
+            MethodId = MethodId.Lol_ClashV1_Tournaments,
             Path = "/lol/clash/v1/tournaments",
         };
-        var data = await _client.SendAndDeserializeAsync<TournamentDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await SendAndDeserializeAsync<TournamentDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 
@@ -74,10 +69,10 @@ public class LolClashV1Endpoint : ILolClashV1
         {
             HttpMethod = HttpMethod.Get,
             Host = region,
-            MethodId = "/lol/clash/v1/tournaments/by-team/{teamId}",
+            MethodId = MethodId.Lol_ClashV1_Tournaments_ByTeam,
             Path = $"/lol/clash/v1/tournaments/by-team/{teamId}",
         };
-        return await _client.SendAndDeserializeAsync<TournamentDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return await SendAndDeserializeAsync<TournamentDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc/>
@@ -90,9 +85,9 @@ public class LolClashV1Endpoint : ILolClashV1
         {
             HttpMethod = HttpMethod.Get,
             Host = region,
-            MethodId = "/lol/clash/v1/tournaments/{tournamentId}",
+            MethodId = MethodId.Lol_ClashV1_Tournaments_ById,
             Path = $"/lol/clash/v1/tournaments/{tournamentId}",
         };
-        return await _client.SendAndDeserializeAsync<TournamentDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return await SendAndDeserializeAsync<TournamentDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 }

@@ -2,18 +2,13 @@
 
 namespace Kunc.RiotGames.Api.LolChallengesV1;
 
-public class LolChallengesV1Endpoint : ILolChallengesV1
+public class LolChallengesV1Endpoint : EndpointBase, ILolChallengesV1
 {
-    private readonly IRiotGamesApiClient _client;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="LolChallengesV1Endpoint"/> class.
     /// </summary>
-    public LolChallengesV1Endpoint(IRiotGamesApiClient client)
-    {
-        ArgumentNullException.ThrowIfNull(client);
-        _client = client;
-    }
+    public LolChallengesV1Endpoint(IServiceProvider service) : base(service)
+    { }
 
     /// <inheritdoc/>
     public async Task<ChallengeConfigInfoDto[]> GetListOfAllBasicChallengeConfigurationInformationAsync(string region, CancellationToken cancellationToken = default)
@@ -24,10 +19,10 @@ public class LolChallengesV1Endpoint : ILolChallengesV1
         {
             HttpMethod = HttpMethod.Get,
             Host = region,
-            MethodId = "/lol/challenges/v1/challenges/config",
+            MethodId = MethodId.Lol_ChallengesV1_Config,
             Path = $"/lol/challenges/v1/challenges/config",
         };
-        var data = await _client.SendAndDeserializeAsync<ChallengeConfigInfoDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await SendAndDeserializeAsync<ChallengeConfigInfoDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 
@@ -40,10 +35,10 @@ public class LolChallengesV1Endpoint : ILolChallengesV1
         {
             HttpMethod = HttpMethod.Get,
             Host = region,
-            MethodId = "/lol/challenges/v1/challenges/percentiles",
+            MethodId = MethodId.Lol_ChallengesV1_Percentiles,
             Path = $"/lol/challenges/v1/challenges/percentiles",
         };
-        var data = await _client.SendAndDeserializeAsync<Dictionary<long, Dictionary<string, double>>>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await SendAndDeserializeAsync<Dictionary<long, Dictionary<string, double>>>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 
@@ -56,10 +51,10 @@ public class LolChallengesV1Endpoint : ILolChallengesV1
         {
             HttpMethod = HttpMethod.Get,
             Host = region,
-            MethodId = "/lol/challenges/v1/challenges/{challengeId}/config",
+            MethodId = MethodId.Lol_ChallengesV1_Config_ById,
             Path = $"/lol/challenges/v1/challenges/{challengeId}/config",
         };
-        return await _client.SendAndDeserializeAsync<ChallengeConfigInfoDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return await SendAndDeserializeAsync<ChallengeConfigInfoDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc/>
@@ -72,11 +67,11 @@ public class LolChallengesV1Endpoint : ILolChallengesV1
         {
             HttpMethod = HttpMethod.Get,
             Host = region,
-            MethodId = "/lol/challenges/v1/challenges/{challengeId}/leaderboards/by-level/{level}",
+            MethodId = MethodId.Lol_ChallengesV1_Leaderboards,
             Path = $"/lol/challenges/v1/challenges/{challengeId}/leaderboards/by-level/{level}",
             Query = query,
         };
-        return await _client.SendAndDeserializeAsync<ApexPlayerInfoDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return await SendAndDeserializeAsync<ApexPlayerInfoDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc/>
@@ -88,10 +83,10 @@ public class LolChallengesV1Endpoint : ILolChallengesV1
         {
             HttpMethod = HttpMethod.Get,
             Host = region,
-            MethodId = "/lol/challenges/v1/challenges/{challengeId}/percentiles",
+            MethodId = MethodId.Lol_ChallengesV1_Percentiles_ById,
             Path = $"/lol/challenges/v1/challenges/{challengeId}/percentiles",
         };
-        return await _client.SendAndDeserializeAsync<Dictionary<string, double>>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return await SendAndDeserializeAsync<Dictionary<string, double>>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc/>
@@ -104,10 +99,10 @@ public class LolChallengesV1Endpoint : ILolChallengesV1
         {
             HttpMethod = HttpMethod.Get,
             Host = region,
-            MethodId = "/lol/challenges/v1/player-data/{puuid}",
+            MethodId = MethodId.Lol_ChallengesV1_PlayerData,
             Path = $"/lol/challenges/v1/player-data/{puuid}",
         };
-        var data = await _client.SendAndDeserializeAsync<PlayerInfoDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await SendAndDeserializeAsync<PlayerInfoDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 }

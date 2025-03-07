@@ -2,18 +2,13 @@
 
 namespace Kunc.RiotGames.Api.RiotAccountV1;
 
-public class RiotAccountV1Endpoint : IRiotAccountV1
+public class RiotAccountV1Endpoint : EndpointBase, IRiotAccountV1
 {
-    private readonly IRiotGamesApiClient _client;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="RiotAccountV1Endpoint"/> class.
     /// </summary>
-    public RiotAccountV1Endpoint(IRiotGamesApiClient client)
-    {
-        ArgumentNullException.ThrowIfNull(client);
-        _client = client;
-    }
+    public RiotAccountV1Endpoint(IServiceProvider service) : base(service)
+    { }
 
     /// <inheritdoc/>
     public async Task<AccountDto> GetAccountByPuuidAsync(string region, string puuid, CancellationToken cancellationToken = default)
@@ -25,10 +20,10 @@ public class RiotAccountV1Endpoint : IRiotAccountV1
         {
             HttpMethod = HttpMethod.Get,
             Host = region,
-            MethodId = "/riot/account/v1/accounts/by-puuid/{puuid}",
+            MethodId = MethodId.Riot_AccountV1_ByPuuid,
             Path = $"/riot/account/v1/accounts/by-puuid/{puuid}",
         };
-        var data = await _client.SendAndDeserializeAsync<AccountDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await SendAndDeserializeAsync<AccountDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 
@@ -43,10 +38,10 @@ public class RiotAccountV1Endpoint : IRiotAccountV1
         {
             HttpMethod = HttpMethod.Get,
             Host = region,
-            MethodId = "/riot/account/v1/accounts/by-riot-id/{gameName}/{tagLine}",
+            MethodId = MethodId.Riot_AccountV1_ByRiotId,
             Path = $"/riot/account/v1/accounts/by-riot-id/{gameName}/{tagLine}",
         };
-        return await _client.SendAndDeserializeAsync<AccountDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return await SendAndDeserializeAsync<AccountDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc/>
@@ -59,10 +54,10 @@ public class RiotAccountV1Endpoint : IRiotAccountV1
         {
             HttpMethod = HttpMethod.Get,
             Host = region,
-            MethodId = "/riot/account/v1/active-shards/by-game/{game}/by-puuid/{puuid}",
+            MethodId = MethodId.Riot_AccountV1_ActiveShard,
             Path = $"/riot/account/v1/active-shards/by-game/{game.ToLowerString()}/by-puuid/{puuid}",
         };
-        var data = await _client.SendAndDeserializeAsync<ActiveShardDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await SendAndDeserializeAsync<ActiveShardDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 }

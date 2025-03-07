@@ -2,18 +2,13 @@
 
 namespace Kunc.RiotGames.Api.LolSummonerV4;
 
-public class LolSummonerV4Endpoint : ILolSummonerV4
+public class LolSummonerV4Endpoint : EndpointBase, ILolSummonerV4
 {
-    private readonly IRiotGamesApiClient _client;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="LolSummonerV4Endpoint"/> class.
     /// </summary>
-    public LolSummonerV4Endpoint(IRiotGamesApiClient client)
-    {
-        ArgumentNullException.ThrowIfNull(client);
-        _client = client;
-    }
+    public LolSummonerV4Endpoint(IServiceProvider service) : base(service)
+    { }
 
     /// <inheritdoc/>
     public async Task<SummonerDto> GetSummonerByPuuidAsync(string region, string puuid, CancellationToken cancellationToken = default)
@@ -25,10 +20,10 @@ public class LolSummonerV4Endpoint : ILolSummonerV4
         {
             HttpMethod = HttpMethod.Get,
             Host = region,
-            MethodId = "/lol/summoner/v4/summoners/by-puuid/{encryptedPUUID}",
+            MethodId = MethodId.Lol_SummonerV4_ByPuuid,
             Path = $"/lol/summoner/v4/summoners/by-puuid/{puuid}",
         };
-        var data = await _client.SendAndDeserializeAsync<SummonerDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await SendAndDeserializeAsync<SummonerDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 }

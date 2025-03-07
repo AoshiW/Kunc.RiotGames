@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using Microsoft.Extensions.Caching.Hybrid;
 
 namespace Kunc.RiotGames.Api;
 
@@ -20,4 +21,11 @@ public class RiotGamesApiOptions
     /// Options to control the behavior during deserialization.
     /// </summary>
     public JsonSerializerOptions? JsonSerializerOptions { get; set; }
+
+    public HybridCacheEntryOptions? DefaultCacheEntryOptions { get; set; } = new() 
+    { 
+        Flags = HybridCacheEntryFlags.DisableLocalCache | HybridCacheEntryFlags.DisableDistributedCache 
+    };
+
+    public Dictionary<string, HybridCacheEntryOptions> MethodCacheEntryOptions { get; set; } = new();
 }

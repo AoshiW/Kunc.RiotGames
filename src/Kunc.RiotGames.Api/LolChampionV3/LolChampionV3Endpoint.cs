@@ -2,18 +2,13 @@
 
 namespace Kunc.RiotGames.Api.LolChampionV3;
 
-public class LolChampionV3Endpoint : ILolChampionV3
+public class LolChampionV3Endpoint : EndpointBase, ILolChampionV3
 {
-    private readonly IRiotGamesApiClient _client;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="LolChampionV3Endpoint"/> class.
     /// </summary>
-    public LolChampionV3Endpoint(IRiotGamesApiClient client)
-    {
-        ArgumentNullException.ThrowIfNull(client);
-        _client = client;
-    }
+    public LolChampionV3Endpoint(IServiceProvider service) : base(service)
+    { }
 
     /// <inheritdoc/>
     public async Task<ChampionInfoDto> GetChampionFreeRotationsAsync(string region, CancellationToken cancellationToken = default)
@@ -24,10 +19,10 @@ public class LolChampionV3Endpoint : ILolChampionV3
         {
             HttpMethod = HttpMethod.Get,
             Host = region,
-            MethodId = "/lol/platform/v3/champion-rotations",
+            MethodId = MethodId.Lol_ChampionV3_FreeRotations,
             Path = "/lol/platform/v3/champion-rotations",
         };
-        var data = await _client.SendAndDeserializeAsync<ChampionInfoDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await SendAndDeserializeAsync<ChampionInfoDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 }

@@ -2,18 +2,13 @@
 
 namespace Kunc.RiotGames.Api.TftMatchV1;
 
-public class TftMatchV1Endpoint : ITftMatchV1
+public class TftMatchV1Endpoint : EndpointBase, ITftMatchV1
 {
-    private readonly IRiotGamesApiClient _client;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="TftMatchV1Endpoint"/> class.
     /// </summary>
-    public TftMatchV1Endpoint(IRiotGamesApiClient client)
-    {
-        ArgumentNullException.ThrowIfNull(client);
-        _client = client;
-    }
+    public TftMatchV1Endpoint(IServiceProvider service) : base(service)
+    { }
 
     /// <inheritdoc/>
     public async Task<string[]> GetMatchIdsAsync(string region, string puuid, MatchIdsQuery? query = null, CancellationToken cancellationToken = default)
@@ -25,11 +20,11 @@ public class TftMatchV1Endpoint : ITftMatchV1
         {
             HttpMethod = HttpMethod.Get,
             Host = region,
-            MethodId = "/tft/match/v1/matches/by-puuid/{puuid}/ids",
+            MethodId = MethodId.Tft_MatchV1_MatchIds,
             Path = $"/tft/match/v1/matches/by-puuid/{puuid}/ids",
             Query = query,
         };
-        var data = await _client.SendAndDeserializeAsync<string[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await SendAndDeserializeAsync<string[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 
@@ -43,9 +38,9 @@ public class TftMatchV1Endpoint : ITftMatchV1
         {
             HttpMethod = HttpMethod.Get,
             Host = region,
-            MethodId = "/tft/match/v1/matches/{matchId}",
+            MethodId = MethodId.Tft_MatchV1_Match,
             Path = $"/tft/match/v1/matches/{matchId}",
         };
-        return await _client.SendAndDeserializeAsync<MatchDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return await SendAndDeserializeAsync<MatchDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 }

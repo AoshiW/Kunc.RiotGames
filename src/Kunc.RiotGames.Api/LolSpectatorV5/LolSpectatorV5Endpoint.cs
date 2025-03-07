@@ -2,18 +2,13 @@
 
 namespace Kunc.RiotGames.Api.LolSpectatorV5;
 
-public class LolSpectatorV5Endpoint : ILolSpectatorV5
+public class LolSpectatorV5Endpoint : EndpointBase, ILolSpectatorV5
 {
-    private readonly IRiotGamesApiClient _client;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="LolSpectatorV5Endpoint"/> class.
     /// </summary>
-    public LolSpectatorV5Endpoint(IRiotGamesApiClient client)
-    {
-        ArgumentNullException.ThrowIfNull(client);
-        _client = client;
-    }
+    public LolSpectatorV5Endpoint(IServiceProvider service) : base(service)
+    { }
 
     /// <inheritdoc/>
     public async Task<CurrentGameInfoDto?> GetCurrentGameInformationForPuuidAsync(string region, string puuid, CancellationToken cancellationToken = default)
@@ -25,10 +20,10 @@ public class LolSpectatorV5Endpoint : ILolSpectatorV5
         {
             HttpMethod = HttpMethod.Get,
             Host = region,
-            MethodId = "/lol/spectator/v5/active-games/by-summoner/{encryptedPUUID}",
+            MethodId = MethodId.Lol_SpectatorV5_ActiveGame,
             Path = $"/lol/spectator/v5/active-games/by-summoner/{puuid}",
         };
-        return await _client.SendAndDeserializeAsync<CurrentGameInfoDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return await SendAndDeserializeAsync<CurrentGameInfoDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc/>
@@ -40,10 +35,10 @@ public class LolSpectatorV5Endpoint : ILolSpectatorV5
         {
             HttpMethod = HttpMethod.Get,
             Host = region,
-            MethodId = "/lol/spectator/v5/featured-games",
+            MethodId = MethodId.Lol_SpectatorV5_FeaturedGames,
             Path = $"/lol/spectator/v5/featured-games",
         };
-        var data = await _client.SendAndDeserializeAsync<FeaturedGamesDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        var data = await SendAndDeserializeAsync<FeaturedGamesDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
 }

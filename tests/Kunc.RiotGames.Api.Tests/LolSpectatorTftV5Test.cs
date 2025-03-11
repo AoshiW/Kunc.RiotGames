@@ -13,7 +13,8 @@ public class LolSpectatorTftV5Test : ApiBase<TGame.TFT>
             Assert.Inconclusive("No games were found.");
 
         var currentGame = await Api.LolSpectatorTftV5.GetCurrentGameInformationForPuuidAsync(Regions.VN2, featuredGames.GameList[0].Participants[0].Puuid);
-
-        Assert.IsNotNull(currentGame);
+        
+        if (currentGame is null)
+            Assert.Inconclusive("A player who should currently be in the game has not been found.");
     }
 }

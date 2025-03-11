@@ -1,4 +1,6 @@
 # Kunc.RiotGames
+[![Daily Build/Test Check](https://github.com/AoshiW/Kunc.RiotGames/actions/workflows/daily_check.yml/badge.svg?branch=dev)](https://github.com/AoshiW/Kunc.RiotGames/actions/workflows/daily_check.yml)
+
 `Kunc.RiotGames` is a collection of libraries to help you work with the RiotGames API, and things like DDragon, LCU , etc.
 
 TODO 

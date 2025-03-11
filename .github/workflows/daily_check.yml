@@ -4,6 +4,7 @@
 name: Daily Build/Test Check
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: '0 12 * * *'
 

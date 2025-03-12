@@ -76,13 +76,21 @@ public class RiotGamesApiClient : IRiotGamesApiClient, IDisposable
 
     async ValueTask<string> ReadErrorMessageAsync(HttpContent content, CancellationToken cancellationToken)
     {
-        var jsonElement = await content.ReadFromJsonAsync<JsonElement>(_options.JsonSerializerOptions, cancellationToken).ConfigureAwait(false);
-        var msg = jsonElement.TryGetProperty("status"u8, out var status) &&
-                    status.TryGetProperty("message"u8, out var message) &&
-                    message.ValueKind == JsonValueKind.String
-                    ? message.ToString()
-                    : string.Empty;
-        return msg;
+        try
+        {
+            var jsonElement = await content.ReadFromJsonAsync<JsonElement>(_options.JsonSerializerOptions, cancellationToken).ConfigureAwait(false);
+            return jsonElement.TryGetProperty("status"u8, out var status) &&
+                        status.TryGetProperty("message"u8, out var message) &&
+                        message.ValueKind == JsonValueKind.String
+                        ? message.ToString()
+                        : jsonElement.ToString();
+        }
+        catch
+        {
+            // sometimes Riot does not return JSON but only this:
+            // error code: 504
+            return await content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+        }
     }
 
     /// <summary>

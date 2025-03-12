@@ -2,6 +2,12 @@ name: NuGet Publish
 
 on:
   workflow_dispatch:
+    inputs:
+      tests:
+        description: 'Run tests'
+        required: false
+        type: boolean
+        default: true
 
 jobs:
   build:
@@ -19,6 +25,7 @@ jobs:
     - name: Build
       run: dotnet build --no-restore  --nowarn:CS1591
     - name: Test
+      if: ${{ inputs.tests }}
       env:
         LOL__APIKEY: ${{ secrets.LOL__APIKEY }}
         LOR__APIKEY: ${{ secrets.LOR__APIKEY }}

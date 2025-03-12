@@ -34,9 +34,7 @@ public static class RiotGamesApiServiceCollectionExtensions
     public static IServiceCollection AddRiotGamesApi(this IServiceCollection services, Action<RiotGamesApiOptions>? configure = null)
     {
         ArgumentNullException.ThrowIfNull(services);
-#pragma warning disable EXTEXP0018 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         services.AddHybridCache();
-#pragma warning restore EXTEXP0018 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         services.AddOptions();
         services.TryAdd(ServiceDescriptor.Singleton<IRiotGamesRateLimiter, RiotGamesRateLimiter>());
         services.TryAdd(ServiceDescriptor.Singleton<IRiotGamesApiClient, RiotGamesApiClient>());

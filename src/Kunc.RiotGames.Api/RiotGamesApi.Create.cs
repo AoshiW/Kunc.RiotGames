@@ -32,12 +32,10 @@ public partial class RiotGamesApi
 
         var serviceCollection = new ServiceCollection();
         serviceCollection.AddRiotGamesApi(configure);
-#pragma warning disable EXTEXP0018 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         serviceCollection.Configure<HybridCacheOptions>(c =>
         {
             c.MaximumPayloadBytes = long.Max(c.MaximumPayloadBytes, 3 * 1024 * 1024); //the biggest json I found in match history was 1,7 MB
         });
-#pragma warning restore EXTEXP0018 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
         var riotGamesApi = serviceProvider.GetRequiredService<IRiotGamesApi>();
         return new DisposingRiotGamesApi(riotGamesApi, serviceProvider);

@@ -5,7 +5,6 @@ namespace Kunc.RiotGames.Api.LolLeagueV4;
 
 public class LeagueItemDto : BaseDto
 {
-
     /// <summary>
     /// Player Universal Unique Identifier.
     /// </summary>

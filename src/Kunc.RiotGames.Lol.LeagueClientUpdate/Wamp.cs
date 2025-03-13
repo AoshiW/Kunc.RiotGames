@@ -2,6 +2,7 @@
 using System.Net.WebSockets;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Kunc.RiotGames.Lol.LeagueClientUpdate;
 
@@ -30,9 +31,9 @@ public sealed class Wamp : IWamp
     /// <summary>
     /// Initializes a new instance of the <see cref="LolLeagueClientUpdate"/> class.
     /// </summary>
-    public Wamp(ILogger<Wamp> logger)
+    public Wamp(ILogger<Wamp>? logger = null)
     {
-        _logger = logger;
+        _logger = logger ?? NullLogger<Wamp>.Instance;
     }
 
     private async Task EventLoopAsync()

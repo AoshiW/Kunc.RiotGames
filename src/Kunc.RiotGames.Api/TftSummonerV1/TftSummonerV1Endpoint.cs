@@ -11,7 +11,7 @@ public class TftSummonerV1Endpoint : EndpointBase, ITftSummonerV1
     { }
 
     /// <inheritdoc/>
-    public async Task<SummonerDto> GetSummonerByPuuidAsync(string region, string puuid, CancellationToken cancellationToken = default)
+    public async Task<SummonerDto?> GetSummonerByPuuidAsync(string region, string puuid, CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(region);
         ArgumentException.ThrowIfNullOrEmpty(puuid);
@@ -24,11 +24,11 @@ public class TftSummonerV1Endpoint : EndpointBase, ITftSummonerV1
             Path = $"/tft/summoner/v1/summoners/by-puuid/{puuid}",
         };
         var data = await SendAndDeserializeAsync<SummonerDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
-        return data!;
+        return data;
     }
 
     /// <inheritdoc/>
-    public async Task<SummonerDto> GetSummonerBySummonerIdAsync(string region, string summonerId, CancellationToken cancellationToken = default)
+    public async Task<SummonerDto?> GetSummonerBySummonerIdAsync(string region, string summonerId, CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(region);
         ArgumentException.ThrowIfNullOrEmpty(summonerId);
@@ -41,6 +41,6 @@ public class TftSummonerV1Endpoint : EndpointBase, ITftSummonerV1
             Path = $"/tft/summoner/v1/summoners/{summonerId}",
         };
         var data = await SendAndDeserializeAsync<SummonerDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
-        return data!;
+        return data;
     }
 }

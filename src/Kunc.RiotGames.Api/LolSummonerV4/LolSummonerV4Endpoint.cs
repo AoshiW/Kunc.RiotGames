@@ -11,7 +11,7 @@ public class LolSummonerV4Endpoint : EndpointBase, ILolSummonerV4
     { }
 
     /// <inheritdoc/>
-    public async Task<SummonerDto> GetSummonerByPuuidAsync(string region, string puuid, CancellationToken cancellationToken = default)
+    public async Task<SummonerDto?> GetSummonerByPuuidAsync(string region, string puuid, CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(region);
         ArgumentException.ThrowIfNullOrEmpty(puuid);
@@ -24,6 +24,6 @@ public class LolSummonerV4Endpoint : EndpointBase, ILolSummonerV4
             Path = $"/lol/summoner/v4/summoners/by-puuid/{puuid}",
         };
         var data = await SendAndDeserializeAsync<SummonerDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
-        return data!;
+        return data;
     }
 }

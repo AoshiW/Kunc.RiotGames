@@ -9,7 +9,7 @@ public interface ITftSummonerV1
     /// <param name="puuid"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<SummonerDto> GetSummonerByPuuidAsync(string region, string puuid, CancellationToken cancellationToken = default);
+    Task<SummonerDto?> GetSummonerByPuuidAsync(string region, string puuid, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Get a summoner by summoner ID.
@@ -18,5 +18,5 @@ public interface ITftSummonerV1
     /// <param name="summonerId"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<SummonerDto> GetSummonerBySummonerIdAsync(string region, string summonerId, CancellationToken cancellationToken = default);
+    Task<SummonerDto?> GetSummonerBySummonerIdAsync(string region, string summonerId, CancellationToken cancellationToken = default);
 }

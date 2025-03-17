@@ -9,5 +9,5 @@ public interface ILolSummonerV4
     /// <param name="puuid"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<SummonerDto> GetSummonerByPuuidAsync(string region, string puuid, CancellationToken cancellationToken = default);
+    Task<SummonerDto?> GetSummonerByPuuidAsync(string region, string puuid, CancellationToken cancellationToken = default);
 }

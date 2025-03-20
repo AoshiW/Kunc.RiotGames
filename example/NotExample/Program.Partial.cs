@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NeoSmart.Caching.Sqlite;
 
-partial class Program
+static partial class Program
 {
     static readonly IConfiguration Configuration = new ConfigurationManager()
         .SetBasePath(Directory.GetParent(Directory.GetCurrentDirectory())!.Parent!.Parent!.FullName)
@@ -37,17 +37,19 @@ partial class Program
             };
         })
         .AddSingleton<ILolGameClient, LolGameClient>()
-        .AddRiotGamesApi(c => c.ApiKey = Configuration["RGAPIKEY"]!)
+        .AddRiotGamesApi(c =>
+        {
+            c.ApiKey = Configuration["RGAPIKEY"]!;
+        })
         .AddSqliteCache(x =>
         {
             x.CachePath = "cache.sqlite";
         })
-#pragma warning disable EXTEXP0018 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         .Configure<HybridCacheOptions>(c =>
         {
             c.MaximumPayloadBytes *= 4; // the biggest json file for LolDataDragon is 2.5 MB
         })
-#pragma warning restore EXTEXP0018 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+        .ApplaySomePrivateLocalSetting()
         .BuildServiceProvider();
 
     static ILorDeckEncoder LorDeckEncoder => _service.GetRequiredService<ILorDeckEncoder>();
@@ -56,4 +58,14 @@ partial class Program
     static ILolDataDragon LolDataDragon => _service.GetRequiredService<ILolDataDragon>();
     static ILolGameClient LolGameClient => _service.GetRequiredService<ILolGameClient>();
     static IRiotGamesApi Api => _service.GetRequiredService<IRiotGamesApi>();
+
+    static IServiceCollection ApplaySomePrivateLocalSetting(this IServiceCollection services)
+    {
+        SomePrivateLocalSetting(services);
+        return services;
+    }
+
+    // these methodsa are defined in Program.Local.cs (this file isn't uploaded to GH)
+    static partial void SomePrivateLocalSetting(IServiceCollection services);
+    static partial void SomePrivateLocalCode();
 }

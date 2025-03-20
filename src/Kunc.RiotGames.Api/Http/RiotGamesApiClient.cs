@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Diagnostics;
+using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
@@ -41,8 +42,12 @@ public class RiotGamesApiClient : IRiotGamesApiClient, IDisposable
             if (options.IncludeApiKey)
                 httpRequestMessage.Headers.Add(ApiConstants.RiotToken, _options.ApiKey);
 
+            var startTime = Stopwatch.GetTimestamp();
+            
             var response = await _client.SendAsync(httpRequestMessage, cancellationToken).ConfigureAwait(false);
-            _logger.LogRequest(httpRequestMessage.RequestUri, response.StatusCode);
+            
+            var elapsed = Stopwatch.GetElapsedTime(startTime);
+            _logger.LogRequest(httpRequestMessage.RequestUri, response.StatusCode, elapsed);
 
             await _rateLimiter.UpdateAsync(request.Host, request, response, cancellationToken).ConfigureAwait(false);
             if (response.IsSuccessStatusCode || response.StatusCode is HttpStatusCode.NotFound)

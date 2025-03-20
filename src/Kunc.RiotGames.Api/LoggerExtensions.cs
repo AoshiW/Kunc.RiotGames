@@ -18,6 +18,6 @@ internal static partial class LoggerExtensions
     [LoggerMessage(LogLevel.Information, "Method rate limiter is initialized, Region: {region}, MethodId: {methodId} RateLimits: {rateLimits}")]
     public static partial void InitializedMethodRateLimit(this ILogger logger, string region, string methodId, string rateLimits);
 
-    [LoggerMessage(LogLevel.Information, "Request: {uri} , statusCode: {statusCode}")]
-    public static partial void LogRequest(this ILogger logger, Uri? uri, HttpStatusCode statusCode);
+    [LoggerMessage(LogLevel.Information, "Request: {uri} , statusCode: {statusCode}, time: {elapsed}")]
+    public static partial void LogRequest(this ILogger logger, Uri? uri, HttpStatusCode statusCode, TimeSpan elapsed);
 }

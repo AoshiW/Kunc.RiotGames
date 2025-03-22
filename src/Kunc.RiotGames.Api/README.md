@@ -21,7 +21,7 @@ Console.WriteLine($"Account: {account.GetRiotId()}");
 var summoner = await api.LolSummonerV4.GetSummonerByPuuidAsync(Regions.EUN1, account.Puuid);
 Console.WriteLine();
 Console.WriteLine("Ranks:");
-var entries = await api.LolLeagueV4.LeagueEntriesForSummonerAsync(Regions.EUN1, summoner.Id);
+var entries = await api.LolLeagueV4.LeagueEntriesForSummonerAsync(Regions.EUN1, summoner.Puuid);
 foreach (var entry in entries)
 {
     Console.WriteLine($"{entry.QueueType}: {entry.ToRank()}");

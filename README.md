@@ -33,7 +33,7 @@ Console.WriteLine($"Account: {account.GetRiotId()}");
 Console.WriteLine($"Region: {smallRegion}");
 Console.WriteLine($"Level: {summoner.Level}");
 
-LeagueEntryDto[] entries = await api.LolLeagueV4.LeagueEntriesForSummonerAsync(smallRegion, summoner.Id);
+LeagueEntryDto[] entries = await api.LolLeagueV4.LeagueEntriesForSummonerAsync(smallRegion, summoner.Puuid);
 Console.WriteLine();
 Console.WriteLine($"Rank:");
 foreach (var entry in entries)
@@ -59,7 +59,6 @@ Region: eun1
 Level: 591
 
 Rank:
-Cherry: Unranked
 RankedFlexSR: Gold I 56LP
 RankedSolo5x5: Gold II 86LP
 

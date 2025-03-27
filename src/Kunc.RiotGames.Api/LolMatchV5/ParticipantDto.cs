@@ -132,6 +132,12 @@ public class ParticipantDto : BaseDto, IKda
     public int GoldSpent { get; set; }
 
     //todo enum TOP JUNGLE MIDDLE BOTTOM UTILITY Invalid
+    /// <remarks>
+    /// Both individualPosition and teamPosition are computed by the game server and are different versions of the most likely position played by a player.
+    /// The individualPosition is the best guess for which position the player actually played in isolation of anything else.
+    /// The teamPosition is the best guess for which position the player actually played if we add the constraint that each team must have one top player, one jungle, one middle, etc.
+    /// Generally the recommendation is to use the teamPosition field over the individualPosition field.
+    /// </remarks>
     [JsonPropertyName("individualPosition")]
     public string IndividualPosition { get; set; } = string.Empty;
 
@@ -326,6 +332,12 @@ public class ParticipantDto : BaseDto, IKda
     public TeamId TeamId { get; set; }
 
     //todo enum TOP JUNGLE MIDDLE BOTTOM UTILITY string.Empty
+    /// <remarks>
+    /// Both individualPosition and teamPosition are computed by the game server and are different versions of the most likely position played by a player.
+    /// The individualPosition is the best guess for which position the player actually played in isolation of anything else.
+    /// The teamPosition is the best guess for which position the player actually played if we add the constraint that each team must have one top player, one jungle, one middle, etc.
+    /// Generally the recommendation is to use the teamPosition field over the individualPosition field.
+    /// </remarks>
     [JsonPropertyName("teamPosition")]
     public string TeamPosition { get; set; } = string.Empty;
 
@@ -437,9 +449,9 @@ public class ParticipantDto : BaseDto, IKda
     [JsonPropertyName("holdPings")]
     public int HoldPings { get; set; }
 
-    /// <summary>
+    /// <remarks>
     /// <see cref="TotalMinionsKilled"/> + <see cref="NeutralMinionsKilled"/>
-    /// </summary>
+    /// </remarks>
     [JsonIgnore]
     public int CreepScore => TotalMinionsKilled + NeutralMinionsKilled;
 

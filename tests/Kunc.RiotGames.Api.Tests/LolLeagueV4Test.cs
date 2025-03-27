@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Kunc.RiotGames.Lol;
+using Microsoft.Extensions.Configuration;
 
 namespace Kunc.RiotGames.Api.Tests;
 
@@ -41,5 +42,14 @@ public class LolLeagueV4Test : ApiBase<TGame.LOL>
         {
             Assert.Inconclusive("Summoner without rank.");
         }
+    }
+
+
+    [TestMethod]
+    public async Task GetAllLeaguesEntriesAsync()
+    {
+        var entries = await Api.LolLeagueV4.GetAllLeaguesEntriesAsync(Regions.SG2, QueueType.RankedSolo5x5, Tier.Emerald, Division.II);
+
+        Assert.AreNotEqual(0, entries.Length);
     }
 }

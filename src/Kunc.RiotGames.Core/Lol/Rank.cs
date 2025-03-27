@@ -1,5 +1,7 @@
 ﻿#pragma warning disable IDE0046 // Use conditional expression for return
+using System.Buffers;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Kunc.RiotGames.Lol;
@@ -188,7 +190,8 @@ public struct Rank :
         return ToString(null, null);
     }
 
-    // TODO: it would be cool to have some formatting options, 
+    // TODO: it would be cool to have some formatting options
+    // (this hould be compatible with parsing)
     // examples:
     // output with/without LP
     // IRON 4 vs IRON IV (roman vs arabic numerals)
@@ -214,11 +217,36 @@ public struct Rank :
     /// <inheritdoc/>
     public readonly string ToString(string? format, IFormatProvider? formatProvider)
     {
-        // todo add support for alternative formats?
-        // (it must be compatible with parsing)
-        return IsUnranked
-            ? UnrankedString
-            : $"{Tier} {Division} {LeaguePoints}LP";
+        if (IsUnranked)
+            return UnrankedString;
+
+        // the longest string should not exceed 22 characters, 
+        Span<char> span = stackalloc char[32];
+        char[]? array = null;
+        int written;
+        while(!TryFormat(span, out written, format, formatProvider))
+        {
+            Debug.Fail("Buffer is too small");
+            /*
+             * If we get here, it means one of two things:
+             * 1. Rank contains some non-valid values that made the buffer size insufficient, e.g.: new Rank((Tier)int.MinValue, (Division)int.MinValue, int.MinValue)
+             *  in this case, we're not doing anything
+             * 2. Tier/Division contains some new value that makes the buffer size insufficient e.g.: Tier.I_am_very_looooooooong_value
+             *  increase buffer size (up to 64) 
+             *  or
+             *  delete this comment + Debug.Fail (if increasing the buffer size wasn't enough)
+             */
+
+            var oldLength = span.Length;
+            if (array is not null)
+                ArrayPool<char>.Shared.Return(array);
+            array = ArrayPool<char>.Shared.Rent(oldLength * 2);
+            span = array;
+        }
+        var str = span.Slice(0, written).ToString();
+        if(array is not null)
+            ArrayPool<char>.Shared.Return(array);
+        return str;
     }
 
     /// <inheritdoc/>

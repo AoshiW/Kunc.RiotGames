@@ -34,7 +34,7 @@ public partial class LolLeagueClientUpdate
             ClientCertificateOptions = ClientCertificateOption.Manual,
             ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator,
         };
-        _client = new HttpClient(clientHandler);
+        _client = new HttpClient(new RateLimiterHandler(clientHandler, _options));
         _lockfileProvider = lockfileProvider;
         _lockfileProvider.Created += _lockfileProvider_Created;
         _lockfileProvider.Deleted += _lockfileProviedr_Deleted;

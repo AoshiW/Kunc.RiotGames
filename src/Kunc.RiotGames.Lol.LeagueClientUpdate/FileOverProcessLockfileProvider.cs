@@ -33,27 +33,31 @@ public class FileOverProcessLockfileProvider : ILockfileProvider
     {
         while (await _timer.WaitForNextTickAsync(cancellationToken) && !_disposedValue)
         {
-            var processes = Process.GetProcessesByName("LeagueClientUx");
-            if (processes.Length == 0)
-            {
-                _logger.LogProcessNotFound();
-                continue;
-            }
-            foreach (var process in processes)
-            {
-                if (process.MainModule is not null)
-                {
-                    _timer.Period = Timeout.InfiniteTimeSpan;
-                    var filenamePath = process.MainModule.FileName;
-                    var path = Path.GetDirectoryName(filenamePath)!;
-                    _filePath = Path.Join(path, "lockfile");
-                    _logger.LogProcessFound();
-                    InitFileSystemWatcher(path);
-                    return;
-                }
-            }
-            _logger.LogProcessFoundNotPath();
+            CheckProcessCore();
         }
+    }
+    private void CheckProcessCore()
+    {
+        var processes = Process.GetProcessesByName("LeagueClientUx");
+        if (processes.Length == 0)
+        {
+            _logger.LogProcessNotFound();
+            return;
+        }
+        foreach (var process in processes)
+        {
+            if (process.MainModule is not null)
+            {
+                _timer.Period = Timeout.InfiniteTimeSpan;
+                var filenamePath = process.MainModule.FileName;
+                var path = Path.GetDirectoryName(filenamePath)!;
+                _filePath = Path.Join(path, "lockfile");
+                _logger.LogProcessFound();
+                InitFileSystemWatcher(path);
+                return;
+            }
+        }
+        _logger.LogProcessFoundNotPath();
     }
 
     private void InitFileSystemWatcher(string path)
@@ -74,6 +78,8 @@ public class FileOverProcessLockfileProvider : ILockfileProvider
     {
         ObjectDisposedException.ThrowIf(_disposedValue, this);
 
+        if (_filePath is null)
+             CheckProcessCore();
         return _lockfile is not null || _filePath is null
             ? ValueTask.FromResult<Lockfile?>(_lockfile)
             : FromFileAsync(_filePath, cancellationToken);

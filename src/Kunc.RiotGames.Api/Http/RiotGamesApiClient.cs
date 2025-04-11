@@ -1,7 +1,7 @@
-﻿using System.Diagnostics;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
@@ -10,20 +10,31 @@ namespace Kunc.RiotGames.Api.Http;
 
 public class RiotGamesApiClient : IRiotGamesApiClient, IDisposable
 {
-    private readonly HttpClient _client = new();
+    private readonly HttpClient _client;
     private readonly RiotGamesApiOptions _options;
-    private readonly IRiotGamesRateLimiter _rateLimiter;
     private readonly ILogger<RiotGamesApiClient> _logger;
     private bool _disposedValue;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RiotGamesApiClient"/> class.
     /// </summary>
-    public RiotGamesApiClient(IOptions<RiotGamesApiOptions> options, IRiotGamesRateLimiter rateLimiter, ILogger<RiotGamesApiClient>? logger = null)
+    public RiotGamesApiClient(IOptions<RiotGamesApiOptions> options, [FromKeyedServices(ApiConstants.Project)] IEnumerable<DelegatingHandler> handlers, ILogger<RiotGamesApiClient>? logger = null)
     {
         _options = options.Value;
-        _rateLimiter = rateLimiter;
+
+        _client= new(CreateChain(handlers));
         _logger = logger ?? NullLogger<RiotGamesApiClient>.Instance;
+    }
+
+    static HttpMessageHandler CreateChain(IEnumerable<DelegatingHandler> handlers)
+    {
+        HttpMessageHandler handler = new HttpClientHandler();
+        foreach (var item in handlers)
+        {
+            item.InnerHandler = handler;
+            handler = item;
+        }
+        return handler;
     }
 
     /// <inheritdoc/>
@@ -34,40 +45,20 @@ public class RiotGamesApiClient : IRiotGamesApiClient, IDisposable
         List<Exception>? exceptions = null;
         do
         {
-            // first check the methodRl, then appRl!
-            using var methodRl = await _rateLimiter.AcquireMethodAsync(request.Host, request.MethodId, cancellationToken).ConfigureAwait(false);
-            using var appRl = await _rateLimiter.AcquireAppAsync(request.Host, cancellationToken).ConfigureAwait(false);
             retries++;
             using var httpRequestMessage = request.ToHttpRequestMessage();
             if (options.IncludeApiKey)
-                httpRequestMessage.Headers.Add(ApiConstants.RiotToken, _options.ApiKey);
+                httpRequestMessage.Headers.Add(ApiConstants.Headers.RiotToken, _options.ApiKey);
 
-            var startTime = Stopwatch.GetTimestamp();
-            
             var response = await _client.SendAsync(httpRequestMessage, cancellationToken).ConfigureAwait(false);
             
-            var elapsed = Stopwatch.GetElapsedTime(startTime);
-            _logger.LogRequest(httpRequestMessage.RequestUri, response.StatusCode, elapsed);
-
-            await _rateLimiter.UpdateAsync(request.Host, request, response, cancellationToken).ConfigureAwait(false);
             if (response.IsSuccessStatusCode || response.StatusCode is HttpStatusCode.NotFound)
                 return response;
 
             var msg = await ReadErrorMessageAsync(response.Content, cancellationToken).ConfigureAwait(false);
             (exceptions ??= new()).Add(new HttpRequestException(msg, null, response.StatusCode));
 
-            if (response.StatusCode is HttpStatusCode.TooManyRequests)
-            {
-                var delay = response.Headers.RetryAfter?.Delta ?? _options.Delay;
-                var rateLimitType = "Unknow";
-                if (response.Headers.TryGetValues(ApiConstants.RateLimitType, out var rlt) && (rateLimitType = rlt.First()) == "method")
-                {
-                    appRl.Dispose();
-                }
-                _logger.HitRateLimits(request.Host, request.MethodId, delay, rateLimitType);
-                await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
-            }
-            else if (response.StatusCode is >= (HttpStatusCode)400 and < (HttpStatusCode)500)
+            if (response.StatusCode is >= (HttpStatusCode)400 and < (HttpStatusCode)500)
             {
                 throw exceptions[^1];
             }

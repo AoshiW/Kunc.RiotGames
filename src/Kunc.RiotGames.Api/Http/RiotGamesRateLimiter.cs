@@ -41,9 +41,9 @@ public sealed class RiotGamesRateLimiter : IRiotGamesRateLimiter, IDisposable
     }
 
     /// <inheritdoc/>
-    public ValueTask UpdateAsync(string region, RiotRequestMessage request, HttpResponseMessage response, CancellationToken cancellationToken)
+    public ValueTask UpdateAsync(RequestInfo requestInfo, HttpRequestMessage request, HttpResponseMessage response, CancellationToken cancellationToken)
     {
-        GetRegionalLimiter(region).Update(request, response);
+        GetRegionalLimiter(requestInfo.Host).Update(requestInfo, request, response);
         return ValueTask.CompletedTask;
     }
 
@@ -101,28 +101,27 @@ public sealed class RiotGamesRateLimiter : IRiotGamesRateLimiter, IDisposable
             return new SemaphoreSlimLease(_methodSS);
         }
 
-        public void Update(RiotRequestMessage request, HttpResponseMessage response)
+        public void Update(RequestInfo requestInfo, HttpRequestMessage request, HttpResponseMessage response)
         {
             var headers = response.Headers;
-            var methodId = request.MethodId;
-            if (_app is null && headers.TryGetValues(ApiConstants.AppRateLimit, out var values1))
+            if (_app is null && headers.TryGetValues(ApiConstants.Headers.AppRateLimit, out var values1))
             {
                 var value = values1.FirstOrDefault();
                 var limiter = Parse(value, _options.Value);
                 if (limiter is not null)
                 {
-                    _logger.InitializedAppRateLimit(request.Host, value!);
+                    _logger.InitializedAppRateLimit(requestInfo.Host, value!);
                     _app = limiter;
                 }
             }
-            if (!_methods.ContainsKey(methodId) && headers.TryGetValues(ApiConstants.MethodRateLimit, out var values2))
+            if (!_methods.ContainsKey(requestInfo.MethodId) && headers.TryGetValues(ApiConstants.Headers.MethodRateLimit, out var values2))
             {
                 var value = values2.FirstOrDefault();
                 var limiter = Parse(value, _options.Value);
                 if (limiter is not null)
                 {
-                    _logger.InitializedMethodRateLimit(request.Host, methodId, value!);
-                    _methods[methodId] = limiter;
+                    _logger.InitializedMethodRateLimit(requestInfo.Host, requestInfo.MethodId, value!);
+                    _methods[requestInfo.MethodId] = limiter;
                 }
             }
         }

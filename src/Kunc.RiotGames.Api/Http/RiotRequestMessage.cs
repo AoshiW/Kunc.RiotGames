@@ -10,7 +10,7 @@ public class RiotRequestMessage
 
     internal HttpRequestMessage ToHttpRequestMessage()
     {
-        return new()
+        var request = new HttpRequestMessage()
         {
             Method = HttpMethod,
             RequestUri = new UriBuilder()
@@ -21,6 +21,14 @@ public class RiotRequestMessage
                 Query = Query?.ToString(),
             }.Uri,
         };
+
+        request.Options.Set(RequestInfo.HttpRequestOptionsKey, new()
+        {
+            Host = Host,
+            MethodId = MethodId,
+        });
+
+        return request;
     }
 
     /// <inheritdoc/>
@@ -39,6 +47,5 @@ public class RiotRequestMessage
     internal string GetCacheKey()
     {
         return $"{Host}_{Path}{Query}";
-        
     }
 }

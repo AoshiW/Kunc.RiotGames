@@ -1,4 +1,5 @@
 ﻿using Kunc.RiotGames.Api.Http;
+using Kunc.RiotGames.Api.Http.Handlers;
 using Kunc.RiotGames.Api.LolChallengesV1;
 using Kunc.RiotGames.Api.LolChampionMasteryV4;
 using Kunc.RiotGames.Api.LolChampionV3;
@@ -39,6 +40,10 @@ public static class RiotGamesApiServiceCollectionExtensions
         services.TryAdd(ServiceDescriptor.Singleton<IRiotGamesRateLimiter, RiotGamesRateLimiter>());
         services.TryAdd(ServiceDescriptor.Singleton<IRiotGamesApiClient, RiotGamesApiClient>());
         services.TryAdd(ServiceDescriptor.Singleton<IRiotGamesApi, RiotGamesApi>());
+
+        // DOTO rewrite with HttpClientFactory
+        services.Add(ServiceDescriptor.KeyedSingleton<DelegatingHandler, LogRequestHandler>(ApiConstants.Project));
+        services.Add(ServiceDescriptor.KeyedSingleton<DelegatingHandler, RateLimiterHandler>(ApiConstants.Project));
 
         services.TryAdd(ServiceDescriptor.Singleton<ILolClashV1, LolClashV1Endpoint>());
         services.TryAdd(ServiceDescriptor.Singleton<ILolChallengesV1, LolChallengesV1Endpoint>());

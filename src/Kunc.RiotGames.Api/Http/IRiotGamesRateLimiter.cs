@@ -8,5 +8,5 @@ public interface IRiotGamesRateLimiter
 
     ValueTask<RateLimitLease> AcquireMethodAsync(string region, string methodId, CancellationToken cancellationToken);
 
-    ValueTask UpdateAsync(string region, RiotRequestMessage request, HttpResponseMessage response, CancellationToken cancellationToken);
+    ValueTask UpdateAsync(RequestInfo requestInfo, HttpRequestMessage request, HttpResponseMessage response, CancellationToken cancellationToken);
 }

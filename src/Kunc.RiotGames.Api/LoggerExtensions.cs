@@ -12,6 +12,9 @@ internal static partial class LoggerExtensions
     [LoggerMessage(LogLevel.Warning, "TooManyRequests (speed limiter didn't work properly). Region: {region}, MethodId: {methodId}, Delay: {delay:c} MethodType: {type}")]
     public static partial void HitRateLimits(this ILogger logger, string region, string methodId, TimeSpan delay, string type);
 
+    [LoggerMessage(LogLevel.Warning, "Missing RequestInfo ({message}).")]
+    public static partial void LogMissingRequestInfo(this ILogger logger, string message);
+
     [LoggerMessage(LogLevel.Information, "App rate limiter is initialized, Region: {region}, RateLimits: {rateLimits}")]
     public static partial void InitializedAppRateLimit(this ILogger logger, string region, string rateLimits);
 

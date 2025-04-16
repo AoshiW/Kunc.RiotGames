@@ -5,12 +5,15 @@ using Microsoft.Extensions.Options;
 
 namespace Kunc.RiotGames.Api.Http.Handlers;
 
-internal class RateLimiterHandler : DelegatingHandler
+public class RateLimiterHandler : DelegatingHandler
 {
     private readonly IRiotGamesRateLimiter _rateLimiter;
     private readonly ILogger<RiotGamesApiClient> _logger;
     private readonly RiotGamesApiOptions _options;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="RateLimiterHandler"/> class.
+    /// </summary>
     public RateLimiterHandler(IRiotGamesRateLimiter rateLimiter, IOptions<RiotGamesApiOptions> options, ILogger<RiotGamesApiClient>? logger = null)
     {
         _rateLimiter = rateLimiter;
@@ -18,16 +21,21 @@ internal class RateLimiterHandler : DelegatingHandler
         _options = options.Value;
     }
 
+    /// <summary>
+    ///  Throw <see cref="NotSupportedException"/>.
+    /// </summary>
+    /// <exception cref="NotSupportedException"></exception>
     protected override HttpResponseMessage Send(HttpRequestMessage request, CancellationToken cancellationToken)
     {
         throw new NotSupportedException("Use SendAsync, Send isn't supported");
     }
 
+    /// <inheritdoc/>
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
         if (!request.Options.TryGetValue(RequestInfo.HttpRequestOptionsKey, out var requestInfo))
         {
-            // TODO log missing data
+            _logger.LogMissingRequestInfo("Rate limiter skipped");
             return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
         }
 

@@ -4,20 +4,29 @@ using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Kunc.RiotGames.Api.Http.Handlers;
 
-internal class LogRequestHandler : DelegatingHandler
+// todo this is probably not needed with httpClientFactory
+public class LogRequestHandler : DelegatingHandler
 {
     private readonly ILogger<RiotGamesApiClient> _logger;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="LogRequestHandler"/> class.
+    /// </summary>
     public LogRequestHandler(ILogger<RiotGamesApiClient>? logger = null)
     {
         _logger = logger ?? NullLogger<RiotGamesApiClient>.Instance;
     }
 
+    /// <summary>
+    ///  Throw <see cref="NotSupportedException"/>.
+    /// </summary>
+    /// <exception cref="NotSupportedException"></exception>
     protected override HttpResponseMessage Send(HttpRequestMessage request, CancellationToken cancellationToken)
     {
         throw new NotSupportedException("Use SendAsync, Send isn't supported");
     }
 
+    /// <inheritdoc/>
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
         var startTime = Stopwatch.GetTimestamp();

@@ -4,16 +4,18 @@
 ## Features
 - Rate limiting (The rate limiter is automatically set according to your api key.)
 - Caching (By default it's disabled; More info [here](#caching).)
+
 ## How to Use
 ```cs
-using  Kunc.RiotGames.Api;
+using Kunc.RiotGames.Api;
+using Microsoft.Extensions.DependencyInjection;
 
-var api = RiotGamesApi.Create(c => c.ApiKey = "RGAPI-...");
-// or
-using var services = new ServiceCollection()
+var services = new ServiceCollection()
     .AddRiotGamesApi(c => c.ApiKey = "RGAPI-...")
     .BuildServiceProvider();
-var api = services.GetRequiredService<IRiotGamesApi>();
+IRiotGamesApi api = services.GetRequiredService<IRiotGamesApi>();
+// or
+IRiotGamesApi api = RiotGamesApi.Create(c => c.ApiKey = "RGAPI-...");
 
 var account = await api.RiotAccountV1.GetAccountByRiotIdAsync(Regions.EUROPE, "AoshiW#IRON");
 Console.WriteLine($"Account: {account.GetRiotId()}");

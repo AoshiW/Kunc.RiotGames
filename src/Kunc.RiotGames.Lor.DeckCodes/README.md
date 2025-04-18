@@ -10,8 +10,8 @@ Documentation on how this works can be found in the [original repository](https:
 ## How to Use
 ```cs
 using Kunc.RiotGames.Lor.DeckCodes;
-var deckEncoder = new LorDeckEncoder();
 
+var deckEncoder = new LorDeckEncoder();
 var deck1 = new List<DeckItem>()
 {
     new() { CardCode = "01DE002", Count = 4 },
@@ -19,6 +19,7 @@ var deck1 = new List<DeckItem>()
     new() { CardCode = "02BW010", Count = 3 },
     ...
 }
+
 string code = deckEncoder.GetCodeFromDeck(deck1);
 List<DeckCard> deck2 = deckEncoder.GetDeckFromCode<DeckCard>(code);
 ```

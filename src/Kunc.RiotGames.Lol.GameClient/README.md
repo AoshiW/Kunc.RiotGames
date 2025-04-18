@@ -6,6 +6,7 @@
 ## How to Use
 ```cs
 using Kunc.RiotGames.Lol.GameClient;
+
 ILolGameClient client = LolGameClient.Create();
 
 AllGameDataDto allGameData = await client.LiveClientData.GetAllGameDataAsync();

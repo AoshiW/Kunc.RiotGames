@@ -10,14 +10,19 @@ Simple client for League of Legends DataDragon.
 ## How to Use
 ```cs
 using Kunc.RiotGames.Lol.DataDragon;
+using Microsoft.Extensions.DependencyInjection;
+
+var service = new ServiceCollection()
+    .AddLolDataDragon()
+    .BuildServiceProvider();
+ILolDataDragon lolDataDragon = service.GetRequiredService<ILolDataDragon>();
+// or
 ILolDataDragon lolDataDragon = LolDataDragon.Create();
 
 int count = 5;
 var language = "en_US";
 var versions = await lolDataDragon.GetVersionsAsync();
-var lastVersion = versions[0];
-// or
-// lastVersion = "latest";
+var lastVersion = versions[0]; // or "latest"
 
 Dictionary<string, ChampionDto> champions = await lolDataDragon.GetChampionsAsync(lastVersion, language);
 

@@ -6,6 +6,13 @@
 ## How to Use
 ```cs
 using Kunc.RiotGames.Lor.GameClient;
+using Microsoft.Extensions.DependencyInjection;
+
+var service = new ServiceCollection()
+    .AddLorGameClient()
+    .BuildServiceProvider();
+ILorGameClient lorGameClient = service.GetRequiredService<ILorGameClient>();
+// or
 ILorGameClient lorGameClient = LorGameClient.Create();
 
 PositionalRectangles positionalRectangles = await lorGameClient.GetPositionalRectanglesAsync();

@@ -6,6 +6,13 @@ Simple client for interacting with the League of Legends LCU.
 ## How to use
 ```cs
 using Kunc.RiotGames.Lol.LeagueClientUpdate;
+using Microsoft.Extensions.DependencyInjection;
+
+var service = new ServiceCollection()
+    .AddLolLeagueClientUpdate()
+    .BuildServiceProvider();
+ILolLeagueClientUpdate lcu = service.GetRequiredService<ILolLeagueClientUpdate>();
+// or 
 ILolLeagueClientUpdate lcu = LolLeagueClientUpdate.Create();
 ```
 

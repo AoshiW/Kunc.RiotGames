@@ -41,7 +41,7 @@ public static class RiotGamesApiServiceCollectionExtensions
         services.TryAdd(ServiceDescriptor.Singleton<IRiotGamesApiClient, RiotGamesApiClient>());
         services.TryAdd(ServiceDescriptor.Singleton<IRiotGamesApi, RiotGamesApi>());
 
-        // DOTO rewrite with HttpClientFactory
+        // TODO maybe rewrite it with HttpClientFactory??
         services.Add(ServiceDescriptor.KeyedSingleton<DelegatingHandler, LogRequestHandler>(ApiConstants.Project));
         services.Add(ServiceDescriptor.KeyedSingleton<DelegatingHandler, RateLimiterHandler>(ApiConstants.Project));
 

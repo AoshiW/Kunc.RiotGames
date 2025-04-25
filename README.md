@@ -3,7 +3,7 @@
 
 `Kunc.RiotGames` is a collection of libraries to help you work with the RiotGames API, and things like DDragon, LCU , etc.
 
-Each package has its own README with more detailed information about its purpose and use. If you want to know more about each one of these, please refer to the [packages](#packages) list.
+**Each package has its own README with more detailed information about its purpose and use.** If you want to know more about each one of these, please refer to the [packages](#packages) list.
 
 ## Packages
 All packages are available through [NuGet](https://www.nuget.org/packages?q=Kunc.RiotGames.).
@@ -68,7 +68,7 @@ foreach (var mastery in masteries.Take(count))
     Console.WriteLine($"{champion.Name,-13} Level:{mastery.ChampionLevel,3}, Points:{mastery.ChampionPoints,7}");
 }
 ```
-Output:
+Example output:
 ```
 Account: AoshiW#NULL
 Region: eun1

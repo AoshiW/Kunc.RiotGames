@@ -2,8 +2,6 @@
 using System.Net.Http.Json;
 using System.Text.Json;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 
 namespace Kunc.RiotGames.Api.Http;
@@ -12,18 +10,16 @@ public class RiotGamesApiClient : IRiotGamesApiClient, IDisposable
 {
     private readonly HttpClient _client;
     private readonly RiotGamesApiOptions _options;
-    private readonly ILogger<RiotGamesApiClient> _logger;
     private bool _disposedValue;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RiotGamesApiClient"/> class.
     /// </summary>
-    public RiotGamesApiClient(IOptions<RiotGamesApiOptions> options, [FromKeyedServices(ApiConstants.Project)] IEnumerable<DelegatingHandler> handlers, ILogger<RiotGamesApiClient>? logger = null)
+    public RiotGamesApiClient(IOptions<RiotGamesApiOptions> options, [FromKeyedServices(ApiConstants.Project)] IEnumerable<DelegatingHandler> handlers)
     {
         _options = options.Value;
 
         _client= new(CreateChain(handlers));
-        _logger = logger ?? NullLogger<RiotGamesApiClient>.Instance;
     }
 
     static HttpMessageHandler CreateChain(IEnumerable<DelegatingHandler> handlers)

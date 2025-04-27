@@ -8,7 +8,7 @@ public class RiotRequestMessage
     public required string Path { get; set; }
     public QueryString? Query { get; set; }
 
-    internal HttpRequestMessage ToHttpRequestMessage()
+    internal HttpRequestMessage ToHttpRequestMessage(RiotRequestOptions options)
     {
         var request = new HttpRequestMessage()
         {
@@ -26,6 +26,7 @@ public class RiotRequestMessage
         {
             Host = Host,
             MethodId = MethodId,
+            IncludeApiKey = options.IncludeApiKey,
         });
 
         return request;

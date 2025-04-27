@@ -8,16 +8,16 @@ namespace Kunc.RiotGames.Api.Http.Handlers;
 public class RateLimiterHandler : DelegatingHandler
 {
     private readonly IRiotGamesRateLimiter _rateLimiter;
-    private readonly ILogger<RiotGamesApiClient> _logger;
+    private readonly ILogger<RateLimiterHandler> _logger;
     private readonly RiotGamesApiOptions _options;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RateLimiterHandler"/> class.
     /// </summary>
-    public RateLimiterHandler(IRiotGamesRateLimiter rateLimiter, IOptions<RiotGamesApiOptions> options, ILogger<RiotGamesApiClient>? logger = null)
+    public RateLimiterHandler(IRiotGamesRateLimiter rateLimiter, IOptions<RiotGamesApiOptions> options, ILogger<RateLimiterHandler>? logger = null)
     {
         _rateLimiter = rateLimiter;
-        _logger = logger ?? NullLogger<RiotGamesApiClient>.Instance;
+        _logger = logger ?? NullLogger<RateLimiterHandler>.Instance;
         _options = options.Value;
     }
 

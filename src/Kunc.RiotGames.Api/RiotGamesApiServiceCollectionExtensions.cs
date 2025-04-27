@@ -18,6 +18,8 @@ using Kunc.RiotGames.Api.TftMatchV1;
 using Kunc.RiotGames.Api.TftSummonerV1;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Http.Resilience;
+using Polly;
 
 namespace Kunc.RiotGames.Api;
 
@@ -38,12 +40,24 @@ public static class RiotGamesApiServiceCollectionExtensions
         services.AddHybridCache();
         services.AddOptions();
         services.TryAdd(ServiceDescriptor.Singleton<IRiotGamesRateLimiter, RiotGamesRateLimiter>());
-        services.TryAdd(ServiceDescriptor.Singleton<IRiotGamesApiClient, RiotGamesApiClient>());
         services.TryAdd(ServiceDescriptor.Singleton<IRiotGamesApi, RiotGamesApi>());
 
-        // TODO maybe rewrite it with HttpClientFactory??
-        services.Add(ServiceDescriptor.KeyedSingleton<DelegatingHandler, LogRequestHandler>(ApiConstants.Project));
-        services.Add(ServiceDescriptor.KeyedSingleton<DelegatingHandler, RateLimiterHandler>(ApiConstants.Project));
+        var client = services.AddHttpClient(ApiConstants.Project)
+            .AddHttpMessageHandler<PrepareRequestHandler>();
+        client.AddResilienceHandler(ApiConstants.Project, (rp) =>
+            {
+                rp.AddRetry(new HttpRetryStrategyOptions()
+                {
+                    ShouldRetryAfterHeader = false,
+                });
+            });
+        client.AddHttpMessageHandler<RateLimiterHandler>()
+            .AddHttpMessageHandler<LogRequestHandler>()
+            .AddAsKeyed();
+
+        services.Add(ServiceDescriptor.Transient<PrepareRequestHandler, PrepareRequestHandler>());
+        services.Add(ServiceDescriptor.Transient<LogRequestHandler, LogRequestHandler>());
+        services.Add(ServiceDescriptor.Transient<RateLimiterHandler, RateLimiterHandler>());
 
         services.TryAdd(ServiceDescriptor.Singleton<ILolClashV1, LolClashV1Endpoint>());
         services.TryAdd(ServiceDescriptor.Singleton<ILolChallengesV1, LolChallengesV1Endpoint>());

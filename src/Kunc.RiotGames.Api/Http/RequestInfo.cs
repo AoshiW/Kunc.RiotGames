@@ -9,4 +9,5 @@ public class RequestInfo
 
     public required string Host { get; set; }
     public required string MethodId { get; set; }
+    public bool IncludeApiKey { get; set; } = true;
 }

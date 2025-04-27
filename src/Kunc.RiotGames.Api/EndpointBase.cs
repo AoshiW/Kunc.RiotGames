@@ -1,5 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using System.Diagnostics;
+using System.Net;
 using System.Text.Json;
 using Kunc.RiotGames.Api.Http;
 using Microsoft.Extensions.Caching.Hybrid;
@@ -12,11 +13,10 @@ namespace Kunc.RiotGames.Api;
 
 public abstract class EndpointBase
 {
-    internal readonly HybridCache HybridCache;
-    internal readonly RiotGamesApiOptions Options;
-
-    protected IRiotGamesApiClient Client { get; }
-    protected ILogger<RiotGamesApi> Logger { get; }
+    private readonly HttpClient _client;
+    private readonly HybridCache _hybridCache;
+    private readonly RiotGamesApiOptions _options;
+    private readonly ILogger<RiotGamesApi> _logger;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="EndpointBase"/> class.
@@ -25,33 +25,36 @@ public abstract class EndpointBase
     protected EndpointBase(IServiceProvider services)
     {
         ArgumentNullException.ThrowIfNull(services);
-        Client = services.GetRequiredService<IRiotGamesApiClient>();
-        HybridCache = services.GetRequiredService<HybridCache>();
-        Options = services.GetRequiredService<IOptions<RiotGamesApiOptions>>().Value;
-        Logger = services.GetService<ILogger<RiotGamesApi>>() ?? NullLogger<RiotGamesApi>.Instance;
+        _client = services.GetRequiredKeyedService<HttpClient>(ApiConstants.Project);
+        _hybridCache = services.GetRequiredService<HybridCache>();
+        _options = services.GetRequiredService<IOptions<RiotGamesApiOptions>>().Value;
+        _logger = services.GetService<ILogger<RiotGamesApi>>() ?? NullLogger<RiotGamesApi>.Instance;
     }
 
     internal async Task<T?> SendAndDeserializeAsync<T>(RiotRequestMessage request, RiotRequestOptions options, CancellationToken cancellationToken = default)
     {
         var cacheKey = request.GetCacheKey();
-        var cacheOptions = Options.MethodCacheEntryOptions.GetValueOrDefault(request.MethodId) ?? Options.DefaultCacheEntryOptions;
+        var cacheOptions = _options.MethodCacheEntryOptions.GetValueOrDefault(request.MethodId) ?? _options.DefaultCacheEntryOptions;
 
         // unfortunately it is not possible to dynamically set whether the response should be cached
         // so the cache must be called twice (1. to test if the data is available; 2. to save the data)
         // but it loses stampede protection.
         // alternative solution: cache everything and if we don't want to cache something then delete it immediately
         // https://github.com/dotnet/aspnetcore/issues/56483
-        var bytes = await HybridCache.GetAsync<byte[]>(cacheKey, cacheOptions, cancellationToken).ConfigureAwait(false);
+        var bytes = await _hybridCache.GetAsync<byte[]>(cacheKey, cacheOptions, cancellationToken).ConfigureAwait(false);
 
         if (bytes is null)
         {
-            var response = await Client.SendAsync(request, options, cancellationToken).ConfigureAwait(false);
-            if (!response.IsSuccessStatusCode)
+            using var httpRequest = request.ToHttpRequestMessage(options);
+            var response = await _client.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            
+            if (response.StatusCode is HttpStatusCode.NotFound)
                 return default;
+            response.EnsureSuccessStatusCode();
 
             bytes = await response.Content.ReadAsByteArrayAsync(cancellationToken).ConfigureAwait(false);
 
-            await HybridCache.SetAsync(cacheKey, bytes,
+            await _hybridCache.SetAsync(cacheKey, bytes,
                 cacheOptions,
                 null, // todo add tags ... maybe as a method argument (or in RiotRequestMessage?)
                 cancellationToken).ConfigureAwait(false);
@@ -59,11 +62,11 @@ public abstract class EndpointBase
 
         try
         {
-            return JsonSerializer.Deserialize<T>(bytes, Options.JsonSerializerOptions);
+            return JsonSerializer.Deserialize<T>(bytes, _options.JsonSerializerOptions);
         }
         catch (Exception ex)
         {
-            Logger.LogDeserializeException(ex, request);
+            _logger.LogDeserializeException(ex, request);
             throw;
         }
     }

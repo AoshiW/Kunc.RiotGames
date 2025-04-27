@@ -7,14 +7,14 @@ namespace Kunc.RiotGames.Api.Http.Handlers;
 // todo this is probably not needed with httpClientFactory
 public class LogRequestHandler : DelegatingHandler
 {
-    private readonly ILogger<RiotGamesApiClient> _logger;
+    private readonly ILogger<LogRequestHandler> _logger;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="LogRequestHandler"/> class.
     /// </summary>
-    public LogRequestHandler(ILogger<RiotGamesApiClient>? logger = null)
+    public LogRequestHandler(ILogger<LogRequestHandler>? logger = null)
     {
-        _logger = logger ?? NullLogger<RiotGamesApiClient>.Instance;
+        _logger = logger ?? NullLogger<LogRequestHandler>.Instance;
     }
 
     /// <summary>

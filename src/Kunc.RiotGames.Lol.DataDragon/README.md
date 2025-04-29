@@ -37,7 +37,7 @@ automatically converts the string `"latest"` to the latest version e.g.:`"15.1.1
 ### Caching
 The `HybridCache` is used as the caching provider, so by default it is only cached in memory, if you want an out-of-process cache, register [IDistributedCache service](https://learn.microsoft.com/en-us/aspnet/core/performance/caching/distributed#establish-distributed-caching-services) to `ServiceCollection`.
 ```cs
-// optionally adding some IDistributedCache .. for example Redish 
+// optionally adding some IDistributedCache .. for example Redis
 Services.AddStackExchangeRedisCache(o => 
 {
     o.Configuration = "connection string";

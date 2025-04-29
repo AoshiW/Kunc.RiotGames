@@ -44,7 +44,7 @@ How to enable caching:
 2. you can enable/modify it only for some endpoints using `MethodCacheEntryOptions[]` (per endpoint setting takes precedence over global)
 
 ```cs
-// optionally adding some IDistributedCache .. for example Redish 
+// optionally adding some IDistributedCache .. for example Redis
 Services.AddStackExchangeRedisCache(o => 
 {
     o.Configuration = "connection string";

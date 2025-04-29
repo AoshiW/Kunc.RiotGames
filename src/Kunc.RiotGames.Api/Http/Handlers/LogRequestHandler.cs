@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Kunc.RiotGames.Api.Http.Handlers;
 
-// todo this is probably not needed with httpClientFactory
+// https://learn.microsoft.com/en-us/dotnet/core/compatibility/networking/9.0/query-redaction-logs
 public class LogRequestHandler : DelegatingHandler
 {
     private readonly ILogger<LogRequestHandler> _logger;

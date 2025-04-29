@@ -1,5 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Http.Resilience;
+using Microsoft.Extensions.Options;
+using Polly;
 
 namespace Kunc.RiotGames.Lol.DataDragon;
 
@@ -20,6 +23,17 @@ public static class LolDataDragonServiceCollectionExtensions
         services.AddOptions();
         services.AddHybridCache();
         services.TryAdd(ServiceDescriptor.Singleton<ILolDataDragon, LolDataDragon>());
+
+        var client = services.AddHttpClient(LolDDConstants.Project, (s, c) =>
+        {
+            var options = s.GetRequiredService<IOptions<LolDataDragonOptions>>().Value;
+            c.BaseAddress = new(options.BaseAdress);
+        }).AddAsKeyed();
+        client.AddResilienceHandler(LolDDConstants.Project, pipline =>
+        {
+            pipline.AddRetry(new HttpRetryStrategyOptions());
+        });
+
         if (configure is not null)
         {
             services.Configure(configure);

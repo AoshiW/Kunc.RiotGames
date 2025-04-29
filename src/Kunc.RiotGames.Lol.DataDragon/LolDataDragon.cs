@@ -7,6 +7,7 @@ using Kunc.RiotGames.Lol.DataDragon.ProfileIcon;
 using Kunc.RiotGames.Lol.DataDragon.RuneReforged;
 using Kunc.RiotGames.Lol.DataDragon.SummonerSpell;
 using Microsoft.Extensions.Caching.Hybrid;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
@@ -25,17 +26,14 @@ public partial class LolDataDragon : ILolDataDragon
     /// <summary>
     /// Initializes a new instance of the <see cref="LolDataDragon"/> class.
     /// </summary>
-    public LolDataDragon(IOptions<LolDataDragonOptions> options, HybridCache cache, ILogger<LolDataDragon>? logger = null)
+    public LolDataDragon(IOptions<LolDataDragonOptions> options, HybridCache cache, [FromKeyedServices(LolDDConstants.Project)] HttpClient client, ILogger<LolDataDragon>? logger = null)
     {
         ArgumentNullException.ThrowIfNull(options);
         ArgumentNullException.ThrowIfNull(cache);
         _options = options.Value;
         _cache = cache;
         _logger = logger ?? NullLogger<LolDataDragon>.Instance;
-        _client = new HttpClient()
-        {
-            BaseAddress = new(_options.BaseAdress)
-        };
+        _client = client;
     }
 
     ValueTask<byte[]> GetAsync(string requestUri, string[] tags, CancellationToken cancellationToken)

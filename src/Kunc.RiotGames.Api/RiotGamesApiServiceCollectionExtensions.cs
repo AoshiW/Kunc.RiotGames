@@ -1,4 +1,5 @@
-﻿using Kunc.RiotGames.Api.Http;
+﻿using System.Net;
+using Kunc.RiotGames.Api.Http;
 using Kunc.RiotGames.Api.Http.Handlers;
 using Kunc.RiotGames.Api.LolChallengesV1;
 using Kunc.RiotGames.Api.LolChampionMasteryV4;
@@ -44,13 +45,20 @@ public static class RiotGamesApiServiceCollectionExtensions
 
         var client = services.AddHttpClient(ApiConstants.Project)
             .AddHttpMessageHandler<PrepareRequestHandler>();
-        client.AddResilienceHandler(ApiConstants.Project, (rp) =>
+        client.AddResilienceHandler(ApiConstants.Project, pipline =>
+        {
+            pipline.AddRetry(new HttpRetryStrategyOptions()
             {
-                rp.AddRetry(new HttpRetryStrategyOptions()
+                ShouldRetryAfterHeader = false,
+                DelayGenerator = args =>
                 {
-                    ShouldRetryAfterHeader = false,
-                });
+                    // If we hit 429 we will set delay to 0 because we handle delay in RateLimitHandler.
+                    return args.Outcome.Result?.StatusCode is HttpStatusCode.TooManyRequests
+                    ? new(TimeSpan.Zero)
+                    : default;
+                }
             });
+        });
         client.AddHttpMessageHandler<RateLimiterHandler>()
             .AddHttpMessageHandler<LogRequestHandler>()
             .AddAsKeyed();

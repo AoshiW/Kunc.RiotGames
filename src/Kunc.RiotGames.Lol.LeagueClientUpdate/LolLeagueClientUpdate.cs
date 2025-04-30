@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Net.Http.Json;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
@@ -21,27 +22,42 @@ public partial class LolLeagueClientUpdate
     /// <param name="options"></param>
     /// <param name="lockfileProvider"></param>
     /// <param name="wamp"></param>
+    /// <param name="service"></param>
     /// <param name="logger"></param>
     /// <exception cref="ArgumentNullException"></exception>
-    public LolLeagueClientUpdate(IOptions<LolLeagueClientUpdateOptions> options, ILockfileProvider lockfileProvider, IWamp wamp, ILogger<LolLeagueClientUpdate>? logger = null)
+    public LolLeagueClientUpdate(IOptions<LolLeagueClientUpdateOptions> options, ILockfileProvider lockfileProvider, IWamp wamp, IServiceProvider service, ILogger<LolLeagueClientUpdate>? logger = null)
     {
         ArgumentNullException.ThrowIfNull(options);
         ArgumentNullException.ThrowIfNull(lockfileProvider);
         ArgumentNullException.ThrowIfNull(wamp);
+        ArgumentNullException.ThrowIfNull(service);
         _options = options.Value;
-        var clientHandler = new HttpClientHandler()
+
+        var handlerPiepline = CreateChain(service.GetKeyedServices<DelegatingHandler>(LolLcuConstants.Project), new HttpClientHandler()
         {
             ClientCertificateOptions = ClientCertificateOption.Manual,
             ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator,
-        };
-        _client = new HttpClient(new RateLimiterHandler(clientHandler, _options.RateLimiter));
+        });
+        _client = new HttpClient(handlerPiepline);
+
         _lockfileProvider = lockfileProvider;
-        _lockfileProvider.Created += _lockfileProvider_Created;
+        _lockfileProvider.Created += _lockfileProvider_Created; 
         _lockfileProvider.Deleted += _lockfileProviedr_Deleted;
         _wamp = wamp;
         _wamp.OnMessage += OnMessage;
         _logger = logger ?? NullLogger<LolLeagueClientUpdate>.Instance;
         _initTask = InitLockFileAsync();
+    }
+
+    static HttpMessageHandler CreateChain(IEnumerable<DelegatingHandler> handlers, HttpMessageHandler coreHandler)
+    {
+        HttpMessageHandler handler = coreHandler;
+        foreach (var item in handlers)
+        {
+            item.InnerHandler = handler;
+            handler = item;
+        }
+        return handler;
     }
 
     private async Task InitLockFileAsync()

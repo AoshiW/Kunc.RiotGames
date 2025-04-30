@@ -1,17 +1,18 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Kunc.RiotGames.Lol.LeagueClientUpdate.Tests;
 
 [TestClass]
 public class WampEvents
 {
-    private sealed class FakeOptions : IOptions<LolLeagueClientUpdateOptions>
-    {
-        public LolLeagueClientUpdateOptions Value { get; } = new();
-    }
-
     private static readonly NullWamp Wamp = new();
-    private static LolLeagueClientUpdate NewLcu() => new LolLeagueClientUpdate(new FakeOptions(), NullLockfileProvieder.Instance, Wamp);
+    private static ILolLeagueClientUpdate NewLcu() => new ServiceCollection()
+        .AddLolLeagueClientUpdate()
+        .Replace(ServiceDescriptor.Singleton<ILockfileProvider>(NullLockfileProvieder.Instance))
+        .Replace(ServiceDescriptor.Singleton<IWamp>(Wamp))
+        .BuildServiceProvider()
+        .GetRequiredService<ILolLeagueClientUpdate>();
 
     [TestMethod]
     public void Test()

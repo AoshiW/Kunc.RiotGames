@@ -1,15 +1,14 @@
 ﻿using System.Threading.RateLimiting;
 
-namespace Kunc.RiotGames.Lol.LeagueClientUpdate;
+namespace Kunc.RiotGames.Lol.LeagueClientUpdate.Handlers;
 
 internal class RateLimiterHandler : DelegatingHandler
 {
     private readonly RateLimiter _rateLimiter;
 
-    public RateLimiterHandler(HttpMessageHandler httpMessageHandler, RateLimiter rateLimiter) : base(httpMessageHandler)
+    public RateLimiterHandler(RateLimiter? rateLimiter = null)
     {
-        ArgumentNullException.ThrowIfNull(rateLimiter);
-        _rateLimiter = rateLimiter;
+        _rateLimiter = rateLimiter ?? new NoopLimiter(); // TODO replace with some RL
     }
 
     protected override HttpResponseMessage Send(HttpRequestMessage request, CancellationToken cancellationToken)

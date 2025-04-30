@@ -29,9 +29,9 @@ public static class LolDataDragonServiceCollectionExtensions
             var options = s.GetRequiredService<IOptions<LolDataDragonOptions>>().Value;
             c.BaseAddress = new(options.BaseAdress);
         }).AddAsKeyed();
-        client.AddResilienceHandler(LolDDConstants.Project, pipline =>
+        client.AddResilienceHandler(LolDDConstants.Project, pipeline =>
         {
-            pipline.AddRetry(new HttpRetryStrategyOptions());
+            pipeline.AddRetry(new HttpRetryStrategyOptions());
         });
 
         if (configure is not null)

@@ -45,9 +45,9 @@ public static class RiotGamesApiServiceCollectionExtensions
 
         var client = services.AddHttpClient(ApiConstants.Project)
             .AddHttpMessageHandler<PrepareRequestHandler>();
-        client.AddResilienceHandler(ApiConstants.Project, pipline =>
+        client.AddResilienceHandler(ApiConstants.Project, pipeline =>
         {
-            pipline.AddRetry(new HttpRetryStrategyOptions()
+            pipeline.AddRetry(new HttpRetryStrategyOptions()
             {
                 ShouldRetryAfterHeader = false,
                 DelayGenerator = args =>

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Kunc.RiotGames.Lol.LeagueClientUpdate.Handlers;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Kunc.RiotGames.Lol.LeagueClientUpdate;
@@ -21,6 +22,10 @@ public static class LolLeagueClientUpdateServiceCollectionExtensions
         services.TryAdd(ServiceDescriptor.Singleton<IWamp, Wamp>());
         services.TryAdd(ServiceDescriptor.Singleton<ILockfileProvider, FileOverProcessLockfileProvider>());
         services.TryAdd(ServiceDescriptor.Singleton<ILolLeagueClientUpdate, LolLeagueClientUpdate>());
+
+        services.Add(ServiceDescriptor.KeyedTransient<DelegatingHandler, RateLimiterHandler>(LolLcuConstants.Project));
+
+
         if (configure is not null)
         {
             services.Configure(configure);

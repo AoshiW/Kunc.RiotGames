@@ -13,5 +13,6 @@ public class LolSummonerV4Test : ApiBase<TGame.LOL>
         var summoner = await Api.LolSummonerV4.GetSummonerByPuuidAsync(acc.Region, acc.Puuid);
 
         Assert.IsNotNull(summoner);
+        Assert.IsTrue(summoner.RevisionDate > DateTimeOffset.UtcNow.AddMonths(-2), "The account has been inactive for more than 2 months.");
     }
 }

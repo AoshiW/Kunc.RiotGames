@@ -11,6 +11,7 @@ public static class MethodId
     public const string Riot_AccountV1_ByPuuid = "/riot/account/v1/accounts/by-puuid/{puuid}";
     public const string Riot_AccountV1_ByRiotId = "/riot/account/v1/accounts/by-riot-id/{gameName}/{tagLine}";
     public const string Riot_AccountV1_ActiveShard = "/riot/account/v1/active-shards/by-game/{game}/by-puuid/{puuid}";
+    public const string Riot_AccountV1_Region = "/riot/account/v1/region/by-game/{game}/by-puuid/{puuid}";
 
     public const string Lol_ChampionV3_FreeRotations = "/lol/platform/v3/champion-rotations";
     public const string Lol_ChampionMasteryV4_ByPuuid = "/lol/champion-mastery/v4/champion-masteries/by-puuid/{puuid}";

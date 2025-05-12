@@ -60,4 +60,21 @@ public class RiotAccountV1Endpoint : EndpointBase, IRiotAccountV1
         var data = await SendAndDeserializeAsync<ActiveShardDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;
     }
+
+    /// <inheritdoc/>
+    public async Task<AccountRegionDto> GetActiveRegionForPlayerAsync(string region, Game game, string puuid, CancellationToken cancellationToken = default)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(region);
+        ArgumentException.ThrowIfNullOrEmpty(puuid);
+
+        var request = new RiotRequestMessage()
+        {
+            HttpMethod = HttpMethod.Get,
+            Host = region,
+            MethodId = MethodId.Riot_AccountV1_Region,
+            Path = $"/riot/account/v1/region/by-game/{game.ToLowerString()}/by-puuid/{puuid}",
+        };
+        var data = await SendAndDeserializeAsync<AccountRegionDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return data!;
+    }
 }

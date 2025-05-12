@@ -3,12 +3,12 @@
 namespace Kunc.RiotGames.Api.Tests;
 
 [TestClass]
-public class RiotAccountV1Test : ApiBase<TGame.LOR>
+public class RiotAccountV1Test_LOL : ApiBase<TGame.LOL>
 {
     [TestMethod]
     public async Task GetAccountByRiotIdAsync()
     {
-        var acc = GetConfiguration("MasterPlayer").Get<AccountInfo>()!;
+        var acc = GetConfiguration("Summoner").Get<AccountInfo>()!;
 
         var account = await Api.RiotAccountV1.GetAccountByRiotIdAsync(Regions.EUROPE, acc.RiotId);
 
@@ -18,7 +18,7 @@ public class RiotAccountV1Test : ApiBase<TGame.LOR>
     [TestMethod]
     public async Task GetAccountByPuuidAsync()
     {
-        var acc = GetConfiguration("MasterPlayer").Get<AccountInfo>()!;
+        var acc = GetConfiguration("Summoner").Get<AccountInfo>()!;
 
         var account = await Api.RiotAccountV1.GetAccountByPuuidAsync(Regions.ASIA, acc.Puuid);
 
@@ -28,10 +28,11 @@ public class RiotAccountV1Test : ApiBase<TGame.LOR>
     [TestMethod]
     public async Task GetActiveShardForPlayerAsync()
     {
-        var acc = GetConfiguration("MasterPlayer").Get<AccountInfo>()!;
+        var acc = GetConfiguration("Summoner").Get<AccountInfo>()!;
 
-        var activeShard = await Api.RiotAccountV1.GetActiveShardForPlayerAsync(Regions.AMERICAS, Game.Lor, acc.Puuid);
+        var accountRegion = await Api.RiotAccountV1.GetActiveRegionForPlayerAsync(Regions.AMERICAS, Game.Lol, acc.Puuid);
 
-        Assert.IsNotNull(activeShard);
+        Assert.IsNotNull(accountRegion);
+        Assert.AreEqual(acc.Region, accountRegion.Region, StringComparer.OrdinalIgnoreCase);
     }
 }

@@ -65,4 +65,14 @@ public interface IRiotAccountV1
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     Task<ActiveShardDto> GetActiveShardForPlayerAsync(string region, Game game, string puuid, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Get active region (lol and tft).
+    /// </summary>
+    /// <param name="region"></param>
+    /// <param name="game"></param>
+    /// <param name="puuid"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<AccountRegionDto> GetActiveRegionForPlayerAsync(string region, Game game, string puuid, CancellationToken cancellationToken = default);
 }

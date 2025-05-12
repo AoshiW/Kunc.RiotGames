@@ -13,6 +13,7 @@ public class TftSummonerV1Test : ApiBase<TGame.TFT>
         var summoner = await Api.TftSummonerV1.GetSummonerByPuuidAsync(acc.Region, acc.Puuid);
 
         Assert.IsNotNull(summoner);
+        Assert.IsTrue(summoner.RevisionDate > DateTimeOffset.UtcNow.AddMonths(-2), "The account has been inactive for more than 2 months.");
     }
 
     [TestMethod]

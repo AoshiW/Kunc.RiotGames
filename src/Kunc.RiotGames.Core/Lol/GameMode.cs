@@ -155,7 +155,13 @@ public enum GameMode
     WipModeWip,
     WipModeWip3,
     WipModeWip4,
-    
+    WipModeWip5,
+
+    /// <summary>
+    /// The Bandlewood
+    /// </summary>
+    Brawl,
+
     CS,
 
     /// <summary>

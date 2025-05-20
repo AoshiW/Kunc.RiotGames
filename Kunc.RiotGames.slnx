@@ -1,0 +1,41 @@
+<Solution>
+  <Folder Name="/benchmarks/">
+    <File Path="benchmarks/Directory.Build.props" />
+    <Project Path="benchmarks/Kunc.RiotGames.Lor.DeckCodes.Benchmarks/Kunc.RiotGames.Lor.DeckCodes.Benchmarks.csproj" />
+  </Folder>
+  <Folder Name="/example/">
+    <File Path="example/Directory.Build.props" />
+    <File Path="example/Directory.Packages.props" />
+    <Project Path="example/NotExample/NotExample.csproj" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="DiagnosticIds.md" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="global.json" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/src/">
+    <File Path="src/Directory.Build.props" />
+    <Project Path="src/Kunc.RiotGames.Api/Kunc.RiotGames.Api.csproj" />
+    <Project Path="src/Kunc.RiotGames.Core/Kunc.RiotGames.Core.csproj" />
+    <Project Path="src/Kunc.RiotGames.Lol.DataDragon/Kunc.RiotGames.Lol.DataDragon.csproj" />
+    <Project Path="src/Kunc.RiotGames.Lol.GameClient/Kunc.RiotGames.Lol.GameClient.csproj" />
+    <Project Path="src/Kunc.RiotGames.Lol.LeagueClientUpdate/Kunc.RiotGames.Lol.LeagueClientUpdate.csproj" />
+    <Project Path="src/Kunc.RiotGames.Lor.DeckCodes/Kunc.RiotGames.Lor.DeckCodes.csproj" />
+    <Project Path="src/Kunc.RiotGames.Lor.GameClient/Kunc.RiotGames.Lor.GameClient.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <File Path="tests/Directory.Build.props" />
+    <Project Path="tests/Kunc.RiotGames.Api.Tests/Kunc.RiotGames.Api.Tests.csproj" />
+    <Project Path="tests/Kunc.RiotGames.Core.Tests/Kunc.RiotGames.Core.Tests.csproj" />
+    <Project Path="tests/Kunc.RiotGames.Lol.DataDragon.Tests/Kunc.RiotGames.Lol.DataDragon.Tests.csproj" />
+    <Project Path="tests/Kunc.RiotGames.Lol.GameClient.Tests/Kunc.RiotGames.Lol.GameClient.Tests.csproj" />
+    <Project Path="tests/Kunc.RiotGames.Lol.LeagueClientUpdate.Tests/Kunc.RiotGames.Lol.LeagueClientUpdate.Tests.csproj" />
+    <Project Path="tests/Kunc.RiotGames.Lor.DeckCodes.Tests/Kunc.RiotGames.Lor.DeckCodes.Tests.csproj" />
+    <Project Path="tests/Kunc.RiotGames.Lor.GameClient.Tests/Kunc.RiotGames.Lor.GameClient.Tests.csproj" />
+  </Folder>
+</Solution>

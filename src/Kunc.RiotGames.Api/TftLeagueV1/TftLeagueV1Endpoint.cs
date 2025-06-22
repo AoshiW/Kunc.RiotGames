@@ -1,4 +1,5 @@
-﻿using Kunc.RiotGames.Api.Http;
+﻿using System;
+using Kunc.RiotGames.Api.Http;
 using Kunc.RiotGames.Lol;
 
 namespace Kunc.RiotGames.Api.TftLeagueV1;
@@ -28,17 +29,17 @@ public class TftLeagueV1Endpoint : EndpointBase, ITftLeagueV1
     }
 
     /// <inheritdoc/>
-    public async Task<LeagueEntryDto[]> LeagueEntriesForSummonerAsync(string region, string summonerId, CancellationToken cancellationToken = default)
+    public async Task<LeagueEntryDto[]> LeagueEntriesForSummonerAsync(string region, string puuid, CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(region);
-        ArgumentException.ThrowIfNullOrEmpty(summonerId);
+        ArgumentException.ThrowIfNullOrEmpty(puuid);
 
         var request = new RiotRequestMessage()
         {
             HttpMethod = HttpMethod.Get,
             Host = region,
-            MethodId = MethodId.Tft_LeagueV1_Entries_BySummonerId,
-            Path = $"/tft/league/v1/entries/by-summoner/{summonerId}",
+            MethodId = MethodId.Tft_LeagueV1_ByPuuid,
+            Path = $"/tft/league/v1/by-puuid/{puuid}",
         };
         var data = await SendAndDeserializeAsync<LeagueEntryDto[]>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data!;

@@ -51,7 +51,7 @@ public static class MethodId
     public const string Lol_SpectatorTftV5_ActiveGame = "/lol/spectator/tft/v5/active-games/by-puuid/{encryptedPUUID}";
     public const string Lol_SpectatorTftV5_FeaturedGames = "/lol/spectator/tft/v5/featured-games";
     public const string Tft_LeagueV1_Challenger = "/tft/league/v1/challenger";
-    public const string Tft_LeagueV1_Entries_BySummonerId = "/tft/league/v1/entries/by-summoner/{summonerId}";
+    public const string Tft_LeagueV1_ByPuuid = "/tft/league/v1/by-puuid/{puuid}";
     public const string Tft_LeagueV1_Entries = "/tft/league/v1/entries/{tier}/{division}";
     public const string Tft_LeagueV1_Grandmaster = "/tft/league/v1/grandmaster";
     public const string Tft_LeagueV1_League = "/tft/league/v1/leagues/{leagueId}";

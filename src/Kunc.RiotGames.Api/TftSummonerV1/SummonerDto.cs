@@ -21,12 +21,6 @@ public class SummonerDto : BaseDto
     public DateTimeOffset RevisionDate { get; set; }
 
     /// <summary>
-    /// Encrypted summoner ID. Max length 63 characters.
-    /// </summary>
-    [JsonPropertyName("id")]
-    public string Id { get; set; } = string.Empty;
-
-    /// <summary>
     /// Player Universal Unique Identifier.
     /// </summary>
     [JsonPropertyName("puuid")]

@@ -15,12 +15,6 @@ public class LeagueEntryDto : BaseDto
     [JsonPropertyName("leagueId")]
     public Guid? LeagueId { get; set; }
 
-    /// <summary>
-    /// Player's encrypted summonerId.
-    /// </summary>
-    [JsonPropertyName("summonerId")]
-    public string SummonerId { get; set; } = string.Empty;
-
     [JsonPropertyName("queueType")]
     public QueueType QueueType { get; set; }
 

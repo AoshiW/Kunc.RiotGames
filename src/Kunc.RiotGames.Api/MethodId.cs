@@ -61,5 +61,4 @@ public static class MethodId
     public const string Tft_MatchV1_Match = "/tft/match/v1/matches/{matchId}";
     public const string Tft_StatusV1_PlatformData = "/tft/status/v1/platform-data";
     public const string Tft_SummonerV1_ByPuuid = "/tft/summoner/v1/summoners/by-puuid/{encryptedPUUID}";
-    public const string Tft_SummonerV1_BySummonerId = "/tft/summoner/v1/summoners/{encryptedSummonerId}";
 }

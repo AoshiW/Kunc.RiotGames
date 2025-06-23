@@ -30,12 +30,6 @@ public class LeagueItemDto : BaseDto
     public int Losses { get; set; }
 
     /// <summary>
-    /// Player's encrypted summonerId.
-    /// </summary>
-    [JsonPropertyName("summonerId")]
-    public string SummonerId { get; set; } = string.Empty;
-
-    /// <summary>
     /// Player Universal Unique Identifier.
     /// </summary>
     [JsonPropertyName("puuid")]

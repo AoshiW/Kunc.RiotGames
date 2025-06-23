@@ -26,21 +26,4 @@ public class TftSummonerV1Endpoint : EndpointBase, ITftSummonerV1
         var data = await SendAndDeserializeAsync<SummonerDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
         return data;
     }
-
-    /// <inheritdoc/>
-    public async Task<SummonerDto?> GetSummonerBySummonerIdAsync(string region, string summonerId, CancellationToken cancellationToken = default)
-    {
-        ArgumentException.ThrowIfNullOrEmpty(region);
-        ArgumentException.ThrowIfNullOrEmpty(summonerId);
-
-        var request = new RiotRequestMessage()
-        {
-            HttpMethod = HttpMethod.Get,
-            Host = region,
-            MethodId = MethodId.Tft_SummonerV1_BySummonerId,
-            Path = $"/tft/summoner/v1/summoners/{summonerId}",
-        };
-        var data = await SendAndDeserializeAsync<SummonerDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
-        return data;
-    }
 }

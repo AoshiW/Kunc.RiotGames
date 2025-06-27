@@ -4,8 +4,11 @@ namespace Kunc.RiotGames.Api.TftLeagueV1;
 
 public class TopRatedLadderEntryDto : BaseDto
 {
-    [JsonPropertyName("summonerId")]
-    public string SummonerId { get; set; } = string.Empty;
+    /// <summary>
+    /// Player's encrypted puuid.
+    /// </summary>
+    [JsonPropertyName("puuid")]
+    public string Puuid { get; set; } = string.Empty;
 
     [JsonPropertyName("ratedTier")]
     public RatedTier RatedTier { get; set; }

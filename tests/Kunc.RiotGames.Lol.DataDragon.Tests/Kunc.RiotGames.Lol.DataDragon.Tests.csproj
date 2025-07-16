@@ -1,6 +1,8 @@
 ﻿<Project Sdk="MSTest.Sdk">
 
     <ItemGroup>
+
+      <PackageReference Include="Microsoft.NET.Test.Sdk" />
         <ProjectReference Include="..\..\src\Kunc.RiotGames.Lol.DataDragon\Kunc.RiotGames.Lol.DataDragon.csproj" />
     </ItemGroup>
 

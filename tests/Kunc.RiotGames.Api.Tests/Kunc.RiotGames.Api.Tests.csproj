@@ -11,6 +11,7 @@
         <ProjectReference Include="..\..\src\Kunc.RiotGames.Api\Kunc.RiotGames.Api.csproj" />
     </ItemGroup>
     <ItemGroup>
+      <PackageReference Include="Microsoft.NET.Test.Sdk" />
       <None Update="appsettings.local.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>

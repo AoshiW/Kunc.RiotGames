@@ -64,6 +64,5 @@ public interface ITftLeagueV1
     /// <param name="queue"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [Obsolete("Riot removed all endpoints that accepted summonerId, but did not update this endpoint to return puuid, so this endpoint is now unusable.")]
     Task<TopRatedLadderEntryDto[]> GetTopRatedLadderAsync(string region, QueueType queue, CancellationToken cancellationToken = default);
 }

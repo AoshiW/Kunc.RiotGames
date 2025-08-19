@@ -51,6 +51,7 @@ public class TftLeagueV1Test : ApiBase<TGame.TFT>
     }
 
     [TestMethod]
+    [Ignore("Game mode is removed.")]
     public async Task GetTopRatedLadderAsync()
     {
         var topRatedLadder = await Api.TftLeagueV1.GetTopRatedLadderAsync(Regions.SG2, QueueType.RankedTftTurbo);

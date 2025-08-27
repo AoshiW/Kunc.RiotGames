@@ -168,4 +168,15 @@ public enum GameMode
     /// Swiftplay
     /// </summary>
     SwiftPlay,
+
+    Ruby,
+
+    [JsonStringEnumMemberName("RUBY_TRIAL_1")]
+    RubyTrial1,
+
+    [JsonStringEnumMemberName("RUBY_TRIAL_2")]
+    RubyTrial2,
+
+    [JsonStringEnumMemberName("RUBY_TRIAL_3")]
+    RubyTrial3,
 }

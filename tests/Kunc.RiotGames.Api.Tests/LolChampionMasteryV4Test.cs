@@ -13,7 +13,7 @@ public class LolChampionMasteryV4Test : ApiBase<TGame.LOL>
 
         var entries = await Api.LolChampionMasteryV4.GetAllChampionMasteryEntriesAsync(summoner.Region, summoner.Puuid);
 
-        Assert.IsTrue(entries.Length > 0);
+        Assert.IsNotEmpty(entries);
     }
 
     [TestMethod]
@@ -36,7 +36,7 @@ public class LolChampionMasteryV4Test : ApiBase<TGame.LOL>
         };
         var entries = await Api.LolChampionMasteryV4.GetTopChampionMasteryEntriesAsync(summoner.Region, summoner.Puuid, query);
 
-        Assert.AreEqual(entries.Length, 7);
+        Assert.HasCount(7, entries);
     }
 
     [TestMethod]
@@ -46,6 +46,6 @@ public class LolChampionMasteryV4Test : ApiBase<TGame.LOL>
 
         var score = await Api.LolChampionMasteryV4.GetPlayersTotalChampionMasteryScoreAsync(summoner.Region, summoner.Puuid);
 
-        Assert.IsTrue(score > 0);
+        Assert.IsGreaterThan(0, score);
     }
 }

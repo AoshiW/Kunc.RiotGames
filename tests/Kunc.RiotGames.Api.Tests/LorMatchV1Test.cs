@@ -12,7 +12,7 @@ public class LorMatchV1Test : ApiBase<TGame.LOR>
 
         var matchIds = await Api.LorMatchV1.GetMatchIdsAsync(masterPlayer.Region, masterPlayer.Puuid);
 
-        Assert.IsTrue(matchIds.Length > 0);
+        Assert.IsNotEmpty(matchIds);
 
         bool isFirstMatch = true;
         foreach (var matchId in matchIds.Take(5))

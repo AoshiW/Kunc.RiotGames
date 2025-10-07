@@ -73,7 +73,7 @@ public class Base32Test
     {
         var bytes = Base32.FromBase32(input);
         string result = Encoding.ASCII.GetString(bytes);
-        Assert.AreEqual(result, expectedOutput);
+        Assert.AreEqual(expectedOutput, result);
         bytes = Base32.FromBase32(input.ToLowerInvariant());
         result = Encoding.ASCII.GetString(bytes);
         Assert.AreEqual(expectedOutput, result);
@@ -82,6 +82,6 @@ public class Base32Test
     [TestMethod]
     public void FromBase32_ThrowsFormatException()
     {
-        Assert.ThrowsException<FormatException>(() => Base32.FromBase32("[];',m."));
+        Assert.Throws<FormatException>(() => Base32.FromBase32("[];',m."));
     }
 }

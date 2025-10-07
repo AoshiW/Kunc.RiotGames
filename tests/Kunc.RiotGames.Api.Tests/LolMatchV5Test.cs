@@ -13,7 +13,7 @@ public class LolMatchV5Test : ApiBase<TGame.LOL>
 
         var matchIds = await Api.LolMatchV5.GetMatchIdsAsync(region, acc.Puuid);
 
-        Assert.IsTrue(matchIds.Length > 0);
+        Assert.IsNotEmpty(matchIds);
         bool isFirstMatch = true;
         foreach (var matchId in matchIds.Take(10))
         {

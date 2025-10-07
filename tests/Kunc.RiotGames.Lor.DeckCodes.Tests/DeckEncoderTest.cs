@@ -363,7 +363,7 @@ public class DeckEncoderTest
         }
         catch (Exception ex)
         {
-            Assert.IsTrue(false, "Expected to throw an ArgumentException, but it threw {0}.", ex);
+            Assert.Fail($"Expected to throw an ArgumentException, but it threw {ex}.");
         }
         Assert.IsTrue(failed, "Expected to throw an ArgumentException, but it succeeded.");
 
@@ -381,7 +381,7 @@ public class DeckEncoderTest
         }
         catch (Exception ex)
         {
-            Assert.IsTrue(false, "Expected to throw an ArgumentException, but it threw {0}.", ex);
+            Assert.Fail($"Expected to throw an ArgumentException, but it threw {ex}.");
         }
         Assert.IsTrue(failed, "Expected to throw an ArgumentException, but it succeeded.");
 
@@ -400,7 +400,7 @@ public class DeckEncoderTest
         }
         catch (Exception ex)
         {
-            Assert.IsTrue(false, "Expected to throw an ArgumentException, but it threw {0}.", ex);
+            Assert.Fail($"Expected to throw an ArgumentException, but it threw {ex}.");
         }
         Assert.IsTrue(failed, "Expected to throw an ArgumentException, but it succeeded.");
     }
@@ -423,7 +423,7 @@ public class DeckEncoderTest
         }
         catch (Exception ex)
         {
-            Assert.IsTrue(false, "Expected to throw an ArgumentException, but it threw {0}.", ex);
+            Assert.Fail($"Expected to throw an ArgumentException, but it threw {ex}.");
         }
         Assert.IsTrue(failed, "Expected to throw an ArgumentException, but it succeeded.");
 
@@ -440,7 +440,7 @@ public class DeckEncoderTest
         }
         catch (Exception ex)
         {
-            Assert.IsTrue(false, "Expected to throw an ArgumentException, but it threw {0}.", ex);
+            Assert.Fail($"Expected to throw an ArgumentException, but it threw {ex}.");
         }
         Assert.IsTrue(failed, "Expected to throw an ArgumentException, but it succeeded.");
     }
@@ -464,7 +464,7 @@ public class DeckEncoderTest
         }
         catch (Exception ex)
         {
-            Assert.IsTrue(false, "Expected to throw an ArgumentException, but it threw {0}.", ex);
+            Assert.Fail($"Expected to throw an ArgumentException, but it threw {ex}.");
         }
         Assert.IsTrue(failed, "Expected to throw an ArgumentException, but it succeeded.");
 
@@ -479,7 +479,7 @@ public class DeckEncoderTest
         }
         catch (Exception ex)
         {
-            Assert.IsTrue(false, "Expected to throw an ArgumentException, but it threw {0}.", ex);
+            Assert.Fail($"Expected to throw an ArgumentException, but it threw {ex}.");
         }
         Assert.IsTrue(failed, "Expected to throw an ArgumentException, but it succeeded.");
 
@@ -533,7 +533,7 @@ public class DeckEncoderTest
     public void ArgumentExceptionOnFutureVersion()
     {
         const string singleCardDeckWithVersion10 = "DEAAABABAEFACAIBAAAQCAIFAEAQGCTP";
-        Assert.ThrowsException<ArgumentException>(() => DeckEncoder.GetDeckFromCode<DeckItem>(singleCardDeckWithVersion10));
+        Assert.Throws<ArgumentException>(() => DeckEncoder.GetDeckFromCode<DeckItem>(singleCardDeckWithVersion10));
     }
 
     private static bool VerifyRehydration(List<DeckItem> d, List<DeckItem> rehydratedList)

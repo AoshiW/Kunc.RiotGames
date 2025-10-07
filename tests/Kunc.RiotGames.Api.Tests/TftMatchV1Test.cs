@@ -13,7 +13,7 @@ public class TftMatchV1Test : ApiBase<TGame.TFT>
 
         var matchIds = await Api.TftMatchV1.GetMatchIdsAsync(region, acc.Puuid);
 
-        Assert.IsTrue(matchIds.Length > 0);
+        Assert.IsNotEmpty(matchIds);
         bool isFirstMatch = true;
         foreach (var matchId in matchIds.Take(10))
         {

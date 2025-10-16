@@ -126,7 +126,7 @@ public sealed class RiotGamesRateLimiter : IRiotGamesRateLimiter, IDisposable
             }
         }
 
-        static ChainedRateLimiter? Parse(string? rateLimit, RiotGamesApiOptions options)
+        static RateLimiter? Parse(string? rateLimit, RiotGamesApiOptions options)
         {
             if (string.IsNullOrEmpty(rateLimit))
                 return null;
@@ -157,7 +157,7 @@ public sealed class RiotGamesRateLimiter : IRiotGamesRateLimiter, IDisposable
                 return null;
 
             limiters.Reverse();
-            return new ChainedRateLimiter(limiters.ToArray());
+            return RateLimiter.CreateChained(limiters.ToArray());
         }
 
         public void Dispose()

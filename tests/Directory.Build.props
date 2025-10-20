@@ -3,7 +3,6 @@
 
     <PropertyGroup>
         <NoWarn>$(NoWarn);CA1707</NoWarn>
-        <TestingPlatformShowTestsFailure>true</TestingPlatformShowTestsFailure>
     </PropertyGroup>
 
 

@@ -12,12 +12,4 @@ public interface ILolSpectatorTftV5
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     Task<CurrentGameInfoDto?> GetCurrentGameInformationForPuuidAsync(string region, string puuid, CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Get list of featured games
-    /// </summary>
-    /// <param name="region"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    Task<FeaturedGamesDto> GetFeaturedGamesAsync(string region, CancellationToken cancellationToken = default);
 }

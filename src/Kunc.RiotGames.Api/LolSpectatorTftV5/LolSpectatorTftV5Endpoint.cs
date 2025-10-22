@@ -26,20 +26,4 @@ public class LolSpectatorTftV5Endpoint : EndpointBase, ILolSpectatorTftV5
         };
         return await SendAndDeserializeAsync<CurrentGameInfoDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
     }
-
-    /// <inheritdoc/>
-    public async Task<FeaturedGamesDto> GetFeaturedGamesAsync(string region, CancellationToken cancellationToken = default)
-    {
-        ArgumentException.ThrowIfNullOrEmpty(region);
-
-        var request = new RiotRequestMessage()
-        {
-            HttpMethod = HttpMethod.Get,
-            Host = region,
-            MethodId = MethodId.Lol_SpectatorTftV5_FeaturedGames,
-            Path = $"/lol/spectator/tft/v5/featured-games",
-        };
-        var data = await SendAndDeserializeAsync<FeaturedGamesDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
-        return data!;
-    }
 }

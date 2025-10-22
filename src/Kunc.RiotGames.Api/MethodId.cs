@@ -39,7 +39,6 @@ public static class MethodId
     public const string Lol_MatchV5_Match = "/lol/match/v5/matches/{matchId}";
     public const string Lol_MatchV5_Timeline = "/lol/match/v5/matches/{matchId}/timeline";
     public const string Lol_SpectatorV5_ActiveGame = "/lol/spectator/v5/active-games/by-summoner/{encryptedPUUID}";
-    public const string Lol_SpectatorV5_FeaturedGames = "/lol/spectator/v5/featured-games";
     public const string Lol_StatusV4_PlatformData = "/lol/status/v4/platform-data";
     public const string Lol_SummonerV4_ByPuuid = "/lol/summoner/v4/summoners/by-puuid/{encryptedPUUID}";
 
@@ -49,7 +48,6 @@ public static class MethodId
     public const string Lor_StatusV1_PlatformData = "/lor/status/v1/platform-data";
 
     public const string Lol_SpectatorTftV5_ActiveGame = "/lol/spectator/tft/v5/active-games/by-puuid/{encryptedPUUID}";
-    public const string Lol_SpectatorTftV5_FeaturedGames = "/lol/spectator/tft/v5/featured-games";
     public const string Tft_LeagueV1_Challenger = "/tft/league/v1/challenger";
     public const string Tft_LeagueV1_ByPuuid = "/tft/league/v1/by-puuid/{puuid}";
     public const string Tft_LeagueV1_Entries = "/tft/league/v1/entries/{tier}/{division}";

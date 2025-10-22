@@ -171,6 +171,8 @@ public enum GameMode
 
     Ruby,
 
+    Kiwi,
+
     [JsonStringEnumMemberName("RUBY_TRIAL_1")]
     RubyTrial1,
 

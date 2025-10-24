@@ -171,6 +171,9 @@ public enum GameMode
 
     Ruby,
 
+    /// <summary>
+    /// ARAM: Mayhem
+    /// </summary>
     Kiwi,
 
     [JsonStringEnumMemberName("RUBY_TRIAL_1")]

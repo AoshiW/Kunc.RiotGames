@@ -16,7 +16,7 @@
         <PackageIcon>logo.png</PackageIcon>
         
         <!--<IsAotCompatible>true</IsAotCompatible>-->
-        <Version>0.16.0</Version>
+        <Version>0.16.1</Version>
 	</PropertyGroup>
 
 	<ItemGroup>

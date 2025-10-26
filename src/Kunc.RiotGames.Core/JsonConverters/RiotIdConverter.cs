@@ -19,11 +19,16 @@ class RiotIdConverter : JsonConverter<RiotId>
             : (array = ArrayPool<char>.Shared.Rent(len));
 
         var written = reader.CopyString(buffer);
-        var riotId = RiotId.Parse(buffer.Slice(0, written), null);
+        var riotId = Parse(buffer.Slice(0, written));
 
         if (array is not null)
             ArrayPool<char>.Shared.Return(array);
         return riotId;
+    }
+
+    protected virtual RiotId Parse(ReadOnlySpan<char> chars)
+    {
+        return RiotId.Parse(chars, null);
     }
 
     /// <inheritdoc/>
@@ -35,10 +40,39 @@ class RiotIdConverter : JsonConverter<RiotId>
             ? stackalloc char[len]
             : (array = ArrayPool<char>.Shared.Rent(len));
 
-        value.TryFormat(buffer, out var written, string.Empty, null);
+        Format(buffer, value, options, out var written);
         writer.WriteStringValue(buffer.Slice(0, written));
 
         if (array is not null)
             ArrayPool<char>.Shared.Return(array);
+    }
+
+    protected virtual void Format(Span<char> buffer, RiotId value, JsonSerializerOptions options, out int written)
+    {
+        value.TryFormat(buffer, out written, string.Empty, null);
+    }
+    
+    internal class Anonymous : RiotIdConverter
+    {
+        protected override RiotId Parse(ReadOnlySpan<char> chars)
+        {
+            if (chars.Contains('#'))
+                return base.Parse(chars);
+
+            return new RiotId(chars.ToString(), string.Empty);
+        }
+
+        protected override void Format(Span<char> buffer, RiotId value, JsonSerializerOptions options, out int written)
+        {
+            if (!string.IsNullOrEmpty(value.TagLine))
+            {
+                base.Format(buffer, value, options, out written);
+                return;
+            }
+
+            value.GameName.CopyTo(buffer);
+            written = value.GameName.Length;
+            return;
+        }
     }
 }

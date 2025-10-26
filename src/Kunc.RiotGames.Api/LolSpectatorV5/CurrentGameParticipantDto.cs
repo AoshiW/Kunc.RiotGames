@@ -1,4 +1,6 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
+using Kunc.RiotGames.JsonConverters;
 using Kunc.RiotGames.Lol;
 
 namespace Kunc.RiotGames.Api.LolSpectatorV5;
@@ -40,9 +42,10 @@ public class CurrentGameParticipantDto : BaseDto
     /// The encrypted puuid of this participant.
     /// </summary>
     [JsonPropertyName("puuid")]
-    public string Puuid { get; set; } = string.Empty;
+    public string? Puuid { get; set; }
 
     [JsonPropertyName("riotId")]
+    [JsonConverter(typeof(RiotIdConverter.Anonymous))]
     public RiotId RiotId { get; set; } = default!;
 
     /// <summary>
@@ -62,4 +65,11 @@ public class CurrentGameParticipantDto : BaseDto
     /// </summary>
     [JsonPropertyName("gameCustomizationObjects")]
     public GameCustomizationObjectDto[] GameCustomizationObjects { get; set; } = [];
+
+    /// <summary>
+    /// The player has activated "Streamer mode"
+    /// </summary>
+    [JsonIgnore]
+    [MemberNotNullWhen(false, nameof(Puuid))]
+    public bool IsAnonymous => Puuid is null;
 }

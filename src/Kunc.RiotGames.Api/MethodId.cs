@@ -36,6 +36,7 @@ public static class MethodId
     public const string Lol_LeagueV4_League = "/lol/league/v4/leagues/{leagueId}";
     public const string Lol_LeagueV4_Master = "/lol/league/v4/masterleagues/by-queue/{queue}";
     public const string Lol_MatchV5_MatchIds = "/lol/match/v5/matches/by-puuid/{puuid}/ids";
+    public const string Lol_MatchV5_Replay = "/lol/match/v5/matches/by-puuid/{puuid}/replays";
     public const string Lol_MatchV5_Match = "/lol/match/v5/matches/{matchId}";
     public const string Lol_MatchV5_Timeline = "/lol/match/v5/matches/{matchId}/timeline";
     public const string Lol_SpectatorV5_ActiveGame = "/lol/spectator/v5/active-games/by-summoner/{encryptedPUUID}";

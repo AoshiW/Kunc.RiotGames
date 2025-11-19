@@ -14,6 +14,15 @@ public interface ILolMatchV5
     Task<string[]> GetMatchIdsAsync(string region, string puuid, MatchIdsQuery? query = null, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Get player replays.
+    /// </summary>
+    /// <param name="region"></param>
+    /// <param name="puuid"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<ReplayDto> GetPlayerReplaysAsync(string region, string puuid, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Get a match by match id.
     /// </summary>
     /// <param name="region"></param>

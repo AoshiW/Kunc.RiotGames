@@ -30,6 +30,23 @@ public class LolMatchV5Endpoint : EndpointBase, ILolMatchV5
     }
 
     /// <inheritdoc/>
+    public async Task<ReplayDto> GetPlayerReplaysAsync(string region, string puuid, CancellationToken cancellationToken = default)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(region);
+        ArgumentException.ThrowIfNullOrEmpty(puuid);
+
+        var request = new RiotRequestMessage()
+        {
+            HttpMethod = HttpMethod.Get,
+            Host = region,
+            MethodId = MethodId.Lol_MatchV5_Replay,
+            Path = $"/lol/match/v5/matches/by-puuid/{puuid}/replays",
+        };
+        var data = await SendAndDeserializeAsync<ReplayDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
+        return data!;
+    }
+
+    /// <inheritdoc/>
     public async Task<MatchDto?> GetMatchAsync(string region, string matchId, CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(region);

@@ -34,4 +34,16 @@ public class LolMatchV5Test : ApiBase<TGame.LOL>
             Assert.IsNotNull(matchTimeline);
         }
     }
+
+    [TestMethod]
+    public async Task GetPlayerReplaysAsync()
+    {
+        var acc = GetConfiguration("Summoner").Get<AccountInfo>()!;
+        var region = ToBigRegion(acc.Region);
+
+        var replays = await Api.LolMatchV5.GetPlayerReplaysAsync(region, acc.Puuid);
+
+        Assert.IsNotNull(replays);
+        Assert.HasCount(5, replays.MatchFileURLs);
+    }
 }

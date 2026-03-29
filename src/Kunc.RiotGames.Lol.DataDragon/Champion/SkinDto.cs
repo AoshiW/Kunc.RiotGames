@@ -16,6 +16,9 @@ public class SkinDto : BaseDto
     [JsonPropertyName("chromas")]
     public bool HasChromas { get; set; }
 
+    [JsonPropertyName("parentSkin")]
+    public int? ParentSkin { get; set; }
+
     public string GetImageUrl(string championId, ChampionImageType imageType)
     {
         ArgumentNullException.ThrowIfNull(championId);

@@ -33,7 +33,6 @@ public static class MethodId
     public const string Lol_LeagueV4_Entries_ByPuuid = "/lol/league/v4/entries/by-puuid/{encryptedPUUID}";
     public const string Lol_LeagueV4_Entries = "/lol/league/v4/entries/{queue}/{tier}/{division}";
     public const string Lol_LeagueV4_Grandmaster = "/lol/league/v4/grandmasterleagues/by-queue/{queue}";
-    public const string Lol_LeagueV4_League = "/lol/league/v4/leagues/{leagueId}";
     public const string Lol_LeagueV4_Master = "/lol/league/v4/masterleagues/by-queue/{queue}";
     public const string Lol_MatchV5_MatchIds = "/lol/match/v5/matches/by-puuid/{puuid}/ids";
     public const string Lol_MatchV5_Replay = "/lol/match/v5/matches/by-puuid/{puuid}/replays";
@@ -53,7 +52,6 @@ public static class MethodId
     public const string Tft_LeagueV1_ByPuuid = "/tft/league/v1/by-puuid/{puuid}";
     public const string Tft_LeagueV1_Entries = "/tft/league/v1/entries/{tier}/{division}";
     public const string Tft_LeagueV1_Grandmaster = "/tft/league/v1/grandmaster";
-    public const string Tft_LeagueV1_League = "/tft/league/v1/leagues/{leagueId}";
     public const string Tft_LeagueV1_Master = "/tft/league/v1/master";
     public const string Tft_LeagueV1_RatedLadders = "/tft/league/v1/rated-ladders/{queue}/top";
     public const string Tft_MatchV1_MatchIds = "/tft/match/v1/matches/by-puuid/{puuid}/ids";

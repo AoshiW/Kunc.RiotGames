@@ -5,9 +5,6 @@ namespace Kunc.RiotGames.Api.TftLeagueV1;
 
 public class LeagueListDto : BaseDto
 {
-    [JsonPropertyName("leagueId")]
-    public Guid LeagueId { get; set; }
-
     [JsonPropertyName("entries")]
     public LeagueItemDto[] Entries { get; set; } = [];
 

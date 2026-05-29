@@ -77,21 +77,6 @@ public class LolLeagueV4Endpoint : EndpointBase, ILolLeagueV4
     }
 
     /// <inheritdoc/>
-    public async Task<LeagueListDto?> GetLeagueByIdAsync(string region, Guid leagueId, CancellationToken cancellationToken = default)
-    {
-        ArgumentException.ThrowIfNullOrEmpty(region);
-
-        var request = new RiotRequestMessage()
-        {
-            HttpMethod = HttpMethod.Get,
-            Host = region,
-            MethodId = MethodId.Lol_LeagueV4_League,
-            Path = $"/lol/league/v4/leagues/{leagueId}",
-        };
-        return await SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
-    }
-
-    /// <inheritdoc/>
     public async Task<LeagueListDto> GetMasterLeagueAsync(string region, QueueType queue, CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(region);

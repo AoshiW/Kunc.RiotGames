@@ -12,9 +12,6 @@ public class LeagueEntryDto : BaseDto
     [JsonPropertyName("puuid")]
     public string Puuid { get; set; } = string.Empty;
 
-    [JsonPropertyName("leagueId")]
-    public Guid? LeagueId { get; set; }
-
     [JsonPropertyName("queueType")]
     public QueueType QueueType { get; set; }
 

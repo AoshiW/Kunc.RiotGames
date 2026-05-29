@@ -6,9 +6,6 @@ namespace Kunc.RiotGames.Api.LolLeagueV4;
 //todo rewrite (bcs arena)
 public class LeagueEntryDto : BaseDto
 {
-    [JsonPropertyName("leagueId")]
-    public Guid LeagueId { get; set; }
-
     /// <summary>
     /// Player Universal Unique Identifier.
     /// </summary>

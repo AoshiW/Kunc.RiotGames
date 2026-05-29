@@ -79,21 +79,6 @@ public class TftLeagueV1Endpoint : EndpointBase, ITftLeagueV1
     }
 
     /// <inheritdoc/>
-    public async Task<LeagueListDto?> GetLeagueByIdAsync(string region, Guid leagueId, CancellationToken cancellationToken = default)
-    {
-        ArgumentException.ThrowIfNullOrEmpty(region);
-
-        var request = new RiotRequestMessage()
-        {
-            HttpMethod = HttpMethod.Get,
-            Host = region,
-            MethodId = MethodId.Tft_LeagueV1_League,
-            Path = $"/tft/league/v1/leagues/{leagueId}",
-        };
-        return await SendAndDeserializeAsync<LeagueListDto>(request, RiotRequestOptions.Default, cancellationToken).ConfigureAwait(false);
-    }
-
-    /// <inheritdoc/>
     public async Task<LeagueListDto> GetMasterLeagueAsync(string region, CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(region);

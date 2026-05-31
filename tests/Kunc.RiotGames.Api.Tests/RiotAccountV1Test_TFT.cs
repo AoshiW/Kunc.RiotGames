@@ -13,6 +13,7 @@ public class RiotAccountV1Test_TFT : ApiBase<TGame.TFT>
         var account = await Api.RiotAccountV1.GetAccountByRiotIdAsync(Regions.EUROPE, acc.RiotId);
 
         Assert.IsNotNull(account);
+        Assert.AreEqual(acc.Puuid, account.Puuid);
     }
 
     [TestMethod]
@@ -23,6 +24,7 @@ public class RiotAccountV1Test_TFT : ApiBase<TGame.TFT>
         var account = await Api.RiotAccountV1.GetAccountByPuuidAsync(Regions.ASIA, acc.Puuid);
 
         Assert.IsNotNull(account);
+        Assert.AreEqual(acc.RiotId, account.GetRiotId().ToString());
     }
 
     [TestMethod]

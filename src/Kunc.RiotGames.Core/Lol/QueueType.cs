@@ -26,6 +26,10 @@ public enum QueueType
 
     [JsonStringEnumMemberName("RANKED_TFT")]
     RankedTft,
+
+
+    [JsonStringEnumMemberName("RANKED_PREMADE_5x5")]
+    RankedPremade5x5,
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }
 
@@ -33,7 +37,7 @@ internal static partial class QueueTypeExtensions
 {
     public static void ThrowIfNotLolQueue(this QueueType queue, [CallerArgumentExpression(nameof(queue))] string? paramName = null)
     {
-        if (!(queue is QueueType.RankedSolo5x5 or QueueType.RankedFlexSR or QueueType.Cherry))
+        if (!(queue is QueueType.RankedSolo5x5 or QueueType.RankedFlexSR or QueueType.Cherry or QueueType.RankedPremade5x5))
         {
             throw new ArgumentException($"Value '{queue}' is not valid LoL Queue", paramName);
         }
@@ -54,6 +58,7 @@ internal static partial class QueueTypeExtensions
             QueueType.RankedSolo5x5 => "RANKED_SOLO_5x5",
             QueueType.RankedFlexSR => "RANKED_FLEX_SR",
             QueueType.Cherry => "CHERRY",
+            QueueType.RankedPremade5x5 => "RANKED_PREMADE_5x5",
 
             QueueType.RankedTftDoubleUp => "RANKED_TFT_DOUBLE_UP",
             QueueType.RankedTftTurbo => "RANKED_TFT_TURBO",

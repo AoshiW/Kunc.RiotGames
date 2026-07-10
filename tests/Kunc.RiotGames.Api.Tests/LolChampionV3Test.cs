@@ -9,6 +9,7 @@ public class LolChampionV3Test : ApiBase<TGame.LOL>
         var freeRotation = await Api.LolChampionV3.GetChampionFreeRotationsAsync(Regions.OC1);
 
         Assert.IsNotNull(freeRotation);
-        Assert.IsGreaterThan(15, freeRotation.FreeChampionIds.Length);
+        Assert.IsNotEmpty(freeRotation.NewPlayer);
+        Assert.IsNotEmpty(freeRotation.SummonersRift);
     }
 }

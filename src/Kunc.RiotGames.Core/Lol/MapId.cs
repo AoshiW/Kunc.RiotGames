@@ -94,4 +94,9 @@ public enum MapId
 
     [Experimental(DiagnosticIds.KNCRG0000, UrlFormat = DiagnosticIds.UrlFormat)]
     Strawberry = 33,
+
+    /// <summary>
+    /// Map for Brawl (`BRAWL`). Work together with your team to escort minions into the enemy portal. No roles, no lanes, no pressure. Just a five-on-five brawl.
+    /// </summary>
+    TheBandlewood = 35,
 }

@@ -165,7 +165,7 @@ public enum GameMode
     CS,
 
     /// <summary>
-    /// Swiftplay
+    /// Swiftplay Games
     /// </summary>
     SwiftPlay,
 

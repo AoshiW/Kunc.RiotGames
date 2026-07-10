@@ -8,7 +8,8 @@ updates:
       interval: "weekly"
       day: "wednesday"
     ignore:
-      - dependency-name: "Microsoft.Extensions*"
+      - dependency-name: "System.*"
+      - dependency-name: "Microsoft.Extensions.*"
     groups:
       dotnet:
         patterns:

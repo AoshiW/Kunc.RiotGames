@@ -184,4 +184,10 @@ public enum GameMode
 
     [JsonStringEnumMemberName("RUBY_TRIAL_3")]
     RubyTrial3,
+
+    [JsonStringEnumMemberName("KIWI_JADE")]
+    KiwiJade,
+
+    [JsonStringEnumMemberName("JADE")]
+    Jade,
 }

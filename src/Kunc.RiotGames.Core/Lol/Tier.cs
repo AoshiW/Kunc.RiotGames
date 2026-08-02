@@ -8,6 +8,8 @@ namespace Kunc.RiotGames.Lol;
 public enum Tier
 {
     Unranked,
+    Salt,
+    Wood,
     Iron,
     Bronze,
     Silver,
@@ -17,7 +19,8 @@ public enum Tier
     Diamond,
     Master,
     Grandmaster,
-    Challenger
+    Challenger,
+    Legend,
 }
 
 internal static class TierExtensions
@@ -27,6 +30,8 @@ internal static class TierExtensions
         return tier switch
         {
             Tier.Unranked => "UNRANKED",
+            Tier.Salt => "SALT",
+            Tier.Wood => "WOOD",
             Tier.Iron => "IRON",
             Tier.Bronze => "BRONZE",
             Tier.Silver => "SILVER",
@@ -37,6 +42,7 @@ internal static class TierExtensions
             Tier.Master => "MASTER",
             Tier.Grandmaster => "GRANDMASTER",
             Tier.Challenger => "CHALLENGER",
+            Tier.Legend => "LEGEND",
             _ => tier.ToString().ToUpperInvariant()
         };
     }

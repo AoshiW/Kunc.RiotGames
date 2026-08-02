@@ -65,7 +65,7 @@ public class SummonerSpellDto : BaseDto
     public string Maxammo { get; set; } = string.Empty;
 
     [JsonPropertyName("range")]
-    public int[] Range { get; set; } = [];
+    public uint[] Range { get; set; } = [];
 
     [JsonPropertyName("rangeBurn")]
     public string RangeBurn { get; set; } = string.Empty;

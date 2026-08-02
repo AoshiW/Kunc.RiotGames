@@ -30,6 +30,9 @@ public enum QueueType
 
     [JsonStringEnumMemberName("RANKED_PREMADE_5x5")]
     RankedPremade5x5,
+
+    [JsonStringEnumMemberName("JADE_RANKED_SOLO_5x5")]
+    JadeRankedSolo5x5
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }
 
@@ -59,6 +62,7 @@ internal static partial class QueueTypeExtensions
             QueueType.RankedFlexSR => "RANKED_FLEX_SR",
             QueueType.Cherry => "CHERRY",
             QueueType.RankedPremade5x5 => "RANKED_PREMADE_5x5",
+            QueueType.JadeRankedSolo5x5 => "JADE_RANKED_SOLO_5x5",
 
             QueueType.RankedTftDoubleUp => "RANKED_TFT_DOUBLE_UP",
             QueueType.RankedTftTurbo => "RANKED_TFT_TURBO",

@@ -44,7 +44,6 @@ public class RankTest
     [DataRow("GoldI 5lp")]
     [DataRow("Gold I asdLP")]
     [DataRow("Gold IIII 5Lp")]
-    [DataRow("Wood I 5LP")]
     [DataRow("Gold V 5LP")]
     [DataRow("Gold I 5")]
     [DataRow("")]

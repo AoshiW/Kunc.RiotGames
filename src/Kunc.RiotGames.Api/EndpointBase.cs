@@ -36,29 +36,21 @@ public abstract class EndpointBase
         var cacheKey = request.GetCacheKey();
         var cacheOptions = _options.MethodCacheEntryOptions.GetValueOrDefault(request.MethodId) ?? _options.DefaultCacheEntryOptions;
 
-        // unfortunately it is not possible to dynamically set whether the response should be cached
-        // so the cache must be called twice (1. to test if the data is available; 2. to save the data)
-        // but it loses stampede protection.
-        // alternative solution: cache everything and if we don't want to cache something then delete it immediately
-        // https://github.com/dotnet/aspnetcore/issues/56483
-        var bytes = await _hybridCache.GetAsync<byte[]>(cacheKey, cacheOptions, cancellationToken).ConfigureAwait(false);
-
-        if (bytes is null)
+        var bytes = await _hybridCache.GetOrCreateAsync(cacheKey, (request, options, _client), static async (state, hcContext, ct) =>
         {
-            using var httpRequest = request.ToHttpRequestMessage(options);
-            var response = await _client.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            
+            using var httpRequest = state.request.ToHttpRequestMessage(state.options);
+            var response = await state._client.SendAsync(httpRequest, ct).ConfigureAwait(false);
+
             if (response.StatusCode is HttpStatusCode.NotFound)
+            {
+                hcContext.Flags |= HybridCacheEntryFlags.DisableDistributedCacheWrite | HybridCacheEntryFlags.DisableLocalCacheWrite;
                 return default;
+            }
             response.EnsureSuccessStatusCode();
 
-            bytes = await response.Content.ReadAsByteArrayAsync(cancellationToken).ConfigureAwait(false);
-
-            await _hybridCache.SetAsync(cacheKey, bytes,
-                cacheOptions,
-                null, // todo add tags ... maybe as a method argument (or in RiotRequestMessage?)
-                cancellationToken).ConfigureAwait(false);
-        }
+            return await response.Content.ReadAsByteArrayAsync(ct).ConfigureAwait(false);
+        },
+        cacheOptions, null, cancellationToken).ConfigureAwait(false);
 
         try
         {
